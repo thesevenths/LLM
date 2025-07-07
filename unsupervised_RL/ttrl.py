@@ -107,7 +107,7 @@ if __name__ == '__main__':
     
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
-    ds = load_dataset('/data/gsm8k')
+    ds = load_dataset('data\gsm8k')
     data = process_data(ds['train'])
     
     output_dir="output"
