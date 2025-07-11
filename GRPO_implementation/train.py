@@ -11,7 +11,7 @@ from torch.utils.tensorboard import SummaryWriter
 from typing import Callable, Dict, List, Optional, Tuple, Union, Any
 from copy import deepcopy
 from datasets import load_dataset
-from reward_func import *
+from reward_fun import *
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '2'
