@@ -14,8 +14,6 @@ from datasets import load_dataset
 from reward_fun import *
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
-
 
 class GSM8KDataset(Dataset):
     def __init__(self, data_path, tokenizer):
@@ -28,9 +26,8 @@ class GSM8KDataset(Dataset):
 
     def __getitem__(self, index):
         sample = self.data[index]
-        # prompt = self.tokenizer.apply_chat_template(sample['prompt'], tokenize=False, add_generation_prompt=True)
         answer = sample['answer_only']
-        prompt = sample['question_zh-cn']
+        prompt = sample['question']
         return {'prompt': prompt, 'answer': answer}
 
 
@@ -173,7 +170,7 @@ class GRPOTrainer:
             attention_mask = (prompt_response_ids.ne(self.tokenizer.pad_token_id)).to(dtype=torch.long)
             response_ids = prompt_response_ids[:, prompt_ids.size(1):]
             action_mask = (
-                        response_ids.ne(self.tokenizer.eos_token_id) & response_ids.ne(self.tokenizer.pad_token_id)).to(
+                    response_ids.ne(self.tokenizer.eos_token_id) & response_ids.ne(self.tokenizer.pad_token_id)).to(
                 dtype=torch.long)
 
             # 存储的是一个group的数据
@@ -353,7 +350,7 @@ class GRPOTrainer:
 
     def train(self):
         self.global_steps = self.args.num_iterations * self.args.epoch * len(self.train_dataset) // (
-                    self.args.batch_size * self.args.gradient_accumulation_steps)
+                self.args.batch_size * self.args.gradient_accumulation_steps)
         for _ in range(self.args.epoch):
 
             dataloader = DataLoader(self.train_dataset, batch_size=self.args.batch_size, shuffle=True)
@@ -413,4 +410,3 @@ if __name__ == "__main__":
                           tokenizer=tokenizer)
     trainer.train()
     trainer.save_model()
-
