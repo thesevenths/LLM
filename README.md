@@ -39,7 +39,7 @@ LLM various post-train solution attempts：sft、RL(GRPO\PPO\DPO)、test-time sc
 
 7. Beyond the 80/20 Rule: High-Entropy Minority Tokens  Drive Effective Reinforcement Learning for LLM Reasoning 少数high entropy的token能让model产生更强的reasoning能力，如下图所示，粉色只使用high entropy的token，蓝色是使用所有token： 
 ![img6](img6.png)  
--high entropy大都是连接词：2/8原则很明显，这些token都是“岔路”比较多的token，也都是传说中的“aha moment”相关的token：  
+-high entropy大都是连接词(诸如"however","because","thus","wait"等)：2/8原则很明显，这些token都是“岔路”比较多的token，也都是传说中的“aha moment”相关的token：  
 ![high entropy token](highentropy.png)
 -只用这种high entropy token训练，不但节约算力，更关键的是accuracy居然还有所提升！
 ![image.png](image.png)
