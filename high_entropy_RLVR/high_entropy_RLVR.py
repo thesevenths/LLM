@@ -5,7 +5,7 @@ from torch.distributions import Categorical
 import numpy as np
 import os
 
-model_name = "E:\model\Qwen-0.6B"
+model_name = "F:\model\Qwen-0.6B"
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -93,7 +93,15 @@ def policy_gradient_update(model, token_ids, rewards, entropy_mask, logits, lr=1
     token_ids_expanded = token_ids_shifted.expand(-1, 1, 1)  # [seq_len-1, 1, 1]：每个token在vocab中的index
     token_log_probs = torch.gather(log_probs, dim=2, index=token_ids_expanded).squeeze(-1)  # [seq_len-1, batch_size]：每个token的实际概率
     loss = -token_log_probs * rewards
-    loss = loss * entropy_mask.to(device).float()
+    # loss = loss * entropy_mask.to(device).float()
+    # 对齐 entropy_mask 维度
+    loss = loss * entropy_mask[1:].to(device).float()
+
+    # 截断 rewards 和 entropy_mask
+    # rewards = rewards[1:].to(device).float()  # [seq_len-1]
+    # entropy_mask = entropy_mask[1:].to(device).float()  # [seq_len-1]
+    # loss = -(token_log_probs * rewards * entropy_mask).mean()
+
     loss = loss.mean()
     loss.backward()
     optimizer.step()
@@ -139,6 +147,7 @@ def train_rlvr(input_texts, true_answers, epochs=8, max_length=2048):
         for input_text, true_answer in zip(input_texts, true_answers):
             token_ids, entropies, logits = generate_cot_and_entropy(input_text, max_length)
             entropy_mask = select_high_entropy_tokens(token_ids, entropies)
+            # entropy_mask = select_high_entropy_tokens(token_ids[1:], entropies[1:])
             rewards = compute_rewards(token_ids, true_answer)
             loss = policy_gradient_update(model, token_ids, rewards, entropy_mask, logits)
             total_loss += loss

@@ -5,7 +5,7 @@
 -政策梯度基础（REINFORCE）  
 &ensp;&ensp;策略梯度算法通过对动作概率的对数取梯度，结合 reward 来更新模型参数：  
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;∇ 𝜃 𝐽(𝜃)= 𝐸[∑ 𝑡 ∇ 𝜃 ln ⁡ 𝜋 𝜃(𝑎 𝑡 ∣ 𝑠 𝑡)⋅ 𝑅 𝑡]  
-&ensp;&ensp;这里可以理解为，“**如果某token带来高 reward，就提升它的概率: 比如这里提升aha moment相关token的概率**”
+&ensp;&ensp;这里可以理解为，“**如果某token带来高 reward，就提升它的概率: 比如这里提升aha moment相关token的概率**”   
 -为什么只更新高熵 token 更好？论文从理论和实证两个角度分析：  
 &ensp;&ensp;**高熵 token 是推理“分叉点”：它决定往哪个推理路径走，是关键决策点，更新它会带来更大预期收益(提高aha moment相关token的概率)**；低熵 token 多属于固定的“修饰”或“填充”，更新它对结果贡献小
 &ensp;&ensp;梯度源自协变：在 policy gradient 更新中，模型 logits 与动作 reward 的协方差驱动熵变化。正协方差意味着模型趋向确认令这些 token 更确定，降低熵，即“entropy collapse”
