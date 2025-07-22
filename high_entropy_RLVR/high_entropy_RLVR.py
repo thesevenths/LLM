@@ -6,12 +6,11 @@ from torch.cuda.amp import autocast, GradScaler
 import numpy as np
 import os
 
-model_name = "F:\model\Qwen-0.6B"
+model_name = "E:\model\Qwen-0.6B"
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True, torch_dtype=torch.float16) # float16半精度节约显存
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
-
 
 # 启用模型参数的梯度跟踪
 for param in model.parameters():
@@ -54,7 +53,6 @@ def generate_cot_and_entropy(input_text, max_length):
     with torch.enable_grad(), autocast():
         generated_ids = input_ids.clone()
         logits_list = []
-        entropies = []
         max_new_tokens = max_length - input_ids.shape[1]
         for _ in range(max_new_tokens):
             # 启用 Flash Attention（若可用）和 memory‑efficient attention，减少注意力层的内存开销
@@ -63,8 +61,6 @@ def generate_cot_and_entropy(input_text, max_length):
             logits = outputs.logits[:, -1, :]
             logits = torch.where(torch.isinf(logits), torch.finfo(logits.dtype).tiny, logits)
             probs = F.softmax(logits, dim=-1)
-            entropy = Categorical(probs=probs).entropy()
-            entropies.append(entropy.item())
             if model.training:
                 logits_list.append(logits.detach())
             else:
@@ -73,10 +69,18 @@ def generate_cot_and_entropy(input_text, max_length):
             generated_ids = torch.cat([generated_ids, next_token], dim=-1)
             if attention_mask is not None:
                 attention_mask = torch.cat([attention_mask, torch.ones_like(next_token)], dim=-1)
-            del outputs, logits, probs
+            del outputs, probs
             torch.cuda.empty_cache()
             if next_token.item() == tokenizer.eos_token_id:
                 break
+
+        # 在生成序列后一次性计算熵
+        entropies = []
+        for logits in logits_list:
+            logits = torch.where(torch.isinf(logits), torch.finfo(logits.dtype).tiny, logits)
+            probs = F.softmax(logits, dim=-1)
+            entropy = Categorical(probs=probs).entropy()
+            entropies.append(entropy.item())
 
     print_model_output(generated_ids, inputs)
     token_ids = generated_ids[0, input_ids.shape[1]:].flatten()  # Ensure 1D: [seq_len]
@@ -101,7 +105,7 @@ def policy_gradient_update(model, token_ids, rewards, entropy_mask, logits, lr=1
     with autocast():
         log_probs = []
         for logit in logits:
-            logit = torch.where(torch.isinf(logit), torch.finfo(logit.dtype).tiny, logit)
+            logit = torch.where(torch.isinf(logit), torch.finfo(logits.dtype).tiny, logit)
             probs = F.softmax(logit, dim=-1)
             log_prob = torch.log(probs + 1e-10)
             log_probs.append(log_prob)
@@ -127,7 +131,7 @@ def train_rlvr(input_texts, true_answers, epochs=8, max_length=512):
         total_loss = 0.0
         for input_text, true_answer in zip(input_texts, true_answers):
             token_ids, entropies, logits = generate_cot_and_entropy(input_text, max_length)
-            entropy_mask = select_high_entropy_tokens(token_ids, entropies)
+            entropy_mask = select_high_entropy_tokens(entropies)
             rewards = compute_rewards(token_ids, true_answer)
             loss = policy_gradient_update(model, token_ids, rewards, entropy_mask, logits)
             total_loss += loss
