@@ -395,8 +395,8 @@ if __name__ == "__main__":
 
     writer = SummaryWriter('./runs')
     # 策略模型
-    tokenizer = AutoTokenizer.from_pretrained('\model\Qwen\Qwen0.6B')
-    model = AutoModelForCausalLM.from_pretrained('\model\Qwen\Qwen0.6B')
+    tokenizer = AutoTokenizer.from_pretrained('E:\model\Qwen-0.6B')
+    model = AutoModelForCausalLM.from_pretrained('E:\model\Qwen-0.6B')
     # 奖励函数
     # reward_model = '/home/user/Downloads/reward-model-deberta-v3-large-v2'
     # reward_tokenizer = AutoTokenizer.from_pretrained('/home/user/Downloads/reward-model-deberta-v3-large-v2')
