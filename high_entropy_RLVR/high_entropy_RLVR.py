@@ -55,8 +55,8 @@ def generate_cot_and_entropy(input_text, max_length):
     attention_mask = inputs.get("attention_mask", None).to(device) if inputs.get("attention_mask") is not None else None
 
     # 手动生成以保留计算图
-    model.train()
-    with torch.enable_grad(), autocast():
+    model.eval()
+    with autocast():
         generated_ids = input_ids.clone()
         logits_list = []
         entropies = []
@@ -103,15 +103,14 @@ def policy_gradient_update(token_ids, rewards, entropy_mask, logits):
     with autocast():
         log_probs = []
         for logit in logits:
-            logit = torch.where(torch.isinf(logit), torch.finfo(logits.dtype).tiny, logit)
             probs = F.softmax(logit.float(), dim=-1)  # logit临时改成32bit，避免下溢出为0
             log_prob = torch.log(probs + 1e-10)
             log_probs.append(log_prob)
         log_probs = torch.stack(log_probs)  # 形状: [seq_len, batch_size, vocab_size]：每个token在vocab中的distribution
+        log_probs = log_probs[:-1]  # 去掉最后一个 logits，保持序列长度一致
         # 调整 token_ids_shifted 维度顺序
-        token_ids_shifted = token_ids[1:].unsqueeze(0).unsqueeze(-1)  # [seq_len-1, 1, 1]
-        token_log_probs = torch.gather(log_probs, dim=2, index=token_ids_shifted).squeeze(
-            -1)  # [seq_len-1, 1]：从distribution中提取每个token的实际概率
+        token_ids_shifted = token_ids[1:].unsqueeze(-1).unsqueeze(-1)  # 修改：形状 [seq_len-1, 1, 1]
+        token_log_probs = torch.gather(log_probs, dim=2, index=token_ids_shifted).squeeze(-1)  # [seq_len-1, 1]
         entropy_mask_reshaped = entropy_mask[1:].to(device).float().unsqueeze(-1)  # [seq_len-1, 1]
         loss = -token_log_probs * rewards[1:].unsqueeze(-1) * entropy_mask_reshaped  # [seq_len-1, 1]
         loss = loss.mean()
@@ -129,18 +128,19 @@ def compute_rewards(token_ids, true_answer):
 
 
 def train_rlvr(input_texts, true_answers, epochs=8, max_length=512):
+    model.train()  # 设置模型为训练模式
     for epoch in range(epochs):
         total_loss = 0.0
         for input_text, true_answer in zip(input_texts, true_answers):
             token_ids, entropies, logits = generate_cot_and_entropy(input_text, max_length)
             entropy_mask = select_high_entropy_tokens(entropies)
             rewards = compute_rewards(token_ids, true_answer)
-            loss = policy_gradient_update(model, token_ids, rewards, entropy_mask, logits)
+            loss = policy_gradient_update(token_ids, rewards, entropy_mask, logits)
             total_loss += loss
             torch.cuda.empty_cache()
         print(f"Epoch {epoch + 1}, Average Loss: {total_loss / len(input_texts)}")
     # 保存模型
-    output_dir = "E:\LLM\models\finetuned_qwen_0.6B"
+    output_dir = "E:\model\finetuned_qwen_0.6B"
     os.makedirs(output_dir, exist_ok=True)
     model.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
