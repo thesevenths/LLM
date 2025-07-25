@@ -14,6 +14,14 @@ from datasets import load_dataset
 from reward_fun import *
 import os
 
+SYSTEM_PROMPT = """
+            ## OutputFormat
+            - <think>....</think> [digital number]
+            ## Constrain
+            - between the 2 <think> .... </think> label, show users your reasoning process, which indicate how to predict the final digital number
+            - after the </think> label is the final answer, which should be only one number , no other characters, so that i can easily extract the final digital answer
+        """
+
 
 class GSM8KDataset(Dataset):
     def __init__(self, data_path, tokenizer):
@@ -324,8 +332,8 @@ class GRPOTrainer:
         # 计算策略模型输出token的概率
         output = model(input_ids, attention_mask=attention_mask)
         logits = output.logits
-        log_probs = F.log_softmax(logits[:, :-1, :], dim=-1)
-        log_probs_labels = log_probs.gather(dim=-1, index=input_ids[:, 1:].unsqueeze(-1))
+        log_probs = F.log_softmax(logits[:, :-1, :], dim=-1)  # AR最后一个token不需要计算loss：；[batch_size, seq_len-1, vocab_size]
+        log_probs_labels = log_probs.gather(dim=-1, index=input_ids[:, 1:].unsqueeze(-1))  # AR第一个token不需要预测；[batch_size, seq_len-1]
         action_log_probs = log_probs_labels.squeeze(-1)[:, -num_actions:]
         return action_log_probs
 
@@ -377,28 +385,17 @@ class GRPOTrainer:
 
 
 if __name__ == "__main__":
-    import os
-
-    os.environ['CUDA_VISIBLE_DEVICES'] = '2'
-
-    SYSTEM_PROMPT = """
-        response in the following format：
-        <think>
-            reasoning process......
-        </think>
-        <answer>
-            final answer
-        </answer>
-        """
-
     args = GRPOArguments()
 
     writer = SummaryWriter('./runs')
     # 策略模型
-    tokenizer = AutoTokenizer.from_pretrained('F:\model\Qwen-0.6B')
-    model = AutoModelForCausalLM.from_pretrained('F:\model\Qwen-0.6B')
+    tokenizer = AutoTokenizer.from_pretrained('E:\model\Qwen-0.6B')
+    model = AutoModelForCausalLM.from_pretrained('E:\model\Qwen-0.6B')
 
-    prompts_dataset = GSM8KDataset('F:\data\gsm8k', tokenizer)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+
+    prompts_dataset = GSM8KDataset('E:\data\gsm8k', tokenizer)
 
     trainer = GRPOTrainer(model=model,
                           reward_funcs=[correctness_reward, digit_reward, hard_format_reward, mark_reward],
