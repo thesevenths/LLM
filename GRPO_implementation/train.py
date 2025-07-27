@@ -189,7 +189,7 @@ class GRPOTrainer:
                 answer=answer,
                 attention_mask=attention_mask,
                 action_mask=action_mask,
-                num_actions=action_mask.size(1),
+                num_actions=action_mask.size(1), # response中去掉结束符、padding的长度，也就是有效长度
                 response_length=action_mask.float().sum(dim=-1)
             )
             samples_list.append(samples)
