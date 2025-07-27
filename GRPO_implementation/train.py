@@ -176,8 +176,8 @@ class GRPOTrainer:
                     fill_value=self.tokenizer.pad_token_id, device=prompt_response_ids.device)], dim=1)
 
             attention_mask = (prompt_response_ids.ne(self.tokenizer.pad_token_id)).to(dtype=torch.long)
-            response_ids = prompt_response_ids[:, prompt_ids.size(1):]
-            action_mask = (
+            response_ids = prompt_response_ids[:, prompt_ids.size(1):] # 切分出generated部分
+            action_mask = ( # 去掉结束符、padding token，避免影响loss数值计算
                     response_ids.ne(self.tokenizer.eos_token_id) & response_ids.ne(self.tokenizer.pad_token_id)).to(
                 dtype=torch.long)
 
@@ -295,7 +295,7 @@ class GRPOTrainer:
         prompt_response_ids = inputs['prompt_response_ids']
         attention_mask = inputs['attention_mask']
         action_mask = inputs['action_mask']
-        num_actions = action_mask.size(1)
+        num_actions = action_mask.size(1) #  seq length
         action_log_probs = self.get_action_log_probs(model, prompt_response_ids, attention_mask, num_actions)
 
         if self.args.beta != 0.0:
@@ -329,13 +329,13 @@ class GRPOTrainer:
 
     def get_action_log_probs(self, model, input_ids, attention_mask, num_actions):
 
-        # 计算策略模型输出token的概率
+        # 对现存seq中的每个token计算logits，用于评估prob distribution，不再生成新的seq；model.generate才是生成新的seq
         output = model(input_ids, attention_mask=attention_mask)
         logits = output.logits
         log_probs = F.log_softmax(logits[:, :-1, :], dim=-1)  # AR最后一个token不需要计算loss：；[batch_size, seq_len-1, vocab_size]
         log_probs_labels = log_probs.gather(dim=-1, index=input_ids[:, 1:].unsqueeze(-1))  # AR第一个token不需要预测；[batch_size, seq_len-1]
-        action_log_probs = log_probs_labels.squeeze(-1)[:, -num_actions:]
-        return action_log_probs
+        action_log_probs = log_probs_labels.squeeze(-1)[:, -num_actions:] # 只取生成部分（response_ids）的概率，去掉提示部分（prompt_ids）
+        return action_log_probs 
 
     def train_step(self, model, inputs, optimizer, step):
         model.train()
@@ -389,13 +389,13 @@ if __name__ == "__main__":
 
     writer = SummaryWriter('./runs')
     # 策略模型
-    tokenizer = AutoTokenizer.from_pretrained('E:\model\Qwen-0.6B')
-    model = AutoModelForCausalLM.from_pretrained('E:\model\Qwen-0.6B')
+    tokenizer = AutoTokenizer.from_pretrained('F:\model\Qwen-0.6B')
+    model = AutoModelForCausalLM.from_pretrained('F:\model\Qwen-0.6B')
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
-    prompts_dataset = GSM8KDataset('E:\data\gsm8k', tokenizer)
+    prompts_dataset = GSM8KDataset('F:\data\gsm8k', tokenizer)
 
     trainer = GRPOTrainer(model=model,
                           reward_funcs=[correctness_reward, digit_reward, hard_format_reward, mark_reward],
