@@ -16,8 +16,10 @@
   * loss如图所示：  ![img.png](img.png)
   * V(t)是critical model计算的state value, R(t)是累计的reward期望；业务意义就是**critical要能准确预测出当前state的value（才能给policy model提供准确的信号），这个value就是后续每个step产生reward的累计**
   * 现在的问题来了：R(t)就是后续每个step产生reward的累计，这个应该怎么计算了？TD或GAE方法！
-    ![img_1.png](img_1.png)
-    * TD：只看当前 token 的奖励和下一 token 的价值，可能忽略整个序列的连贯性；不涉及未来多步的随机性，方差低；依赖不准确的 V(s) ，初期可能偏差大；
+    ![img_1.png](img_1.png)![img_2.png](img_2.png)
+    * TD：只看当前token的奖励和下一token的价值(bellman方程)
+      * 可能忽略整个序列的连贯性；
+      * 不涉及未来多步的随机性，方差低；依赖不准确的 V(s) ，初期可能偏差大，收敛困难；
     * GAE：结合整个seq的reward(policy model结束后才能评估整个seq的reward，计算量比TD大)，更准确地评估 token 对seq质量的贡献；
       * 更接近真实回报，偏差低；涉及更多未来奖励的随机性，方差高！
       * lambda 控制了未来奖励的影响范围（lambda = 0 时退化为 TD(0)，lambda = 1 时接近蒙特卡洛）

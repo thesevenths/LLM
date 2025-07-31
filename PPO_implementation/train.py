@@ -42,9 +42,9 @@ class Critic(nn.Module):
         self.value_head = nn.Linear(base_model.config.hidden_size, 1)  # base model共用actor的，额外加一层就行了
 
     def forward(self, input_ids, attention_mask, num_actions):
-        hidden_state = self.base_model(input_ids, attention_mask=attention_mask).last_hidden_state
-        value_model_output = self.value_head(hidden_state)
-        values = value_model_output.squeeze(-1)[:, -num_actions:]
+        hidden_state = self.base_model(input_ids, attention_mask=attention_mask).last_hidden_state # hidden_state(batch_size, seq_len, hidden_size)：每个token都有hidden_size
+        value_model_output = self.value_head(hidden_state)  # value_model_output(batch_size, seq_len, 1) # 每个token都评估一个value
+        values = value_model_output.squeeze(-1)[:, -num_actions:]  # (batch_size, num_actions) # 每个有效token都评估一个value
         return values
 
 
@@ -170,12 +170,13 @@ def get_advantages_and_returns(
         rewards = action_mask * rewards
 
     for t in reversed(range(response_length)):
-        nextvalues = values[:, t + 1] if t < response_length - 1 else 0.0
-        delta = rewards[:, t] + gamma * nextvalues - values[:, t]
-        lastgaelam = delta + gamma * lambd * lastgaelam
-        advantages_reversed.append(lastgaelam)
-    advantages = torch.stack(advantages_reversed[::-1], dim=1)
-    returns = advantages + values
+        nextvalues = values[:, t + 1] if t < response_length - 1 else 0.0  # nextvalues(batch_size,)
+        delta = rewards[:, t] + gamma * nextvalues - values[:, t] # delta(batch_size,)
+        lastgaelam = delta + gamma * lambd * lastgaelam # lastgaelam(batch_size,)
+        advantages_reversed.append(lastgaelam) # response_length(batch_size,)
+    # 每个seq 的每个 token 的 GAE advantage估计
+    advantages = torch.stack(advantages_reversed[::-1], dim=1) # response_length 个 (batch_size,) 张量堆叠成形状为 (batch_size, response_length) 的张量
+    returns = advantages + values  # 每个token都有return(batch_size, response_length)
     return advantages.detach(), returns
 
 
