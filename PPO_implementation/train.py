@@ -172,7 +172,7 @@ def get_advantages_and_returns(
     for t in reversed(range(response_length)):
         nextvalues = values[:, t + 1] if t < response_length - 1 else 0.0  # nextvalues(batch_size,)
         delta = rewards[:, t] + gamma * nextvalues - values[:, t] # delta(batch_size,)
-        lastgaelam = delta + gamma * lambd * lastgaelam # lastgaelam(batch_size,)
+        lastgaelam = delta + gamma * lambd * lastgaelam # lastgaelam(batch_size,) ; 整体reward存放在最后一个token，通过这种回溯让前面的每个token都按比例折算得到seq的reward
         advantages_reversed.append(lastgaelam) # response_length(batch_size,)
     # 每个seq 的每个 token 的 GAE advantage估计
     advantages = torch.stack(advantages_reversed[::-1], dim=1) # response_length 个 (batch_size,) 张量堆叠成形状为 (batch_size, response_length) 的张量
