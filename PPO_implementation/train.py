@@ -217,6 +217,7 @@ def generate_samples(prompts, model, max_length, max_new_tokens, n_samples_per_p
 
 
 def compute_rewards(kl, r, action_mask, kl_ctl, clip_reward_value):
+    # 在每个 token 上施加一个负的punish，强度由 kl_ctl（KL 控制系数，默认 0.1）调节;kl(batch_size, num_actions)
     kl_divergence_estimate = -kl_ctl * kl
     rewards = kl_divergence_estimate
 
@@ -225,8 +226,16 @@ def compute_rewards(kl, r, action_mask, kl_ctl, clip_reward_value):
     if not isinstance(clip_reward_value, torch.Tensor):
         clip_reward_value = torch.tensor(clip_reward_value).to(r.device)
 
-    reward_clip = torch.clamp(r, -clip_reward_value,
-                              clip_reward_value)
+    reward_clip = torch.clamp(r, -clip_reward_value, clip_reward_value)
+
+    # 对于非最后一个 token，rewards[:, t] = -kl_ctl * kl[:, t]（仅基于 KL 散度）。
+    # 对于最后一个 token，rewards[:, t] = -kl_ctl * kl[:, t] + reward_clip（KL 散度加上 reward model 的裁剪奖励）。
+    # 每个token都由reward model计算reward成本太高，这里退而求其次：用每个token的KL作为reward，防止policy model过度偏离reference model
+        # 稳定性：避免跨度过大
+        # 效率：降低计算成本，适合大规模训练
+        # 控制性：通过 kl_ctl 调整generated text的保守性与创造性
+        # 泛化性：避免过拟合，提高模型在多样化输入上的表现
+        # 稀疏奖励支持：为非最后一个 token 提供连续奖励信号，弥补序列级奖励的稀疏性
     batch_size = r.size(0)
     for j in range(batch_size):
         rewards[j, :ends[j]][-1] += reward_clip[j, 0]
@@ -266,7 +275,8 @@ def generate_experiences(samples_list):
             seq_texts = actor_tokenizer.batch_decode(seqs, skip_special_tokens=True)
             # 计算奖励模型的奖励值
             reward_model_inputs = reward_tokenizer(seq_texts, return_tensors="pt", padding=True)
-            r = reward_model(**reward_model_inputs.to(device)).logits  # 奖励模型的输出，相当于生成最后一个token的奖励（结果奖励模型）
+            r = reward_model(
+                **reward_model_inputs.to(device)).logits  # r(batch_size, 1),即每个seq只有一个奖励值;也就是每个seq最后一个有效token的reward
             # 计算kl散度
             kl = compute_approx_kl(
                 action_log_probs,
