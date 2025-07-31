@@ -20,6 +20,7 @@
     * TD：只看当前token的奖励和下一token的价值(bellman方程)
       * 可能忽略整个序列的连贯性；
       * 不涉及未来多步的随机性，方差低；依赖不准确的 V(s) ，初期可能偏差大，收敛困难；
-    * GAE：结合整个seq的reward(policy model结束后才能评估整个seq的reward，计算量比TD大)，更准确地评估 token 对seq质量的贡献；
+    * GAE：结合整个seq的reward评估每个token的advantage，准确性更高！
+      * seq结束后，使用A(t) = R(t) + gam*V(t+1) - V(t) + gam*lam*A(t+1)公式**递归回溯，计算每个token的advantage和returns，信息量更大、更准确**；
       * 更接近真实回报，偏差低；涉及更多未来奖励的随机性，方差高！
       * lambda 控制了未来奖励的影响范围（lambda = 0 时退化为 TD(0)，lambda = 1 时接近蒙特卡洛）
