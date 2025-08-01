@@ -45,3 +45,4 @@ LLM various post-train solution attempts：sft、RL(GRPO\PPO\DPO)、test-time sc
 ![image.png](image.png)  
 -最后总结思路：RL提升了sampling efficiency，并未提升base model的其他能力；需要多和env交互才能带来新的reasoning pattern；
 ![img.jpg](img.jpg)
+8. RL是非常耗显存的，**显存占用 ≈ Actor模型 + Critic模型 + Reference模型 + (可选的Reward模型) + 各自的梯度gradient和优化器optimizer状态 + 经验数据池(Rollout Buffer)**
