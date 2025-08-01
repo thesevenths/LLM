@@ -23,4 +23,7 @@
     * GAE：结合整个seq的reward评估每个token的advantage，准确性更高！
       * seq结束后，使用A(t) = R(t) + gam*V(t+1) - V(t) + gam*lam*A(t+1)公式**递归回溯，计算每个token的advantage和returns（seq整体的reward存放在最后一个token，通过这种回溯让前面的每个token都按比例折算得到seq的reward），信息量更大、更准确**；
       * 更接近真实回报，偏差低；涉及更多未来奖励的随机性，方差高！
-      * lambda 控制了未来奖励的影响范围（lambda = 0 时退化为 TD(0)，lambda = 1 时接近蒙特卡洛）
+      * lambda 控制了未来奖励的影响范围（lambda = 0 时退化为 TD(0)，lambda = 1 时接近蒙特卡洛）  
+
+3、PPO显存消耗非常大，示意如下：绿色框是可训练的，蓝色框是冻结的  
+  ![img_3.png](img_3.png)
