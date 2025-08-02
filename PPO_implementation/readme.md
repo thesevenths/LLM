@@ -23,8 +23,8 @@
     * GAE：结合整个seq的reward评估每个token的advantage，准确性更高！
       * seq结束后，使用A(t) = R(t) + gam*V(t+1) - V(t) + gam*lam*A(t+1)公式**递归回溯，计算每个token的advantage和returns（seq整体的reward存放在最后一个token，通过这种平滑回溯让前面的每个token都按比例折算得到seq的reward），信息量更大、更准确；但方差大**；
       * lambda 控制了未来奖励的影响范围（lambda = 0 时退化为 TD(0)，lambda = 1 时接近蒙特卡洛）  
-      * GAE 通过**advantage结合多步TD误差，减少了偏差（相比单步 TD，如 TD(0)）；V(s) 作为基线，提供了当前状态的估计，降低方差；return结合了 GAE 的低偏差和V(s)的低方差特性，提供了稳定的训练目标**
-  * critical model收敛的业务解释： ![img_4.png](img_4.png)
+      * GAE 通过**advantage结合多步TD误差，减少了偏差（相比单步 TD，如 TD(0)）；V(s) 作为基线，提供了当前状态的估计，降低方差；return结合了 GAE 的低偏差和V(s)的低方差特性，提供了稳定的训练目标**  
+  * critical model收敛的业务解释：train初期，V(s)肯定不准，需要advantage辅助（**毕竟advantage是seq整体reward的折现，不需要预测的，就是准确的数值**）；后期V(s)收敛后对state的value的判断越来越准，就不需要advantage帮忙了！ ![img_4.png](img_4.png)
 
 3、PPO显存消耗非常大，示意如下：绿色框是可训练的，蓝色框是冻结的  
   ![img_3.png](img_3.png)
