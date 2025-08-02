@@ -176,6 +176,9 @@ def get_advantages_and_returns(
         advantages_reversed.append(lastgaelam) # response_length(batch_size,)
     # 每个seq 的每个 token 的 GAE advantage估计
     advantages = torch.stack(advantages_reversed[::-1], dim=1) # response_length 个 (batch_size,) 张量堆叠成形状为 (batch_size, response_length) 的张量
+    # advantage：seq整体的reward按照lamda折扣比例平滑向前回溯到每个token，减少了偏差（相比单步 TD，如 TD(0)），解决了sparse reward的问题，但方差可能较高
+    # values ： 作为基线，提供了当前状态的估计，降低方差
+    # return ：综合了 GAE 的低偏差和 V(s) 的低方差特性，提供了稳定的训练目标。
     returns = advantages + values  # 每个token都有return(batch_size, response_length)
     return advantages.detach(), returns
 
@@ -216,7 +219,7 @@ def generate_samples(prompts, model, max_length, max_new_tokens, n_samples_per_p
 
     return samples_list
 
-
+# seq整体的reward是r，代表seq的整体质量；怎么把这个整体质量反应到单个token了？先把整体reward放到最后一个token上
 def compute_rewards(kl, r, action_mask, kl_ctl, clip_reward_value):
     # 在每个 token 上施加一个负的punish，强度由 kl_ctl（KL 控制系数，默认 0.1）调节;kl(batch_size, num_actions)
     kl_divergence_estimate = -kl_ctl * kl
