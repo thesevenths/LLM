@@ -39,13 +39,13 @@ class VLM(PreTrainedModel):
         self.processor = AutoProcessor.from_pretrained(self.config.vision_model_path)
         self.llm_model = AutoModelForCausalLM.from_pretrained(self.config.llm_model_path)
         self.tokenizer = AutoTokenizer.from_pretrained(self.config.llm_model_path)
+        # vision model extension: fit for the llm model
         self.linear1 = nn.Linear(self.vision_model.config.vision_config.hidden_size*4, self.llm_model.config.hidden_size)
         self.linear2 = nn.Linear(self.llm_model.config.hidden_size, self.llm_model.config.hidden_size)
         if self.config.freeze_vision_model:
             for param in self.vision_model.parameters():
                 param.requires_grad = False
-        for param in self.llm_model.parameters():
-            
+        for param in self.llm_model.parameters(): # freeze llm model
             param.requires_grad = False
         
     def forward(self, input_ids, labels, pixel_values, attention_mask=None):
