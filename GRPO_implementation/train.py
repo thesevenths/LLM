@@ -313,7 +313,7 @@ class GRPOTrainer:
         coef_1 = torch.exp(
             action_log_probs - old_action_log_probs)  # 重要性采样 shape: [batch_size * num_generations, num_actions]
         coef_2 = torch.clamp(coef_1, 1 - self.args.clip_eps, 1 + self.args.clip_eps)
-        per_token_loss1 = coef_1 * advantages.unsqueeze(1)  # 一个序列中每个token的优势是一样的
+        per_token_loss1 = coef_1 * advantages.unsqueeze(1)  # 序列级别的 advantage 被均匀分配给该序列中的每一个 token，用来计算 token-level 的 surrogate loss;一个序列中每个token的优势是一样的
         per_token_loss2 = coef_2 * advantages.unsqueeze(1)
         per_token_loss = -torch.min(per_token_loss1, per_token_loss2)
         per_token_loss = per_token_loss * action_mask
