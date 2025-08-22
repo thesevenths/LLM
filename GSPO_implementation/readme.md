@@ -11,9 +11,10 @@
   在数学竞赛基准 AIME’24 上，GSPO 相比 GRPO 的模型表现提升约 15%；LiveCodeBench、CodeForces 上也分别有 22%、18% 左右提升。这说明 GSPO 在复杂推理任务上的鲁棒性更强、更能引导模型学习整体优化路径。
 * 两者最大的关键区别：importance ratio和clip的颗粒度
 
-![1755789732383](image/readme/1755789732383.png)  
+![1755789732383](image/readme/1755789732383.png)
 
-    这是用整个seq的likelihood经过长度归一化(几何平均)得到的。然后 GSPO 在seq级别进行裁剪与优化，这使得训练更加稳定、方差更低(用整个seq的ratio作为advantage的weight，比使用单个token的ratio更平滑、均匀！)
+    这是用整个seq的likelihood经过长度归一化(几何平均)得到的。然后 GSPO 在seq级别进行裁剪与优化，这使得训练更加稳定、方差更低(**用整个seq的ratio作为advantage的weight，比使用单个token的ratio更平滑、均匀，不会突然变得很大或很小**)！
+
 总结：
 
 ![1755789426008](image/readme/1755789426008.png)
