@@ -1,0 +1,430 @@
+from transformers import AutoModelForCausalLM, AutoModel, AutoModelForSequenceClassification, AutoTokenizer, \
+    PreTrainedModel
+from dataclasses import dataclass
+from typing import Optional, Union, Tuple
+import random
+import torch
+import torch.nn.functional as F
+import torch.nn as nn
+from torch.utils.data import Dataset, DataLoader
+from torch.utils.tensorboard import SummaryWriter
+from typing import Callable, Dict, List, Optional, Tuple, Union, Any
+from copy import deepcopy
+from datasets import load_dataset
+from reward_fun import *
+import os
+
+SYSTEM_PROMPT = """
+            ## OutputFormat
+            - <think>....</think> [digital number]
+            ## Constrain
+            - between the 2 <think> .... </think> label, show users your reasoning process, which indicate how to predict the final digital number
+            - after the </think> label is the final answer, which should be only one number , no other characters, so that i can easily extract the final digital answer
+        """
+
+
+class GSM8KDataset(Dataset):
+    def __init__(self, data_path, tokenizer):
+        self.tokenizer = tokenizer
+        data = load_dataset(data_path)
+        self.data = data['train']
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        sample = self.data[index]
+        answer = sample['answer_only']
+        prompt = sample['question']
+        return {'prompt': prompt, 'answer': answer}
+
+
+@dataclass
+class Samples:
+    prompt_response_ids: torch.Tensor
+    response_ids: torch.Tensor
+    prompt: Any
+    answer: Any
+    attention_mask: Optional[torch.LongTensor]
+    action_mask: Optional[torch.BoolTensor]
+    num_actions: Union[int, torch.Tensor]
+    response_length: int
+
+
+class GSPOArguments:
+    output_dir = './output'
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    lr = 0.000001
+    save_steps = 100
+    epoch = 3
+    num_generations = 4  # 组内样本数
+    max_prompt_length = 256  # 最大输入长度
+    max_generate_length = 256  # 最大输出长度
+    reward_weights: List[float] = None  # 奖励的权重（多个奖励函数）
+    beta = 0.0  # KL散度的系数，为0则忽略KL散度，即不使用参考模型
+    clip_eps = 0.2
+    gradient_accumulation_steps = 2  # 梯度累加
+    num_iterations = 1  # 采样一次样本训练模型轮数
+    batch_size = 1
+
+
+class GSPOTrainer:
+    def __init__(self,
+                 model=None,
+                 reward_funcs: Union[List[str], List[Callable]] = None,
+                 args=None,
+                 train_dataset: Optional[Union[Dataset]] = None,
+                 eval_dataset: Optional[Union[Dataset]] = None,
+                 tokenizer=None,
+                 reward_tokenizers=None):
+
+        self.args = args
+        # 加载模型
+        if isinstance(model, str):
+            model = AutoModelForCausalLM.from_pretrained(model)
+        self.model = model.to(self.args.device)
+
+        # 是否使用参考模型
+        self.ref_model = None
+        if self.args.beta != 0.0:
+            self.ref_model = deepcopy(model)
+            self.ref_model.eval()
+
+        if isinstance(tokenizer, str):
+            tokenizer = AutoTokenizer.from_pretrained(tokenizer)
+
+        self.tokenizer = self.get_tokenizer(tokenizer)
+
+        if isinstance(reward_funcs, str):
+            reward_funcs = [reward_funcs]
+
+        for i, reward_func in enumerate(reward_funcs):
+            # 如果奖励函数为字符串，表示使用的是奖励模型，则加载模型
+            if isinstance(reward_func, str):
+                reward_funcs[i] = AutoModelForSequenceClassification.from_pretrained(
+                    reward_func, num_labels=1).to(self.args.device)
+
+        self.reward_funcs = reward_funcs
+
+        if reward_tokenizers is None:
+            reward_tokenizers = [None] * len(reward_funcs)
+
+        elif isinstance(reward_tokenizers, str):
+            reward_tokenizers = [reward_tokenizers]
+
+        else:
+            if len(reward_tokenizers) != len(reward_funcs):
+                raise ValueError("Length of reward_tokenizers must be equal to the number of reward_funcs.")
+
+        for i, (reward_tokenizer, reward_func) in enumerate(zip(reward_tokenizers, reward_funcs)):
+            if isinstance(reward_func, PreTrainedModel):
+                if reward_tokenizer is None:
+                    reward_tokenizer = AutoTokenizer.from_pretrained(reward_func.config._name_or_path)
+                if reward_tokenizer.pad_token_id is None:
+                    reward_tokenizer.pad_token = reward_tokenizer.eos_token
+
+                reward_func.config.pad_token_id = reward_tokenizer.pad_token_id
+                reward_tokenizers[i] = reward_tokenizer
+        self.reward_tokenizers = reward_tokenizers
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.args.lr)
+        self.train_dataset = train_dataset
+        self.eval_dataset = eval_dataset
+
+        # 缓存已经生成的数据的一个批次的数据，可供模型多次训练迭代，无需重新生成
+        self.input_buffer = [None] * self.args.gradient_accumulation_steps
+
+        # 模型更新的次数
+        self.update_steps = 0
+
+    def get_tokenizer(self, tokenizer):
+        tokenizer.padding_side = "left"
+        return tokenizer
+
+    # 生成样本，以组为单位
+    def generate_samples(self, inputs):
+        samples_list = []
+        self.model.eval()
+        prompts = [prompt for prompt in inputs['prompt']]
+        answers = [None] * len(prompts)
+
+        if 'answer' in inputs:
+            answers = [answer for answer in inputs['answer']]
+
+        max_length = self.args.max_generate_length + self.args.max_prompt_length
+        for prompt, answer in zip(prompts, answers):
+            # 应用聊天模板，加入系统提示词
+            input_text = self.tokenizer.apply_chat_template(
+                [{"role": "system", 'content': SYSTEM_PROMPT}, {"role": "user", 'content': prompt}],
+                add_generation_prompt=True, tokenize=False)
+
+            # 生成一个group的输入数据
+            inputs = self.tokenizer([input_text] * self.args.num_generations, padding='max_length',
+                                    max_length=self.args.max_prompt_length, truncation=True, return_tensors='pt')
+            prompt_ids = inputs['input_ids']
+            with torch.no_grad():
+                prompt_response_ids = self.model.generate(**inputs.to(self.args.device),
+                                                          max_new_tokens=self.args.max_generate_length,
+                                                          temperature=0.9,
+                                                          top_p=1,
+                                                          top_k=50)
+
+            if prompt_response_ids.size(1) >= max_length:
+                prompt_response_ids = prompt_response_ids[:, :max_length]
+            else:
+                prompt_response_ids = torch.cat([prompt_response_ids, torch.full(
+                    (prompt_response_ids.size(0), max_length - prompt_response_ids.size(1)),
+                    fill_value=self.tokenizer.pad_token_id, device=prompt_response_ids.device)], dim=1)
+
+            attention_mask = (prompt_response_ids.ne(self.tokenizer.pad_token_id)).to(dtype=torch.long)
+            response_ids = prompt_response_ids[:, prompt_ids.size(1):] # 切分出generated部分
+            action_mask = ( # 去掉结束符、padding token，避免影响loss数值计算
+                    response_ids.ne(self.tokenizer.eos_token_id) & response_ids.ne(self.tokenizer.pad_token_id)).to(
+                dtype=torch.long)
+
+            # 存储的是一个group的数据
+            samples = Samples(
+                prompt_response_ids=prompt_response_ids,
+                response_ids=response_ids,
+                prompt=prompt,
+                answer=answer,
+                attention_mask=attention_mask,
+                action_mask=action_mask,
+                num_actions=action_mask.size(1), # response中去掉结束符、padding的长度，也就是有效长度
+                response_length=action_mask.float().sum(dim=-1)
+            )
+            samples_list.append(samples)
+
+        return samples_list
+
+    # 生成经验(优势、token的概率分布)
+    def generate_experiences(self, inputs):
+
+        self.model.eval()
+        samples_list = self.generate_samples(inputs)
+
+        batch_prompt_response_ids = []
+        batch_attention_mask = []
+        batch_action_mask = []
+        batch_advantages = []
+        batch_old_action_log_probs = []
+        batch_ref_action_log_probs = []
+
+        for samples in samples_list:
+            prompt_response_ids = samples.prompt_response_ids  # shape: (num_generations, seq_len)
+            response_ids = samples.response_ids  # shape: (num_generations, seq_len)
+            answer = samples.answer
+            attention_mask = samples.attention_mask  # shape: (num_generations, seq_len)
+            action_mask = samples.action_mask  # shape: (num_generations, seq_len)
+            num_actions = samples.num_actions
+            prompt = samples.prompt
+            batch_prompt_response_ids.append(prompt_response_ids)
+            batch_attention_mask.append(attention_mask)
+            batch_action_mask.append(action_mask)
+
+            with torch.no_grad():
+                # 计算策略模型输出token的概率
+                old_action_log_probs = self.get_action_log_probs(self.model, prompt_response_ids, attention_mask,
+                                                                 num_actions)
+                batch_old_action_log_probs.append(old_action_log_probs)
+
+                # 是否使用参考模型
+                if self.ref_model:
+                    # 计算参考模型输出token的概率
+                    ref_action_log_probs = self.get_action_log_probs(self.ref_model, prompt_response_ids,
+                                                                     attention_mask, num_actions)
+                    batch_ref_action_log_probs.append(ref_action_log_probs)
+
+                # 存储各个奖励函数在一个group内各个响应的奖励
+                rewards_per_func = torch.zeros(len(self.reward_funcs), self.args.num_generations,
+                                               device=self.args.device)
+
+                # 将输出转换成文本
+                response_texts = self.tokenizer.batch_decode(response_ids, skip_special_tokens=True)
+                prompt_texts = [prompt] * len(response_texts)
+                prompt_response_texts = [prompt + response for prompt, response in zip(prompt_texts, response_texts)]
+
+                for i, (reward_func, reward_tokenizer) in enumerate(
+                        zip(self.reward_funcs, self.reward_tokenizers)
+                ):
+                    if isinstance(reward_func, PreTrainedModel):
+                        with torch.inference_mode():
+                            reward_model_inputs = reward_tokenizer(prompt_response_texts, return_tensors="pt",
+                                                                   padding=True)
+                            rewards_per_func[i] = reward_func(
+                                **reward_model_inputs.to(self.args.device)).logits.squeeze(-1)
+
+                    else:
+                        answers = [answer] * len(prompt_texts)
+                        output_reward_func = reward_func(prompts=prompt_texts, responses=response_texts,
+                                                         answers=answers)
+                        output_reward_func = [reward if reward is not None else torch.nan for reward in
+                                              output_reward_func]
+                        rewards_per_func[i] = torch.tensor(output_reward_func, dtype=torch.float32,
+                                                           device=self.args.device)
+
+                # rewards_per_func: [num_funcs, num_generations]
+                if not self.args.reward_weights:
+                    self.args.reward_weights = [1.0] * len(self.reward_funcs)
+                if len(self.args.reward_weights) != len(self.reward_funcs):
+                    raise ValueError("The number of reward weights must be equal to the number of reward functions.")
+                # 乘以各个奖励函数的权重
+                rewards = rewards_per_func * torch.tensor(self.args.reward_weights, dtype=torch.float32,
+                                                          device=rewards_per_func.device).unsqueeze(1)
+
+                # rewards: [num_funcs, num_generations]
+                rewards = rewards.sum(dim=0)  # shape: [num_generations]
+                print(f'rewards: {rewards}')
+                mean_group_rewards = rewards.mean()
+                std_group_rewards = rewards.std()
+
+                # GSPO的优势是句子粒度的，而非token粒度的
+                advantages = (rewards - mean_group_rewards) / (std_group_rewards + 1e-8)  # shape: [num_generations]
+                batch_advantages.append(advantages)
+
+        return {
+            "prompt_response_ids": torch.cat(batch_prompt_response_ids, dim=0),
+            "attention_mask": torch.cat(batch_attention_mask, dim=0),
+            "action_mask": torch.cat(batch_action_mask, dim=0),
+            "old_action_log_probs": torch.cat(batch_old_action_log_probs, dim=0),
+            "ref_action_log_probs": torch.cat(batch_ref_action_log_probs, dim=0) if self.ref_model else None,
+            "advantages": torch.cat(batch_advantages, dim=0),
+        }
+
+    def compute_loss(self, model, inputs):
+        # 这个函数是GSPO的核心，计算损失函数
+        # GSPO与GRPO的本质区别在于优化粒度：GSPO使用序列级（sequence-level）的概率比和剪裁机制，
+        # 而GRPO使用token级。这使得GSPO的梯度更稳定，减少噪声，尤其适合长序列。
+        # 参考GSPO论文中的Equation (5) 和 (7)：
+        # - 序列级重要性比率 s_i(θ) = exp( (1/|y_i|) * sum_t log(π_θ(y_{i,t}) / π_old(y_{i,t})) )
+        # - 损失 = - mean( min( s_i * A_i, clip(s_i, 1-ε, 1+ε) * A_i ) )
+        # 梯度通过自动求导流动到每个token的log_prob，权重均匀（1/|y_i|）。
+
+        prompt_response_ids = inputs['prompt_response_ids']
+        attention_mask = inputs['attention_mask']
+        action_mask = inputs['action_mask']
+        num_actions = action_mask.size(1)  # seq length
+        action_log_probs = self.get_action_log_probs(model, prompt_response_ids, attention_mask, num_actions)
+
+        advantages = inputs['advantages']
+
+        old_action_log_probs = inputs[
+            'old_action_log_probs'] if self.args.num_iterations > 1 else action_log_probs.detach()
+
+        # 计算每个token的log ratio: log(π_θ / π_old) = action_log_probs - old_action_log_probs
+        per_token_log_ratio = action_log_probs - old_action_log_probs  # shape: [bs, seq_len]
+
+        # 计算序列级的平均log ratio: (sum per_token_log_ratio) / T, where T = action_mask.sum(1)
+        seq_lengths = action_mask.sum(dim=1).clamp(min=1)  # 有效序列长度，避免除零
+        # 这个是核心，也是GSPO和GRPO最大的区别；GSPO是用整个seq的概率做ratio，比较平滑，避免GRPO单个token的高方差、高波动
+        seq_log_ratio = (per_token_log_ratio * action_mask.float()).sum(dim=1) / seq_lengths  # shape: [bs]
+
+        # 序列级比率 s_i = exp(平均 log ratio)，相当于per-token比率的几何平均，减少数值爆炸风险
+        seq_ratio = seq_log_ratio.exp()  # shape: [bs]
+
+        # 序列级剪裁: clip(s_i, 1-ε, 1+ε)
+        clipped_ratio = torch.clamp(seq_ratio, 1 - self.args.clip_eps, 1 + self.args.clip_eps)  # shape: [bs]
+
+        # 计算代理目标: min(s_i * A_i, clipped * A_i)
+        sur1 = seq_ratio * advantages  # shape: [bs]
+        sur2 = clipped_ratio * advantages  # shape: [bs]
+        min_sur = torch.min(sur1, sur2)  # shape: [bs]
+
+        # 策略损失: - min_sur.mean()，因为要最大化代理目标
+        policy_loss = - min_sur  # shape: [bs]
+        loss = policy_loss.mean()  # 平均过所有响应
+
+        # 如果使用KL正则 (beta != 0)，添加KL损失
+        # GSPO中KL是可选的，论文中未提及，但代码保留兼容
+        # 计算序列级KL近似: 与GRPO类似，但序列级
+        if self.args.beta != 0.0:
+            ref_action_log_probs = inputs['ref_action_log_probs']
+            # log_ratio = log(π_ref / π_θ) = ref_log - action_log
+            per_token_log_ratio_kl = ref_action_log_probs - action_log_probs  # shape: [bs, seq_len]
+            seq_log_ratio_kl = (per_token_log_ratio_kl * action_mask.float()).sum(dim=1) / seq_lengths  # 平均
+            # k3 ≈ KL近似: exp(seq_log_ratio_kl) - 1 - seq_log_ratio_kl
+            k3 = seq_log_ratio_kl.exp() - 1 - seq_log_ratio_kl  # shape: [bs]
+            kl_loss = self.args.beta * k3.mean()
+            loss += kl_loss
+
+        # 注意: GSPO的这个实现确保梯度均匀分布到序列每个token，因为seq_ratio依赖于平均log_prob
+        # 与GRPO不同，GRPO的coef_1/2是per-token，导致噪声大；GSPO统一序列级，稳定性高
+
+        return loss
+
+    def get_action_log_probs(self, model, input_ids, attention_mask, num_actions):
+
+        # 对现存seq中的每个token计算logits，用于评估prob distribution，不再生成新的seq；model.generate才是生成新的seq
+        output = model(input_ids, attention_mask=attention_mask)
+        logits = output.logits
+        log_probs = F.log_softmax(logits[:, :-1, :], dim=-1)  # AR最后一个token不需要计算loss：；[batch_size, seq_len-1, vocab_size]
+        log_probs_labels = log_probs.gather(dim=-1, index=input_ids[:, 1:].unsqueeze(-1))  # AR第一个token不需要预测；[batch_size, seq_len-1]
+        action_log_probs = log_probs_labels.squeeze(-1)[:, -num_actions:] # 只取生成部分（response_ids）的概率，去掉提示部分（prompt_ids）
+        return action_log_probs
+
+    def train_step(self, model, inputs, optimizer, step):
+        model.train()
+        # scaler = torch.amp.GradScaler()
+        # with torch.amp.autocast(device_type='cuda'):
+        loss = self.compute_loss(model, inputs)
+        loss = loss / self.args.gradient_accumulation_steps
+        # loss = scaler.scale(loss)
+        loss.backward()
+        if (step + 1) % self.args.gradient_accumulation_steps == 0:
+            optimizer.step()
+            optimizer.zero_grad()
+            # scaler.unscale_(optimizer)
+            # scaler.step(optimizer)
+            # scaler.update()
+
+            writer.add_scalar("gspo_loss", loss.item(), self.update_steps)
+            print(f"step: {self.update_steps}/{self.global_steps}  gspo_loss: {loss.item():.8f}")
+        torch.cuda.empty_cache()
+
+    def train(self):
+        self.global_steps = self.args.num_iterations * self.args.epoch * len(self.train_dataset) // (
+                self.args.batch_size * self.args.gradient_accumulation_steps)
+        for _ in range(self.args.epoch):
+
+            dataloader = DataLoader(self.train_dataset, batch_size=self.args.batch_size, shuffle=True)
+            for idx, batch in enumerate(dataloader):
+
+                inputs = self.generate_experiences(batch)
+                self.input_buffer[idx % self.args.gradient_accumulation_steps] = inputs
+                if (idx + 1) % self.args.gradient_accumulation_steps == 0:
+
+                    for _ in range(self.args.num_iterations):
+                        for step, inputs in enumerate(self.input_buffer):
+                            self.train_step(self.model, inputs, self.optimizer, step)
+
+                        self.update_steps += 1
+                        if self.update_steps % self.args.save_steps == 0:
+                            self.model.save_pretrained(self.args.output_dir + f'/checkpoint_{self.update_steps}')
+                            self.tokenizer.save_pretrained(self.args.output_dir + f'/checkpoint_{self.update_steps}')
+
+                del inputs
+
+    def save_model(self):
+        self.model.save_pretrained(self.args.output_dir)
+        self.tokenizer.save_pretrained(self.args.output_dir)
+
+
+if __name__ == "__main__":
+    args = GSPOArguments()
+
+    writer = SummaryWriter('./runs')
+    # 策略模型
+    tokenizer = AutoTokenizer.from_pretrained('F:\model\Qwen-0.6B')
+    model = AutoModelForCausalLM.from_pretrained('F:\model\Qwen-0.6B')
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+
+    prompts_dataset = GSM8KDataset('F:\data\gsm8k', tokenizer)
+
+    trainer = GSPOTrainer(model=model,
+                          reward_funcs=[correctness_reward, digit_reward, hard_format_reward, mark_reward],
+                          args=args,
+                          train_dataset=prompts_dataset,
+                          tokenizer=tokenizer)
+    trainer.train()
+    trainer.save_model()
