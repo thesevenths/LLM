@@ -156,8 +156,8 @@ def compute_approx_kl(
 # A(T-1) = R(T-1) + gam*V(T) - V(T-1) + gam*lam*A(T) 知道A(T)可计算A(T-1) 依次类推
 # returns(t) = A(t) + V(t) = = R(t) + gam * (V(t+1) + lam * A(t+1))
 def get_advantages_and_returns(
-        values: torch.Tensor,
-        rewards: torch.Tensor,
+        values: torch.Tensor,  # critical model 给每个answer中token都计算
+        rewards: torch.Tensor,  # reward model给每个seq计算的，放在最后一个有效token；其他token简单粗暴用kl替代
         action_mask: torch.Tensor,
         gamma: float,
         lambd: float):
@@ -171,8 +171,9 @@ def get_advantages_and_returns(
 
     for t in reversed(range(response_length)):
         nextvalues = values[:, t + 1] if t < response_length - 1 else 0.0  # nextvalues(batch_size,)
+        # 整体reward存放在最后一个token，通过这种回溯让前面的每个token都按比例折算得到seq的reward
         delta = rewards[:, t] + gamma * nextvalues - values[:, t] # delta(batch_size,)
-        lastgaelam = delta + gamma * lambd * lastgaelam # lastgaelam(batch_size,) ; 整体reward存放在最后一个token，通过这种回溯让前面的每个token都按比例折算得到seq的reward
+        lastgaelam = delta + gamma * lambd * lastgaelam # lastgaelam(batch_size,) ;
         advantages_reversed.append(lastgaelam) # response_length(batch_size,)
     # 每个seq 的每个 token 的 GAE advantage估计
     advantages = torch.stack(advantages_reversed[::-1], dim=1) # response_length 个 (batch_size,) 张量堆叠成形状为 (batch_size, response_length) 的张量
