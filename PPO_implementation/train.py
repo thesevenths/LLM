@@ -157,6 +157,7 @@ def compute_approx_kl(
 # returns(t) = A(t) + V(t) = = R(t) + gam * (V(t+1) + lam * A(t+1))
 def get_advantages_and_returns(
         values: torch.Tensor,  # critical model 给每个answer中token都计算
+        # advantages从最后一个token回溯，按照比例折算，让前面每个token都按照一定比例得到整个seq的reward
         rewards: torch.Tensor,  # reward model给每个seq计算的，放在最后一个有效token；其他token简单粗暴用kl替代
         action_mask: torch.Tensor,
         gamma: float,
