@@ -139,7 +139,7 @@ class MoE(nn.Module):
         self.top_k = top_k
         # 路由器：决定每个 token 分配到哪些专家
         self.router = nn.Sequential(
-            nn.Linear(hidden_size, hidden_size // 4),  # 降维减少开销
+            nn.Linear(hidden_size, hidden_size // 4),  # 降维减少开销;聚焦于输入token的关键信息，帮助router更准确地判断哪些expert适合处理当前token
             nn.ReLU(),
             nn.Linear(hidden_size // 4, num_experts)   # 输出专家得分
         )
@@ -166,12 +166,12 @@ class MoE(nn.Module):
         """
         B, T, C = x.shape
         x_flat = x.view(-1, C)  # 展平为 (batch_size * seq_len, hidden_size)
-        gates = F.softmax(self.router(x_flat), dim=-1)  # 路由得分，(B*T, num_experts)
+        gates = F.softmax(self.router(x_flat), dim=-1)  # router得分，(B*T, num_experts)
         topk_gates, topk_idx = torch.topk(gates, self.top_k, dim=-1)  # 选择 top-k 专家
         topk_gates = F.softmax(topk_gates / self.top_k, dim=-1)  # 归一化 top-k 权重
 
         out = torch.zeros_like(x_flat)  # 初始化输出
-        # 共享专家的贡献
+        # 共享expert的贡献
         out += self.shared_expert(x_flat)
         # 稀疏专家的贡献：仅计算 top-k 专家
         for i in range(B * T):
