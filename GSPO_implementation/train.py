@@ -340,6 +340,7 @@ class GSPOTrainer:
             ref_action_log_probs = inputs['ref_action_log_probs']
             # log_ratio = log(π_ref / π_θ) = ref_log - action_log
             per_token_log_ratio_kl = ref_action_log_probs - action_log_probs  # shape: [bs, seq_len]
+            # 每个token的log_ratio求和然后平均，得到整个seq的log_ratio
             seq_log_ratio_kl = (per_token_log_ratio_kl * action_mask.float()).sum(dim=1) / seq_lengths  # 平均
             # k3 ≈ KL近似: exp(seq_log_ratio_kl) - 1 - seq_log_ratio_kl
             k3 = seq_log_ratio_kl.exp() - 1 - seq_log_ratio_kl  # shape: [bs]
