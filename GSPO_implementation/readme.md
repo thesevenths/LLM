@@ -38,3 +38,5 @@
 ![1755787181786](image/readme/1755787181786.png)
 
 直观理解：对于同一个prompt，会让policy model生成多个response，然后逐一用reward model打分，每个response计算这个group内相对的advantage，然后把整个**response的advantage平均分给该段里的每个 token(除以|yi|)来计算gridant**，并且用old/new policy生成该response的概率比值si(seta)用来校正！
+
+在 rollout 阶段，从old policy 采样 yi ，然后用new policy重计算 log-prob（cached KV 以加速）。这在 GSPO 中比 GRPO 更高效，因为避免 token-level 循环。
