@@ -39,3 +39,5 @@
 | **Per-Token RM**        | 直接rtr_t**r**t计算    | 高               | 中等     | Variance -15-30%         | 精确 alignment  |
 | **PAR Shaping**         | Sigmoid boundedrr**r** | 中等             | 低       | Win rate +5-10%          | 稳定训练        |
 | **GTPO/GRPO-S**         | Entropy 加权                 | 高               | 中等     | Mean32 +25-37%           | 长序列/推理任务 |
+
+第4中方式效果最好，原因很简单：***entropy高的都是“aha moment”顿悟的token，比如“wait”、“but”、“throught”、“again”等转折的token，给这类token高reward，本质是鼓励model多反思、多考虑不同的方案、思路***！
