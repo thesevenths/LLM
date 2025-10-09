@@ -128,14 +128,21 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss()
 
+    # === 新增：用于计算 grad_cosine_sim 的梯度缓冲区 ===
+    grad_buffer = []  # 存最近的梯度 (fc1.weight.grad)
+    buffer_size = 5
+
     history = {
         'train_loss': [], 'train_acc': [],
         'test_loss': [], 'test_acc': [],
-        'w_norm_fc1': [], 'delta_w_norm_fc1': [], 'grad_norm_fc1': [], 'cosine_fc1': []
+        'w_norm_fc1': [],
+        'delta_w_norm_fc1': [],
+        'grad_norm_fc1': [],
+        'grad_cosine_sim': [],      # ← 新增
+        'feature_diversity': [],    # ← 新增
     }
 
     prev_w_fc1 = None
-    prev_delta_fc1 = None
 
     t0 = time.time()
     for ep in range(1, epochs + 1):
@@ -147,39 +154,82 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
         history['test_loss'].append(vl)
         history['test_acc'].append(va)
 
-        # 记录 fc1 权重 norm
+        # --- 权重相关 ---
         w_fc1 = model.fc1.weight.detach().cpu().numpy()
         w_norm = np.linalg.norm(w_fc1)
         history['w_norm_fc1'].append(w_norm)
 
-        # 计算 delta & cosine
         if prev_w_fc1 is not None:
             delta = w_fc1 - prev_w_fc1
             delta_norm = np.linalg.norm(delta)
             history['delta_w_norm_fc1'].append(delta_norm)
-            if prev_delta_fc1 is not None:
-                cos_sim = np.dot(delta.flatten(), prev_delta_fc1.flatten()) / (
-                    (np.linalg.norm(delta) * np.linalg.norm(prev_delta_fc1)) + 1e-12
-                )
-            else:
-                cos_sim = 0.0
-            history['cosine_fc1'].append(cos_sim)
-            prev_delta_fc1 = delta.copy()
         else:
             history['delta_w_norm_fc1'].append(0.0)
-            history['cosine_fc1'].append(0.0)
-            prev_delta_fc1 = None
-
         prev_w_fc1 = w_fc1.copy()
 
-        # 梯度 norm
+        # --- 梯度相关 ---
         grad_norm = 0.0
+        current_grad = None
         if model.fc1.weight.grad is not None:
-            grad_norm = float(model.fc1.weight.grad.detach().cpu().norm().item())
+            g = model.fc1.weight.grad.detach().cpu().numpy()
+            current_grad = g.copy()
+            grad_norm = float(np.linalg.norm(g))
         history['grad_norm_fc1'].append(grad_norm)
 
+        # --- 梯度方向一致性 (grad_cosine_sim) ---
+        grad_cos_sim = 0.0
+        if current_grad is not None:
+            grad_buffer.append(current_grad.flatten())
+            if len(grad_buffer) > buffer_size:
+                grad_buffer.pop(0)
+            if len(grad_buffer) >= 2:
+                grads_mat = np.stack(grad_buffer)  # [T, D]
+                norms = np.linalg.norm(grads_mat, axis=1, keepdims=True) + 1e-12
+                cos_matrix = (grads_mat @ grads_mat.T) / (norms @ norms.T)
+                # 取上三角均值（不含对角）
+                triu_mask = np.triu(np.ones_like(cos_matrix), k=1).astype(bool)
+                grad_cos_sim = float(cos_matrix[triu_mask].mean())
+        history['grad_cosine_sim'].append(grad_cos_sim)
+
+        # --- 特征多样性 (feature_diversity) ---
+        # 用一个 batch 的隐藏层输出 h2 计算奇异值熵
+        feature_div = 0.0
+        try:
+            model.eval()
+            with torch.no_grad():
+                # 取一个 batch
+                x_batch, _ = next(iter(train_loader))
+                x_batch = x_batch.to(device)
+                a = x_batch[:, 0]
+                b = x_batch[:, 1]
+                ea = model.embed(a)
+                eb = model.embed(b)
+                h = torch.cat([ea, eb], dim=1)
+                h2 = model.relu(model.fc1(h))  # [B, hidden_dim]
+                h2_np = h2.cpu().numpy()
+                # SVD
+                U, S, Vt = np.linalg.svd(h2_np, full_matrices=False)
+                # 归一化奇异值
+                S_norm = S / (S.sum() + 1e-12)
+                # 熵
+                entropy = -np.sum(S_norm * np.log(S_norm + 1e-12))
+                feature_div = float(entropy)
+        except Exception as e:
+            feature_div = 0.0
+        history['feature_diversity'].append(feature_div)
+
+        # --- 打印全部指标 ---
         if ep % 100 == 0 or ep == 1:
-            print(f"Ep {ep}: train_acc={ta:.4f}, test_acc={va:.4f}, w_norm={w_norm:.3f}, grad_norm={grad_norm:.3f}, cos={history['cosine_fc1'][-1]:.3f}")
+            print(
+                f"Ep {ep:4d} | "
+                f"train_acc={ta:.4f}, test_acc={va:.4f} | "
+                f"train_loss={tl:.4f}, test_loss={vl:.4f} | "
+                f"w_norm={w_norm:.3f} | "
+                f"Δw_norm={history['delta_w_norm_fc1'][-1]:.3e} | "
+                f"grad_norm={grad_norm:.3f} | "
+                f"grad_cos_sim={grad_cos_sim:.3f} | "
+                f"feature_div={feature_div:.3f}"
+            )
 
     elapsed = time.time() - t0
     history['elapsed'] = elapsed
@@ -188,7 +238,7 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
     grok_pt = detect_grokking_point(history['test_acc'], threshold=0.9, min_epoch=10)
     print("Grokking point:", grok_pt)
 
-    # 保存
+    # --- 保存 ---
     model_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}.pt")
     torch.save(model.state_dict(), model_path)
     hist_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_hist.json")
@@ -196,40 +246,47 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
         json.dump(history, f, cls=NumpyEncoder)
     print("Saved history to", hist_path)
 
-    # 可视化
+    # --- 可视化（新增 feature_diversity 和 grad_cosine_sim）---
     epochs_range = list(range(1, epochs + 1))
-    fig, axs = plt.subplots(3, 2, figsize=(12, 10))
+    fig, axs = plt.subplots(3, 3, figsize=(15, 12))
 
-    axs[0,0].plot(epochs_range, history['train_acc'], label='train_acc')
-    axs[0,0].plot(epochs_range, history['test_acc'], label='test_acc')
+    axs[0,0].plot(epochs_range, history['train_acc'], label='train')
+    axs[0,0].plot(epochs_range, history['test_acc'], label='test')
     if grok_pt:
-        axs[0,0].axvline(grok_pt, color='red', linestyle='--', label='grok_pt')
-    axs[0,0].legend()
+        axs[0,0].axvline(grok_pt, color='red', linestyle='--', label='grok')
     axs[0,0].set_title('Accuracy')
+    axs[0,0].legend()
 
-    axs[0,1].plot(epochs_range, history['w_norm_fc1'], label='w_norm_fc1')
+    axs[0,1].plot(epochs_range, history['train_loss'], label='train')
+    axs[0,1].plot(epochs_range, history['test_loss'], label='test')
+    axs[0,1].set_title('Loss')
     axs[0,1].legend()
-    axs[0,1].set_title('Weight Norm (fc1)')
 
-    axs[1,0].plot(epochs_range, history['delta_w_norm_fc1'], label='delta_w_norm_fc1')
-    axs[1,0].plot(epochs_range, history['grad_norm_fc1'], label='grad_norm_fc1')
-    axs[1,0].legend()
-    axs[1,0].set_title('Δ Weight Norm & Grad Norm')
+    axs[0,2].plot(epochs_range, history['w_norm_fc1'], 'g-')
+    axs[0,2].set_title('Weight Norm (fc1)')
+
+    axs[1,0].plot(epochs_range, history['delta_w_norm_fc1'], 'r-', label='ΔW_norm')
+    axs[1,0].set_yscale('log')
+    axs[1,0].set_title('Δ Weight Norm (log)')
+
+    axs[1,1].plot(epochs_range, history['grad_norm_fc1'], 'm-', label='Grad Norm')
+    axs[1,1].set_title('Gradient Norm')
+
+    axs[1,2].plot(epochs_range, history['grad_cosine_sim'], 'c-')
+    axs[1,2].set_title('Grad Cosine Similarity')
+
+    axs[2,0].plot(epochs_range, history['feature_diversity'], 'y-')
+    axs[2,0].set_title('Feature Diversity (SVD Entropy)')
 
     gap = np.array(history['train_acc']) - np.array(history['test_acc'])
-    axs[1,1].plot(epochs_range, gap, label='train-test gap')
-    axs[1,1].legend()
-    axs[1,1].set_title('Generalization Gap')
+    axs[2,1].plot(epochs_range, gap, 'k-')
+    axs[2,1].set_title('Generalization Gap')
 
-    axs[2,0].plot(epochs_range, history['cosine_fc1'], label='cosine_fc1')
-    axs[2,0].legend()
-    axs[2,0].set_title('Cosine of Delta Direction Change')
-
-    axs[2,1].axis('off')
+    axs[2,2].axis('off')
 
     fig.tight_layout()
     fig_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_fig.png")
-    plt.savefig(fig_path)
+    plt.savefig(fig_path, dpi=150)
     print("Saved figure to", fig_path)
     plt.close()
 
@@ -245,7 +302,7 @@ if __name__ == '__main__':
         for lr in lrs:
             for wd in wds:
                 print("=== Running hd =", hd, "lr =", lr, "wd =", wd)
-                hist, grok_pt = train_grokking_full(m=97, hidden_dim=hd, epochs=500, lr=lr, weight_decay=wd, seed=0, mode='add')
+                hist, grok_pt = train_grokking_full(m=97, hidden_dim=hd, epochs=1000, lr=lr, weight_decay=wd, seed=0, mode='add')
                 key = f"m{97}_hd{hd}_lr{lr}_wd{wd}"
                 all_hist[key] = hist
                 grok_points[key] = grok_pt
