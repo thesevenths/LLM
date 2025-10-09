@@ -64,6 +64,17 @@ class ModularNet(nn.Module):
         out = self.fc2(h2)
         return out
 
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super().default(obj)
+
 def train_one_epoch(model, loader, optimizer, criterion):
     model.train()
     total = 0
@@ -182,7 +193,7 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
     torch.save(model.state_dict(), model_path)
     hist_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_hist.json")
     with open(hist_path, 'w') as f:
-        json.dump(history, f)
+        json.dump(history, f, cls=NumpyEncoder)
     print("Saved history to", hist_path)
 
     # 可视化
@@ -240,5 +251,5 @@ if __name__ == '__main__':
                 grok_points[key] = grok_pt
     all_path = os.path.join(script_dir, "grokking_all_full_hist.json")
     with open(all_path, 'w') as f:
-        json.dump({'hist': all_hist, 'grok_pt': grok_points}, f)
+        json.dump({'hist': all_hist, 'grok_pt': grok_points}, f, cls=NumpyEncoder)
     print("Saved all histories to", all_path)
