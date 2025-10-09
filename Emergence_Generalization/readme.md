@@ -1,4 +1,4 @@
-《Provable Scaling Laws of Feature Emergence from Learning Dynamics of Grokking》
+1、《Provable Scaling Laws of Feature Emergence from Learning Dynamics of Grokking》
 
 by https://www.yuandong-tian.com/
 
@@ -19,3 +19,14 @@ code: https://github.com/facebookresearch/luckmatters/tree/yuandong3/grokking
 | I    | Lazy Learning                | 顶层过拟合随机隐藏表示，模型表现为记忆                                                                                            | `ΔW1_norm ≈ 0`（相邻 epoch 隐藏层权重几乎不变）                                    |
 | II   | Independent Feature Learning | 因 weight decay，反向梯度$G_F$ 携带标签结构，<br />每个隐藏单元独立沿能量函数 $ E$ 的梯度上升，收敛到局部极大值（即涌现特征） | `grad_cosine_sim` 高（各神经元梯度方向一致）`weight_norm` 缓慢上升（特征被激活）   |
 | III  | Interactive Feature Learning | 隐藏单元开始协作，$G_F$ 聚焦于尚未学会的缺失特征，完成泛化                                                                      | `train_loss ≈ 0` 但 `grad_norm` 出现新峰值 `feature_diversity` 高（学到多种基） |
+
+
+2、部分运行结果出现grokking：
+
+![1760023383449](image/readme/1760023383449.png)
+
+![1760023292396](image/readme/1760023292396.png)
+
+![1760023324796](image/readme/1760023324796.png)
+
+![1760023272784](image/readme/1760023272784.png)
