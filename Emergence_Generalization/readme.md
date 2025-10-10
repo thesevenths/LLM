@@ -20,7 +20,6 @@ code: https://github.com/facebookresearch/luckmatters/tree/yuandong3/grokking
 | II   | Independent Feature Learning | 因 weight decay，反向梯度$G_F$ 携带标签结构，<br />每个隐藏单元独立沿能量函数 $ E$ 的梯度上升，收敛到局部极大值（即涌现特征） | `grad_cosine_sim` 高（各神经元梯度方向一致）`weight_norm` 缓慢上升（特征被激活）   |
 | III  | Interactive Feature Learning | 隐藏单元开始协作，$G_F$ 聚焦于尚未学会的缺失特征，完成泛化                                                                      | `train_loss ≈ 0` 但 `grad_norm` 出现新峰值 `feature_diversity` 高（学到多种基） |
 
-
 2、部分运行结果出现grokking：
 
 ![1760023383449](image/readme/1760023383449.png)
@@ -30,3 +29,12 @@ code: https://github.com/facebookresearch/luckmatters/tree/yuandong3/grokking
 ![1760023324796](image/readme/1760023324796.png)
 
 ![1760023272784](image/readme/1760023272784.png)
+
+3、部分结果解读：
+
+| Epoch    | 阶段判断               | 依据                                                                                                                                                               |
+| -------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1        | Stage I: Lazy          | `train_acc ≈ 0`，但 `w_norm=6.5` 已不小 → 可能 Lazy 阶段极短（因使用 Embedding + ReLU，初始化已有结构）                                                      |
+| 100      | Stage II → III 过渡   | `train_acc=1.0`（记忆完成），`test_acc=0.49` → 开始泛化；`w_norm` 快速上升（特征激活）；`Δw_norm` 较大（持续学习）                                       |
+| 300–400 | Stage III: Interactive | `test_acc` 从 0.58 → 0.99（**grokking 发生！**）；`w_norm` 开始下降（weight decay 压缩冗余特征）；`grad_cos_sim` 从负变正并上升（梯度从随机 → 协同） |
+| 500+     | 收敛                   | `test_acc=1.0`，`w_norm` 稳定在 ~27，`Δw_norm` 仍较大（因 weight decay 与梯度平衡）<br />feather_div缓慢下降，表明模型在 **剔除冗余、聚焦关键特征**   |

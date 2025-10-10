@@ -49,7 +49,8 @@ class ModularDataset(torch.utils.data.Dataset):
 class ModularNet(nn.Module):
     def __init__(self, m=97, hidden_dim=128):
         super().__init__()
-        self.embed = nn.Embedding(m, hidden_dim)
+        # 模仿 transformers 的 embedding 层
+        self.embed = nn.Embedding(m, hidden_dim) #直接查索引查表，不需要one-hot
         self.fc1 = nn.Linear(hidden_dim * 2, hidden_dim)
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(hidden_dim, m)
@@ -57,7 +58,7 @@ class ModularNet(nn.Module):
     def forward(self, x):
         a = x[:,0]
         b = x[:,1]
-        ea = self.embed(a)
+        ea = self.embed(a) # shape: (batch_size, hidden_dim), 每个输入数字转成hidden_dim
         eb = self.embed(b)
         h = torch.cat([ea, eb], dim=1)
         h2 = self.relu(self.fc1(h))
@@ -138,8 +139,8 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
         'w_norm_fc1': [],
         'delta_w_norm_fc1': [],
         'grad_norm_fc1': [],
-        'grad_cosine_sim': [],      # ← 新增
-        'feature_diversity': [],    # ← 新增
+        'grad_cosine_sim': [],      # 
+        'feature_diversity': [],    # hidden layer 特征多样性；奇异值接近（如 S ≈ [1,1,1,...]），说明表示均匀分布在多个方向上 → 高多样性 → 高熵
     }
 
     prev_w_fc1 = None
