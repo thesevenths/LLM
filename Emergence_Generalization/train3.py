@@ -217,23 +217,24 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
         current_grad = None
         if model.fc1.weight.grad is not None:
             g = model.fc1.weight.grad.detach().cpu().numpy()
-            current_grad = g.copy()
+            current_grad = g.copy() # shape: (hidden_dim, hidden_dim*2)
             grad_norm = float(np.linalg.norm(g))
         history['grad_norm_fc1'].append(grad_norm)
 
         # --- 梯度方向一致性 (grad_cosine_sim) ---
+        # 不同 epoch 之间梯度方向的一致性，反映训练动态是否稳定/趋同
         grad_cos_sim = 0.0
         if current_grad is not None:
             grad_buffer.append(current_grad.flatten())
             if len(grad_buffer) > buffer_size:
                 grad_buffer.pop(0)
             if len(grad_buffer) >= 2:
-                grads_mat = np.stack(grad_buffer)  # [T, D]
+                grads_mat = np.stack(grad_buffer)  # [T, D] T个历史向量的梯度
                 norms = np.linalg.norm(grads_mat, axis=1, keepdims=True) + 1e-12
-                cos_matrix = (grads_mat @ grads_mat.T) / (norms @ norms.T)
+                cos_matrix = (grads_mat @ grads_mat.T) / (norms @ norms.T) # cosin相似度矩阵 [T, T], 两两计算cosine相似度
                 # 取上三角均值（不含对角）
-                triu_mask = np.triu(np.ones_like(cos_matrix), k=1).astype(bool)
-                grad_cos_sim = float(cos_matrix[triu_mask].mean())
+                triu_mask = np.triu(np.ones_like(cos_matrix), k=1).astype(bool) #上三角矩阵掩码
+                grad_cos_sim = float(cos_matrix[triu_mask].mean()) #平均cosine相似度
         history['grad_cosine_sim'].append(grad_cos_sim)
 
         # --- 特征多样性 (feature_diversity) ---
