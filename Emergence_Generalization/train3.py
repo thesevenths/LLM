@@ -112,10 +112,54 @@ def eval_one_epoch(model, loader, criterion):
             correct += (pred == y).sum().item()
     return total_loss / total, correct / total
 
-def detect_grokking_point(test_acc_list, threshold=0.9, min_epoch=10):
-    for i in range(min_epoch, len(test_acc_list)):
-        if test_acc_list[i] >= threshold and test_acc_list[i-1] < threshold:
-            return i
+def detect_grokking_point(
+    test_acc_list,
+    threshold=0.9,
+    min_epoch=10,
+    consecutive_epochs=3,      # 要求连续 N 轮达标
+    smooth_window=None         # 滑动平均窗口大小（如 5），设为 None 则不平滑
+):
+    """
+    Detect the epoch at which grokking occurs.
+
+    Args:
+        test_acc_list (list of float): Test accuracy per epoch.
+        threshold (float): Accuracy threshold to consider as "generalized".
+        min_epoch (int): Ignore epochs before this (avoid early noise).
+        consecutive_epochs (int): Require this many consecutive epochs above threshold.
+        smooth_window (int or None): If not None, apply moving average smoothing.
+
+    Returns:
+        int or None: Epoch index (1-based in caller's context) where grokking starts,
+                     or None if not detected.
+    """
+    if len(test_acc_list) < min_epoch + consecutive_epochs:
+        return None
+
+    # 可选：滑动平均平滑
+    if smooth_window is not None and smooth_window > 1:
+        import numpy as np
+        acc = np.array(test_acc_list)
+        # 使用 'valid' 卷积实现滑动平均
+        smoothed = np.convolve(acc, np.ones(smooth_window) / smooth_window, mode='same')
+        # 边界用原始值填充（可选）
+        smoothed[:smooth_window//2] = acc[:smooth_window//2]
+        smoothed[-(smooth_window//2):] = acc[-(smooth_window//2):]
+        acc_to_use = smoothed.tolist()
+    else:
+        acc_to_use = test_acc_list
+
+    # 从 min_epoch 开始检查连续达标
+    for i in range(min_epoch, len(acc_to_use) - consecutive_epochs + 1):
+        # 检查从 i 开始的 consecutive_epochs 轮是否都 ≥ threshold
+        if all(acc_to_use[j] >= threshold for j in range(i, i + consecutive_epochs)):
+            # 确保前一轮（i-1）未达标（可选，保留跃升语义）
+            if i == 0 or acc_to_use[i - 1] < threshold:
+                return i  # 返回首次连续达标起始 epoch
+            else:
+                # 如果前一轮也达标，说明更早已 grok，继续向前找
+                continue
+
     return None
 
 def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=0.0, seed=0, mode='add'):
@@ -236,7 +280,13 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
     history['elapsed'] = elapsed
     print("Total elapsed:", elapsed)
 
-    grok_pt = detect_grokking_point(history['test_acc'], threshold=0.9, min_epoch=10)
+    # grok_pt = detect_grokking_point(history['test_acc'], threshold=0.9, min_epoch=10)
+    grok_pt = detect_grokking_point(
+        history['test_acc'],
+        threshold=0.95,
+        min_epoch=50,
+        consecutive_epochs=5   # 连续 5 轮 ≥95% 才算 grok，防止抖动、偶然达标
+)
     print("Grokking point:", grok_pt)
 
     # --- 保存 ---
