@@ -140,7 +140,7 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
         'delta_w_norm_fc1': [],
         'grad_norm_fc1': [],
         'grad_cosine_sim': [],      # 
-        'feature_diversity': [],    # hidden layer 特征多样性；奇异值接近（如 S ≈ [1,1,1,...]），说明表示均匀分布在多个方向上 → 高多样性 → 高熵
+        'feature_diversity': [],    # hidden layer 特征多样性；奇异值接近（如 S ≈ [1,1.1,0.99,...]），说明表示均匀分布在多个方向上 → high diverity → high entropy
     }
 
     prev_w_fc1 = None
