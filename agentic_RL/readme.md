@@ -1,0 +1,1 @@
+    通过让 LLM 生成特殊标签（`<think>`, `<search>`, `<information>`, `<answer>`），并用 RL（PPO 变体）优化生成policy，实现了 Agentic RL 的核心：agent通过多次试错、尝试，学习在合适时机进行think、tool call和最终的answer生成。reward fun 驱动模型学习结构化行为和正确性，PPO 确保policy逐步改进，最终**让model“自主”决定的action sequence。 Agentic RL 的本质：结合 LLM 和 RL，让agent自主学会plan和tool call的能力。**
