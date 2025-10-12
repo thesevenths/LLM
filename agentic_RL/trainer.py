@@ -1,20 +1,8 @@
 # trainer.py
 """
-    rollout 采样、策略优化、并行环境            action, act_id, content_id, log_prob = self.planner.decide(obs)
-            traj.planner_actions.append(action)
-            traj.contexts.append(obs.context)
-            
-            # 记录planner步骤
-            traj.planner_steps.append(PlannerStep(
-                act_id=act_id,
-                content_id=content_id,
-                old_logp=log_prob,
-                context_input_ids=self.planner.tokenizer.encode(obs.context)
-            ))
-            
-            # 记录生成的答案
-            if action.action_type == ActionType.ANSWER:
-                traj.generated_answers.append(action.content)
+    rollout 采样、策略优化、并行环境管理;
+"""
+
 import torch
 import torch.nn.functional as F
 from torch.optim import Adam
