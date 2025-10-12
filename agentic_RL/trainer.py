@@ -52,17 +52,27 @@ class Trainer:
                 context_input_ids=self.planner.tokenizer.encode(obs.context)
             ))
             
+            # 根据动作类型记录信息
+            if action.action_type == ActionType.THINK:
+                traj.think_texts.append(action.content)
+                print(f"记录思考: {action.content}")  # 调试输出
+            elif action.action_type == ActionType.ANSWER:
+                traj.generated_answers.append(action.content)
+                print(f"记录答案: {action.content}")  # 调试输出
+
             obs_next, r, done = env.step(action)
             # record local reward
             traj.local_rewards.append(r)
+            
             # if tool call, also record result
             if action.action_type == ActionType.TOOL:
                 # last tool call in memory
                 query, result = env.memory["tool_calls"][-1]
                 traj.tool_results.append((query, result))
-            if action.action_type == ActionType.THINK:
-                traj.think_texts.append(action.content)
+                print(f"记录工具调用结果: 查询={query}, 结果={result}")  # 调试输出
+            
             if done:
+                print(f"Episode 完成，最终答案: {traj.final_answer}")  # 调试输出
                 break
             obs = obs_next
         # final answer

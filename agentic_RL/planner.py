@@ -136,33 +136,36 @@ class PlannerPolicy(nn.Module):
             "think_logits": think_logits
         }
     
-    def get_log_prob(self, input_ids: torch.Tensor, action_type: str, content_id: int):
+    def get_log_prob(self, input_ids: torch.Tensor, action_type: int, content_id: int):
         """
         给定 context 的 input_ids、action_type 与 content_id，计算 log π(action_type, content_id | context)
+        
+        Args:
+            input_ids: 输入token IDs
+            action_type: 动作类型的ID (0:THINK, 1:TOOL, 2:ANSWER)
+            content_id: 内容的ID
         """
         out = self.forward(input_ids)
         action_logits = out["action_logits"]
         logp_action = F.log_softmax(action_logits, dim=-1)
-        # 映射 action_type 到 index
-        if action_type == ActionType.THINK:
-            act_idx = 0
-        elif action_type == ActionType.TOOL:
-            act_idx = 1
-        elif action_type == ActionType.ANSWER:
-            act_idx = 2
-        else:
-            raise ValueError("Unknown action_type")
-        logp = logp_action[:, act_idx]  # (batch,)
+        
+        # action_type直接作为索引使用
+        if not (0 <= action_type <= 2):
+            raise ValueError(f"Invalid action_type: {action_type}, must be 0, 1, or 2")
+            
+        logp = logp_action[:, action_type]  # (batch,)
         # 加上 content 子策略的 log prob
-        if action_type == ActionType.TOOL:
-            tool_logits = out["tool_logits"]
-            logp_content = F.log_softmax(tool_logits, dim=-1)
-            logp = logp + logp_content[:, content_id]
-        elif action_type == ActionType.THINK:
+        if action_type == 0:  # THINK
             think_logits = out["think_logits"]
             logp_content = F.log_softmax(think_logits, dim=-1)
             logp = logp + logp_content[:, content_id]
-        # ANSWER 的 content 部分若要生成，也类似处理
+        elif action_type == 1:  # TOOL
+            tool_logits = out["tool_logits"]
+            logp_content = F.log_softmax(tool_logits, dim=-1)
+            logp = logp + logp_content[:, content_id]
+        elif action_type == 2:  # ANSWER
+            # ANSWER的情况，我们不需要额外的content logprob
+            pass
         return logp  # 返回 tensor shape (batch,)
 
 
@@ -251,10 +254,10 @@ class Planner:
             action = Action(ActionType.TOOL, content)
             
         else:  # ANSWER
-            # 使用base_model生成答案
+            # 使用policy中的base_model生成答案
             try:
                 with torch.no_grad():
-                    generated_ids = self.base_model.generate(
+                    generated_ids = self.policy.base_model.generate(
                         input_ids,
                         max_new_tokens=50,
                         num_return_sequences=1,
@@ -262,6 +265,7 @@ class Planner:
                         top_p=0.9,
                     )
                     content = self.tokenizer.decode(generated_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
+                    print(f"\n成功生成答案: {content}")  # 调试输出
             except Exception as e:
                 print(f"生成答案时出错: {e}")
                 content = "<生成答案失败>"
