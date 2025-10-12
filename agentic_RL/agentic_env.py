@@ -30,16 +30,24 @@ class Observation:
         self.context = context
         self.memory = memory  # 可存历史工具调用、思考片段等
 
+class PlannerStep:
+    def __init__(self, act_id: int, content_id: int, old_logp: float, context_input_ids: List[int]):
+        self.act_id = act_id
+        self.content_id = content_id
+        self.old_logp = old_logp
+        self.context_input_ids = context_input_ids  # context at that step 的 input_ids snapshot
+
 class Trajectory:
-    """存储一次 rollout 的数据"""
     def __init__(self):
-        self.planner_actions: List[Action] = []
-        self.tool_results: List[Any] = []  # 每次 TOOL 对应的结果
-        self.think_texts: List[str] = []  # THINK 阶段的思考文本
-        self.final_answer: str = ""
-        self.reward: float = 0.0
-        self.local_rewards: List[float] = []  # 各 action / step 的局部 reward
-        self.contexts: List[str] = []  # 每步 context（可用于策略重演）
+        self.planner_steps: List[PlannerStep] = []
+        self.planner_actions = []  # 存储所有的action
+        self.contexts = []         # 存储每一步的context
+        self.tool_results = []     # 存储工具调用结果
+        self.think_texts = []      # 存储思考文本
+        self.generated_answers = [] # 存储模型生成的答案
+        self.final_answer = ""     # 最终答案
+        self.reward = 0.0         # 总奖励
+        self.local_rewards = []    # 每一步的局部奖励
 
 class BaseEnv(abc.ABC):
     @abc.abstractmethod

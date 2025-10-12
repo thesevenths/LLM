@@ -1,30 +1,47 @@
 # trainer.py
 """
-    rollout 采样、策略优化、并行环境管理;
-"""
-
+    rollout 采样、策略优化、并行环境            action, act_id, content_id, log_prob = self.planner.decide(obs)
+            traj.planner_actions.append(action)
+            traj.contexts.append(obs.context)
+            
+            # 记录planner步骤
+            traj.planner_steps.append(PlannerStep(
+                act_id=act_id,
+                content_id=content_id,
+                old_logp=log_prob,
+                context_input_ids=self.planner.tokenizer.encode(obs.context)
+            ))
+            
+            # 记录生成的答案
+            if action.action_type == ActionType.ANSWER:
+                traj.generated_answers.append(action.content)
 import torch
 import torch.nn.functional as F
 from torch.optim import Adam
 from typing import List
-from agentic_env import SearchEnv, Trajectory, Observation
+from agentic_env import SearchEnv, Trajectory, Observation, PlannerStep
 from planner import Planner
 from executor import Executor
 from verifier import Verifier
 from generator import Generator
 from agentic_env import ActionType
+from transformers import AutoTokenizer
 
 import multiprocessing as mp
 
 class Trainer:
-    def __init__(self, search_engine, model_name: str = "microsoft/DialoGPT-small", lr=3e-5):
+    def __init__(self, search_engine, model_name, lr=3e-5):
         self.search_engine = search_engine
-        self.planner = Planner(model_name)
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.planner = Planner(model_name, tokenizer)
         self.executor = Executor(search_engine)
         self.verifier = Verifier()
         self.generator = Generator()
 
-        self.optimizer = Adam(self.planner.model.parameters(), lr=lr)
+        # 设置优化器，使用torch.cuda.amp进行混合精度训练
+        self.optimizer = Adam(self.planner.policy.parameters(), lr=lr)
+        self.scaler = torch.cuda.amp.GradScaler()  # 用于混合精度训练
+        self.batch_accumulation = 4  # 梯度累积步数
         self.clip_epsilon = 0.2
         self.beta = 0.01
         self.target_kl = 0.02
@@ -36,9 +53,17 @@ class Trainer:
 
         traj = Trajectory()
         for step in range(max_steps):
-            action = self.planner.decide(obs)
+            action, act_id, content_id, log_prob = self.planner.decide(obs)
             traj.planner_actions.append(action)
             traj.contexts.append(obs.context)
+            # 记录planner步骤
+            traj.planner_steps.append(PlannerStep(
+                act_id=act_id,
+                content_id=content_id,
+                old_logp=log_prob,
+                context_input_ids=self.planner.tokenizer.encode(obs.context)
+            ))
+            
             obs_next, r, done = env.step(action)
             # record local reward
             traj.local_rewards.append(r)
@@ -63,43 +88,80 @@ class Trainer:
         adv = (rt - rt.mean()) / (rt.std() + 1e-8)
         return adv
 
-    def recompute_log_probs(self, traj: Trajectory) -> torch.Tensor:
-        """
-        用 planner 模型重新计算这条轨迹上每一步 action 的 log prob.
-        因为 planner 是一个语言模型 + sampling 决策策略，这里简化假设：
-        把 Planner.decide 的 prompt + 输出看作生成 token 的概率。
-        对真实项目，需要把 planner 的输出结构化为policy network来计算 log prob。
-        """
-        # 这里示例代码用最简化方法：不重算，返回 dummy
-        return torch.zeros(len(traj.planner_actions))
+    def recompute_log_probs(self, trajectories: List[Trajectory]) -> List[torch.Tensor]:
+        all_logps = []
+        for traj in trajectories:
+            logps = []
+            for step in traj.planner_steps:
+                # 重建 context 输入 ids
+                input_ids = torch.tensor(step.context_input_ids, dtype=torch.long).unsqueeze(0).to(self.planner.policy.device)
+                # 用策略网络重新计算 log prob
+                # step.act_id, step.content_id 是 trajectory 记录的
+                # 得到 logp_new
+                logp_new = self.planner.policy.get_log_prob(input_ids, step.act_id, step.content_id)
+                # 这里 logp_new 是 tensor shape (1,),我们要 scalar
+                logps.append(logp_new.squeeze(0))
+            if logps:
+                all_logps.append(torch.stack(logps))
+            else:
+                all_logps.append(torch.zeros(0, device=self.planner.policy.device))
+        return all_logps
 
     def update_policy(self, trajectories: List[Trajectory]):
         if not trajectories:
             return
-        rewards = [t.reward for t in trajectories]
-        advantages = self.compute_advantages(rewards)
+        rewards = [sum(traj.local_rewards) for traj in trajectories]
+        advantages = self.compute_advantages(rewards)  # tensor (batch,)
 
-        # 简化：旧 log probs placeholder
-        old_log_probs = [self.recompute_log_probs(t) for t in trajectories]
-
-        # 一个 epoch 的更新
+        old_logps_list = []
+        for traj in trajectories:
+            old_vals = torch.tensor([step.old_logp for step in traj.planner_steps], dtype=torch.float32,
+                                    device=self.planner.policy.device)
+            old_logps_list.append(old_vals)
+        
         for epoch in range(3):
+            new_logps_list = self.recompute_log_probs(trajectories)
             total_loss = 0.0
-            for i, traj in enumerate(trajectories):
-                # new log probs (dummy)
-                new_lp = self.recompute_log_probs(traj)
-                old_lp = old_log_probs[i]
-                # ratio
-                ratio = torch.exp(new_lp - old_lp)
-                adv = advantages[i]
-                # 假设这一条 trajectory 的各步等权
-                loss = -torch.min(ratio * adv, torch.clamp(ratio, 1 - self.clip_epsilon, 1 + self.clip_epsilon) * adv).mean()
-                total_loss += loss
-            total_loss = total_loss / len(trajectories)
             self.optimizer.zero_grad()
-            total_loss.backward()
-            torch.nn.utils.clip_grad_norm_(self.planner.model.parameters(), 1.0)
-            self.optimizer.step()
+            
+            # 将trajectories分成更小的批次以适应GPU内存
+            batch_size = max(1, len(trajectories) // self.batch_accumulation)
+            for batch_idx in range(0, len(trajectories), batch_size):
+                batch_end = min(batch_idx + batch_size, len(trajectories))
+                batch_trajectories = trajectories[batch_idx:batch_end]
+                
+                # 使用混合精度训练
+                with torch.cuda.amp.autocast():
+                    batch_loss = 0.0
+                    for i, traj in enumerate(batch_trajectories):
+                        old_lp = old_logps_list[batch_idx + i]
+                        new_lp = new_logps_list[batch_idx + i]
+                        if len(old_lp) == 0:
+                            continue
+                        # 逐步计算 ratio
+                        ratio = torch.exp(new_lp - old_lp)
+                        adv = advantages[batch_idx + i]
+                        # 这里我们把 adv 扩展到每一步
+                        adv_rep = adv.repeat(len(ratio))
+                        # PPO 裁剪 surrogate
+                        surr1 = ratio * adv_rep
+                        surr2 = torch.clamp(ratio, 1 - self.clip_epsilon, 1 + self.clip_epsilon) * adv_rep
+                        policy_loss = -torch.min(surr1, surr2).mean()
+                        batch_loss = batch_loss + policy_loss
+                    
+                    batch_loss = batch_loss / len(batch_trajectories)
+                    # 缩放损失以适应梯度累积
+                    batch_loss = batch_loss / self.batch_accumulation
+                    total_loss += batch_loss.item()
+                
+                # 反向传播
+                self.scaler.scale(batch_loss).backward()
+            
+            # 梯度裁剪并更新
+            self.scaler.unscale_(self.optimizer)
+            torch.nn.utils.clip_grad_norm_(self.planner.policy.parameters(), 1.0)
+            self.scaler.step(self.optimizer)
+            self.scaler.update()
 
     def train(self, queries: List[str], truths: List[str], epochs: int = 10, batch_size: int = 2):
         for ep in range(epochs):

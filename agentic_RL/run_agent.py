@@ -25,7 +25,7 @@ class SearchEngine:
 
 def main():
     se = SearchEngine()
-    trainer = Trainer(se, model_name="E:\\model\\DialoGPT-small", lr=1e-5)
+    trainer = Trainer(se, model_name="F:\\model\\Qwen-0.6B", lr=1e-5)
 
     # 准备训练数据
     queries = ["What is Python?", "Explain machine learning", "What is deep learning?"]
