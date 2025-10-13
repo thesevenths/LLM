@@ -104,7 +104,7 @@ class PlannerPolicy(nn.Module):
             with torch.no_grad():
                 generated_ids = self.base_model.generate(
                     input_ids,
-                    max_new_tokens=50,  # 生成最多50个新token
+                    max_new_tokens=150,  # 生成最多150个新token
                     num_return_sequences=1,
                     no_repeat_ngram_size=2,
                     temperature=0.7,

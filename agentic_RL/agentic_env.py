@@ -16,13 +16,14 @@ class ActionType:
 
 class Action:
     """高层行动决策（由 Planner 输出）"""
-    def __init__(self, action_type: str, content: str = ""):
+    def __init__(self, action_type: str, content: str, generated_content: str = None):
         """
         action_type: THINK / TOOL / ANSWER
         content: 对于 THINK，content 可以是 prompt 片段；对于 TOOL，可是工具名或参数；对于 ANSWER，是 final answer prompt
         """
         self.action_type = action_type
         self.content = content
+        self.generated_content = generated_content  # 新增属性
 
 class Observation:
     """给 Planner / Executor / Verifier 的输入观察上下文"""

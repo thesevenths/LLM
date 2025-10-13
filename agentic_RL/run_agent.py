@@ -5,7 +5,7 @@ from agentic_env import SearchEnv
 from transformers import AutoTokenizer
 import argparse
 
-# 一个简易的 “知识库 / 搜索引擎” 实现
+# 一个简易的 “知识库 / 搜索引擎” 实现；这里只是简单用字典模拟，做字符串匹配。严谨做法需要用embedding+向量数据库做sematic语义检索
 class SearchEngine:
     def __init__(self):
         self.kb = {
@@ -25,7 +25,7 @@ class SearchEngine:
 
 def main():
     se = SearchEngine()
-    trainer = Trainer(se, model_name="F:\\model\\Qwen-0.6B", lr=1e-5)
+    trainer = Trainer(se, model_name="E:\\model\\Qwen3-0.6B", lr=1e-5)
 
     # 准备训练数据
     queries = ["What is Python?", "Explain machine learning", "What is deep learning?"]
