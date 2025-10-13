@@ -295,12 +295,41 @@ class Planner:
                     else:
                         action = Action(ActionType.ANSWER, content_text, generated_content=new_text)
 
-                    # 对于 LM 路径，无法精确得到子策略的 log prob，这里用 action head 的近似值：
-                    out = self.policy(input_ids)
-                    action_logits = out['action_logits']
-                    logp_action = F.log_softmax(action_logits, dim=-1)
-                    logp_act = logp_action[:, act_id].item()
-                    total_logp = logp_act
+                    # 对于 LM 路径，尽可能精确计算生成序列的新token的对数概率：
+                    try:
+                        # gen_ids 包含 prompt + 生成tokens
+                        full_ids = gen_ids.to(self.device)
+                        input_len = input_ids.shape[1]
+                        full_len = full_ids.shape[1]
+                        if full_len <= input_len:
+                            # 没有生成新token，退回到 action head 近似
+                            out = self.policy(input_ids)
+                            action_logits = out['action_logits']
+                            logp_action = F.log_softmax(action_logits, dim=-1)
+                            total_logp = logp_action[:, act_id].item()
+                        else:
+                            # 计算新生成token在模型下的实际对数概率
+                            # 令 inp = full_ids[:, :-1], tgt = full_ids[:, 1:]
+                            inp = full_ids[:, :-1]
+                            tgt = full_ids[:, 1:]
+                            with torch.no_grad():
+                                outs2 = self.policy.base_model(inp)
+                            logits2 = outs2.logits  # shape (1, seq_len-1, vocab_size)
+                            logp2 = F.log_softmax(logits2, dim=-1)
+                            # 生成token对应的tgt索引从 input_len 到 full_len-1 -> 在tgt上的索引为 input_len-1 .. full_len-2
+                            start_idx = input_len - 1
+                            end_idx = full_len - 2
+                            total = 0.0
+                            for idx in range(start_idx, end_idx + 1):
+                                tok = tgt[0, idx].item()
+                                total += logp2[0, idx, tok].item()
+                            total_logp = total
+                    except Exception:
+                        # 如果计算失败，退回近似
+                        out = self.policy(input_ids)
+                        action_logits = out['action_logits']
+                        logp_action = F.log_softmax(action_logits, dim=-1)
+                        total_logp = logp_action[:, act_id].item()
                     return action, act_id, content_id, total_logp
             except Exception as e:
                 print(f"LM生成并解析JSON失败，回退到head采样：{e}")
