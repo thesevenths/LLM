@@ -206,31 +206,112 @@ class Planner:
         return self.tool_vocab.get(tool_id, "搜索相关信息")
 
     def decide(self, obs: Observation):
+        # 将 obs.context 编为 token ids
+        input_ids = self.tokenizer.encode(obs.context, return_tensors="pt").to(self.device)
+
+        # 如果输入看起来像 messages JSON（由 Trainer._build_messages 生成），优先让 LM 直接生成 JSON 格式的 action
+        use_lm_path = False
         try:
-            # 把 obs.context 转为 token ids
-            input_ids = self.tokenizer.encode(obs.context, return_tensors="pt").to(self.device)
-            
-            # 打印调试信息
-            print(f"\n处理输入: {obs.context}")
-            
-            # 前向得到 logits
-            out = self.policy(input_ids)
-            action_logits = out["action_logits"]
-            action_probs = F.softmax(action_logits, dim=-1)
-            
-            # 打印动作概率
-            print(f"动作概率: THINK={action_probs[0][0]:.3f}, TOOL={action_probs[0][1]:.3f}, ANSWER={action_probs[0][2]:.3f}")
-            
-            # 先采样 action_type
-            dist = torch.distributions.Categorical(action_probs)
-            act_id = dist.sample().item()
-            logp_act = dist.log_prob(torch.tensor(act_id).to(self.device)).item()
-            
-            print(f"选择的动作ID: {act_id}")
-        except Exception as e:
-            print(f"决策过程出错: {e}")
-            # 返回一个默认的THINK动作
-            return Action(ActionType.THINK, "出错了，让我重新思考"), 0, 0, 0.0
+            import json
+            maybe = obs.context.strip()
+            # 简单检测：以 '[' 或 '{' 开头并包含 'system' 或 'role' 字样
+            if (maybe.startswith('{') or maybe.startswith('[')) and ('system' in maybe or 'role' in maybe):
+                use_lm_path = True
+        except Exception:
+            use_lm_path = False
+
+        # LM generation path: 让 base_model 生成一个严格的 JSON 输出，格式遵循 _build_messages 中的要求
+        if use_lm_path:
+            try:
+                with torch.no_grad():
+                    # 生成短JSON块，要求模型返回action json
+                    gen_ids = self.policy.base_model.generate(
+                        input_ids,
+                        max_new_tokens=128,
+                        num_return_sequences=1,
+                        temperature=0.2,
+                        top_p=0.9,
+                        do_sample=True,
+                    )
+                gen_text = self.tokenizer.decode(gen_ids[0], skip_special_tokens=True)
+                # 只取新生成部分
+                orig = self.tokenizer.decode(input_ids[0], skip_special_tokens=True)
+                new_text = gen_text[len(orig):].strip()
+                # 尝试从 new_text 中提取 JSON 对象
+                parsed_action = None
+                try:
+                    import re
+                    import json
+                    m = re.search(r"\{.*\}", new_text, re.S)
+                    if m:
+                        parsed_action = json.loads(m.group(0))
+                except Exception:
+                    parsed_action = None
+
+                if parsed_action is not None:
+                    # 解析 JSON，期望字段 action (THINK/TOOL/ANSWER 或数字)，content 列表
+                    a = parsed_action.get('action')
+                    content_list = parsed_action.get('content') or parsed_action.get('contents') or []
+                    # 解析动作id
+                    if isinstance(a, str):
+                        a_up = a.strip().upper()
+                        if a_up == 'THINK':
+                            act_id = 0
+                        elif a_up == 'TOOL':
+                            act_id = 1
+                        elif a_up == 'ANSWER':
+                            act_id = 2
+                        else:
+                            # 可能是数字字符串
+                            try:
+                                act_id = int(a) - 1
+                            except Exception:
+                                act_id = 2
+                    else:
+                        try:
+                            act_id = int(a) - 1
+                        except Exception:
+                            act_id = 2
+
+                    # 取第一个 content dict
+                    content_id = 0
+                    content_text = ''
+                    if isinstance(content_list, list) and len(content_list) > 0 and isinstance(content_list[0], dict):
+                        cdict = content_list[0]
+                        # 优先取 answer, tool, think
+                        content_text = cdict.get('answer') or cdict.get('tool') or cdict.get('think') or ''
+                    else:
+                        # 如果 content_list 是字符串或直接文本
+                        if isinstance(content_list, str):
+                            content_text = content_list
+                        elif isinstance(content_list, list) and len(content_list) > 0:
+                            content_text = str(content_list[0])
+
+                    # 构造 Action，记录 generated_content
+                    if act_id == 0:
+                        action = Action(ActionType.THINK, content_text, generated_content=new_text)
+                    elif act_id == 1:
+                        action = Action(ActionType.TOOL, content_text, generated_content=new_text)
+                    else:
+                        action = Action(ActionType.ANSWER, content_text, generated_content=new_text)
+
+                    # 对于 LM 路径，无法精确得到子策略的 log prob，这里用 action head 的近似值：
+                    out = self.policy(input_ids)
+                    action_logits = out['action_logits']
+                    logp_action = F.log_softmax(action_logits, dim=-1)
+                    logp_act = logp_action[:, act_id].item()
+                    total_logp = logp_act
+                    return action, act_id, content_id, total_logp
+            except Exception as e:
+                print(f"LM生成并解析JSON失败，回退到head采样：{e}")
+
+        # fallback: policy head sampling (原有逻辑)
+        out = self.policy(input_ids)
+        action_logits = out["action_logits"]
+        action_probs = F.softmax(action_logits, dim=-1)
+        dist = torch.distributions.Categorical(action_probs)
+        act_id = dist.sample().item()
+        logp_act = dist.log_prob(torch.tensor(act_id).to(self.device)).item()
 
         # 初始化content_id为None
         content_id = None

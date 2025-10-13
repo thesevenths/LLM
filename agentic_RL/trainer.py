@@ -219,10 +219,24 @@ class Trainer:
         system 位于前，user 在后
         """
         system_content = f"""
-            you are an agentic assisstance; 
-            you need to answer the question based on your knowledge and tools; 
-            if you need more information, you can think \ tool \ answer in multiple steps; 
-            finally, provide a concise and accurate answer.
+            - you are an agentic assistance, you need to answer the question based on your knowledge and tools; 
+            - you know exactly how to plan 、execute and when to finish;
+                - for simple questions, you can answer directly;
+                - for complex questions, you can think \ tool \ answer in multiple steps;
+            - your answer should be strictly in the following json format with keys: 
+                {
+                    {
+                        "action": "...",  # 1:THINK / 2:TOOL / 3:ANSWER
+                        "content":[
+                            {
+                                "think": "...", # if action is THINK, provide your reasoning here
+                                "tool": "...",  # if action is TOOL, tool can be   1:search local knowledge base;  2:search web  3: None
+                                "answer": "..." # if action is ANSWER, provide the final answer here
+                            }
+                        ]
+                    }
+                };
+            - finally, provide a concise and accurate answer.
         """
         return [
             {"role": "system", "content": system_content},
