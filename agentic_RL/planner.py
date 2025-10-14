@@ -104,7 +104,7 @@ class PlannerPolicy(nn.Module):
             with torch.no_grad():
                 generated_ids = self.base_model.generate(
                     input_ids,
-                    max_new_tokens=150,  # 生成最多150个新token
+                    max_new_tokens=150, 
                     num_return_sequences=1,
                     no_repeat_ngram_size=2,
                     temperature=0.7,
@@ -204,7 +204,8 @@ class Planner:
     def id_to_tool_query(self, tool_id: int) -> str:
         """将工具ID转换为具体的查询文本"""
         return self.tool_vocab.get(tool_id, "搜索相关信息")
-
+    
+    # todo : if multi-step is tool or think, should iterate to get multiple content ids until answer, then return a list of content ids in trajectory
     def decide(self, obs: Observation):
         # 将 obs.context 编为 token ids
         input_ids = self.tokenizer.encode(obs.context, return_tensors="pt").to(self.device)
@@ -334,7 +335,7 @@ class Planner:
             except Exception as e:
                 print(f"LM生成并解析JSON失败，回退到head采样：{e}")
 
-        # fallback: policy head sampling (原有逻辑)
+        # fallback: policy head sampling 
         out = self.policy(input_ids)
         action_logits = out["action_logits"]
         action_probs = F.softmax(action_logits, dim=-1)
@@ -369,7 +370,7 @@ class Planner:
                 with torch.no_grad():
                     generated_ids = self.policy.base_model.generate(
                         input_ids,
-                        max_new_tokens=50,
+                        max_new_tokens=150,
                         num_return_sequences=1,
                         temperature=0.7,
                         top_p=0.9,

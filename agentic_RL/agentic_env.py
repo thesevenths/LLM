@@ -112,7 +112,8 @@ class SearchEnv(BaseEnv):
             # final reward: correctness check
             # ground_truth should be stored in memory or env
             gt = self.memory.get("ground_truth", "")
-            if gt and answer.strip() == gt.strip():
+            # todo: sematic match by another LLM, not just exact charactor match
+            if gt and answer.strip() == gt.strip(): 
                 return Observation(self.context, self.memory), 2.0, True
             else:
                 return Observation(self.context, self.memory), 0.0, True

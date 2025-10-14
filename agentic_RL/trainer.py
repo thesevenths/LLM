@@ -1,6 +1,6 @@
 # trainer.py
 """
-    rollout 采样、策略优化、并行环境管理;
+    rollout sampling、policy update、env management;
 """
 
 import torch
@@ -44,7 +44,6 @@ class Trainer:
         env.memory["ground_truth"] = ground_truth
 
         traj = Trajectory()
-        generated_content = None  # 用于存储模型生成的内容
         
         for step in range(max_steps):
             # 获取模型生成的内容和动作决策
@@ -215,29 +214,38 @@ class Trainer:
 
     def _build_messages(self, q: str) -> list:
         """
-        构建符合 OpenAI-style 的 messages 列表：
-        system 位于前，user 在后
+        构建 messages 列表：
+        # todo: other tools like calculator, shell execute, file read/write, database read/write etc;
         """
-        system_content = f"""
-            - you are an agentic assistance, you need to answer the question based on your knowledge and tools; 
-            - you know exactly how to plan 、execute and when to finish;
-                - for simple questions, you can answer directly;
-                - for complex questions, you can think \ tool \ answer in multiple steps;
-            - your answer should be strictly in the following json format with keys: 
-                {
-                    {
-                        "action": "...",  # 1:THINK / 2:TOOL / 3:ANSWER
-                        "content":[
-                            {
-                                "think": "...", # if action is THINK, provide your reasoning here
-                                "tool": "...",  # if action is TOOL, tool can be   1:search local knowledge base;  2:search web  3: None
-                                "answer": "..." # if action is ANSWER, provide the final answer here
-                            }
-                        ]
-                    }
-                };
-            - finally, provide a concise and accurate answer.
-        """
+        system_content = (
+            "You are an agentic assistant that answers questions using your knowledge and available tools. "
+            "Follow these rules strictly:\n\n"
+            
+            "1. For simple questions, answer directly.\n"
+            "2. For complex questions, your only allowed actions are: THINK, TOOL, or ANSWER.\n\n"
+            
+            "- If your action is THINK:\n"
+            "    - Provide your reasoning about what to do next.\n"
+            "- If your action is TOOL:\n"
+            "    - Specify the tool name and parameters. Available tools are:\n"
+            "        • 'search local knowledge base'\n"
+            "        • 'search web'\n"
+            "- If your action is ANSWER:\n"
+            "    - Provide the final, concise, and accurate answer.\n\n"
+            
+            "Your output must be a valid JSON object with the following structure:\n"
+            "{\n"
+            "  \"action\": \"THINK\" | \"TOOL\" | \"ANSWER\",\n"
+            "  \"content\": {\n"
+            "    \"think\": \"your reasoning here\"   (only if action is THINK),\n"
+            "    \"tool\": \"search local knowledge base\" | \"search web\"   (only if action is TOOL),\n"
+            "    \"answer\": \"your final answer here\"   (only if action is ANSWER)\n"
+            "  }\n"
+            "}\n\n"
+            
+            "Important: Only include the relevant key (think/tool/answer) in the 'content' object based on the action. "
+            "Do not include the other two keys. Ensure the output is valid JSON and nothing else."
+        )
         return [
             {"role": "system", "content": system_content},
             {"role": "user", "content": q}
