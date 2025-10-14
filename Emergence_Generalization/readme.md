@@ -82,3 +82,5 @@ for x, y in loader:
 | 100      | Stage II → III 过渡   | `train_acc=1.0`（记忆完成），`test_acc=0.49` → 开始泛化；`w_norm` 快速上升（特征激活）；`Δw_norm` 较大（持续学习）                                       |
 | 300–400 | Stage III: Interactive | `test_acc` 从 0.58 → 0.99（**grokking 发生！**）；`w_norm` 开始下降（weight decay 压缩冗余特征）；`grad_cos_sim` 从负变正并上升（梯度从随机 → 协同） |
 | 500+     | 收敛                   | `test_acc=1.0`，`w_norm` 稳定在 ~27，`Δw_norm` 仍较大（因 weight decay 与梯度平衡）<br />feather_div缓慢下降，表明模型在 **剔除冗余、聚焦关键特征**   |
+
+5、emergence：部分token距离其他大分部token较远， 大家不在同一个分布上，产生了一些新的信息！但是这种信息还是基于已有预料产生的，遇到OOD的情况还是会抓瞎！
