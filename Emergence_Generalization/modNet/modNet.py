@@ -23,20 +23,30 @@ def set_seed(seed):
         torch.cuda.manual_seed_all(seed)
 
 class ModularDataset(torch.utils.data.Dataset):
-    def __init__(self, m=97, train=True, frac_train=0.5, mode='add'):
+    def __init__(self, m=97, train=True, frac_train=0.5, mode='add', pairs=None):
+        """
+        If `pairs` is provided it should already be the subset (list of (a,b))
+        for this dataset (i.e. already split). Otherwise the dataset will
+        construct and split pairs internally (legacy behavior).
+        """
         self.m = m
-        self.pairs = [(a, b) for a in range(m) for b in range(m)]
-        random.shuffle(self.pairs)
-        split = int(len(self.pairs) * frac_train)
-        if train:
-            self.pairs = self.pairs[:split]
+        # If caller provided a pre-sliced pairs list, use it directly.
+        if pairs is not None:
+            self.pairs = list(pairs)
         else:
-            self.pairs = self.pairs[split:]
+            self.pairs = [(a, b) for a in range(m) for b in range(m)]
+            random.shuffle(self.pairs)
+            split = int(len(self.pairs) * frac_train)
+            if train:
+                self.pairs = self.pairs[:split]
+            else:
+                self.pairs = self.pairs[split:]
+
         self.inputs = torch.tensor(self.pairs, dtype=torch.long)
         if mode == 'add':
-            self.labels = (self.inputs[:,0] + self.inputs[:,1]) % m
+            self.labels = (self.inputs[:, 0] + self.inputs[:, 1]) % m
         elif mode == 'mul':
-            self.labels = (self.inputs[:,0] * self.inputs[:,1]) % m
+            self.labels = (self.inputs[:, 0] * self.inputs[:, 1]) % m
         else:
             raise ValueError("Unknown mode")
 
@@ -164,8 +174,16 @@ def detect_grokking_point(
 
 def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=0.0, seed=0, mode='add'):
     set_seed(seed)
-    train_ds = ModularDataset(m=m, train=True, frac_train=0.5, mode=mode)
-    test_ds = ModularDataset(m=m, train=False, frac_train=0.5, mode=mode)
+
+    # Create all pairs once and split deterministically to avoid overlap/leakage.
+    all_pairs = [(a, b) for a in range(m) for b in range(m)]
+    random.shuffle(all_pairs)
+    split_idx = int(len(all_pairs) * 0.5)
+    train_pairs = all_pairs[:split_idx]
+    test_pairs = all_pairs[split_idx:]
+
+    train_ds = ModularDataset(m=m, mode=mode, pairs=train_pairs)
+    test_ds = ModularDataset(m=m, mode=mode, pairs=test_pairs)
     train_loader = torch.utils.data.DataLoader(train_ds, batch_size=128, shuffle=True)
     test_loader = torch.utils.data.DataLoader(test_ds, batch_size=128, shuffle=False)
 

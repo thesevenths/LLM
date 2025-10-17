@@ -83,4 +83,27 @@ for x, y in loader:
 | 300–400 | Stage III: Interactive | `test_acc` 从 0.58 → 0.99（**grokking 发生！**）；`w_norm` 开始下降（weight decay 压缩冗余特征）；`grad_cos_sim` 从负变正并上升（梯度从随机 → 协同） |
 | 500+     | 收敛                   | `test_acc=1.0`，`w_norm` 稳定在 ~27，`Δw_norm` 仍较大（因 weight decay 与梯度平衡）<br />feather_div缓慢下降，表明模型在 **剔除冗余、聚焦关键特征**   |
 
-5、emergence：部分token距离其他大分部token较远， 大家不在同一个分布上，产生了一些新的信息！但是这种信息还是基于已有预料产生的，遇到OOD的情况还是会抓瞎！
+
+
+5、emergence example：
+
+---
+
+Suppose we have an input (x \in \mathbb{R}^d) and a target label (y). The network has one hidden layer with two neurons whose weights are (w_1, w_2), and the output layer has weights (v_1, v_2). The model’s prediction is:
+
+![1760674284871](image/readme/1760674284871.png)
+
+We train using gradient descent plus weight decay.
+
+* **Phase I (Lazy / Memorization Phase):**
+
+  The **hidden weights (w_1, w_2) barely change**. The ***output weights (v_1, v_2) get trained so as to fit the training set***. The g**radients propagated back from the output layer to the hidden weights (w) are mostly noise**, with little structural signal. So **(w_1, w_2) stay roughly at their initial values**. In effect, the ***model “memorizes” the training set via the output layer*** on top of near-random hidden features.
+* As training continues, the output weights (v) converge toward some combination. **Because of weight decay, (v) cannot become arbitrarily large** and must balance fitting accuracy vs regularization***. This constraint causes the updates of (v) to start inducing a mild structured signal in the backpropagated gradient to (w).*** In particular, the gradient component on each (w_j) is no longer purely noise; it begins to carry correlation with (y). At this point, (w_1) and (w_2) each receive a signal that can help them improve their predictive alignment with the label (y).
+* **Phase II (Independent Feature Learning):**
+
+  Each (w_j) separately “climbs” along the gradient direction of an energy function (E(w_j)), meaning that** *each hidden neuron independently learns a feature that is useful relative to the label (y)***. This process can be slow; only after sufficient training will these features become clear and meaningful.
+* **Phase III (Interactive Feature Learning):**
+
+  Once (w_1) and (w_2) each have “signal directions,” interactions between them may emerge. If the two hidden weights are too similar, the feedback mechanism might push them to diverge to avoid redundancy. The mechanism (via backpropagation) begins focusing more on those parts of the structure not yet captured by either neuron, guiding further learning of missing features. Eventually, when the missing regularities are filled in, the output and hidden layers work synergistically, and the model’s generalization performance suddenly improves. That is the “grokking” moment.
+
+In this toy scenario, the *delay* in grokking arises because,** *initially, the hidden layer almost never learns useful features***. Only when the **output layer and weight decay jointly cause the backpropagated gradient** to** *carry informative signal does the hidden layer gradually learn general-purpose features; once these features are sufficiently integrated, the model “suddenly” generalizes.***
