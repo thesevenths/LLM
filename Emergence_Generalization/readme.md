@@ -83,7 +83,10 @@ for x, y in loader:
 | 300–400 | Stage III: Interactive | `test_acc` 从 0.58 → 0.99（**grokking 发生！**）；`w_norm` 开始下降（weight decay 压缩冗余特征）；`grad_cos_sim` 从负变正并上升（梯度从随机 → 协同） |
 | 500+     | 收敛                   | `test_acc=1.0`，`w_norm` 稳定在 ~27，`Δw_norm` 仍较大（因 weight decay 与梯度平衡）<br />feather_div缓慢下降，表明模型在 **剔除冗余、聚焦关键特征**   |
 
-compare： with or without weight decay, test acc is totally diffrent!
+compare： with or without weight decay, test acc is totally diffrent!  
+
+* no weight decay: test acc is around 0.5 at 100 epoch，no higher in later epoch
+* with weight decay = 0.0001：test acc raise up from 200 epoch， reached to 1 at 400 epoch, emergence happened!
 
 ![1760688103587](image/readme/1760688103587.png)
 
