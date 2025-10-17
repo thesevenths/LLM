@@ -85,8 +85,14 @@ for x, y in loader:
 
 compare： with or without weight decay, test acc is totally diffrent!  
 
-* no weight decay: test acc is around 0.5 at 100 epoch，no higher in later epoch
-* with weight decay = 0.0001：test acc raise up from 200 epoch， reached to 1 at 400 epoch, emergence happened!
+* no weight decay:
+  * test acc is around 0.5 at 100 epoch，no higher in later epoch
+  * test loss up to 25
+  * other indexs also not stable
+* with weight decay = 0.0001：
+  * test acc raise up from 200 epoch， reached to 1 at 400 epoch, emergence happened!
+  * test loss decrice to 0 at 400 epoch
+  * other indexs also stable
 
 ![1760688103587](image/readme/1760688103587.png)
 
