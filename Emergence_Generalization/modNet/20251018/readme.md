@@ -228,11 +228,12 @@ Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.0005_wd0.0_fig.png
 
 解读：
-模型在训练集上迅速拟合（train_acc 100%）但验证几乎无提升 → 与阶段 I 的典型表现吻合：记忆但不泛化。
-指标上：avg_grad_cos 非常低（≈0），说明梯度方向未稳定/结构化；rem_dirs 没下降（128→128），说明“特征方向覆盖”几乎无进展；feat_div 稳定、未见上升然后下降。
-虽然 ΔW_norm 初期较大（如 ~0.15）但随着训练而下降，说明虽然权重变化有，但并未进入真正的特征学习轨迹。
-模型未进入阶段 II 或 III，因此无 grokking点。
-这与理论非常吻合：尤其 无正则化（wd=0） 的情况下，根据 Li₂ 框架，“weight decay” 是启动特征学习的关键因素之一。该论文指出：当没有正则化，隐藏层难以跳出记忆‐拟合状态。
+
+* 模型在训练集上迅速拟合（train_acc 100%）但验证几乎无提升 → 与阶段 I 的典型表现吻合：记忆但不泛化。
+* 指标上：avg_grad_cos 非常低（≈0），说明梯度方向未稳定/结构化；rem_dirs 没下降（128→128），说明“特征方向覆盖”几乎无进展；feat_div 稳定、未见上升然后下降。
+
+* 虽然 ΔW_norm 初期较大（如 ~0.15）但随着训练而下降，说明虽然权重变化有，但并未进入真正的特征学习轨迹。模型未进入阶段 II 或 III，因此无 grokking点。
+* 这与理论非常吻合：尤其 无正则化（wd=0） 的情况下，根据 Li₂ 框架，“weight decay” 是启动特征学习的关键因素之一。该论文指出：当没有正则化，隐藏层难以跳出记忆‐拟合状态。
 
 === Running hd = 128 lr = 0.0005 wd = 0.0001
 Ep    1 | train_acc=0.0074, test_acc=0.0079 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=4.462 | rem_dirs=128 | node_sim=0.000 | stage=1
@@ -245,19 +246,19 @@ Ep  600 | train_acc=1.0000, test_acc=0.2797 | ΔW_norm=2.134e-01 | avgΔW=2.133e
 Ep  700 | train_acc=1.0000, test_acc=0.8561 | ΔW_norm=2.362e-01 | avgΔW=2.371e-01 | grad_cos=0.022 | avg_grad_cos=0.021 | feat_div=4.302 | rem_dirs=128 | node_sim=-0.005 | stage=1
 *** Enter Stage II at epoch 738
 *** Enter Stage III at epoch 739
-Ep  800 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=2.258e-01 | avgΔW=2.267e-01 | grad_cos=0.054 | avg_grad_cos=0.053 | feat_div=4.062 | rem_dirs=128 | node_sim=-0.003 | stage=3  
+Ep  800 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=2.258e-01 | avgΔW=2.267e-01 | grad_cos=0.054 | avg_grad_cos=0.053 | feat_div=4.062 | rem_dirs=128 | node_sim=-0.003 | stage=3
 Ep  900 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.994e-01 | avgΔW=2.050e-01 | grad_cos=0.129 | avg_grad_cos=0.135 | feat_div=3.896 | rem_dirs=128 | node_sim=-0.001 | stage=3
 Ep 1000 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.744e-01 | avgΔW=1.740e-01 | grad_cos=0.191 | avg_grad_cos=0.184 | feat_div=3.888 | rem_dirs=128 | node_sim=-0.004 | stage=3
 Total elapsed: 238.52488160133362
-Stage start epochs: {1: 1, 2: 738, 3: 739}
-Grokking point: 722
+Stage start epochs: {1: 1, 2: 738, 3: 739}  
+Grokking point: 722  
 
 
 解读：
-加入了微小的 weight_decay = 0.0001 后：训练集依然很快拟合，但验证开始慢慢提升，然后在 ~ep 400 处出现急跃（≈0.98 → 1.0） → 典型 grokking行为。
-阶段切换被触发（stage II 在 ep404，stage III 在 ep405）说明你的判定逻辑捕捉到了该点。
-指标变化支持：avg_grad_cos 在 ep300→400 从 ~0.005→0.024 上升；avgΔW 持续增加至 ~0.34；同时 feat_div 从 ~4.468下降至 ~4.212，说明隐藏表示结构化/聚焦；虽然 rem_dirs 仍未下降（可能因为候选方向设定的问题），但模型已进入泛化。
-这与理论吻合：weight decay 使隐藏层渐渐开始学习可泛化特征（进入阶段 II），随后节点间协作/交互（阶段 III）并快速泛化。
+
+* 加入了微小的 weight_decay = 0.0001 后：训练集依然很快拟合，但验证开始慢慢提升，然后在 ~ep 400 处出现急跃（≈0.98 → 1.0） → 典型 grokking行为。阶段切换被触发（stage II 在 ep404，stage III 在 ep405）说明判定逻辑捕捉到了该点。
+* 指标变化支持：avg_grad_cos 在 ep300→400 从 ~0.005→0.024 上升；avgΔW 持续增加至 ~0.34；同时 feat_div 从 ~4.468下降至 ~4.212，说明隐藏表示结构化/聚焦；虽然 rem_dirs 仍未下降（可能因为候选方向设定的问题），但模型已进入泛化。
+* 这与理论吻合：weight decay 使隐藏层渐渐开始学习可泛化特征（进入阶段 II），随后节点间协作/交互（阶段 III）并快速泛化。
 
 ---
 
