@@ -24,57 +24,45 @@ def set_seed(seed):
 
 class ModularDataset(torch.utils.data.Dataset):
     def __init__(self, m=97, train=True, frac_train=0.5, mode='add', pairs=None):
-        """
-        If `pairs` is provided it should already be the subset (list of (a,b))
-        for this dataset (i.e. already split). Otherwise the dataset will
-        construct and split pairs internally (legacy behavior).
-        """
         self.m = m
-        # If caller provided a pre-sliced pairs list, use it directly.
         if pairs is not None:
             self.pairs = list(pairs)
         else:
-            self.pairs = [(a, b) for a in range(m) for b in range(m)]
+            self.pairs = [(a,b) for a in range(m) for b in range(m)]
             random.shuffle(self.pairs)
             split = int(len(self.pairs) * frac_train)
             if train:
                 self.pairs = self.pairs[:split]
             else:
                 self.pairs = self.pairs[split:]
-
         self.inputs = torch.tensor(self.pairs, dtype=torch.long)
         if mode == 'add':
-            self.labels = (self.inputs[:, 0] + self.inputs[:, 1]) % m
+            self.labels = (self.inputs[:,0] + self.inputs[:,1]) % m
         elif mode == 'mul':
-            self.labels = (self.inputs[:, 0] * self.inputs[:, 1]) % m
+            self.labels = (self.inputs[:,0] * self.inputs[:,1]) % m
         else:
             raise ValueError("Unknown mode")
-
     def __len__(self):
         return len(self.inputs)
-
     def __getitem__(self, idx):
         return self.inputs[idx], self.labels[idx]
 
 class ModularNet(nn.Module):
     def __init__(self, m=97, hidden_dim=128):
         super().__init__()
-        # 模仿 transformers 的 embedding 层
-        self.embed = nn.Embedding(m, hidden_dim) #直接查索引查表，不需要one-hot
+        self.embed = nn.Embedding(m, hidden_dim)
         self.fc1 = nn.Linear(hidden_dim * 2, hidden_dim)
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(hidden_dim, m)
-
     def forward(self, x):
         a = x[:,0]
         b = x[:,1]
-        ea = self.embed(a) # shape: (batch_size, hidden_dim), 每个输入数字转成hidden_dim
+        ea = self.embed(a)
         eb = self.embed(b)
         h = torch.cat([ea, eb], dim=1)
         h2 = self.relu(self.fc1(h))
         out = self.fc2(h2)
         return out
-
 
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -91,11 +79,11 @@ def train_one_epoch(model, loader, optimizer, criterion):
     total = 0
     total_loss = 0.0
     correct = 0
-    for x, y in loader:
+    for x,y in loader:
         x = x.to(device)
         y = y.to(device)
         optimizer.zero_grad()
-        logits = model(x) #logits.shape：(batch_size, m)，这里比如logits.shape=(128, 97)
+        logits = model(x)
         loss = criterion(logits, y)
         loss.backward()
         optimizer.step()
@@ -103,7 +91,7 @@ def train_one_epoch(model, loader, optimizer, criterion):
         total_loss += loss.item() * x.size(0)
         pred = logits.argmax(dim=1)
         correct += (pred == y).sum().item()
-    return total_loss / total, correct / total
+    return total_loss/total, correct/total
 
 def eval_one_epoch(model, loader, criterion):
     model.eval()
@@ -111,7 +99,7 @@ def eval_one_epoch(model, loader, criterion):
     total_loss = 0.0
     correct = 0
     with torch.no_grad():
-        for x, y in loader:
+        for x,y in loader:
             x = x.to(device)
             y = y.to(device)
             logits = model(x)
@@ -120,95 +108,85 @@ def eval_one_epoch(model, loader, criterion):
             total_loss += loss.item() * x.size(0)
             pred = logits.argmax(dim=1)
             correct += (pred == y).sum().item()
-    return total_loss / total, correct / total
+    return total_loss/total, correct/total
 
 def detect_grokking_point(
     test_acc_list,
     threshold=0.9,
     min_epoch=10,
-    consecutive_epochs=3,      # 要求连续 N 轮达标
-    smooth_window=None         # 滑动平均窗口大小（如 5），设为 None 则不平滑
+    consecutive_epochs=3,
+    smooth_window=None
 ):
-    """
-    Detect the epoch at which grokking occurs.
-
-    Args:
-        test_acc_list (list of float): Test accuracy per epoch.
-        threshold (float): Accuracy threshold to consider as "generalized".
-        min_epoch (int): Ignore epochs before this (avoid early noise).
-        consecutive_epochs (int): Require this many consecutive epochs above threshold.
-        smooth_window (int or None): If not None, apply moving average smoothing.
-
-    Returns:
-        int or None: Epoch index (1-based in caller's context) where grokking starts,
-                     or None if not detected.
-    """
     if len(test_acc_list) < min_epoch + consecutive_epochs:
         return None
-
-    # 可选：滑动平均平滑
     if smooth_window is not None and smooth_window > 1:
-        import numpy as np
         acc = np.array(test_acc_list)
-        # 使用 'valid' 卷积实现滑动平均
-        smoothed = np.convolve(acc, np.ones(smooth_window) / smooth_window, mode='same')
-        # 边界用原始值填充（可选）
+        smoothed = np.convolve(acc, np.ones(smooth_window)/smooth_window, mode='same')
         smoothed[:smooth_window//2] = acc[:smooth_window//2]
         smoothed[-(smooth_window//2):] = acc[-(smooth_window//2):]
         acc_to_use = smoothed.tolist()
     else:
         acc_to_use = test_acc_list
-
-    # 从 min_epoch 开始检查连续达标
-    for i in range(min_epoch, len(acc_to_use) - consecutive_epochs + 1):
-        # 检查从 i 开始的 consecutive_epochs 轮是否都 ≥ threshold
-        if all(acc_to_use[j] >= threshold for j in range(i, i + consecutive_epochs)):
-            # 确保前一轮（i-1）未达标（可选，保留跃升语义）
-            if i == 0 or acc_to_use[i - 1] < threshold:
-                return i  # 返回首次连续达标起始 epoch
+    for i in range(min_epoch, len(acc_to_use)-consecutive_epochs+1):
+        if all(acc_to_use[j] >= threshold for j in range(i, i+consecutive_epochs)):
+            if i == 0 or acc_to_use[i-1] < threshold:
+                return i
             else:
-                # 如果前一轮也达标，说明更早已 grok，继续向前找
                 continue
-
     return None
 
 def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=0.0, seed=0, mode='add'):
     set_seed(seed)
-
-    # Create all pairs once and split deterministically to avoid overlap/leakage.
-    all_pairs = [(a, b) for a in range(m) for b in range(m)]
+    all_pairs = [(a,b) for a in range(m) for b in range(m)]
     random.shuffle(all_pairs)
     split_idx = int(len(all_pairs) * 0.5)
     train_pairs = all_pairs[:split_idx]
     test_pairs = all_pairs[split_idx:]
-
     train_ds = ModularDataset(m=m, mode=mode, pairs=train_pairs)
     test_ds = ModularDataset(m=m, mode=mode, pairs=test_pairs)
     train_loader = torch.utils.data.DataLoader(train_ds, batch_size=128, shuffle=True)
     test_loader = torch.utils.data.DataLoader(test_ds, batch_size=128, shuffle=False)
-
     model = ModularNet(m=m, hidden_dim=hidden_dim).to(device)
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss()
 
-    # === 新增：用于计算 grad_cosine_sim 的梯度缓冲区 ===
-    grad_buffer = []  # 存最近的梯度 (fc1.weight.grad)
+    # 阈值设定（改进版）
+    T1_delta_w = 5e-3                # 较低阈值
+    T1_grad_cos = 0.03               # 降低至 ~0.03
+    tau_cov = 0.6                    # 覆盖度阈值
+    thr_test_acc_for_stage3 = 0.95
+    min_epoch_for_stage3 = 50
+    consecutive_for_stage3 = 5
+    rem_dirs_threshold_for_stage3 = 5   # “剩余方向”低于这个视为特征基本覆盖
+
+    # 候选方向 U_np — 使用傅里叶基方向为例（两向量拼接）
+    K = hidden_dim
+    D = hidden_dim * 2
+    U_np = np.zeros((K, D), dtype=np.float32)
+    for k in range(K):
+        # 假设每个方向为 sin+cos 模型（简化示例）
+        vec = np.sin(2*np.pi * (k+1) * np.arange(D) / D) + np.cos(2*np.pi * (k+1) * np.arange(D) / D)
+        U_np[k] = vec / (np.linalg.norm(vec) + 1e-12)
+
+    grad_buffer = []
     buffer_size = 5
 
     history = {
         'train_loss': [], 'train_acc': [],
         'test_loss': [], 'test_acc': [],
-        'w_norm_fc1': [],
-        'delta_w_norm_fc1': [],
-        'grad_norm_fc1': [],
-        'grad_cosine_sim': [],      # 
-        'feature_diversity': [],    # hidden layer 特征多样性；奇异值接近（如 S ≈ [1,1.1,0.99,...]），说明表示均匀分布在多个方向上 → high diverity → high entropy
+        'w_norm_fc1': [], 'delta_w_norm_fc1': [],
+        'grad_norm_fc1': [], 'grad_cosine_sim': [],
+        'feature_diversity': [], 'stage': [],
+        'num_covered_dirs': [], 'num_remaining_dirs': [],
+        'node_similarity_mean': []    # 新增　节点间相似度监控
     }
-
     prev_w_fc1 = None
 
+    current_stage = 1
+    stage_start = {1: 1}
+
     t0 = time.time()
-    for ep in range(1, epochs + 1):
+    for ep in range(1, epochs+1):
         tl, ta = train_one_epoch(model, train_loader, optimizer, criterion)
         vl, va = eval_one_epoch(model, test_loader, criterion)
 
@@ -217,113 +195,142 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
         history['test_loss'].append(vl)
         history['test_acc'].append(va)
 
-        # --- 权重相关 ---
+        # 权重变化
         w_fc1 = model.fc1.weight.detach().cpu().numpy()
         w_norm = np.linalg.norm(w_fc1)
         history['w_norm_fc1'].append(w_norm)
-
         if prev_w_fc1 is not None:
             delta = w_fc1 - prev_w_fc1
             delta_norm = np.linalg.norm(delta)
-            history['delta_w_norm_fc1'].append(delta_norm)
         else:
-            history['delta_w_norm_fc1'].append(0.0)
+            delta_norm = 0.0
+        history['delta_w_norm_fc1'].append(delta_norm)
         prev_w_fc1 = w_fc1.copy()
 
-        # --- 梯度相关 ---
+        # 梯度相关
         grad_norm = 0.0
         current_grad = None
         if model.fc1.weight.grad is not None:
             g = model.fc1.weight.grad.detach().cpu().numpy()
-            current_grad = g.copy() # shape: (hidden_dim, hidden_dim*2)
+            current_grad = g.copy()
             grad_norm = float(np.linalg.norm(g))
         history['grad_norm_fc1'].append(grad_norm)
 
-        # --- 梯度方向一致性 (grad_cosine_sim) ---
-        # 不同 epoch 之间梯度方向的一致性，反映训练动态是否稳定/趋同
         grad_cos_sim = 0.0
         if current_grad is not None:
             grad_buffer.append(current_grad.flatten())
             if len(grad_buffer) > buffer_size:
                 grad_buffer.pop(0)
             if len(grad_buffer) >= 2:
-                grads_mat = np.stack(grad_buffer)  # [T, D] T个历史向量的梯度
+                grads_mat = np.stack(grad_buffer)
                 norms = np.linalg.norm(grads_mat, axis=1, keepdims=True) + 1e-12
-                cos_matrix = (grads_mat @ grads_mat.T) / (norms @ norms.T) # cosin相似度矩阵 [T, T], 两两计算cosine相似度
-                # 取上三角均值（不含对角）
-                triu_mask = np.triu(np.ones_like(cos_matrix), k=1).astype(bool) #上三角矩阵掩码
-                grad_cos_sim = float(cos_matrix[triu_mask].mean()) #平均cosine相似度
+                cos_matrix = (grads_mat @ grads_mat.T) / (norms @ norms.T)
+                triu_mask = np.triu(np.ones_like(cos_matrix), k=1).astype(bool)
+                grad_cos_sim = float(cos_matrix[triu_mask].mean())
         history['grad_cosine_sim'].append(grad_cos_sim)
 
-        # --- 特征多样性 (feature_diversity) ---
-        # 用一个 batch 的隐藏层输出 h2 计算奇异值熵
+        # 特征多样性
         feature_div = 0.0
         try:
             model.eval()
             with torch.no_grad():
-                # 取一个 batch
                 x_batch, _ = next(iter(train_loader))
                 x_batch = x_batch.to(device)
-                a = x_batch[:, 0]
-                b = x_batch[:, 1]
-                ea = model.embed(a)
-                eb = model.embed(b)
+                a = x_batch[:,0]; b = x_batch[:,1]
+                ea = model.embed(a); eb = model.embed(b)
                 h = torch.cat([ea, eb], dim=1)
-                h2 = model.relu(model.fc1(h))  # [B, hidden_dim]
+                h2 = model.relu(model.fc1(h))
                 h2_np = h2.cpu().numpy()
-                # SVD
-                U, S, Vt = np.linalg.svd(h2_np, full_matrices=False)
-                # 归一化奇异值
-                S_norm = S / (S.sum() + 1e-12)
-                # 熵
+                U_svd, S_svd, Vt_svd = np.linalg.svd(h2_np, full_matrices=False)
+                S_norm = S_svd / (S_svd.sum() + 1e-12)
                 entropy = -np.sum(S_norm * np.log(S_norm + 1e-12))
                 feature_div = float(entropy)
-        except Exception as e:
+        except Exception:
             feature_div = 0.0
         history['feature_diversity'].append(feature_div)
 
-        # --- 打印全部指标 ---
+        # 候选方向覆盖度监控
+        w_flat = w_fc1.reshape(w_fc1.shape[0], -1)  # (hidden_dim × D)
+        W_norms = np.linalg.norm(w_flat, axis=1, keepdims=True) + 1e-12
+        U_norms = np.linalg.norm(U_np, axis=1, keepdims=True) + 1e-12
+        cos_mat = (w_flat @ U_np.T) / (W_norms * U_norms.T)
+        max_cos_per_dir = cos_mat.max(axis=0)
+        covered = (max_cos_per_dir >= tau_cov)
+        num_covered = int(covered.sum())
+        num_remaining = int(K - num_covered)
+        history['num_covered_dirs'].append(num_covered)
+        history['num_remaining_dirs'].append(num_remaining)
+
+        # 隐藏节点间相似度监控（行与行的余弦平均）
+        W_norms_rows = np.linalg.norm(w_flat, axis=1, keepdims=True) + 1e-12
+        cos_node_mat = (w_flat @ w_flat.T) / (W_norms_rows * W_norms_rows.T)
+        # mask upper off‐diagonal
+        triu_mask2 = np.triu(np.ones_like(cos_node_mat), k=1).astype(bool)
+        if triu_mask2.any():
+            node_sim_mean = float(cos_node_mat[triu_mask2].mean())
+        else:
+            node_sim_mean = 0.0
+        history['node_similarity_mean'].append(node_sim_mean)
+
+        # 滑动平均（监控平滑指标）
+        if ep >= 10:
+            avg_delta_w = np.mean(history['delta_w_norm_fc1'][-10:])
+            avg_grad_cos = np.mean(history['grad_cosine_sim'][-10:])
+        else:
+            avg_delta_w = delta_norm
+            avg_grad_cos = grad_cos_sim
+
+        # 阶段判定逻辑
+        history['stage'].append(current_stage)
+        if current_stage == 1:
+            if (avg_delta_w > T1_delta_w) and (avg_grad_cos > T1_grad_cos):
+                current_stage = 2
+                stage_start[2] = ep
+                print(f"*** Enter Stage II at epoch {ep}")
+        elif current_stage == 2:
+            # 当 “测试准确率连续高” 或 “剩余方向数低” 之一满足时进入阶段 III
+            grok_pt = detect_grokking_point(history['test_acc'],
+                                            threshold=thr_test_acc_for_stage3,
+                                            min_epoch=0,
+                                            consecutive_epochs=consecutive_for_stage3)
+            if (grok_pt is not None and grok_pt <= ep) or (num_remaining <= rem_dirs_threshold_for_stage3):
+                current_stage = 3
+                stage_start[3] = ep
+                print(f"*** Enter Stage III at epoch {ep}")
+
         if ep % 100 == 0 or ep == 1:
-            print(
-                f"Ep {ep:4d} | "
-                f"train_acc={ta:.4f}, test_acc={va:.4f} | "
-                f"train_loss={tl:.4f}, test_loss={vl:.4f} | "
-                f"w_norm={w_norm:.3f} | "
-                f"Δw_norm={history['delta_w_norm_fc1'][-1]:.3e} | "
-                f"grad_norm={grad_norm:.3f} | "
-                f"grad_cos_sim={grad_cos_sim:.3f} | "
-                f"feature_div={feature_div:.3f}"
-            )
+            print(f"Ep {ep:4d} | train_acc={ta:.4f}, test_acc={va:.4f} | ΔW_norm={delta_norm:.3e} | "
+                  f"avgΔW={avg_delta_w:.3e} | grad_cos={grad_cos_sim:.3f} | avg_grad_cos={avg_grad_cos:.3f} | "
+                  f"feat_div={feature_div:.3f} | rem_dirs={num_remaining} | node_sim={node_sim_mean:.3f} | stage={current_stage}")
 
     elapsed = time.time() - t0
     history['elapsed'] = elapsed
     print("Total elapsed:", elapsed)
+    print("Stage start epochs:", stage_start)
 
-    # grok_pt = detect_grokking_point(history['test_acc'], threshold=0.9, min_epoch=10)
-    grok_pt = detect_grokking_point(
-        history['test_acc'],
-        threshold=0.95,
-        min_epoch=50,
-        consecutive_epochs=5   # 连续 5 轮 ≥95% 才算 grok，防止抖动、偶然达标
-)
+    grok_pt = detect_grokking_point(history['test_acc'],
+                                    threshold=thr_test_acc_for_stage3,
+                                    min_epoch=50,
+                                    consecutive_epochs=consecutive_for_stage3)
     print("Grokking point:", grok_pt)
 
-    # --- 保存 ---
-    model_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}.pt")
+    model_path = os.path.join(script_dir,
+        f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}.pt")
     torch.save(model.state_dict(), model_path)
-    hist_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_hist.json")
+    hist_path = os.path.join(script_dir,
+        f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_hist.json")
     with open(hist_path, 'w') as f:
-        json.dump(history, f, cls=NumpyEncoder)
+        json.dump({'history': history, 'stage_start': stage_start}, f, cls=NumpyEncoder)
     print("Saved history to", hist_path)
 
-    # --- 可视化（新增 feature_diversity 和 grad_cosine_sim）---
-    epochs_range = list(range(1, epochs + 1))
-    fig, axs = plt.subplots(3, 3, figsize=(15, 12))
+    # 可视化
+    epochs_range = list(range(1, epochs+1))
+    fig, axs = plt.subplots(4, 2, figsize=(14, 16))
 
     axs[0,0].plot(epochs_range, history['train_acc'], label='train')
     axs[0,0].plot(epochs_range, history['test_acc'], label='test')
-    if grok_pt:
-        axs[0,0].axvline(grok_pt, color='red', linestyle='--', label='grok')
+    for st, ep0 in stage_start.items():
+        axs[0,0].axvline(ep0, linestyle='--', label=f'Stage {st} start')
     axs[0,0].set_title('Accuracy')
     axs[0,0].legend()
 
@@ -332,51 +339,59 @@ def train_grokking_full(m=97, hidden_dim=128, epochs=500, lr=1e-3, weight_decay=
     axs[0,1].set_title('Loss')
     axs[0,1].legend()
 
-    axs[0,2].plot(epochs_range, history['w_norm_fc1'], 'g-')
-    axs[0,2].set_title('Weight Norm (fc1)')
+    axs[1,0].plot(epochs_range, history['w_norm_fc1'], 'g-')
+    axs[1,0].set_title('Weight Norm (fc1)')
 
-    axs[1,0].plot(epochs_range, history['delta_w_norm_fc1'], 'r-', label='ΔW_norm')
-    axs[1,0].set_yscale('log')
-    axs[1,0].set_title('Δ Weight Norm (log)')
+    axs[1,1].plot(epochs_range, history['delta_w_norm_fc1'], 'r-', label='ΔW_norm')
+    axs[1,1].set_yscale('log')
+    axs[1,1].set_title('Δ Weight Norm (log)')
 
-    axs[1,1].plot(epochs_range, history['grad_norm_fc1'], 'm-', label='Grad Norm')
-    axs[1,1].set_title('Gradient Norm')
+    axs[2,0].plot(epochs_range, history['grad_cosine_sim'], 'c-', label='grad_cos')
+    axs[2,0].plot(epochs_range, np.convolve(history['grad_cosine_sim'], np.ones(10)/10, mode='same'), 'c--', label='smooth grad_cos')
+    axs[2,0].set_title('Grad Cosine Similarity')
+    axs[2,0].legend()
 
-    axs[1,2].plot(epochs_range, history['grad_cosine_sim'], 'c-')
-    axs[1,2].set_title('Grad Cosine Similarity')
+    axs[2,1].plot(epochs_range, history['feature_diversity'], 'y-')
+    axs[2,1].set_title('Feature Diversity (SVD Entropy)')
 
-    axs[2,0].plot(epochs_range, history['feature_diversity'], 'y-')
-    axs[2,0].set_title('Feature Diversity (SVD Entropy)')
+    axs[3,0].plot(epochs_range, history['num_remaining_dirs'], 'b-')
+    axs[3,0].set_title('Remaining Candidate Feature Directions')
 
-    gap = np.array(history['train_acc']) - np.array(history['test_acc'])
-    axs[2,1].plot(epochs_range, gap, 'k-')
-    axs[2,1].set_title('Generalization Gap')
-
-    axs[2,2].axis('off')
+    axs[3,1].plot(epochs_range, history['node_similarity_mean'], 'm-')
+    axs[3,1].set_title('Node Similarity Mean (hidden units)')
 
     fig.tight_layout()
-    fig_path = os.path.join(script_dir, f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_fig.png")
+    fig_path = os.path.join(script_dir,
+        f"grok_mod_full_m{m}_hd{hidden_dim}_lr{lr}_wd{weight_decay}_fig.png")
     plt.savefig(fig_path, dpi=150)
     print("Saved figure to", fig_path)
     plt.close()
 
-    return history, grok_pt
+    return history, stage_start, grok_pt
 
 if __name__ == '__main__':
     dims = [32, 64, 128]
     lrs = [1e-3, 5e-4]
     wds = [0.0, 1e-4]
     all_hist = {}
+    stage_starts = {}
     grok_points = {}
     for hd in dims:
         for lr in lrs:
             for wd in wds:
                 print("=== Running hd =", hd, "lr =", lr, "wd =", wd)
-                hist, grok_pt = train_grokking_full(m=97, hidden_dim=hd, epochs=1000, lr=lr, weight_decay=wd, seed=0, mode='add')
+                hist, stage_start, grok_pt = train_grokking_full(
+                    m=97, hidden_dim=hd, epochs=1000, lr=lr, weight_decay=wd,
+                    seed=0, mode='add')
                 key = f"m{97}_hd{hd}_lr{lr}_wd{wd}"
                 all_hist[key] = hist
+                stage_starts[key] = stage_start
                 grok_points[key] = grok_pt
     all_path = os.path.join(script_dir, "grokking_all_full_hist.json")
     with open(all_path, 'w') as f:
-        json.dump({'hist': all_hist, 'grok_pt': grok_points}, f, cls=NumpyEncoder)
+        json.dump({
+            'hist': all_hist,
+            'stage_starts': stage_starts,
+            'grok_pt': grok_points
+        }, f, cls=NumpyEncoder)
     print("Saved all histories to", all_path)
