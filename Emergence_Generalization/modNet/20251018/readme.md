@@ -216,7 +216,6 @@ Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_l
 模型未进入阶段 II 或 III，因此无 grokking点。
 这与理论非常吻合：尤其 无正则化（wd=0） 的情况下，根据 Li₂ 框架，“weight decay” 是启动特征学习的关键因素之一。该论文指出：当没有正则化，隐藏层难以跳出记忆‐拟合状态。
 
-
 === Running hd = 128 lr = 0.0005 wd = 0.0001
 Ep    1 | train_acc=0.0074, test_acc=0.0079 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=4.462 | rem_dirs=128 | node_sim=0.000 | stage=1
 Ep  100 | train_acc=0.8325, test_acc=0.0002 | ΔW_norm=2.614e-01 | avgΔW=2.666e-01 | grad_cos=-0.004 | avg_grad_cos=0.005 | feat_div=4.463 | rem_dirs=128 | node_sim=-0.003 | stage=1
@@ -241,8 +240,8 @@ Grokking point: 722
 指标变化支持：avg_grad_cos 在 ep300→400 从 ~0.005→0.024 上升；avgΔW 持续增加至 ~0.34；同时 feat_div 从 ~4.468下降至 ~4.212，说明隐藏表示结构化/聚焦；虽然 rem_dirs 仍未下降（可能因为候选方向设定的问题），但模型已进入泛化。
 这与理论吻合：weight decay 使隐藏层渐渐开始学习可泛化特征（进入阶段 II），随后节点间协作/交互（阶段 III）并快速泛化。
 
+---
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 指标计算方式
 
 1. **ΔW_norm**
@@ -250,12 +249,10 @@ Grokking point: 722
    * 计算方式：每个 epoch 计算隐藏层 `fc1.weight` 的权重矩阵 (W)（形如 hidden_dim × (hidden_dim×2)）的当前值与上一个 epoch 值的差矩阵 (\Delta W = W_{\text{current}} - W_{\text{prev}})。然后取该差矩阵的范数（欧几里得范数／L2 范数） (|\Delta W|)。
    * 在脚本里：`delta_norm = np.linalg.norm(w_fc1 - prev_w_fc1)`。
    * 意义：权重在隐藏层第一线性层的变化量。权重大幅变化意味着隐藏层正在较积极地更新其表征／特征方向。变化非常微小或下降意味着隐藏层几乎停滞或收敛。
-
 2. **avgΔW**
 
    * 计算方式：在脚本中用滑动平均（window = 10 等）计算最近若干 epoch（例如最后 10 条）ΔW_norm 的平均值。
    * 意义：比单一 epoch 的 ΔW_norm 更稳定，减弱噪声／突变。反映 “最近隐藏层权重更新速率” 的趋势。
-
 3. **grad_cos**
 
    * 计算方式：每 epoch 获取当前 `fc1.weight.grad` 梯度矩阵 (G)，将其 flatten 成向量，保存在一个缓冲区（例如最近 5 个 epoch 的梯度向量）。然后计算这些向量之间余弦相似度矩阵，并取上三角的平均值。
@@ -268,12 +265,10 @@ Grokking point: 722
      grad_cos_sim = float(cos_matrix[triu_mask].mean())
      ```
    * 意义：衡量隐藏层权重梯度在 “方向” 上的一致性。较高的余弦相似度表示最近几个 epoch 梯度方向较为一致／结构化；较低表示梯度方向在大范围内震荡、无组织。
-
 4. **avg_grad_cos**
 
    * 计算方式：类似 avgΔW，用滑动平均对 grad_cos 取平均。
    * 意义：反映“最近隐藏层梯度方向稳定性”的趋势。
-
 5. **feat_div**（Feature Diversity）
 
    * 计算方式：在每个 epoch 取一个 batch 的隐藏层输出 (h_2)（隐藏层激活，形如 batch_size × hidden_dim），做 SVD：(h_2 = U,S,V^T)。取奇异值向量 (S = [s_1, s_2, …])，归一化 (S_{\text{norm}} = S / \sum S)。然后计算熵：(-\sum_i S_{\text{norm},i}\log S_{\text{norm},i})。
@@ -286,12 +281,10 @@ Grokking point: 722
      feature_div = float(entropy)
      ```
    * 意义：衡量隐藏层激活在不同方向／特征子空间上的“分散度”或“多样性”。高熵表示激活分布较为均匀（即很多隐藏单元在发挥作用、表征丰富）；低熵可能表示表示集中在少数方向或者隐藏单元协同导致冗余。
-
 6. **rem_dirs**（Remaining Candidate Feature Directions）
 
    * 计算方式：在脚本中预构造了一个候选特征方向集合 (U_{np})（例如 K 个方向，每个是一个长度 D 向量，D = hidden_dim × 2）。然后把当前隐藏层权重矩阵 flatten 转为 w_flat (hidden_dim × D)，计算 w_flat 与 U_np 的余弦相似度矩阵：形状 hidden_dim × K。然后对每个候选方向 k 取最大相似度：(\max_j \cos(w_j, u_k))。若该最大相似度 ≥ 阈值 tau_cov，则认为 “方向 k 已被覆盖”。于是 `num_covered = sum(covered)`；`num_remaining = K - num_covered`。
    * 意义：尝试量化隐藏层“已学”多少候选特征方向、“还剩多少特征方向未被覆盖”。是用来监控“特征覆盖”进度的指标。
-
 7. **node_sim**（Hidden Nodes Similarity Mean）
 
    * 计算方式：计算当前 w_flat (hidden_dim × D)，然后计算两两余弦相似度矩阵 (hidden_dim × hidden_dim)。取上三角部分平均值（即只算不同节点间的余弦相似度）。
@@ -310,7 +303,6 @@ Grokking point: 722
   * feat_div 可能偏低或无明显提升（隐藏表示尚无多个“特征子空间”被激活）；
   * rem_dirs 高（几乎所有候选方向未覆盖）；
   * node_sim 高（隐藏单元还没分化或专化）。
-
 * 阶段 II（独立特征学习）：
 
   * ΔW_norm 上升／维持较高（隐藏层权重活跃更新）；
@@ -318,7 +310,6 @@ Grokking point: 722
   * feat_div 上升（激活分散在更多特征方向）；
   * rem_dirs 开始下降（隐藏层节点覆盖更多候选特征方向）；
   * node_sim 开始下降（隐藏单元分化）。
-
 * 阶段 III（交互特征学习／泛化跃迁）：
 
   * ΔW_norm 可能下降或稳定（权重更新放缓但结构化）；
@@ -327,9 +318,6 @@ Grokking point: 722
   * rem_dirs 接近 0 或很低（几乎所有候选特征方向已被覆盖）；
   * node_sim 较低（节点高度分化）。
   * 验证精度（test_acc）大幅跃升 (“grok” 点) 出现。
-
-
-
 
 ```
 ΔW_norm=2.362e-01 | avgΔW=2.371e-01 | grad_cos=0.022 | avg_grad_cos=0.021 | feat_div=4.302 | rem_dirs=128 | node_sim=-0.005
