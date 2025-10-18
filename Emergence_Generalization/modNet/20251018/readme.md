@@ -1,4 +1,4 @@
-=== Running hd = 32 lr = 0.001 wd = 0.0
+=== Running hd = 32 lr = 0.001 wd = 0.0   
 Ep    1 | train_acc=0.0106, test_acc=0.0123 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.290 | rem_dirs=32 | node_sim=0.005 | stage=1
 Ep  100 | train_acc=0.1031, test_acc=0.0040 | ΔW_norm=1.239e-01 | avgΔW=1.235e-01 | grad_cos=0.014 | avg_grad_cos=-0.003 | feat_div=3.303 | rem_dirs=32 | node_sim=0.012 | stage=1
 Ep  200 | train_acc=0.2043, test_acc=0.0100 | ΔW_norm=1.313e-01 | avgΔW=1.251e-01 | grad_cos=-0.020 | avg_grad_cos=-0.007 | feat_div=3.275 | rem_dirs=31 | node_sim=0.022 | stage=1
@@ -15,6 +15,8 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.001_wd0.0_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.001_wd0.0_fig.png
+
+
 === Running hd = 32 lr = 0.001 wd = 0.0001
 Ep    1 | train_acc=0.0106, test_acc=0.0121 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.289 | rem_dirs=32 | node_sim=0.005 | stage=1
 Ep  100 | train_acc=0.0989, test_acc=0.0032 | ΔW_norm=1.285e-01 | avgΔW=1.299e-01 | grad_cos=0.012 | avg_grad_cos=-0.005 | feat_div=3.305 | rem_dirs=32 | node_sim=0.007 | stage=1
@@ -34,6 +36,8 @@ Stage start epochs: {1: 1, 2: 778, 3: 895}
 Grokking point: 890
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.001_wd0.0001_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.001_wd0.0001_fig.png
+
+
 === Running hd = 32 lr = 0.0005 wd = 0.0
 Ep    1 | train_acc=0.0106, test_acc=0.0115 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.287 | rem_dirs=32 | node_sim=0.004 | stage=1
 Ep  100 | train_acc=0.0604, test_acc=0.0026 | ΔW_norm=6.827e-02 | avgΔW=6.965e-02 | grad_cos=0.002 | avg_grad_cos=-0.004 | feat_div=3.305 | rem_dirs=32 | node_sim=0.002 | stage=1
@@ -51,6 +55,8 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.0005_wd0.0_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.0005_wd0.0_fig.png
+
+
 === Running hd = 32 lr = 0.0005 wd = 0.0001
 Ep    1 | train_acc=0.0108, test_acc=0.0113 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.287 | rem_dirs=32 | node_sim=0.005 | stage=1
 Ep  100 | train_acc=0.0591, test_acc=0.0021 | ΔW_norm=7.433e-02 | avgΔW=7.440e-02 | grad_cos=0.003 | avg_grad_cos=-0.002 | feat_div=3.302 | rem_dirs=32 | node_sim=-0.001 | stage=1
@@ -68,6 +74,8 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.0005_wd0.0001_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd32_lr0.0005_wd0.0001_fig.png
+
+
 === Running hd = 64 lr = 0.001 wd = 0.0
 Ep    1 | train_acc=0.0102, test_acc=0.0087 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.936 | rem_dirs=64 | node_sim=0.001 | stage=1
 Ep  100 | train_acc=0.4177, test_acc=0.0026 | ΔW_norm=2.558e-01 | avgΔW=2.559e-01 | grad_cos=-0.012 | avg_grad_cos=-0.002 | feat_div=3.935 | rem_dirs=64 | node_sim=0.003 | stage=1
@@ -85,6 +93,7 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.001_wd0.0_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.001_wd0.0_fig.png
+
 === Running hd = 64 lr = 0.001 wd = 0.0001
 Ep    1 | train_acc=0.0102, test_acc=0.0087 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.935 | rem_dirs=64 | node_sim=0.001 | stage=1
 Ep  100 | train_acc=0.3912, test_acc=0.0026 | ΔW_norm=2.703e-01 | avgΔW=2.685e-01 | grad_cos=-0.012 | avg_grad_cos=-0.001 | feat_div=3.937 | rem_dirs=64 | node_sim=0.001 | stage=1
@@ -99,11 +108,13 @@ Ep  700 | train_acc=1.0000, test_acc=0.9798 | ΔW_norm=2.318e-01 | avgΔW=2.291e
 Ep  800 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.996e-01 | avgΔW=1.938e-01 | grad_cos=0.062 | avg_grad_cos=0.081 | feat_div=3.580 | rem_dirs=64 | node_sim=-0.008 | stage=3
 Ep  900 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.939e-01 | avgΔW=1.993e-01 | grad_cos=0.122 | avg_grad_cos=0.121 | feat_div=3.689 | rem_dirs=64 | node_sim=-0.012 | stage=3
 Ep 1000 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.838e-01 | avgΔW=1.847e-01 | grad_cos=0.158 | avg_grad_cos=0.158 | feat_div=3.726 | rem_dirs=64 | node_sim=-0.011 | stage=3
-Total elapsed: 220.67678260803223
+Total elapsed: 220.67678260803223  
 Stage start epochs: {1: 1, 2: 708, 3: 709}
 Grokking point: 682
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.001_wd0.0001_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.001_wd0.0001_fig.png
+
+
 === Running hd = 64 lr = 0.0005 wd = 0.0
 Ep    1 | train_acc=0.0106, test_acc=0.0104 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.934 | rem_dirs=64 | node_sim=0.001 | stage=1
 Ep  100 | train_acc=0.2094, test_acc=0.0006 | ΔW_norm=1.380e-01 | avgΔW=1.396e-01 | grad_cos=-0.016 | avg_grad_cos=-0.002 | feat_div=3.941 | rem_dirs=64 | node_sim=-0.003 | stage=1
@@ -121,6 +132,8 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.0005_wd0.0_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.0005_wd0.0_fig.png
+
+
 === Running hd = 64 lr = 0.0005 wd = 0.0001
 Ep    1 | train_acc=0.0104, test_acc=0.0102 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=3.934 | rem_dirs=64 | node_sim=0.001 | stage=1
 Ep  100 | train_acc=0.1941, test_acc=0.0009 | ΔW_norm=1.436e-01 | avgΔW=1.447e-01 | grad_cos=-0.015 | avg_grad_cos=-0.001 | feat_div=3.942 | rem_dirs=64 | node_sim=-0.003 | stage=1
@@ -138,6 +151,8 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.0005_wd0.0001_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd64_lr0.0005_wd0.0001_fig.png
+
+
 === Running hd = 128 lr = 0.001 wd = 0.0
 Ep    1 | train_acc=0.0064, test_acc=0.0045 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=4.467 | rem_dirs=128 | node_sim=0.001 | stage=1
 Ep  100 | train_acc=1.0000, test_acc=0.0021 | ΔW_norm=1.478e-01 | avgΔW=1.579e-01 | grad_cos=-0.004 | avg_grad_cos=-0.000 | feat_div=4.477 | rem_dirs=128 | node_sim=-0.003 | stage=1
@@ -155,8 +170,9 @@ Stage start epochs: {1: 1}
 Grokking point: None
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.001_wd0.0_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.001_wd0.0_fig.png
+
 === Running hd = 128 lr = 0.001 wd = 0.0001
-Ep    1 | train_acc=0.0064, test_acc=0.0045 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=4.467 | rem_dirs=128 | node_sim=0.001 | stage=1
+Ep    1 | train_acc=0.0064, test_acc=0.0045 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=4.467 | rem_dirs=128 | node_sim=0.001 | stage=1  
 Ep  100 | train_acc=1.0000, test_acc=0.0011 | ΔW_norm=2.051e-01 | avgΔW=2.171e-01 | grad_cos=-0.006 | avg_grad_cos=0.001 | feat_div=4.474 | rem_dirs=128 | node_sim=-0.003 | stage=1
 Ep  200 | train_acc=1.0000, test_acc=0.0125 | ΔW_norm=2.380e-01 | avgΔW=2.321e-01 | grad_cos=-0.005 | avg_grad_cos=0.002 | feat_div=4.468 | rem_dirs=128 | node_sim=-0.004 | stage=1
 Ep  300 | train_acc=1.0000, test_acc=0.1841 | ΔW_norm=3.392e-01 | avgΔW=3.393e-01 | grad_cos=0.013 | avg_grad_cos=0.005 | feat_div=4.402 | rem_dirs=128 | node_sim=-0.005 | stage=1
@@ -179,6 +195,8 @@ Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.001_wd0.0001_fig.png
 Saved history to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.001_wd0.0001_hist.json
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.001_wd0.0001_fig.png
+
+
 === Running hd = 128 lr = 0.0005 wd = 0.0
 Ep    1 | train_acc=0.0077, test_acc=0.0079 | ΔW_norm=0.000e+00 | avgΔW=0.000e+00 | grad_cos=0.000 | avg_grad_cos=0.000 | feat_div=4.462 | rem_dirs=128 | node_sim=0.000 | stage=1
 Saved figure to f:\LLM\Emergence_Generalization\modNet\grok_mod_full_m97_hd128_lr0.001_wd0.0001_fig.png
@@ -227,12 +245,13 @@ Ep  600 | train_acc=1.0000, test_acc=0.2797 | ΔW_norm=2.134e-01 | avgΔW=2.133e
 Ep  700 | train_acc=1.0000, test_acc=0.8561 | ΔW_norm=2.362e-01 | avgΔW=2.371e-01 | grad_cos=0.022 | avg_grad_cos=0.021 | feat_div=4.302 | rem_dirs=128 | node_sim=-0.005 | stage=1
 *** Enter Stage II at epoch 738
 *** Enter Stage III at epoch 739
-Ep  800 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=2.258e-01 | avgΔW=2.267e-01 | grad_cos=0.054 | avg_grad_cos=0.053 | feat_div=4.062 | rem_dirs=128 | node_sim=-0.003 | stage=3
+Ep  800 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=2.258e-01 | avgΔW=2.267e-01 | grad_cos=0.054 | avg_grad_cos=0.053 | feat_div=4.062 | rem_dirs=128 | node_sim=-0.003 | stage=3  
 Ep  900 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.994e-01 | avgΔW=2.050e-01 | grad_cos=0.129 | avg_grad_cos=0.135 | feat_div=3.896 | rem_dirs=128 | node_sim=-0.001 | stage=3
 Ep 1000 | train_acc=1.0000, test_acc=1.0000 | ΔW_norm=1.744e-01 | avgΔW=1.740e-01 | grad_cos=0.191 | avg_grad_cos=0.184 | feat_div=3.888 | rem_dirs=128 | node_sim=-0.004 | stage=3
 Total elapsed: 238.52488160133362
 Stage start epochs: {1: 1, 2: 738, 3: 739}
 Grokking point: 722
+
 
 解读：
 加入了微小的 weight_decay = 0.0001 后：训练集依然很快拟合，但验证开始慢慢提升，然后在 ~ep 400 处出现急跃（≈0.98 → 1.0） → 典型 grokking行为。
