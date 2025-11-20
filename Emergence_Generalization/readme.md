@@ -83,7 +83,7 @@ for x, y in loader:
 | 300–400 | Stage III: Interactive | `test_acc` 从 0.58 → 0.99（**grokking 发生！**）；`w_norm` 开始下降（weight decay 压缩冗余特征）；`grad_cos_sim` 从负变正并上升（梯度从随机 → 协同） |
 | 500+     | 收敛                   | `test_acc=1.0`，`w_norm` 稳定在 ~27，`Δw_norm` 仍较大（因 weight decay 与梯度平衡）<br />feather_div缓慢下降，表明模型在 **剔除冗余、聚焦关键特征**   |
 
-compare： with or without weight decay, test acc is totally diffrent!  
+compare： with or without weight decay, test acc is totally diffrent!
 
 * no weight decay:
   * test acc is around 0.5 at 100 epoch，no higher in later epoch
@@ -116,3 +116,13 @@ We train using gradient descent plus weight decay.
   Once (w_1) and (w_2) each have “signal directions,” interactions between them may emerge. If the **two hidden weights are too similar, the feedback mechanism might push them to diverge to avoid redundancy**. The mechanism (via backpropagation) begins **focusing more on those parts of the structure *not yet captured by either neuron*,  guiding *further learning of missing features***. Eventually,  ***when the missing regularities are filled in, the output and hidden layers work synergistically***  , and the model’s generalization performance suddenly improves. That is the “grokking” moment.
 
 In this toy scenario, the *delay* in grokking arises because, ***initially, the hidden layer almost never learns useful features***. Only when the **output layer and weight decay jointly cause the backpropagated gradient** to  ***carry informative signal does the hidden layer gradually learn general-purpose features; once these features are sufficiently integrated, the model “suddenly” generalizes.* **
+
+
+
+提升泛化能力的方式：
+
+| 数据 | 清洗测试集、去重、增加多样性、加入COT         |
+| ---- | --------------------------------------------- |
+| 训练 | 早停、避免过训练、用 ICL 风格微调、加扰动     |
+| 评估 | 用 CoDeC 检测污染、自建新 benchmark、要求解释 |
+| 目标 | 追求“平坦最小值”，而非最低 loss             |
