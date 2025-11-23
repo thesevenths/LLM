@@ -14,7 +14,7 @@ from torch.optim import AdamW   # ← 改这里！
 
 
 def prepare_bi_lora_model(base_model_path, target_modules):
-    model = AutoModelForCausalLM.from_pretrained(
+    base_model = AutoModelForCausalLM.from_pretrained(
         base_model_path,
         torch_dtype=torch.float16,
         device_map="auto",
@@ -22,32 +22,36 @@ def prepare_bi_lora_model(base_model_path, target_modules):
     )
 
     main_config = LoraConfig(
-        r=64,
-        lora_alpha=16,
+        r=16,
+        lora_alpha=32,
         target_modules=target_modules,
         lora_dropout=0.05,
         bias="none",
         task_type="CAUSAL_LM",
     )
-    model_main = get_peft_model(model, main_config)
-
-    model_aux = AutoModelForCausalLM.from_pretrained(
-        base_model_path,
-        torch_dtype=torch.float16,
-        device_map="auto",
-        trust_remote_code=True,
-    )
     aux_config = LoraConfig(
-        r=32,
-        lora_alpha=8,
+        r=8,
+        lora_alpha=16,
         target_modules=target_modules,
         lora_dropout=0.0,
         bias="none",
         task_type="CAUSAL_LM",
     )
-    model_aux = get_peft_model(model_aux, aux_config)
 
-    return model_main, model_aux
+    # 第一步：加主 LoRA（默认名字就是 "default"）
+    model = get_peft_model(base_model, main_config)
+
+    # 第二步：加辅助 LoRA
+    model.add_adapter(adapter_name="aux", peft_config=aux_config)
+
+    # 第三步：【终极正确】用 PEFT 官方最新 API 启用多 adapter 融合
+    from peft import PeftConfig
+    model.peft_config["aux"] = aux_config  # 确保 aux 真的在 peft_config 里
+
+    # # 关键一行！必须这样写！
+    # model.set_adapter(["default", "aux"])   
+
+    return model
 
 
 def make_dataset(data_path, tokenizer, max_length=512):
@@ -87,47 +91,49 @@ def make_dataset(data_path, tokenizer, max_length=512):
 
 
 class BiLoRATrainer(Trainer):
-    def __init__(self, aux_model, lambda_aux=1.0, **kwargs):
+    def __init__(self, lambda_aux=1.0, **kwargs):
         super().__init__(**kwargs)
-        self.aux_model = aux_model
         self.lambda_aux = lambda_aux
-        self.aux_model.train()
 
-        # 修复：从 torch.optim 导入 AdamW
-        self.optimizer_aux = AdamW(
-            filter(lambda p: p.requires_grad, aux_model.parameters()),
-            lr=self.args.learning_rate,
-            weight_decay=self.args.weight_decay,
-        )
+    # def compute_loss(self, model, inputs, return_outputs=False):
+    #     # 临时只用主 LoRA
+    #     with model.set_adapter("default"):
+    #         outputs_main = model(**inputs)
+    #         loss_main = outputs_main.loss
+
+    #     # 临时只用辅助 LoRA
+    #     with model.set_adapter("aux"):
+    #         outputs_aux = model(**inputs)
+    #         loss_aux = outputs_aux.loss
+
+    #     # Bi-LoRA 核心
+    #     loss = loss_main - self.lambda_aux * loss_aux
+
+    #     # 返回时可以附带主输出（用于日志、eval）
+    #     return (loss, outputs_main) if return_outputs else loss
 
     def compute_loss(self, model, inputs, return_outputs=False):
-        outputs = model(**inputs)
-        loss_main = outputs.loss
-
-        aux_outputs = self.aux_model(**inputs)
-        loss_aux = aux_outputs.loss
+        # 直接指定 active_adapter，最保险
+        loss_main = model(**inputs, active_adapter="default").loss
+        loss_aux  = model(**inputs, active_adapter="aux").loss
 
         loss = loss_main - self.lambda_aux * loss_aux
-        return (loss, outputs) if return_outputs else loss
+        return (loss, None) if return_outputs else loss
 
-    # 完全兼容 fp16 + gradient_accumulation
+
+    # 兼容新版 Trainer 的第四个参数
     def training_step(self, model, inputs, num_items_in_batch=None):
         model.train()
-        self.aux_model.train()
         inputs = self._prepare_inputs(inputs)
 
         loss = self.compute_loss(model, inputs)
         loss = loss / self.args.gradient_accumulation_steps
 
-        # 自动兼容 fp16/bf16/deepspeed
         self.accelerator.backward(loss)
 
-        # 梯度累积结束才 step
         if (self.state.global_step + 1) % self.args.gradient_accumulation_steps == 0:
             self.optimizer.step()
-            self.optimizer_aux.step()
             self.optimizer.zero_grad()
-            self.optimizer_aux.zero_grad()
             if self.lr_scheduler is not None:
                 self.lr_scheduler.step()
 
@@ -142,9 +148,12 @@ def main():
                       "gate_proj", "up_proj", "down_proj"]  # 更强但更吃显存
 
     tokenizer = AutoTokenizer.from_pretrained(base_model_path, trust_remote_code=True)
-    ds = make_dataset(data_path, tokenizer, max_length=1024)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    ds = make_dataset(data_path, tokenizer, max_length=512) # 相比1024省显存
 
-    model_main, model_aux = prepare_bi_lora_model(base_model_path, target_modules)
+    # 关键：只调用一次 prepare_bi_lora_model，返回一个 model
+    model = prepare_bi_lora_model(base_model_path, target_modules)
 
 
     data_collator = DataCollatorForLanguageModeling(
@@ -155,11 +164,12 @@ def main():
 
     args = TrainingArguments(
         output_dir=output_dir,
-        per_device_train_batch_size=2,
-        gradient_accumulation_steps=8,
+        per_device_train_batch_size=4,        # 可以开大一点
+        gradient_accumulation_steps=4,
         num_train_epochs=3,
-        learning_rate=2e-4,
+        learning_rate=3e-4,
         fp16=True,
+        weight_decay=1e-4,                     
         logging_steps=10,
         save_steps=500,
         save_total_limit=3,
@@ -167,27 +177,28 @@ def main():
         lr_scheduler_type="cosine",
         report_to="none",
         remove_unused_columns=False,
-        dataloader_num_workers=0,
+        dataloader_num_workers=0,             # Windows 必关
     )
 
     trainer = BiLoRATrainer(
-        model=model_main,
-        aux_model=model_aux,
+        model=model,               # 只传一个 base model！
         lambda_aux=1.0,
         args=args,
         train_dataset=ds["train"],
         eval_dataset=ds["validation"],
+        tokenizer=tokenizer,
         data_collator=data_collator,
     )
 
     print("开始真正的 Bi-LoRA 训练，两个 LoRA 都在更新！")
     trainer.train()
 
+    # 保存时分别保存两个 adapter
     os.makedirs(output_dir, exist_ok=True)
-    model_main.save_pretrained(os.path.join(output_dir, "lora_main"))
-    model_aux.save_pretrained(os.path.join(output_dir, "lora_aux"))
+    model.save_pretrained(os.path.join(output_dir, "lora_main"), adapter_name="default")
+    model.save_pretrained(os.path.join(output_dir, "lora_aux"),  adapter_name="aux")
     tokenizer.save_pretrained(output_dir)
-    print("训练完成！")
+    print("训练完成！两个 adapter 已分别保存")
 
 
 if __name__ == "__main__":

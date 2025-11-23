@@ -25,3 +25,13 @@ This equilibrium point is called a **flat minimum** or **robust local minimum** 
 By letting a “malicious but weak” auxiliary LoRA constantly attack the model during training, Bi-LoRA forces the optimizer to automatically discover **low-loss regions that are inherently wide and flat**, instead of falling into sharp, brittle minima that overfit or break under tiny perturbations.
 
 In short: **Train with a built-in enemy → end up with a naturally robust and generalizable model.**
+
+
+
+
+
+train on my laptop:
+
+![1763903510609](image/readme/1763903510609.png)
+
+![1763903336120](image/readme/1763903336120.png)
