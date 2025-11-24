@@ -1,4 +1,3 @@
-# train_bi_lora_final.py  —— 这次真·最终版，包跑通
 import os
 import torch
 from transformers import (
@@ -10,7 +9,7 @@ from transformers import (
 )
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model
-from torch.optim import AdamW   # ← 改这里！
+from torch.optim import AdamW  
 
 
 def prepare_bi_lora_model(base_model_path, target_modules):
@@ -38,18 +37,15 @@ def prepare_bi_lora_model(base_model_path, target_modules):
         task_type="CAUSAL_LM",
     )
 
-    # 第一步：加主 LoRA（默认名字就是 "default"）
+    # 主 LoRA（默认名字就是 "default"）
     model = get_peft_model(base_model, main_config)
 
-    # 第二步：加辅助 LoRA
+    # 辅助 LoRA
     model.add_adapter(adapter_name="aux", peft_config=aux_config)
 
-    # 第三步：【终极正确】用 PEFT 官方最新 API 启用多 adapter 融合
+    #  PEFT 启用多 adapter 融合
     from peft import PeftConfig
     model.peft_config["aux"] = aux_config  # 确保 aux 真的在 peft_config 里
-
-    # # 关键一行！必须这样写！
-    # model.set_adapter(["default", "aux"])   
 
     return model
 
