@@ -112,7 +112,7 @@ class BiLoRATrainer(Trainer):
         # 直接指定 active_adapter，最保险
         loss_main = model(**inputs, active_adapter="default").loss
         loss_aux  = model(**inputs, active_adapter="aux").loss
-
+        # loss_aux稍微变动一点，如果loss变化很大，说明当前landscape很sharp，一点都不flat
         loss = loss_main - self.lambda_aux * loss_aux
         return (loss, None) if return_outputs else loss
 
