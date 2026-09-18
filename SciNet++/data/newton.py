@@ -97,9 +97,11 @@ class NewtonGenerator:
             would destroy this amplitude signal and make mass unidentifiable.
         labels : np.ndarray, shape (n, 2), float32       -- columns (force, mass)
         """
+        from tqdm import tqdm
+
         trajectories = []
         labels = []
-        for _ in range(n):
+        for _ in tqdm(range(n), desc="Generating newton trajectories"):
             sig, F, m = self.sample_one()
             trajectories.append(sig)
             labels.append((F, m))

@@ -124,9 +124,11 @@ class DoublePendulumGenerator:
         X : np.ndarray, shape (n, length, 4), float32
         labels : np.ndarray, shape (n, 1), float32  -- column (energy,)
         """
+        from tqdm import tqdm
+
         trajectories = []
         labels = []
-        for _ in range(n):
+        for _ in tqdm(range(n), desc="Generating double-pendulum trajectories"):
             states, energy = self.sample_one()
             trajectories.append(states)
             labels.append((energy,))

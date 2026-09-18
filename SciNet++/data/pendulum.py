@@ -60,9 +60,11 @@ class PendulumGenerator:
         X : np.ndarray, shape (n, length, state_dim), float32
         labels : np.ndarray, shape (n, 2), float32  -- columns (gamma, omega)
         """
+        from tqdm import tqdm
+
         trajectories = []
         labels = []
-        for _ in range(n):
+        for _ in tqdm(range(n), desc="Generating pendulum trajectories"):
             x, gamma, omega = self.sample_one()
             trajectories.append(x)
             labels.append((gamma, omega))

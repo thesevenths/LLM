@@ -23,6 +23,7 @@ import matplotlib
 matplotlib.use("Agg")  # headless-safe backend
 
 import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.ticker as mticker  # noqa: E402
 import numpy as np  # noqa: E402
 from sklearn.decomposition import PCA  # noqa: E402
 
@@ -150,18 +151,15 @@ def attribution_heatmap(
             ax.text(j, i, f"{val:+.2f}", ha="center", va="center",
                     fontsize=9, color=text_color)
 
-    # Set ticks and labels atomically to avoid FixedLocator mismatch.
-    # imshow with aspect='auto' can inject its own locator between separate
-    # set_ticks / set_ticklabels calls, causing a count mismatch error.
-    ytick_positions = list(range(n_concepts))
-    xtick_positions = list(range(n_latent))
-    ax.set(
-        yticks=ytick_positions,
-        yticklabels=ylabels,
-        xticks=xtick_positions,
-        xticklabels=xlabels,
-        xlabel="Latent dimension",
-        title="Latent Attribution Matrix\n(concept → latent dependency)",
-    )
+    # imshow(aspect='auto') locks the axis locator to pixel-based positions
+    # (e.g. 16 ticks for a 4-row matrix rendered at 4x scale). We MUST clear
+    # that locator BEFORE setting tick labels, otherwise matplotlib raises
+    # "FixedLocator locations (N) does not match number of labels (M)".
+    ax.yaxis.set_major_locator(mticker.FixedLocator(list(range(n_concepts))))
+    ax.xaxis.set_major_locator(mticker.FixedLocator(list(range(n_latent))))
+    ax.set_yticklabels(ylabels)
+    ax.set_xticklabels(xlabels)
+    ax.set_xlabel("Latent dimension")
+    ax.set_title("Latent Attribution Matrix\n(concept → latent dependency)")
     fig.colorbar(im, ax=ax, shrink=0.8, label="Effective weight")
     return _save(fig, output_dir, name)
