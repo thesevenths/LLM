@@ -11,7 +11,9 @@ CPU automatically when unavailable.
 from __future__ import annotations
 
 import datetime
+import logging
 import os
+import sys
 
 import torch
 import yaml
@@ -99,3 +101,72 @@ def ensure_output_dir(cfg: dict) -> str:
     os.makedirs(out_dir, exist_ok=True)
     print(f"[output] experiment='{experiment}' run='{run_id}' -> {out_dir}")
     return out_dir
+
+
+def setup_logging(out_dir: str, name: str = "run") -> logging.Logger:
+    """Configure a logger that writes to BOTH console and a per-run log file.
+
+    The log file lands at ``<out_dir>/<name>.log`` so every run-id directory
+    contains its own complete console transcript for later review.
+
+    Call this ONCE at the start of each stage script (train / analyze / ...),
+    after ``ensure_output_dir`` has resolved the output path.
+
+    Returns the configured Logger instance; callers can use it directly or
+    just keep using ``print()`` — the root logger's StreamHandler + FileHandler
+    will capture everything written via ``logging.info/warning/error`` as well.
+    """
+    log_path = os.path.join(out_dir, f"{name}.log")
+
+    # Use the root logger so that ALL print-like calls are captured when
+    # code uses logging.info() etc. We also add a custom stream wrapper
+    # below to capture bare print() statements.
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    # Avoid duplicate handlers if called multiple times (e.g. in tests)
+    logger.handlers.clear()
+
+    fmt = logging.Formatter(
+        "%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
+    # Console handler (same as before)
+    console = logging.StreamHandler(sys.stdout)
+    console.setLevel(logging.INFO)
+    console.setFormatter(fmt)
+    logger.addHandler(console)
+
+    # File handler (per-run log)
+    fh = logging.FileHandler(log_path, mode="w", encoding="utf-8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(fmt)
+    logger.addHandler(fh)
+
+    # Redirect bare print() to the logger so existing print-based code
+    # is captured without modification.
+    class _PrintToLogger:
+        """Drop-in replacement for sys.stdout that tees output to a logger."""
+        def __init__(self, original_stdout, target_logger):
+            self._original = original_stdout
+            self._logger = target_logger
+
+        def write(self, msg):
+            # Write to real stdout first (so tqdm / interactive output still works)
+            self._original.write(msg)
+            # Also log non-empty lines (skip pure newlines from tqdm refreshes)
+            stripped = msg.rstrip("\n")
+            if stripped:
+                self._logger.info(stripped)
+
+        def flush(self):
+            self._original.flush()
+
+        def __getattr__(self, attr):
+            return getattr(self._original, attr)
+
+    sys.stdout = _PrintToLogger(sys.__stdout__, logger)
+
+    logger.info(f"Logging to {log_path}")
+    return logger

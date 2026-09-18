@@ -33,7 +33,7 @@ import sys
 
 import numpy as np
 
-from utils.config import ensure_output_dir, load_config, make_run_id
+from utils.config import ensure_output_dir, load_config, make_run_id, setup_logging
 
 try:  # PySR pulls in a Julia backend; keep the import optional.
     from pysr import PySRRegressor
@@ -144,6 +144,7 @@ def main() -> None:
     elif args.run_id:
         cfg["run_id"] = args.run_id
     out_dir = ensure_output_dir(cfg)
+    setup_logging(out_dir, name="symbolic")
 
     if not PYSR_AVAILABLE:
         print("=" * 70)

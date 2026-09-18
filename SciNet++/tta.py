@@ -37,7 +37,7 @@ from torch.utils.data import DataLoader
 
 from data.dataset import build_dataset, state_dim, validate_config
 from models.world_model import WorldModel
-from utils.config import ensure_output_dir, load_config, resolve_device, make_run_id
+from utils.config import ensure_output_dir, load_config, resolve_device, make_run_id, setup_logging
 from utils.losses import prediction_loss, vicreg_loss
 from utils.metrics import cosine_similarity
 from utils.seed import set_seed
@@ -117,6 +117,7 @@ def main() -> None:
     set_seed(cfg["seed"])
     device = resolve_device(cfg)
     out_dir = ensure_output_dir(cfg)
+    setup_logging(out_dir, name="tta")
     horizons = sorted(cfg["jepa"]["rollout_steps"])
 
     model = WorldModel.from_config(cfg, state_dim(cfg)).to(device)

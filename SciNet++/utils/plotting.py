@@ -23,7 +23,6 @@ import matplotlib
 matplotlib.use("Agg")  # headless-safe backend
 
 import matplotlib.pyplot as plt  # noqa: E402
-import matplotlib.ticker as mticker  # noqa: E402
 import numpy as np  # noqa: E402
 from sklearn.decomposition import PCA  # noqa: E402
 
@@ -113,6 +112,12 @@ def attribution_heatmap(
     Each cell [j, k] shows the effective weight from latent dim z_k to concept j,
     extracted from the trained probe's composed linear map W2 @ W1.
 
+    Uses pcolormesh instead of imshow to avoid the FixedLocator mismatch bug:
+    imshow treats the matrix as a pixel image and locks axis ticks to pixel
+    positions (e.g. 2 rows * DPI scaling = 16 ticks), which conflicts with
+    any attempt to set custom tick labels. pcolormesh works in data coordinates
+    so tick counts always match the matrix dimensions.
+
     Annotations:
       - Cell values show the raw weight (signed contribution).
       - Row headers include R^2 (if provided) so you can see recovery quality.
@@ -126,8 +131,8 @@ def attribution_heatmap(
 
     # Build y-axis labels with optional R^2 and PR annotations
     ylabels = []
-    for j, name in enumerate(label_names):
-        parts = [name]
+    for j, cname in enumerate(label_names):
+        parts = [cname]
         if r2_scores is not None:
             parts.append(f"R²={r2_scores[j]:.3f}")
         if pr_scores is not None:
@@ -140,26 +145,32 @@ def attribution_heatmap(
     vmax = float(np.abs(matrix).max()) + 1e-8
 
     fig, ax = plt.subplots(figsize=(max(6, n_latent * 1.4), max(3, n_concepts * 1.2)))
-    im = ax.imshow(matrix, cmap="RdBu_r", aspect="auto", vmin=-vmax, vmax=vmax,
-                   origin="upper")
 
-    # Annotate each cell with its value
+    # pcolormesh uses data coordinates: x edges = [0, 1, ..., n_latent],
+    # y edges = [0, 1, ..., n_concepts]. Tick centres land at 0.5, 1.5, ...
+    mesh = ax.pcolormesh(
+        np.arange(n_latent + 1),          # x edges
+        np.arange(n_concepts + 1),         # y edges
+        matrix,                            # data (n_concepts x n_latent)
+        cmap="RdBu_r",
+        vmin=-vmax,
+        vmax=vmax,
+    )
+
+    # Annotate each cell with its value (centre of each cell = i+0.5, j+0.5)
     for i in range(n_concepts):
         for j in range(n_latent):
             val = matrix[i, j]
             text_color = "white" if abs(val) > 0.5 * vmax else "black"
-            ax.text(j, i, f"{val:+.2f}", ha="center", va="center",
+            ax.text(j + 0.5, i + 0.5, f"{val:+.2f}", ha="center", va="center",
                     fontsize=9, color=text_color)
 
-    # imshow(aspect='auto') locks the axis locator to pixel-based positions
-    # (e.g. 16 ticks for a 4-row matrix rendered at 4x scale). We MUST clear
-    # that locator BEFORE setting tick labels, otherwise matplotlib raises
-    # "FixedLocator locations (N) does not match number of labels (M)".
-    ax.yaxis.set_major_locator(mticker.FixedLocator(list(range(n_concepts))))
-    ax.xaxis.set_major_locator(mticker.FixedLocator(list(range(n_latent))))
-    ax.set_yticklabels(ylabels)
+    # Set ticks at cell centres; pcolormesh guarantees these match the data dims
+    ax.set_xticks([k + 0.5 for k in range(n_latent)])
     ax.set_xticklabels(xlabels)
+    ax.set_yticks([k + 0.5 for k in range(n_concepts)])
+    ax.set_yticklabels(ylabels)
     ax.set_xlabel("Latent dimension")
     ax.set_title("Latent Attribution Matrix\n(concept → latent dependency)")
-    fig.colorbar(im, ax=ax, shrink=0.8, label="Effective weight")
+    fig.colorbar(mesh, ax=ax, shrink=0.8, label="Effective weight")
     return _save(fig, output_dir, name)

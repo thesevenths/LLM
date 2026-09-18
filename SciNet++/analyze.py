@@ -34,7 +34,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from data.dataset import build_dataset, state_dim, validate_config
 from models.world_model import WorldModel
 from models.probe import Probe
-from utils.config import ensure_output_dir, load_config, resolve_device, make_run_id
+from utils.config import ensure_output_dir, load_config, resolve_device, make_run_id, setup_logging
 from utils.metrics import r2, rmse
 from utils.plotting import pca_plot, probe_parity_plot, scatter_latent, attribution_heatmap
 from utils.seed import set_seed
@@ -188,6 +188,7 @@ def main() -> None:
     set_seed(cfg["seed"])
     device = resolve_device(cfg)
     out_dir = ensure_output_dir(cfg)
+    setup_logging(out_dir, name="analyze")
 
     # ---- rebuild model and load the trained weights -----------------------
     # Reconstruct architecture from config, then load trained weights.
