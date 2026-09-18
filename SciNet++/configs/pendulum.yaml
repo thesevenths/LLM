@@ -50,7 +50,7 @@ jepa:
 
 # --- Optimization -----------------------------------------------------------
 train:
-  epochs: 300
+  epochs: 200
   batch_size: 1024      # large batch -> stable VICReg var/cov statistics
   lr: 0.001
   weight_decay: 0.0001

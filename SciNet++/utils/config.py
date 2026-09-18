@@ -113,14 +113,12 @@ def setup_logging(out_dir: str, name: str = "run") -> logging.Logger:
     after ``ensure_output_dir`` has resolved the output path.
 
     Returns the configured Logger instance; callers can use it directly or
-    just keep using ``print()`` — the root logger's StreamHandler + FileHandler
-    will capture everything written via ``logging.info/warning/error`` as well.
+    just keep using ``print()`` -- bare print() calls are captured via
+    sys.stdout redirection and written to the log file only (console output
+    passes through the original stdout unchanged, avoiding double-printing).
     """
     log_path = os.path.join(out_dir, f"{name}.log")
 
-    # Use the root logger so that ALL print-like calls are captured when
-    # code uses logging.info() etc. We also add a custom stream wrapper
-    # below to capture bare print() statements.
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
@@ -132,8 +130,9 @@ def setup_logging(out_dir: str, name: str = "run") -> logging.Logger:
         datefmt="%Y-%m-%d %H:%M:%S",
     )
 
-    # Console handler (same as before)
-    console = logging.StreamHandler(sys.stdout)
+    # Console handler: write to REAL stdout (bypass our redirect below)
+    # so that logging.info() calls appear on screen exactly once.
+    console = logging.StreamHandler(sys.__stdout__)
     console.setLevel(logging.INFO)
     console.setFormatter(fmt)
     logger.addHandler(console)
@@ -144,21 +143,29 @@ def setup_logging(out_dir: str, name: str = "run") -> logging.Logger:
     fh.setFormatter(fmt)
     logger.addHandler(fh)
 
-    # Redirect bare print() to the logger so existing print-based code
-    # is captured without modification.
-    class _PrintToLogger:
-        """Drop-in replacement for sys.stdout that tees output to a logger."""
+    # Redirect bare print() so existing print-based code is captured in the
+    # log file WITHOUT modifying every print statement. Console output goes
+    # through the original stdout directly; only the file gets the logged copy.
+    class _PrintToFile:
+        """sys.stdout wrapper that tees print() output to a log file."""
         def __init__(self, original_stdout, target_logger):
             self._original = original_stdout
             self._logger = target_logger
 
         def write(self, msg):
-            # Write to real stdout first (so tqdm / interactive output still works)
+            # Always pass through to real stdout (tqdm, interactive output)
             self._original.write(msg)
-            # Also log non-empty lines (skip pure newlines from tqdm refreshes)
+            # Also write non-empty lines to the log FILE only (not console,
+            # since the original write above already displayed it)
             stripped = msg.rstrip("\n")
             if stripped:
-                self._logger.info(stripped)
+                # Use the file handler directly to avoid double console output
+                for handler in self._logger.handlers:
+                    if isinstance(handler, logging.FileHandler):
+                        record = self._logger.makeRecord(
+                            "print", logging.INFO, "", 0, stripped, (), None
+                        )
+                        handler.emit(record)
 
         def flush(self):
             self._original.flush()
@@ -166,7 +173,7 @@ def setup_logging(out_dir: str, name: str = "run") -> logging.Logger:
         def __getattr__(self, attr):
             return getattr(self._original, attr)
 
-    sys.stdout = _PrintToLogger(sys.__stdout__, logger)
+    sys.stdout = _PrintToFile(sys.__stdout__, logger)
 
     logger.info(f"Logging to {log_path}")
     return logger
