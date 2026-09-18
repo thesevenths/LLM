@@ -139,7 +139,8 @@ def attribution_heatmap(
     vmax = float(np.abs(matrix).max()) + 1e-8
 
     fig, ax = plt.subplots(figsize=(max(6, n_latent * 1.4), max(3, n_concepts * 1.2)))
-    im = ax.imshow(matrix, cmap="RdBu_r", aspect="auto", vmin=-vmax, vmax=vmax)
+    im = ax.imshow(matrix, cmap="RdBu_r", aspect="auto", vmin=-vmax, vmax=vmax,
+                   origin="upper")
 
     # Annotate each cell with its value
     for i in range(n_concepts):
@@ -149,11 +150,18 @@ def attribution_heatmap(
             ax.text(j, i, f"{val:+.2f}", ha="center", va="center",
                     fontsize=9, color=text_color)
 
-    ax.set_xticks(range(n_latent))
-    ax.set_xticklabels(xlabels)
-    ax.set_yticks(range(n_concepts))
-    ax.set_yticklabels(ylabels)
-    ax.set_xlabel("Latent dimension")
-    ax.set_title("Latent Attribution Matrix\n(concept → latent dependency)")
+    # Set ticks and labels atomically to avoid FixedLocator mismatch.
+    # imshow with aspect='auto' can inject its own locator between separate
+    # set_ticks / set_ticklabels calls, causing a count mismatch error.
+    ytick_positions = list(range(n_concepts))
+    xtick_positions = list(range(n_latent))
+    ax.set(
+        yticks=ytick_positions,
+        yticklabels=ylabels,
+        xticks=xtick_positions,
+        xticklabels=xlabels,
+        xlabel="Latent dimension",
+        title="Latent Attribution Matrix\n(concept → latent dependency)",
+    )
     fig.colorbar(im, ax=ax, shrink=0.8, label="Effective weight")
     return _save(fig, output_dir, name)
