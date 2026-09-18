@@ -36,7 +36,7 @@ from models.world_model import WorldModel
 from models.probe import Probe
 from utils.config import ensure_output_dir, load_config, resolve_device, make_run_id
 from utils.metrics import r2, rmse
-from utils.plotting import pca_plot, probe_parity_plot, scatter_latent
+from utils.plotting import pca_plot, probe_parity_plot, scatter_latent, attribution_heatmap
 from utils.seed import set_seed
 
 
@@ -89,6 +89,61 @@ def best_latent_dim(Z, y):
     yc = (y - y.mean()) / (y.std() + 1e-8)                # standardise concept values
     corr = (Zc.T @ yc) / len(y)                            # pearson correlation per dim
     return int(np.argmax(np.abs(corr)))                    # dim with strongest |correlation|
+
+
+def compute_attribution_matrix(probe, label_names, latent_dim):
+    """Extract the Latent Attribution Matrix from the trained probe's first layer.
+
+    The probe is a small MLP: latent -> hidden -> concepts. Its first linear
+    layer W1 has shape (hidden, latent_dim). Each row of W1 shows how one
+    hidden unit mixes latent dimensions; but what we really want is the
+    *concept-level* attribution.
+
+    We approximate this by propagating W1 through the second layer W2
+    (concepts, hidden): the effective linear map from latent to concepts is
+    W_eff = W2 @ W1, shape (num_concepts, latent_dim). Element [j, k] tells
+    us how much latent dim z_k contributes to predicting concept j.
+
+    This is equivalent to the Jacobian of the probe at zero input (first-order
+    Taylor expansion), which for small probes with ReLU is a good proxy for
+    global feature importance.
+
+    Returns:
+        W_eff: np.ndarray of shape (num_concepts, latent_dim)
+    """
+    layers = list(probe.net)
+    # Extract weight matrices from the first two Linear layers
+    linear_layers = [m for m in layers if isinstance(m, torch.nn.Linear)]
+    if len(linear_layers) < 2:
+        # Fallback: single-layer probe — use its weights directly
+        W = linear_layers[0].weight.detach().cpu().numpy()  # (out, latent)
+        return W
+    W1 = linear_layers[0].weight.detach().cpu().numpy()  # (hidden, latent_dim)
+    W2 = linear_layers[1].weight.detach().cpu().numpy()  # (num_concepts, hidden)
+    W_eff = W2 @ W1  # (num_concepts, latent_dim)
+    return W_eff
+
+
+def disentanglement_score(attribution_matrix):
+    """Quantify whether the latent space is disentangled or distributed.
+
+    For each concept (row), compute the *participation ratio*:
+        PR_j = (sum(|w_jk|))^2 / sum(w_jk^2)
+    This equals 1.0 if exactly one latent dim carries all the weight (perfectly
+    disentangled) and equals latent_dim if all dims contribute equally
+    (fully distributed / superposition).
+
+    Also returns per-concept scores and an overall mean.
+
+    Returns:
+        per_concept: np.ndarray of shape (num_concepts,) — PR for each concept
+        overall: float — mean PR across concepts
+    """
+    W = np.asarray(attribution_matrix, dtype=np.float64)
+    abs_sum = np.abs(W).sum(axis=1)          # L1 norm per concept
+    sq_sum = (W ** 2).sum(axis=1)            # L2^2 norm per concept
+    pr = (abs_sum ** 2) / (sq_sum + 1e-12)   # participation ratio
+    return pr, float(pr.mean())
 
 
 def train_probe(probe, Z, Y, cfg, device):
@@ -185,6 +240,32 @@ def main() -> None:
             f"most-correlated latent dim=z{best_dim}"
         )
 
+    # ---- Latent Attribution Matrix ----------------------------------------
+    # Extract the effective linear map from latent dims to concepts via the
+    # trained probe's weight composition (W2 @ W1). This answers:
+    #   1. Can the probe recover each physical quantity? (R^2 above)
+    #   2. Which latent dims does each concept depend on? (matrix weights)
+    #   3. Is the encoding disentangled (1:1) or distributed (superposition)?
+    #      -> participation ratio PR: 1.0 = perfectly disentangled,
+    #         latent_dim = fully distributed
+    attribution = compute_attribution_matrix(probe, label_names, cfg["model"]["latent_dim"])
+    pr_per_concept, pr_overall = disentanglement_score(attribution)
+
+    print("\n=== Latent Attribution Matrix ===")
+    header = "          " + "".join(f"{'z'+str(k):>8s}" for k in range(attribution.shape[1]))
+    print(header)
+    for j, name in enumerate(label_names):
+        row = "".join(f"{attribution[j, k]:+8.3f}" for k in range(attribution.shape[1]))
+        print(f"  {name:8s}{row}")
+
+    print(f"\n=== Disentanglement Analysis (Participation Ratio) ===")
+    for j, name in enumerate(label_names):
+        style = "disentangled" if pr_per_concept[j] < 1.5 else (
+            "mixed" if pr_per_concept[j] < 2.5 else "distributed"
+        )
+        print(f"  {name:8s}: PR={pr_per_concept[j]:.2f}  ({style})")
+    print(f"  Overall mean PR = {pr_overall:.2f} / {cfg['model']['latent_dim']} latent dims")
+
     # ---- persist artefacts for symbolic.py (fixes the broken handoff) -----
     # Save latents + labels so symbolic.py can run PySR: latent -> formula
     np.save(os.path.join(out_dir, "latent.npy"), Zte)     # (N, latent_dim) frozen test latents
@@ -201,6 +282,15 @@ def main() -> None:
     for j, name in enumerate(label_names):
         best_dim = best_latent_dim(Zte, Yte[:, j])
         scatter_latent(Zte[:, best_dim], Yte[:, j], name, output_dir=out_dir)
+    # Latent Attribution Matrix heatmap
+    attribution_heatmap(
+        attribution,
+        label_names,
+        cfg["model"]["latent_dim"],
+        r2_scores=r2_scores,
+        pr_scores=pr_per_concept,
+        output_dir=out_dir,
+    )
     print(f"Wrote plots to {out_dir}/")
 
 

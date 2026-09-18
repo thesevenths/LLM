@@ -96,3 +96,64 @@ def probe_parity_plot(true, pred, names, output_dir="outputs", name="probe_parit
         ax.set_ylabel(f"predicted {names[j]}")
         ax.legend(fontsize=8)
     return _save(fig, output_dir, name)
+
+
+def attribution_heatmap(
+    matrix,
+    label_names,
+    latent_dim,
+    r2_scores=None,
+    pr_scores=None,
+    output_dir="outputs",
+    name="attribution_matrix",
+):
+    """Latent Attribution Matrix heatmap: concepts (rows) x latent dims (cols).
+
+    Each cell [j, k] shows the effective weight from latent dim z_k to concept j,
+    extracted from the trained probe's composed linear map W2 @ W1.
+
+    Annotations:
+      - Cell values show the raw weight (signed contribution).
+      - Row headers include R^2 (if provided) so you can see recovery quality.
+      - A sidebar or title notes the participation ratio (disentanglement score).
+
+    Colour scale is symmetric around zero (diverging cmap) so positive and
+    negative contributions are equally visible.
+    """
+    matrix = np.asarray(matrix, dtype=np.float64)
+    n_concepts, n_latent = matrix.shape
+
+    # Build y-axis labels with optional R^2 and PR annotations
+    ylabels = []
+    for j, name in enumerate(label_names):
+        parts = [name]
+        if r2_scores is not None:
+            parts.append(f"R²={r2_scores[j]:.3f}")
+        if pr_scores is not None:
+            parts.append(f"PR={pr_scores[j]:.2f}")
+        ylabels.append("  ".join(parts))
+
+    xlabels = [f"z{k}" for k in range(n_latent)]
+
+    # Symmetric colour limits for diverging colormap
+    vmax = float(np.abs(matrix).max()) + 1e-8
+
+    fig, ax = plt.subplots(figsize=(max(6, n_latent * 1.4), max(3, n_concepts * 1.2)))
+    im = ax.imshow(matrix, cmap="RdBu_r", aspect="auto", vmin=-vmax, vmax=vmax)
+
+    # Annotate each cell with its value
+    for i in range(n_concepts):
+        for j in range(n_latent):
+            val = matrix[i, j]
+            text_color = "white" if abs(val) > 0.5 * vmax else "black"
+            ax.text(j, i, f"{val:+.2f}", ha="center", va="center",
+                    fontsize=9, color=text_color)
+
+    ax.set_xticks(range(n_latent))
+    ax.set_xticklabels(xlabels)
+    ax.set_yticks(range(n_concepts))
+    ax.set_yticklabels(ylabels)
+    ax.set_xlabel("Latent dimension")
+    ax.set_title("Latent Attribution Matrix\n(concept → latent dependency)")
+    fig.colorbar(im, ax=ax, shrink=0.8, label="Effective weight")
+    return _save(fig, output_dir, name)
