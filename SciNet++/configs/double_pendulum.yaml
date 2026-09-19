@@ -62,10 +62,10 @@ probe:
 
 # --- Symbolic regression (AI Feynman / PySR) --------------------------------
 symbolic:
-  niterations: 40
+  niterations: 20
   binary_operators: ["+", "-", "*"]
   unary_operators: ["exp", "cos", "log", "sqrt", "inv"]
-  max_complexity: 25
+  max_complexity: 15
   batch_size: 50
 
 # --- Test-time adaptation (AdaJEPA) -----------------------------------------
