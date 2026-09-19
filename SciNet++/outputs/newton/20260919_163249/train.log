@@ -1,0 +1,13 @@
+2026-09-19 16:32:55 [INFO] Logging to outputs\newton\20260919_163249\train.log
+2026-09-19 16:34:37 [INFO] [epoch   0] train=7.1242 val_pred=0.0061 latent_std=1.073 cos(h1)=0.977
+2026-09-19 16:35:41 [INFO] [epoch   1] train=3.5562 val_pred=0.0141 latent_std=0.944 cos(h1)=0.935
+2026-09-19 16:36:58 [INFO] [epoch   2] train=3.4887 val_pred=0.0234 latent_std=1.037 cos(h1)=0.970
+2026-09-19 16:38:19 [INFO] [epoch   3] train=3.5513 val_pred=0.0318 latent_std=0.999 cos(h1)=0.988
+2026-09-19 16:39:45 [INFO] [epoch   4] train=3.5497 val_pred=0.0466 latent_std=1.097 cos(h1)=0.979
+2026-09-19 16:40:44 [INFO] [epoch   5] train=3.6741 val_pred=0.0522 latent_std=1.017 cos(h1)=0.990
+2026-09-19 16:41:41 [INFO] [epoch   6] train=3.4714 val_pred=0.0939 latent_std=1.030 cos(h1)=0.996
+2026-09-19 16:42:45 [INFO] [epoch   7] train=3.5636 val_pred=0.0464 latent_std=1.004 cos(h1)=0.983
+2026-09-19 16:43:36 [INFO] [epoch   8] train=3.6865 val_pred=0.0873 latent_std=0.947 cos(h1)=0.923
+2026-09-19 16:44:36 [INFO] [epoch   9] train=3.5346 val_pred=0.0480 latent_std=1.074 cos(h1)=0.970
+2026-09-19 16:45:34 [INFO] [epoch  10] train=3.5803 val_pred=0.0513 latent_std=0.972 cos(h1)=0.957
+2026-09-19 16:46:44 [INFO] [epoch  11] train=3.4489 val_pred=0.0539 latent_std=0.951 cos(h1)=0.959

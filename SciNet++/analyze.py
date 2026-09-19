@@ -112,16 +112,18 @@ def compute_attribution_matrix(probe, label_names, latent_dim):
         W_eff: np.ndarray of shape (num_concepts, latent_dim)
     """
     layers = list(probe.net)
-    # Extract weight matrices from the first two Linear layers
+    # Extract ALL Linear layers and compose their weights to get the full
+    # effective map from latent dims to concepts.
+    # Probe structure: latent -> h1 -> h2 -> ... -> num_concepts
+    # W_eff = W_last @ ... @ W2 @ W1, shape (num_concepts, latent_dim)
     linear_layers = [m for m in layers if isinstance(m, torch.nn.Linear)]
-    if len(linear_layers) < 2:
-        # Fallback: single-layer probe — use its weights directly
-        W = linear_layers[0].weight.detach().cpu().numpy()  # (out, latent)
-        return W
-    W1 = linear_layers[0].weight.detach().cpu().numpy()  # (hidden, latent_dim)
-    W2 = linear_layers[1].weight.detach().cpu().numpy()  # (num_concepts, hidden)
-    W_eff = W2 @ W1  # (num_concepts, latent_dim)
-    return W_eff
+    if not linear_layers:
+        raise ValueError("Probe has no Linear layers -- cannot compute attribution.")
+    W_eff = linear_layers[0].weight.detach().cpu().numpy()  # (h1, latent_dim)
+    for layer in linear_layers[1:]:
+        W_next = layer.weight.detach().cpu().numpy()          # (h_out, h_in)
+        W_eff = W_next @ W_eff                                # compose left-to-right
+    return W_eff  # shape: (num_concepts, latent_dim)
 
 
 def disentanglement_score(attribution_matrix):

@@ -1,0 +1,17 @@
+2026-09-19 16:49:44 [INFO] Logging to outputs\pendulum\20260919_110050\tta.log
+2026-09-19 16:49:50 [INFO]   tta step   0  loss=0.03257
+2026-09-19 16:49:51 [INFO]   tta step   6  loss=0.03177
+2026-09-19 16:49:51 [INFO]   tta step  12  loss=0.03132
+2026-09-19 16:49:52 [INFO]   tta step  18  loss=0.03112
+2026-09-19 16:49:52 [INFO]   tta step  24  loss=0.03097
+2026-09-19 16:49:53 [INFO] 
+=== AdaJEPA test-time adaptation ===
+2026-09-19 16:49:53 [INFO] (test batch corrupted with Gaussian noise std=0.05)
+2026-09-19 16:49:53 [INFO]  horizon |  MSE before |   MSE after | cos before |  cos after
+2026-09-19 16:49:53 [INFO] --------------------------------------------------------------
+2026-09-19 16:49:53 [INFO]        1 |     0.01199 |     0.00825 |     0.9782 |     0.9780
+2026-09-19 16:49:53 [INFO]        2 |     0.00567 |     0.00392 |     0.9865 |     0.9876
+2026-09-19 16:49:53 [INFO]        3 |     0.00205 |     0.00120 |     0.9940 |     0.9950
+2026-09-19 16:49:53 [INFO]        4 |     0.00351 |     0.00293 |     0.9935 |     0.9923
+2026-09-19 16:49:53 [INFO] 
+Mean latent MSE improved by +29.75% (0.00580 -> 0.00408) with no labels used.

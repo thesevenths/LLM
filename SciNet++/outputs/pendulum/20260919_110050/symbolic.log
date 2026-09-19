@@ -1,0 +1,5 @@
+2026-09-19 16:38:26 [INFO] Logging to outputs\pendulum\20260919_110050\symbolic.log
+2026-09-19 16:38:26 [INFO] Loaded latents (2000, 4) and 2 concept target(s): ['gamma', 'omega']
+2026-09-19 16:38:26 [INFO] 
+=== Symbolic regression: latent -> gamma ===
+2026-09-19 16:38:27 [INFO] Compiling Julia backend...

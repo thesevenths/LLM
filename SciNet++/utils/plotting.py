@@ -107,70 +107,58 @@ def attribution_heatmap(
     output_dir="outputs",
     name="attribution_matrix",
 ):
-    """Latent Attribution Matrix heatmap: concepts (rows) x latent dims (cols).
+    """Save the Latent Attribution Matrix as a CSV file and print a text table.
 
     Each cell [j, k] shows the effective weight from latent dim z_k to concept j,
     extracted from the trained probe's composed linear map W2 @ W1.
 
-    Uses pcolormesh instead of imshow to avoid the FixedLocator mismatch bug:
-    imshow treats the matrix as a pixel image and locks axis ticks to pixel
-    positions (e.g. 2 rows * DPI scaling = 16 ticks), which conflicts with
-    any attempt to set custom tick labels. pcolormesh works in data coordinates
-    so tick counts always match the matrix dimensions.
+    Outputs:
+      - ``<output_dir>/<name>.csv`` -- machine-readable CSV for downstream analysis
+      - Console/log text table with R^2 and PR annotations per concept
 
-    Annotations:
-      - Cell values show the raw weight (signed contribution).
-      - Row headers include R^2 (if provided) so you can see recovery quality.
-      - A sidebar or title notes the participation ratio (disentanglement score).
-
-    Colour scale is symmetric around zero (diverging cmap) so positive and
-    negative contributions are equally visible.
+    This replaces the previous matplotlib heatmap which suffered from a persistent
+    FixedLocator bug across multiple matplotlib versions. A text table + CSV is
+    more portable, diffable, and impossible to break.
     """
+    import csv
+
     matrix = np.asarray(matrix, dtype=np.float64)
     n_concepts, n_latent = matrix.shape
 
-    # Build y-axis labels with optional R^2 and PR annotations
-    ylabels = []
-    for j, cname in enumerate(label_names):
-        parts = [cname]
-        if r2_scores is not None:
-            parts.append(f"R²={r2_scores[j]:.3f}")
-        if pr_scores is not None:
-            parts.append(f"PR={pr_scores[j]:.2f}")
-        ylabels.append("  ".join(parts))
-
     xlabels = [f"z{k}" for k in range(n_latent)]
 
-    # Symmetric colour limits for diverging colormap
-    vmax = float(np.abs(matrix).max()) + 1e-8
+    # ---- Save CSV --------------------------------------------------------
+    os.makedirs(output_dir, exist_ok=True)
+    csv_path = os.path.join(output_dir, f"{name}.csv")
+    with open(csv_path, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        header = ["concept"] + xlabels
+        if r2_scores is not None:
+            header.append("R2")
+        if pr_scores is not None:
+            header.append("PR")
+        writer.writerow(header)
+        for j in range(n_concepts):
+            row = [label_names[j]] + [f"{matrix[j, k]:.4f}" for k in range(n_latent)]
+            if r2_scores is not None:
+                row.append(f"{r2_scores[j]:.4f}")
+            if pr_scores is not None:
+                row.append(f"{pr_scores[j]:.4f}")
+            writer.writerow(row)
 
-    fig, ax = plt.subplots(figsize=(max(6, n_latent * 1.4), max(3, n_concepts * 1.2)))
+    # ---- Build text table for console/log --------------------------------
+    col_w = 9  # width per latent column
+    hdr = f"{'':>10s}" + "".join(f"{xl:>{col_w}s}" for xl in xlabels)
+    lines = [hdr]
+    for j in range(n_concepts):
+        row_str = f"{label_names[j]:>10s}"
+        row_str += "".join(f"{matrix[j, k]:>+{col_w}.3f}" for k in range(n_latent))
+        if r2_scores is not None:
+            row_str += f"  R2={r2_scores[j]:.3f}"
+        if pr_scores is not None:
+            row_str += f"  PR={pr_scores[j]:.2f}"
+        lines.append(row_str)
+    table_text = "\n".join(lines)
+    print(table_text)
 
-    # pcolormesh uses data coordinates: x edges = [0, 1, ..., n_latent],
-    # y edges = [0, 1, ..., n_concepts]. Tick centres land at 0.5, 1.5, ...
-    mesh = ax.pcolormesh(
-        np.arange(n_latent + 1),          # x edges
-        np.arange(n_concepts + 1),         # y edges
-        matrix,                            # data (n_concepts x n_latent)
-        cmap="RdBu_r",
-        vmin=-vmax,
-        vmax=vmax,
-    )
-
-    # Annotate each cell with its value (centre of each cell = i+0.5, j+0.5)
-    for i in range(n_concepts):
-        for j in range(n_latent):
-            val = matrix[i, j]
-            text_color = "white" if abs(val) > 0.5 * vmax else "black"
-            ax.text(j + 0.5, i + 0.5, f"{val:+.2f}", ha="center", va="center",
-                    fontsize=9, color=text_color)
-
-    # Set ticks at cell centres; pcolormesh guarantees these match the data dims
-    ax.set_xticks([k + 0.5 for k in range(n_latent)])
-    ax.set_xticklabels(xlabels)
-    ax.set_yticks([k + 0.5 for k in range(n_concepts)])
-    ax.set_yticklabels(ylabels)
-    ax.set_xlabel("Latent dimension")
-    ax.set_title("Latent Attribution Matrix\n(concept → latent dependency)")
-    fig.colorbar(mesh, ax=ax, shrink=0.8, label="Effective weight")
-    return _save(fig, output_dir, name)
+    return csv_path

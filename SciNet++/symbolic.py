@@ -130,7 +130,6 @@ def discover_formula(Z: np.ndarray, y: np.ndarray, cfg: dict,
         # ensures they are cleaned up after the search completes.
         temp_equation_file=True,
         delete_tempfiles=True,
-        equation_file=os.path.join(out_dir, "hall_of_fame.csv"),
     )
     model.fit(Z, y)  # Z = (N, latent_dim), y = (N,) concept values
     return model
