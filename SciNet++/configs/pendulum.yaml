@@ -67,8 +67,8 @@ symbolic:
   niterations: 20
   binary_operators: ["+", "-", "*"]
   unary_operators: ["exp", "cos", "log", "sqrt", "inv"]
-  max_complexity: 30
-  batch_size: 100
+  max_complexity: 15
+  batch_size: 50
 
 # --- Test-time adaptation (AdaJEPA) -----------------------------------------
 tta:
