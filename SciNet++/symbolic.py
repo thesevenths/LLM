@@ -122,6 +122,14 @@ def discover_formula(Z, y, cfg, out_dir, concept_name):
         f"hall_of_fame_{concept_name}.csv",
     )
 
+    # NOTE: on Windows, parallelism="multithreading" swallows per-iteration
+    # logs (terminal stuck at `[ Info: Started!`) and thread-scheduling
+    # overhead actually slows down small problems.  Serial mode prints
+    # `iter X/N` progress and converges faster for data of this scale.
+    # early stop: config `symbolic.early_stop` > 0 时,best loss 低于该值即停止;
+    # 0/缺省 -> None,即关闭(PySR 的正确参数名是 early_stop_condition)
+    _esc = s.get("early_stop", 0.0)
+
     model = PySRRegressor(
         niterations=s.get("niterations", 40),
         binary_operators=s.get("binary_operators", ["+", "-", "*"]),
@@ -130,9 +138,11 @@ def discover_formula(Z, y, cfg, out_dir, concept_name):
         batch_size=s.get("batch_size", 50),
 
         random_state=cfg.get("seed", 42),
+        parallelism=s.get("parallelism", "serial"),
+        deterministic=True,
 
-        parallelism="multithreading",
-        deterministic=False,
+        # stop once the best loss drops below this threshold (None = disabled)
+        early_stop_condition=(_esc if _esc and _esc > 0 else None),
 
         precision=64,
 

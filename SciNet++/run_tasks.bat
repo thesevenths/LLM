@@ -6,7 +6,7 @@ echo ==========================================
 echo [1/3] 正在执行 pendulum 配置...
 echo ==========================================
 :: python run_all.py --config configs/pendulum.yaml
-python train.py --config configs/pendulum.yaml
+:: python train.py --config configs/pendulum.yaml
 python analyze.py --config configs/pendulum.yaml
 python symbolic.py --config configs/pendulum.yaml
 python evaluate.py --config configs/pendulum.yaml
