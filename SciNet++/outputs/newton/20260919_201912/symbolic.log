@@ -1,0 +1,58 @@
+2026-09-25 10:54:09 [INFO] Logging to outputs\newton\20260919_201912\symbolic.log
+2026-09-25 10:54:09 [INFO] ======================================================================
+2026-09-25 10:54:09 [INFO] Julia backend
+2026-09-25 10:54:09 [INFO] ======================================================================
+2026-09-25 10:54:09 [INFO] Exe     :
+2026-09-25 10:54:09 [INFO]  
+2026-09-25 10:54:09 [INFO] D:\ProgramData\anaconda3\julia_env\pyjuliapkg\install\bin\julia.exe
+2026-09-25 10:54:09 [INFO] Project :
+2026-09-25 10:54:09 [INFO]  
+2026-09-25 10:54:09 [INFO] D:\ProgramData\anaconda3\julia_env
+2026-09-25 10:54:09 [INFO] Threads :
+2026-09-25 10:54:09 [INFO]  
+2026-09-25 10:54:09 [INFO] auto
+2026-09-25 10:54:09 [INFO] ======================================================================
+2026-09-25 10:54:09 [INFO] Loaded latents (2000, 4)
+2026-09-25 10:54:09 [INFO] Loaded concepts ['force', 'mass']
+2026-09-25 10:54:09 [INFO] 
+======================================================================
+2026-09-25 10:54:09 [INFO] Symbolic regression: latent -> force
+2026-09-25 10:54:09 [INFO] ======================================================================
+2026-09-25 10:54:09 [INFO] Start searching formula for force
+2026-09-25 10:54:09 [INFO] Calling model.fit()...
+2026-09-25 10:54:09 [INFO] Compiling Julia backend...
+2026-09-25 10:55:18 [INFO] Finished force in 69.3s
+2026-09-25 10:55:18 [INFO] Finished force in 69.3 seconds
+2026-09-25 10:55:18 [INFO] 
+Best equation:
+2026-09-25 10:55:18 [INFO] complexity                                                       5
+loss                                                       0.06942
+equation             1.822407748224401 - (x2 * 1.2745925208326607)
+score                                                     0.363747
+sympy_format             1.822407748224401 - 1.2745925208326607*x2
+lambda_format    PySRFunction(X=>1.822407748224401 - 1.27459252...
+Name: 2, dtype: object
+2026-09-25 10:55:18 [INFO] R2 = 0.959924
+2026-09-25 10:55:18 [INFO] Saved outputs\newton\20260919_201912\equations_force.txt
+2026-09-25 10:55:18 [INFO] Saved outputs\newton\20260919_201912\equations_force.csv
+2026-09-25 10:55:18 [INFO] 
+======================================================================
+2026-09-25 10:55:18 [INFO] Symbolic regression: latent -> mass
+2026-09-25 10:55:18 [INFO] ======================================================================
+2026-09-25 10:55:18 [INFO] Start searching formula for mass
+2026-09-25 10:55:18 [INFO] Calling model.fit()...
+2026-09-25 10:55:29 [INFO] Finished mass in 10.7s
+2026-09-25 10:55:29 [INFO] Finished mass in 10.7 seconds
+2026-09-25 10:55:29 [INFO] 
+Best equation:
+2026-09-25 10:55:29 [INFO] complexity                                                       8
+loss                                                      0.529315
+equation         (exp(x1 * x1) * -0.0010890148147615593) - -1.7...
+score                                                     0.013129
+sympy_format     exp(x1*x1)*(-0.0010890148147615593) - 1*(-1.78...
+lambda_format    PySRFunction(X=>exp(x1*x1)*(-0.001089014814761...
+Name: 4, dtype: object
+2026-09-25 10:55:29 [INFO] R2 = 0.016458
+2026-09-25 10:55:29 [INFO] Saved outputs\newton\20260919_201912\equations_mass.txt
+2026-09-25 10:55:29 [INFO] Saved outputs\newton\20260919_201912\equations_mass.csv
+2026-09-25 10:55:29 [INFO] Symbolic regression completed.

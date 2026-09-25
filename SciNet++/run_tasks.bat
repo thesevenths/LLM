@@ -1,41 +1,41 @@
 @echo off
-:: 设置UTF-8编码，防止中文提示乱码
-chcp 65001 >nul 
-
-echo ==========================================
-echo [1/3] 正在执行 pendulum 配置...
-echo ==========================================
-:: python run_all.py --config configs/pendulum.yaml
-:: python train.py --config configs/pendulum.yaml
-python analyze.py --config configs/pendulum.yaml
-python symbolic.py --config configs/pendulum.yaml
-python evaluate.py --config configs/pendulum.yaml
-python tta.py --config configs/pendulum.yaml --noise-std 0.05
+:: NOTE: keep this file ASCII-only (no Chinese, no chcp 65001).
+:: cmd reads .bat by byte offset; UTF-8 Chinese + codepage switch can
+:: swallow characters of the next line (e.g. "python" -> "hon").
+:: To skip a finished step, just comment its line out with ::
 
 echo.
 echo ==========================================
-echo [2/3] 正在执行 newton 配置...
+echo [1/3] pendulum
 echo ==========================================
-python train.py --config configs/newton.yaml
-python analyze.py --config configs/newton.yaml
-python symbolic.py --config configs/newton.yaml
-python evaluate.py --config configs/newton.yaml
-python tta.py --config configs/newton.yaml --noise-std 0.05
+python train.py    --config configs/pendulum.yaml              || exit /b 1
+python analyze.py  --config configs/pendulum.yaml              || exit /b 1
+python symbolic.py --config configs/pendulum.yaml              || exit /b 1
+python evaluate.py --config configs/pendulum.yaml              || exit /b 1
+python tta.py      --config configs/pendulum.yaml --noise-std 0.05 || exit /b 1
 
 echo.
 echo ==========================================
-echo [3/3] 正在执行 double_pendulum 配置...
+echo [2/3] newton
 echo ==========================================
-python train.py --config configs/double_pendulum.yaml
-python analyze.py --config configs/double_pendulum.yaml
-python symbolic.py --config configs/double_pendulum.yaml
-python evaluate.py --config configs/double_pendulum.yaml
-python tta.py --config configs/double_pendulum.yaml --noise-std 0.05
+python train.py    --config configs/newton.yaml                || exit /b 1
+python analyze.py  --config configs/newton.yaml                || exit /b 1
+python symbolic.py --config configs/newton.yaml                || exit /b 1
+python evaluate.py --config configs/newton.yaml                || exit /b 1
+python tta.py      --config configs/newton.yaml --noise-std 0.05 || exit /b 1
 
 echo.
 echo ==========================================
-echo 所有任务执行完毕！
+echo [3/3] double_pendulum
 echo ==========================================
+python train.py    --config configs/double_pendulum.yaml              || exit /b 1
+python analyze.py  --config configs/double_pendulum.yaml              || exit /b 1
+python symbolic.py --config configs/double_pendulum.yaml              || exit /b 1
+python evaluate.py --config configs/double_pendulum.yaml              || exit /b 1
+python tta.py      --config configs/double_pendulum.yaml --noise-std 0.05 || exit /b 1
 
-:: 暂停，防止执行完后窗口直接关闭
+echo.
+echo ==========================================
+echo All tasks completed!
+echo ==========================================
 pause

@@ -1,0 +1,38 @@
+2026-09-25 16:17:41 [INFO] Logging to outputs\double_pendulum\20260919_093324\symbolic.log
+2026-09-25 16:17:41 [INFO] ======================================================================
+2026-09-25 16:17:41 [INFO] Julia backend
+2026-09-25 16:17:41 [INFO] ======================================================================
+2026-09-25 16:17:41 [INFO] Exe     :
+2026-09-25 16:17:41 [INFO]  
+2026-09-25 16:17:41 [INFO] D:\ProgramData\anaconda3\julia_env\pyjuliapkg\install\bin\julia.exe
+2026-09-25 16:17:41 [INFO] Project :
+2026-09-25 16:17:41 [INFO]  
+2026-09-25 16:17:41 [INFO] D:\ProgramData\anaconda3\julia_env
+2026-09-25 16:17:41 [INFO] Threads :
+2026-09-25 16:17:41 [INFO]  
+2026-09-25 16:17:41 [INFO] auto
+2026-09-25 16:17:41 [INFO] ======================================================================
+2026-09-25 16:17:41 [INFO] Loaded latents (1000, 4)
+2026-09-25 16:17:41 [INFO] Loaded concepts ['energy']
+2026-09-25 16:17:41 [INFO] 
+======================================================================
+2026-09-25 16:17:41 [INFO] Symbolic regression: latent -> energy
+2026-09-25 16:17:41 [INFO] ======================================================================
+2026-09-25 16:17:41 [INFO] Start searching formula for energy
+2026-09-25 16:17:41 [INFO] Calling model.fit()...
+2026-09-25 16:17:41 [INFO] Compiling Julia backend...
+2026-09-25 16:18:42 [INFO] Finished energy in 61.1s
+2026-09-25 16:18:42 [INFO] Finished energy in 61.1 seconds
+2026-09-25 16:18:42 [INFO] 
+Best equation:
+2026-09-25 16:18:42 [INFO] complexity                                                   5
+loss                                                  110.3829
+equation                     cos(inv(x2)) * 15.463376496182082
+score                                                 0.266708
+sympy_format                      cos(1/x2)*15.463376496182082
+lambda_format    PySRFunction(X=>cos(1/x2)*15.463376496182082)
+Name: 3, dtype: object
+2026-09-25 16:18:42 [INFO] R2 = 0.561092
+2026-09-25 16:18:42 [INFO] Saved outputs\double_pendulum\20260919_093324\equations_energy.txt
+2026-09-25 16:18:42 [INFO] Saved outputs\double_pendulum\20260919_093324\equations_energy.csv
+2026-09-25 16:18:42 [INFO] Symbolic regression completed.

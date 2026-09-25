@@ -1,0 +1,17 @@
+2026-09-25 10:32:46 [INFO] Logging to outputs\newton\20260919_201912\tta.log
+2026-09-25 10:32:48 [INFO]   tta step   0  loss=1.22870
+2026-09-25 10:32:49 [INFO]   tta step   6  loss=1.22597
+2026-09-25 10:32:49 [INFO]   tta step  12  loss=1.22542
+2026-09-25 10:32:49 [INFO]   tta step  18  loss=1.22394
+2026-09-25 10:32:49 [INFO]   tta step  24  loss=1.22345
+2026-09-25 10:32:49 [INFO] 
+=== AdaJEPA test-time adaptation ===
+2026-09-25 10:32:49 [INFO] (test batch corrupted with Gaussian noise std=0.05)
+2026-09-25 10:32:49 [INFO]  horizon |  MSE before |   MSE after | cos before |  cos after
+2026-09-25 10:32:49 [INFO] --------------------------------------------------------------
+2026-09-25 10:32:49 [INFO]        1 |     0.00356 |     0.00434 |     0.9985 |     0.9984
+2026-09-25 10:32:49 [INFO]        2 |     0.00519 |     0.00471 |     0.9996 |     0.9993
+2026-09-25 10:32:49 [INFO]        3 |     0.03473 |     0.03194 |     0.9996 |     0.9993
+2026-09-25 10:32:49 [INFO]        4 |     0.12909 |     0.10910 |     0.9997 |     0.9994
+2026-09-25 10:32:49 [INFO] 
+Mean latent MSE improved by +13.02% (0.04314 -> 0.03752) with no labels used.

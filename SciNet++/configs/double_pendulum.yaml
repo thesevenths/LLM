@@ -62,11 +62,11 @@ probe:
 
 # --- Symbolic regression (AI Feynman / PySR) --------------------------------
 symbolic:
-  niterations: 20
+  niterations: 40
   binary_operators: ["+", "-", "*"]
   unary_operators: ["exp", "cos", "log", "sqrt", "inv"]
   max_complexity: 15
-  batch_size: 50
+  batch_size: 100
   parallelism: serial     # Windows下multithreading会吞掉逐轮日志且小数据更慢
   early_stop: 0.0         # >0时,best loss低于该值即停止(如1e-3);0=关闭
 

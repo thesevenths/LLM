@@ -1,58 +1,58 @@
-2026-09-24 23:02:42 [INFO] Logging to outputs\pendulum\20260919_171240\symbolic.log
-2026-09-24 23:02:42 [INFO] ======================================================================
-2026-09-24 23:02:42 [INFO] Julia backend
-2026-09-24 23:02:42 [INFO] ======================================================================
-2026-09-24 23:02:42 [INFO] Exe     :
-2026-09-24 23:02:42 [INFO]  
-2026-09-24 23:02:42 [INFO] D:\ProgramData\anaconda3\julia_env\pyjuliapkg\install\bin\julia.exe
-2026-09-24 23:02:42 [INFO] Project :
-2026-09-24 23:02:42 [INFO]  
-2026-09-24 23:02:42 [INFO] D:\ProgramData\anaconda3\julia_env
-2026-09-24 23:02:42 [INFO] Threads :
-2026-09-24 23:02:42 [INFO]  
-2026-09-24 23:02:42 [INFO] auto
-2026-09-24 23:02:42 [INFO] ======================================================================
-2026-09-24 23:02:42 [INFO] Loaded latents (2000, 4)
-2026-09-24 23:02:42 [INFO] Loaded concepts ['gamma', 'omega']
-2026-09-24 23:02:42 [INFO] 
+2026-09-25 10:12:14 [INFO] Logging to outputs\pendulum\20260919_171240\symbolic.log
+2026-09-25 10:12:14 [INFO] ======================================================================
+2026-09-25 10:12:14 [INFO] Julia backend
+2026-09-25 10:12:14 [INFO] ======================================================================
+2026-09-25 10:12:14 [INFO] Exe     :
+2026-09-25 10:12:14 [INFO]  
+2026-09-25 10:12:14 [INFO] D:\ProgramData\anaconda3\julia_env\pyjuliapkg\install\bin\julia.exe
+2026-09-25 10:12:14 [INFO] Project :
+2026-09-25 10:12:14 [INFO]  
+2026-09-25 10:12:14 [INFO] D:\ProgramData\anaconda3\julia_env
+2026-09-25 10:12:14 [INFO] Threads :
+2026-09-25 10:12:14 [INFO]  
+2026-09-25 10:12:14 [INFO] auto
+2026-09-25 10:12:14 [INFO] ======================================================================
+2026-09-25 10:12:14 [INFO] Loaded latents (2000, 4)
+2026-09-25 10:12:14 [INFO] Loaded concepts ['gamma', 'omega']
+2026-09-25 10:12:14 [INFO] 
 ======================================================================
-2026-09-24 23:02:42 [INFO] Symbolic regression: latent -> gamma
-2026-09-24 23:02:42 [INFO] ======================================================================
-2026-09-24 23:02:42 [INFO] Start searching formula for gamma
-2026-09-24 23:02:42 [INFO] Calling model.fit()...
-2026-09-24 23:02:42 [INFO] Compiling Julia backend...
-2026-09-24 23:03:42 [INFO] Finished gamma in 59.8s
-2026-09-24 23:03:42 [INFO] Finished gamma in 59.8 seconds
-2026-09-24 23:03:42 [INFO] 
+2026-09-25 10:12:14 [INFO] Symbolic regression: latent -> gamma
+2026-09-25 10:12:14 [INFO] ======================================================================
+2026-09-25 10:12:14 [INFO] Start searching formula for gamma
+2026-09-25 10:12:14 [INFO] Calling model.fit()...
+2026-09-25 10:12:14 [INFO] Compiling Julia backend...
+2026-09-25 10:13:20 [INFO] Finished gamma in 65.5s
+2026-09-25 10:13:20 [INFO] Finished gamma in 65.5 seconds
+2026-09-25 10:13:20 [INFO] 
 Best equation:
-2026-09-24 23:03:42 [INFO] complexity                                                       5
-loss                                                      0.002259
-equation          (x1 * 0.06037468576473002) + 0.19995257931585902
-score                                                     0.587524
-sympy_format          x1*0.06037468576473002 + 0.19995257931585902
-lambda_format    PySRFunction(X=>x1*0.06037468576473002 + 0.199...
-Name: 2, dtype: object
-2026-09-24 23:03:42 [INFO] R2 = 0.688071
-2026-09-24 23:03:42 [INFO] Saved outputs\pendulum\20260919_171240\equations_gamma.txt
-2026-09-24 23:03:42 [INFO] Saved outputs\pendulum\20260919_171240\equations_gamma.csv
-2026-09-24 23:03:42 [INFO] 
+2026-09-25 10:13:20 [INFO] complexity                                                      13
+loss                                                      0.001431
+equation         sqrt(exp(x1 + (((x2 + x0) - x3) * -0.211727378...
+score                                                     0.099306
+sympy_format     0.20447031969353233*sqrt(exp(-0.21172737810146...
+lambda_format    PySRFunction(X=>0.20447031969353233*sqrt(exp(-...
+Name: 6, dtype: object
+2026-09-25 10:13:20 [INFO] R2 = 0.802453
+2026-09-25 10:13:20 [INFO] Saved outputs\pendulum\20260919_171240\equations_gamma.txt
+2026-09-25 10:13:20 [INFO] Saved outputs\pendulum\20260919_171240\equations_gamma.csv
+2026-09-25 10:13:20 [INFO] 
 ======================================================================
-2026-09-24 23:03:42 [INFO] Symbolic regression: latent -> omega
-2026-09-24 23:03:42 [INFO] ======================================================================
-2026-09-24 23:03:42 [INFO] Start searching formula for omega
-2026-09-24 23:03:42 [INFO] Calling model.fit()...
-2026-09-24 23:03:49 [INFO] Finished omega in 7.1s
-2026-09-24 23:03:49 [INFO] Finished omega in 7.1 seconds
-2026-09-24 23:03:49 [INFO] 
+2026-09-25 10:13:20 [INFO] Symbolic regression: latent -> omega
+2026-09-25 10:13:20 [INFO] ======================================================================
+2026-09-25 10:13:20 [INFO] Start searching formula for omega
+2026-09-25 10:13:20 [INFO] Calling model.fit()...
+2026-09-25 10:13:35 [INFO] Finished omega in 14.9s
+2026-09-25 10:13:35 [INFO] Finished omega in 14.9 seconds
+2026-09-25 10:13:35 [INFO] 
 Best equation:
-2026-09-24 23:03:49 [INFO] complexity                                                7
+2026-09-25 10:13:35 [INFO] complexity                                                7
 loss                                               0.084661
 equation                      sqrt(sqrt(exp(cos(x0) - x3)))
-score                                              0.331289
+score                                              0.374452
 sympy_format                      exp(-x3 + cos(x0))**(1/4)
 lambda_format    PySRFunction(X=>exp(-x3 + cos(x0))**(1/4))
 Name: 4, dtype: object
-2026-09-24 23:03:49 [INFO] R2 = 0.553790
-2026-09-24 23:03:49 [INFO] Saved outputs\pendulum\20260919_171240\equations_omega.txt
-2026-09-24 23:03:49 [INFO] Saved outputs\pendulum\20260919_171240\equations_omega.csv
-2026-09-24 23:03:49 [INFO] Symbolic regression completed.
+2026-09-25 10:13:35 [INFO] R2 = 0.553790
+2026-09-25 10:13:35 [INFO] Saved outputs\pendulum\20260919_171240\equations_omega.txt
+2026-09-25 10:13:35 [INFO] Saved outputs\pendulum\20260919_171240\equations_omega.csv
+2026-09-25 10:13:35 [INFO] Symbolic regression completed.
