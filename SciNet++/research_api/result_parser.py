@@ -23,16 +23,54 @@ def sha256_file(path: str | Path) -> str:
     return h.hexdigest()
 
 
-def parse_horizon_metrics(out_dir: str | Path) -> dict[str, float]:
-    """``horizon_metrics.npy`` rows are ``[horizon, latent_mse, cosine]``."""
+def read_evaluation_split(out_dir: str | Path,
+                          requested_split: str | None = None) -> str | None:
+    """The split the stage ACTUALLY evaluated, as written by evaluate.py.
+
+    Prefer the split-tagged meta when the job's own command names a split:
+    the canonical ``evaluation_meta.json`` is shared by every evaluation on a
+    run_id and gets overwritten by later jobs. The tagged copy is immutable
+    evidence for that specific split.
+    """
+    root = Path(out_dir)
+    candidates = []
+    if requested_split:
+        candidates.append(root / f"evaluation_meta_{requested_split}.json")
+    candidates.append(root / "evaluation_meta.json")
+    for path in candidates:
+        if not path.is_file():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (ValueError, OSError):
+            continue
+        split = payload.get("split")
+        return str(split) if split else None
+    return None
+
+
+def parse_horizon_metrics(out_dir: str | Path,
+                          split: str | None = None) -> dict[str, float]:
+    """``horizon_metrics[_<split>].npy`` rows are ``[horizon, mse, cosine]``.
+
+    When a split is known, read ONLY its split-tagged file. Falling back to the
+    canonical ``horizon_metrics.npy`` would be dangerous: on a shared run_id a
+    later ``--split test`` job overwrites that file, so a validation job could
+    silently inherit test numbers. Missing split-tagged evidence yields empty
+    metrics (and a diagnosable failure), never a wrong split's numbers.
+    """
     import numpy as np
 
-    path = Path(out_dir) / "horizon_metrics.npy"
+    root = Path(out_dir)
+    if split:
+        path = root / f"horizon_metrics_{split}.npy"
+    else:
+        path = root / "horizon_metrics.npy"
     if not path.is_file():
         return {}
     arr = np.asarray(np.load(path, allow_pickle=False))
     if arr.ndim != 2 or arr.shape[1] < 3:
-        raise ValueError(f"unexpected horizon_metrics.npy shape: {arr.shape}")
+        raise ValueError(f"unexpected {path.name} shape: {arr.shape}")
     metrics: dict[str, float] = {}
     for row in arr:
         k = int(row[0])
@@ -77,10 +115,16 @@ def build_result(*, job: dict, status: str, exit_code: int | None,
                  out_dir: str | Path, engine: str = "scinet++",
                  started_at: str | None = None, finished_at: str | None = None,
                  error: str | None = None, error_type: str | None = None,
-                 dataset_version: str | None = None) -> dict[str, Any]:
+                 dataset_version: str | None = None,
+                 split: str | None = None) -> dict[str, Any]:
     """Single shape for success AND failure -- the Runtime never sees a partial dict."""
     out = Path(out_dir)
-    metrics = parse_horizon_metrics(out) if status == "succeeded" else {}
+    is_eval = job.get("stage") == "evaluate"
+    # Actual split wins over the requested flag (they must agree; recording
+    # both makes a mismatch visible instead of silently trusting either one).
+    actual_split = read_evaluation_split(out, split) if is_eval else None
+    metrics = (parse_horizon_metrics(out, split=actual_split or split)
+               if status == "succeeded" and is_eval else {})
     checkpoint = describe_checkpoint(out) if status == "succeeded" else None
     spec = job.get("spec") or {}
     return {
@@ -93,6 +137,8 @@ def build_result(*, job: dict, status: str, exit_code: int | None,
         "run_id": job.get("run_id"),
         "model_version": spec.get("model_version"),
         "dataset_version": dataset_version or spec.get("dataset_version"),
+        "requested_split": split if is_eval else None,
+        "evaluation_split": actual_split or (split if is_eval else None),
         "metrics": metrics,
         "checkpoint": checkpoint,
         "artifacts": collect_artifacts(out),

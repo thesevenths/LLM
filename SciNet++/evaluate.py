@@ -24,13 +24,14 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import os
 
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from data.dataset import build_dataset, state_dim, validate_config
+from data.dataset import SPLITS, build_dataset, state_dim, validate_config
 from models.world_model import WorldModel
 from utils.config import ensure_output_dir, load_config, resolve_device, make_run_id, setup_logging
 from utils.metrics import cosine_similarity
@@ -50,6 +51,14 @@ def parse_args() -> argparse.Namespace:
         "--new",
         action="store_true",
         help="force a fresh timestamped run sub-directory even if one exists",
+    )
+    parser.add_argument(
+        "--split",
+        default="test",
+        choices=list(SPLITS),
+        help="split to evaluate on. Use 'validation' for candidate selection; "
+             "reserve 'test' for the final independent evaluation "
+             "(default: test, preserving historical behaviour).",
     )
     return parser.parse_args()
 
@@ -111,14 +120,19 @@ def main() -> None:
     ckpt = torch.load(os.path.join(out_dir, "checkpoint.pt"), map_location=device)
     model.load_state_dict(ckpt["model_state"])
 
-    # Use TEST split for evaluation (not train) to measure generalisation
-    test_set = build_dataset(cfg, split="test")
-    loader = DataLoader(test_set, batch_size=cfg["train"]["batch_size"], shuffle=False)
+    # Evaluate on the EXPLICITLY requested split. Test is reserved for the
+    # final independent evaluation; candidate selection must use validation.
+    eval_set = build_dataset(cfg, split=args.split)
+    loader = DataLoader(eval_set, batch_size=cfg["train"]["batch_size"], shuffle=False)
+    print(
+        f"[data] evaluate split={eval_set.split} samples={len(eval_set)} "
+        f"dataset_version={eval_set.dataset_version} frozen={eval_set.frozen_path}"
+    )
 
     # Run multi-step rollout evaluation across all configured horizons
     mse, cos = evaluate_rollout(model, loader, horizons, device)
 
-    print("=== V-JEPA multi-step latent prediction ===")
+    print(f"=== V-JEPA multi-step latent prediction (split={eval_set.split}) ===")
     print(f"{'horizon':>8} | {'latent MSE':>12} | {'cosine sim':>12}")
     print("-" * 38)
     for k in horizons:
@@ -132,10 +146,30 @@ def main() -> None:
         horizons, [cos[k] for k in horizons], "Cosine similarity",
         output_dir=out_dir, name="horizon_cosine",
     )
-    # Save numerical metrics for downstream analysis (e.g. comparing configs)
-    np.save(os.path.join(out_dir, "horizon_metrics.npy"),
-            np.array([[k, mse[k], cos[k]] for k in horizons]))
-    print(f"\nSaved horizon plots + metrics to {out_dir}/")
+    # Save numerical metrics for downstream analysis (e.g. comparing configs).
+    rows = np.array([[k, mse[k], cos[k]] for k in horizons])
+    # Canonical name kept for downstream stages and the worker's required
+    # artifact check (horizon_metrics.npy must exist for a successful job).
+    np.save(os.path.join(out_dir, "horizon_metrics.npy"), rows)
+    # A split-tagged copy keeps validation and test evidence independent: a
+    # later "--split test" run on the same run_id cannot overwrite the metrics
+    # that a "--split validation" job was judged on.
+    np.save(os.path.join(out_dir, f"horizon_metrics_{eval_set.split}.npy"), rows)
+    meta = {
+        "split": eval_set.split,
+        "dataset_version": eval_set.dataset_version,
+        "frozen_path": eval_set.frozen_path,
+        "samples": int(len(eval_set)),
+        "horizons": horizons,
+    }
+    # Canonical copy for humans / downstream tooling, plus a split-tagged copy
+    # that a later evaluation on another split cannot overwrite. result.json
+    # reconstruction must be able to prove which split a given job used.
+    for name in ("evaluation_meta.json",
+                 f"evaluation_meta_{eval_set.split}.json"):
+        with open(os.path.join(out_dir, name), "w", encoding="utf-8") as handle:
+            json.dump(meta, handle, indent=2, ensure_ascii=False, sort_keys=True)
+    print(f"\nSaved horizon plots + metrics (split={eval_set.split}) to {out_dir}/")
 
 
 if __name__ == "__main__":

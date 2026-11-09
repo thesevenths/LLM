@@ -1,7 +1,7 @@
 {
   "config_path": "E:\\LLM\\SciNet++\\configs\\pendulum_smoke.yaml",
-  "config_sha256": "341a8cf0711672e7c9dc07962f8496e2b883f43ca0b8b8e0fa3113639e648204",
-  "created_at": "2026-11-09T17:00:01",
+  "config_sha256": "e2adceb102e56fc2a5312a3d229a505539d30a9083b479024feaa3d4c6de23ce",
+  "created_at": "2026-11-09T18:03:02",
   "data_spec": {
     "block_size": 20,
     "generator": "pendulum",
@@ -11,11 +11,11 @@
       "train": 64,
       "validation": 16
     },
-    "seed": 42,
+    "seed": 20261109,
     "sequence_length": 80,
     "t_max": 8.0
   },
-  "dataset_version": "pendulum-2c509c69e0c1",
+  "dataset_version": "pendulum-a0e03386be89",
   "generator": "pendulum",
   "schema_version": 1,
   "splits": {
@@ -35,8 +35,8 @@
         2
       ],
       "samples": 16,
-      "sha256": "44cf8799ba0fb48e18ee726469fafa1ed818460fd19208b5dd9aaa5ca7bfe67e",
-      "split_seed": 1462889030,
+      "sha256": "849bb0430fa6bda7360b200817d54b9df46fc481b067d1c7b8616ff9e5f446b4",
+      "split_seed": 1637828046,
       "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
     },
     "test": {
@@ -55,8 +55,8 @@
         2
       ],
       "samples": 16,
-      "sha256": "6c7d0b67ba1835469d357b4b354250b757d74fead874860c4a79d1d65d851728",
-      "split_seed": 3219653656,
+      "sha256": "b8fe1a2f49796ea38bed16c176650deb3bd6ee7ba50de5c8a23dbc00669084e1",
+      "split_seed": 132629063,
       "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
     },
     "train": {
@@ -75,8 +75,8 @@
         2
       ],
       "samples": 64,
-      "sha256": "96c846fa744bb6eadcda02dc223c0f54aae5c129a1cb6a009371994a796bade8",
-      "split_seed": 2202066522,
+      "sha256": "e80619226130463ab1d47ef65837a8c7ccb09e1b6b4a34c832c1cdf8196a96fd",
+      "split_seed": 511422397,
       "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
     },
     "validation": {
@@ -95,8 +95,8 @@
         2
       ],
       "samples": 16,
-      "sha256": "b77358ee26ca8abd438b33eb2cbb15a6ba774541157b3346d56f2fa78a70116a",
-      "split_seed": 3748063718,
+      "sha256": "96cc6e06e998c2c9884f803866e134dfd65db1c74f96d9161aae004be850e0fc",
+      "split_seed": 2485735968,
       "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
     }
   }

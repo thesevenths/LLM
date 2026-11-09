@@ -56,6 +56,19 @@ def _required_artifact(stage: str) -> str | None:
     }.get(stage)
 
 
+def _command_option(command: list[str], option: str) -> str | None:
+    """Extract ``--flag value`` from the ACTUAL argv the worker executed.
+
+    Reading the command (rather than the caller's spec) means result.json
+    records what really ran, even if a human edited the job in the store.
+    """
+    try:
+        index = command.index(option)
+        return str(command[index + 1])
+    except (ValueError, IndexError):
+        return None
+
+
 def run_job(job_id: str, db_path: str, heartbeat_interval: float = 3.0) -> int:
     store = JobStore(db_path)
     job = store.get(job_id)
@@ -136,6 +149,7 @@ def run_job(job_id: str, db_path: str, heartbeat_interval: float = 3.0) -> int:
         started_at=started_at, finished_at=finished_at,
         error=error, error_type=error_type,
         dataset_version=_dataset_version(spec.get("config")),
+        split=_command_option(command, "--split") if stage == "evaluate" else None,
     )
     write_result(result_path, payload)
     store.update(

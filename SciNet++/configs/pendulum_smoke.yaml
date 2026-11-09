@@ -9,18 +9,25 @@
 #   python evaluate.py  --config configs/pendulum_smoke.yaml --run-id <same>
 # =============================================================================
 experiment: pendulum_smoke
-seed: 42
+seed: 42                 # model init / training randomness ONLY
 device: cpu
 output_dir: outputs
 
 # --- Data -------------------------------------------------------------------
+# All four splits are frozen on disk with SHA-256 + manifest verification.
+# ``dataset_seed`` (not ``seed``) defines data identity, so a paired
+# multi-seed experiment can change ``seed`` without minting a new dataset.
 data:
   generator: pendulum
+  dataset_seed: 20261109
+  frozen_dir: datasets/pendulum_smoke_v1
   sequence_length: 80
   block_size: 20          # 4 blocks -> rollout_steps up to 3
   t_max: 8.0
   train_samples: 64
-  test_samples: 16
+  validation_samples: 16  # train-time monitoring (train.py)
+  adapt_samples: 16       # TTA adaptation (tta.py)
+  test_samples: 16        # final independent evaluation ONLY (evaluate.py --split test)
 
 # --- Model ------------------------------------------------------------------
 model:

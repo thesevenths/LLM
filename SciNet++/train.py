@@ -119,13 +119,22 @@ def main() -> None:
     max_context = num_blocks(cfg) - 1 - max_horizon  # last valid context block index
 
     train_set = build_dataset(cfg, split="train")
-    test_set = build_dataset(cfg, split="test")
+    # Training-time diagnostics belong to VALIDATION only. The test split is
+    # frozen evidence and must not be read during training -- not even for
+    # monitoring, because an Agent that later selects checkpoints using these
+    # numbers would leak test information into model selection.
+    validation_set = build_dataset(cfg, split="validation")
     train_loader = DataLoader(
         train_set, batch_size=cfg["train"]["batch_size"], shuffle=True, drop_last=True
     )
-    test_loader = DataLoader(
-        test_set, batch_size=cfg["train"]["batch_size"], shuffle=False
+    validation_loader = DataLoader(
+        validation_set, batch_size=cfg["train"]["batch_size"], shuffle=False
     )
+    for name, ds in (("train", train_set), ("validation", validation_set)):
+        print(
+            f"[data] {name} split={ds.split} samples={len(ds)} "
+            f"dataset_version={ds.dataset_version} frozen={ds.frozen_path}"
+        )
 
     model = WorldModel.from_config(cfg, state_dim(cfg)).to(device)
 
@@ -187,7 +196,9 @@ def main() -> None:
         scheduler.step()  # cosine LR decay once per epoch
 
         # ---- epoch diagnostics (validation + collapse watch) ---------------
-        val = evaluate_epoch(model, test_loader, horizons, max_context, device)
+        # Deliberately the validation loader: test stays untouched until the
+        # final independent evaluation (evaluate.py --split test).
+        val = evaluate_epoch(model, validation_loader, horizons, max_context, device)
         std_mean = float(val["latent_std"].mean())  # <<1.0 = collapse danger
 
         # TensorBoard scalars for monitoring training dynamics

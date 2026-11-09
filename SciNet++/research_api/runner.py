@@ -38,14 +38,21 @@ SUPPORTED_STAGES = ("train", "evaluate", "analyze", "symbolic", "tta")
 
 def build_command(stage: str, config: str, run_id: str, *,
                   epochs: int | None = None,
-                  extra_args: list[str] | None = None) -> list[str]:
-    """Registry of stage -> command builder. Add a stage here, nowhere else."""
+                  extra_args: list[str] | None = None,
+                  split: str | None = None) -> list[str]:
+    """Registry of stage -> command builder. Add a stage here, nowhere else.
+
+    ``split`` is only meaningful for the evaluation stage; other stages get
+    their split from their own script logic (train -> train/validation,
+    tta -> adapt) so a stray CLI flag can never silently change them.
+    """
     if stage not in SUPPORTED_STAGES:
         raise ValueError(f"stage must be one of {SUPPORTED_STAGES}, got {stage!r}")
     if stage == "train":
         return build_train_command(config, run_id, epochs=epochs, extra_args=extra_args)
     if stage == "evaluate":
-        return build_evaluate_command(config, run_id, extra_args=extra_args)
+        return build_evaluate_command(config, run_id, extra_args=extra_args,
+                                      split=split)
     if stage == "analyze":
         return build_analyze_command(config, run_id)
     if stage == "symbolic":
@@ -76,12 +83,13 @@ class JobRunner:
     def submit(self, *, experiment_id: str, stage: str, config: str,
                run_id: str | None = None, epochs: int | None = None,
                job_id: str | None = None, spec: dict | None = None,
-               extra_args: list[str] | None = None) -> dict:
+               extra_args: list[str] | None = None,
+               split: str | None = None) -> dict:
         job_id = job_id or uuid.uuid4().hex
         run_id = run_id or make_run_id(job_id)
         meta = load_config_meta(config)          # fail fast on a bad config path
         command = build_command(stage, config, run_id, epochs=epochs,
-                                extra_args=extra_args)
+                                extra_args=extra_args, split=split)
         out_dir = run_dir_for(meta, run_id)
         out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -93,6 +101,8 @@ class JobRunner:
         spec_payload = dict(spec or {})
         spec_payload.setdefault("config", config)
         spec_payload.setdefault("budget", {})
+        if split:
+            spec_payload["requested_split"] = split
 
         record = self.store.create_job(
             job_id=job_id, experiment_id=experiment_id, stage=stage,

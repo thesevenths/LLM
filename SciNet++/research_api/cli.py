@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 from .runner import JobRunner, SUPPORTED_STAGES
-from .settings import resolve_config_path
+from .settings import DATA_SPLITS, resolve_config_path
 
 
 def _emit(payload) -> None:
@@ -61,6 +61,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_submit.add_argument("--epochs", type=int, default=None)
     p_submit.add_argument("--spec-json", default=None)
     p_submit.add_argument("--extra-args", default=None)
+    p_submit.add_argument(
+        "--split", default=None, choices=list(DATA_SPLITS),
+        help="evaluation split (only forwarded to the evaluate stage). "
+             "Omit to use the stage script's default (test).",
+    )
     p_submit.add_argument("--db", default=None)
 
     p_status = sub.add_parser("status", help="query job status")
@@ -103,6 +108,7 @@ def dispatch(args: argparse.Namespace) -> dict:
             config=args.config, run_id=args.run_id, epochs=args.epochs,
             job_id=args.job_id, spec=spec,
             extra_args=_parse_extra_args(args.extra_args),
+            split=args.split,
         )
 
     if args.command == "freeze":

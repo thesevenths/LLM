@@ -22,7 +22,11 @@ outputs/agent_jobs/
 *.db-wal
 *.db-shm
 
+# 每次运行新生成的 smoke run 目录：可重建的流水线产物，不是固化证据。
+# 已入库的历史 run 不受影响（gitignore 不会取消对已追踪文件的跟踪）。
+outputs/pendulum_smoke/*/
+
 # 刻意不忽略：
-#   outputs/<experiment>/ 下的历史实验记录（checkpoint / 指标 / 图 / 公式）属于研究证据；
+#   outputs/ 下已入库的历史实验记录（checkpoint / 指标 / 图 / 公式）属于研究证据；
 #   datasets/ 下的冻结数据集与 manifest.json 属于可复现性证据。
 # 二者是否入库由提交者按实验决定，忽略规则不替其做决定。

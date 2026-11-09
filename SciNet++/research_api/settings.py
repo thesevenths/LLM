@@ -14,6 +14,11 @@ PROJECT_DIR = Path(__file__).resolve().parents[1]
 JOBS_DIR = PROJECT_DIR / "outputs" / "agent_jobs"
 DEFAULT_DB_PATH = JOBS_DIR / "jobs.sqlite"
 
+# Kept here (not imported from data.dataset) because this module must stay
+# importable in a lightweight interpreter without torch. A regression test
+# asserts this tuple stays in sync with data.dataset.SPLITS.
+DATA_SPLITS = ("train", "validation", "adapt", "test")
+
 
 def resolve_db_path(db: str | None = None) -> Path:
     path = Path(db) if db else DEFAULT_DB_PATH

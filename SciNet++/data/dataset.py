@@ -99,9 +99,12 @@ def samples_for_split(cfg: dict, split: str) -> int:
 def dataset_spec(cfg: dict) -> dict:
     """Minimal, canonical snapshot of everything that shapes the raw data.
 
-    Deliberately excludes training hyper-parameters (lr / epochs / model dims):
-    changing those must NOT mint a new dataset version, because the data is
-    byte-identical. Excludes ``frozen_dir`` too (it is an output location).
+    Deliberately excludes training hyper-parameters (lr / epochs / model dims)
+    and the MODEL seed (``cfg['seed']``): a paired multi-seed experiment must
+    vary model initialisation while keeping byte-identical data. The data seed
+    lives in ``data.dataset_seed`` and falls back to the top-level seed for
+    backward compatibility -- that fallback keeps every historical
+    ``dataset_version`` unchanged. Excludes ``frozen_dir`` (an output location).
     """
     d = cfg["data"]
     spec = {
@@ -109,7 +112,7 @@ def dataset_spec(cfg: dict) -> dict:
         "sequence_length": int(d["sequence_length"]),
         "block_size": int(d["block_size"]),
         "t_max": float(d.get("t_max", 10.0)),
-        "seed": int(cfg.get("seed", 42)),
+        "seed": int(d.get("dataset_seed", cfg.get("seed", 42))),
         "samples": {s: samples_for_split(cfg, s) for s in SPLITS},
     }
     if d["generator"] == "newton":
@@ -168,9 +171,28 @@ def load_frozen_split(cfg: dict, split: str) -> "BlockSequenceDataset":
             f"python -m data.frozen --config <cfg> --out {base} first."
         )
     manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
+    # SHA-256 alone proves the FILES were not tampered with; it cannot prove
+    # they still correspond to the CURRENT config. Without this check, editing
+    # dataset_seed / sample counts / generator would silently keep loading an
+    # older dataset and report a stale dataset_version as if it were current.
+    expected = dataset_version(cfg)
+    declared = manifest.get("dataset_version")
+    if declared != expected:
+        raise RuntimeError(
+            f"Frozen dataset / config mismatch: config resolves to "
+            f"dataset_version={expected!r}, but {manifest_file} declares "
+            f"{declared!r}. The data spec (generator / sequence_length / "
+            f"block_size / t_max / dataset_seed / split samples) changed since "
+            f"this dataset was frozen. Re-freeze it before evaluating: "
+            f"python -m data.frozen --config <cfg> --out {base} "
+            f"--splits train validation adapt test"
+        )
     entry = manifest["splits"].get(split)
     if not entry:
-        raise KeyError(f"split {split!r} absent from {manifest_file}")
+        raise KeyError(
+            f"split {split!r} absent from {manifest_file}; re-freeze with "
+            f"--splits including {split!r}"
+        )
     path = base / entry["file"]
     if not path.is_file():
         raise FileNotFoundError(f"frozen split file missing: {path}")
