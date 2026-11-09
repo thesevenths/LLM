@@ -26,6 +26,10 @@ outputs/agent_jobs/
 # 已入库的历史 run 不受影响（gitignore 不会取消对已追踪文件的跟踪）。
 outputs/pendulum_smoke/*/
 
+# P1-04 Campaign 生成的候选配置与清单：每次运行可重建，且 campaign_id 唯一。
+# 真正的 checkpoint / worker 日志仍留在 outputs/<experiment>/<run_id>/，不复制。
+outputs/research_campaigns/
+
 # 刻意不忽略：
 #   outputs/ 下已入库的历史实验记录（checkpoint / 指标 / 图 / 公式）属于研究证据；
 #   datasets/ 下的冻结数据集与 manifest.json 属于可复现性证据。
