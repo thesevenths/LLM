@@ -1,0 +1,103 @@
+{
+  "config_path": "E:\\LLM\\SciNet++\\configs\\pendulum_smoke.yaml",
+  "config_sha256": "341a8cf0711672e7c9dc07962f8496e2b883f43ca0b8b8e0fa3113639e648204",
+  "created_at": "2026-11-09T17:00:01",
+  "data_spec": {
+    "block_size": 20,
+    "generator": "pendulum",
+    "samples": {
+      "adapt": 16,
+      "test": 16,
+      "train": 64,
+      "validation": 16
+    },
+    "seed": 42,
+    "sequence_length": 80,
+    "t_max": 8.0
+  },
+  "dataset_version": "pendulum-2c509c69e0c1",
+  "generator": "pendulum",
+  "schema_version": 1,
+  "splits": {
+    "adapt": {
+      "X_shape": [
+        16,
+        80,
+        1
+      ],
+      "file": "adapt.npz",
+      "label_names": [
+        "gamma",
+        "omega"
+      ],
+      "labels_shape": [
+        16,
+        2
+      ],
+      "samples": 16,
+      "sha256": "44cf8799ba0fb48e18ee726469fafa1ed818460fd19208b5dd9aaa5ca7bfe67e",
+      "split_seed": 1462889030,
+      "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
+    },
+    "test": {
+      "X_shape": [
+        16,
+        80,
+        1
+      ],
+      "file": "test.npz",
+      "label_names": [
+        "gamma",
+        "omega"
+      ],
+      "labels_shape": [
+        16,
+        2
+      ],
+      "samples": 16,
+      "sha256": "6c7d0b67ba1835469d357b4b354250b757d74fead874860c4a79d1d65d851728",
+      "split_seed": 3219653656,
+      "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
+    },
+    "train": {
+      "X_shape": [
+        64,
+        80,
+        1
+      ],
+      "file": "train.npz",
+      "label_names": [
+        "gamma",
+        "omega"
+      ],
+      "labels_shape": [
+        64,
+        2
+      ],
+      "samples": 64,
+      "sha256": "96c846fa744bb6eadcda02dc223c0f54aae5c129a1cb6a009371994a796bade8",
+      "split_seed": 2202066522,
+      "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
+    },
+    "validation": {
+      "X_shape": [
+        16,
+        80,
+        1
+      ],
+      "file": "validation.npz",
+      "label_names": [
+        "gamma",
+        "omega"
+      ],
+      "labels_shape": [
+        16,
+        2
+      ],
+      "samples": 16,
+      "sha256": "b77358ee26ca8abd438b33eb2cbb15a6ba774541157b3346d56f2fa78a70116a",
+      "split_seed": 3748063718,
+      "split_seed_alg": "sha256(spec|split)->RandomState(MT19937)"
+    }
+  }
+}

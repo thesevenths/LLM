@@ -31,9 +31,13 @@ class PendulumGenerator:
     #: names of the ground-truth physical concepts returned as labels
     label_names = ("gamma", "omega")
 
-    def __init__(self, length: int = 200, t_max: float = 10.0) -> None:
+    def __init__(self, length: int = 200, t_max: float = 10.0, rng=None) -> None:
         self.length = length
         self.t = np.linspace(0.0, t_max, length, dtype=np.float32)
+        # 可注入的独立 RNG。默认沿用 numpy 全局 RNG，保持直接调用
+        # PendulumGenerator().sample() 的既有行为；build_dataset 会显式注入
+        # per-split RandomState，使同一 split 在不同进程里逐位可复现。
+        self.rng = rng if rng is not None else np.random
 
     def sample_one(self):
         """Generate a single trajectory.
@@ -44,10 +48,10 @@ class PendulumGenerator:
         gamma : float
         omega : float
         """
-        amp = np.random.uniform(0.5, 1.5)
-        gamma = np.random.uniform(0.01, 0.3)
-        omega = np.random.uniform(0.5, 2.0)
-        phi = np.random.uniform(0.0, 2.0 * np.pi)
+        amp = self.rng.uniform(0.5, 1.5)
+        gamma = self.rng.uniform(0.01, 0.3)
+        omega = self.rng.uniform(0.5, 2.0)
+        phi = self.rng.uniform(0.0, 2.0 * np.pi)
 
         x = amp * np.exp(-gamma * self.t) * np.cos(omega * self.t + phi)
         return x.astype(np.float32)[:, None], float(gamma), float(omega)

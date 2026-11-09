@@ -1,0 +1,39 @@
+{
+  "artifacts": [
+    "checkpoint.pt",
+    "evaluate.log",
+    "horizon_cosine.png",
+    "horizon_metrics.npy",
+    "horizon_mse.png",
+    "train.log"
+  ],
+  "checkpoint": {
+    "bytes": 23330,
+    "path": "E:\\LLM\\SciNet++\\outputs\\pendulum_smoke\\e2e_e444297d\\checkpoint.pt",
+    "sha256": "1dab3f4478a9f7f55e5fed313a8601f91cecafa701b5164eaad0574655234d67"
+  },
+  "dataset_version": "pendulum-2c509c69e0c1",
+  "engine": "scinet++",
+  "error": null,
+  "error_type": null,
+  "exit_code": 0,
+  "experiment_id": "e2e",
+  "finished_at": "2026-11-09T17:15:42",
+  "job_id": "ev_e444297d",
+  "log_path": "E:\\LLM\\SciNet++\\outputs\\agent_jobs\\ev_e444297d.log",
+  "metrics": {
+    "cosine@1": 0.5388827623675152,
+    "cosine@2": 0.5022997074276574,
+    "cosine@3": 0.519114494030183,
+    "latent_mse@1": 0.026778336614370346,
+    "latent_mse@2": 0.02578679472208023,
+    "latent_mse@3": 0.02470671385526657
+  },
+  "model_version": null,
+  "result_path": "E:\\LLM\\SciNet++\\outputs\\pendulum_smoke\\e2e_e444297d\\result_ev_e444297d.json",
+  "run_id": "e2e_e444297d",
+  "schema_version": 1,
+  "stage": "evaluate",
+  "started_at": "2026-11-09T17:15:36",
+  "status": "succeeded"
+}

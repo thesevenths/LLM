@@ -1,0 +1,3 @@
+2026-11-09 17:16:04 [INFO] Logging to outputs\pendulum_smoke\20261109_171557_e59096c2\train.log
+2026-11-09 17:16:08 [INFO] [epoch   0] train=22.6854 val_pred=0.0258 latent_std=0.094 cos(h1)=0.539
+2026-11-09 17:16:08 [INFO] Saved checkpoint to outputs\pendulum_smoke\20261109_171557_e59096c2\checkpoint.pt

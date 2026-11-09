@@ -1,0 +1,28 @@
+{
+  "artifacts": [
+    "checkpoint.pt",
+    "train.log"
+  ],
+  "checkpoint": {
+    "bytes": 23330,
+    "path": "E:\\LLM\\SciNet++\\outputs\\pendulum_smoke\\e2e_14a65d5b\\checkpoint.pt",
+    "sha256": "a47d4b7553f2663d7c0ca63482ec6f05d230997d044da8f11b7cb6fc35cfa580"
+  },
+  "dataset_version": "pendulum-2c509c69e0c1",
+  "engine": "scinet++",
+  "error": null,
+  "error_type": null,
+  "exit_code": 0,
+  "experiment_id": "e2e",
+  "finished_at": "2026-11-09T17:02:29",
+  "job_id": "tr_14a65d5b",
+  "log_path": "E:\\LLM\\SciNet++\\outputs\\agent_jobs\\tr_14a65d5b.log",
+  "metrics": {},
+  "model_version": "baseline-v0",
+  "result_path": "E:\\LLM\\SciNet++\\outputs\\pendulum_smoke\\e2e_14a65d5b\\result_tr_14a65d5b.json",
+  "run_id": "e2e_14a65d5b",
+  "schema_version": 1,
+  "stage": "train",
+  "started_at": "2026-11-09T17:02:17",
+  "status": "succeeded"
+}

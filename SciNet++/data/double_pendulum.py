@@ -40,6 +40,7 @@ class DoublePendulumGenerator:
         l1: float = 1.0,
         l2: float = 1.0,
         g: float = 9.81,
+        rng=None,
     ) -> None:
         self.length = length
         self.duration = duration
@@ -47,6 +48,8 @@ class DoublePendulumGenerator:
         self.l1, self.l2 = l1, l2
         self.g = g
         self.t_eval = np.linspace(0.0, duration, length)
+        # 可注入的独立 RNG（见 data.pendulum 的同名参数说明）。
+        self.rng = rng if rng is not None else np.random
 
     # ------------------------------------------------------------------ ODE --
     def dynamics(self, t, y):
@@ -99,10 +102,10 @@ class DoublePendulumGenerator:
     def sample_one(self):
         """Integrate one trajectory from a random initial condition."""
         y0 = [
-            np.random.uniform(-np.pi, np.pi),
-            np.random.uniform(-np.pi, np.pi),
-            np.random.uniform(-1.0, 1.0),
-            np.random.uniform(-1.0, 1.0),
+            self.rng.uniform(-np.pi, np.pi),
+            self.rng.uniform(-np.pi, np.pi),
+            self.rng.uniform(-1.0, 1.0),
+            self.rng.uniform(-1.0, 1.0),
         ]
         sol = solve_ivp(
             self.dynamics,

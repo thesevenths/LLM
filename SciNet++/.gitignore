@@ -1,0 +1,28 @@
+# 凭据（任何情况下不入库）
+.env
+**/.env
+
+# Python 缓存 / 虚拟环境 / 工具缓存
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 本地运行数据库与作业日志（运行时生成、可重建，不是实验证据）
+outputs/agent_jobs/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# 刻意不忽略：
+#   outputs/<experiment>/ 下的历史实验记录（checkpoint / 指标 / 图 / 公式）属于研究证据；
+#   datasets/ 下的冻结数据集与 manifest.json 属于可复现性证据。
+# 二者是否入库由提交者按实验决定，忽略规则不替其做决定。

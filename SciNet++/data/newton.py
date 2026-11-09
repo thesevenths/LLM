@@ -53,6 +53,7 @@ class NewtonGenerator:
         mass_range: tuple[float, float] = (0.5, 3.0),
         x0_range: tuple[float, float] = (-1.0, 1.0),
         v0_range: tuple[float, float] = (-2.0, 2.0),
+        rng=None,
     ) -> None:
         self.length = length
         self.t = np.linspace(0.0, t_max, length, dtype=np.float32)
@@ -60,6 +61,8 @@ class NewtonGenerator:
         self.mass_range = mass_range
         self.x0_range = x0_range
         self.v0_range = v0_range
+        # 可注入的独立 RNG（见 data.pendulum 的同名参数说明）。
+        self.rng = rng if rng is not None else np.random
 
     def sample_one(self):
         """Generate a single trajectory.
@@ -71,10 +74,10 @@ class NewtonGenerator:
         force : float
         mass : float
         """
-        F = np.random.uniform(*self.force_range)
-        m = np.random.uniform(*self.mass_range)
-        x0 = np.random.uniform(*self.x0_range)
-        v0 = np.random.uniform(*self.v0_range)
+        F = self.rng.uniform(*self.force_range)
+        m = self.rng.uniform(*self.mass_range)
+        x0 = self.rng.uniform(*self.x0_range)
+        v0 = self.rng.uniform(*self.v0_range)
         t = self.t
 
         x = x0 + v0 * t + 0.5 * (F / m) * t ** 2          # Newton's 2nd law, integrated
