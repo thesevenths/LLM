@@ -34,3 +34,8 @@ outputs/research_campaigns/
 #   outputs/ 下已入库的历史实验记录（checkpoint / 指标 / 图 / 公式）属于研究证据；
 #   datasets/ 下的冻结数据集与 manifest.json 属于可复现性证据。
 # 二者是否入库由提交者按实验决定，忽略规则不替其做决定。
+
+# P2-01 生成的 Pusher 轨迹数据：每次可由 scripts/collect_pusher.py 重新生成
+# （dataset_seed 固定 → 内容寻址 dataset_version 固定），因此默认不入库，
+# 避免仓库膨胀。若要固化某次数据集作为证据，按上面说明显式 `git add`。
+datasets/pusher_v1/
