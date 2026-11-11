@@ -90,6 +90,44 @@ class TestDtypeValidation(unittest.TestCase):
             DynamicsBatch(obs, cond, mask, ["a", "b"])
 
 
+class TestUnconditionedRepresentationIsUnique(unittest.TestCase):
+    """A1 amendment: conditions=None is the ONLY unconditioned representation.
+
+    Rejects the second convention (`U=0` / all-zero tensor standing in for
+    "no control") that the A0 gap draft had suggested. Zero-valued controls
+    with U>=1 remain valid and semantically distinct from None.
+    """
+
+    def test_zero_width_conditions_tensor_raises(self):
+        obs = torch.randn(2, 11, 3)
+        mask = torch.ones(2, 10, dtype=torch.bool)
+        cond_u0 = torch.zeros(2, 10, 0)  # [B,T,U=0]
+        with self.assertRaises(ValueError):
+            DynamicsBatch(obs, cond_u0, mask, ["a", "b"])
+
+    def test_none_vs_all_zero_are_distinct(self):
+        obs = [_rand(11, 3) for _ in range(2)]
+        zeros = [np.zeros((10, 2), dtype=np.float32) for _ in range(2)]
+        b_zero = dynamics_batch_from_episodes(obs, zeros)
+        b_none = dynamics_batch_from_episodes(obs)
+        # zero-valued controls => conditioned; None => unconditioned
+        self.assertIsNotNone(b_zero.conditions)
+        self.assertTrue(b_zero.is_conditioned)
+        self.assertEqual(b_zero.cond_dim, 2)
+        self.assertIsNone(b_none.conditions)
+        self.assertFalse(b_none.is_conditioned)
+        self.assertIsNone(b_none.cond_dim)
+
+    def test_episode_ids_are_string_metadata_not_tensor(self):
+        obs = [_rand(11, 3) for _ in range(2)]
+        b = dynamics_batch_from_episodes(obs, episode_ids=["ep-a", "ep-b"])
+        self.assertIsInstance(b.episode_ids, list)
+        self.assertTrue(all(isinstance(e, str) for e in b.episode_ids))
+        # integer ids are accepted but normalised to plain strings
+        b2 = dynamics_batch_from_episodes(obs, episode_ids=[7, 8])
+        self.assertEqual(b2.episode_ids, ["7", "8"])
+
+
 class TestTemporalAlignment(unittest.TestCase):
     def test_xt_ut_xtplus1_alignment(self):
         # Construct a fully controlled, deterministic sequence so we can assert

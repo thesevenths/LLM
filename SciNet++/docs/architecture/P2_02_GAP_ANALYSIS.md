@@ -36,6 +36,20 @@ what is missing, and the concrete change needed. It is the input to the **A1 gat
 
 ## 1. Generic data contract — the central gap
 
+> **A1 AMENDMENT (supersedes the `U=0` / `episode_ids: Tensor` lines below).**
+> This A0 audit draft sketched `U=0 => unconditioned` and
+> `episode_ids: Tensor [B] (long)`. Both were **rejected** during A1 to keep a
+> single unambiguous semantics:
+> - `conditions=None` is the **only** unconditioned representation; a `U=0`
+>   (zero-width) condition tensor is rejected by `validate_dynamics_batch`.
+>   An all-zero tensor with `U>=1` stays valid (control channel exists, zero
+>   input) and is a different experiment from `None`.
+> - `episode_ids` is a length-`B` **sequence of strings / integer IDs** (sample
+>   identity metadata), never a `torch.Tensor`.
+> The authoritative spec is `DYNAMICS_DATA_CONTRACT.md` §2; the implementation
+> is `dynamics/contracts.py` + `dynamics/validation.py`. The sketch below is
+> retained verbatim as the A0 audit record, not as the current contract.
+
 **What exists:** `data/dataset.BlockSequenceDataset` shaped `(n, num_blocks,
 block_dim)` + `labels`. It assumes a *fixed* `sequence_length`, *uniform* validity,
 *no* actions, *no* episode grouping. It is fundamentally the wrong shape for

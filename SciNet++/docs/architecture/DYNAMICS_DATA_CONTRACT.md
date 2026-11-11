@@ -55,9 +55,21 @@ This is the single most important semantic distinction in the contract:
   system *has* a control channel, but the input happens to be zero at every step.
 
 These are different data-generating processes and must not be conflated. The
-contract stores `None` for the first and a zero tensor for the second, and the
-validator `validate_dynamics_batch` enforces the `None`/tensor distinction
-explicitly.
+contract stores `None` for the first and a zero tensor (with `U>=1`) for the
+second, and the validator `validate_dynamics_batch` enforces the
+`None`/tensor distinction explicitly.
+
+**A1 amendment (single unconditioned representation).** An earlier draft of the
+gap analysis suggested `U=0 => unconditioned`. That second convention is
+**rejected**: `conditions=None` is the *only* representation of an unconditioned
+system. A `conditions` tensor with `U=0` (zero-width) is now rejected by
+`validate_dynamics_batch` with a `ValueError`. An all-zero tensor with `U>=1`
+remains valid — it means "a control channel exists, but the input is zero",
+which is not the same experiment as "no external control variable exists".
+
+Likewise, `episode_ids` is a **sequence of length B of string identifiers**
+(or integer IDs normalised to strings), not a `torch.Tensor`. It is sample
+identity metadata and never participates in GPU computation.
 
 ---
 
@@ -113,9 +125,10 @@ implements the required discipline:
 | Pusher-v5         | 23  | action tensor           | 7    | conditioned; action range `[-2, 2]` |
 
 The contract never hardcodes `D` or `U`; both are inferred at build time from
-the data. A single code path builds the Pendulum (`U=0`) and Pusher (`U=7`)
-batches, proving the contract is domain-independent (see
-`tests/dynamics/test_contracts.py`).
+the data. A single code path builds the Pendulum (`conditions=None`) and Pusher
+(`conditions` with `U=7`) batches, proving the contract is domain-independent
+(see `tests/dynamics/test_contracts.py`). Note there is **no** `U=0` row:
+Pendulum is unconditioned via `None`, not via a zero-width condition tensor.
 
 ---
 
@@ -178,8 +191,9 @@ non-coercing checks:
 
 - `observations` is `[B, T+1, D]` float with `T+1 >= 2`,
 - `valid_mask` is `[B, T]` **bool** (dtype is checked, not cast),
-- `conditions` (if present) is `[B, T, U]` float,
-- `episode_ids` length equals `B`,
+- `conditions` (if present) is `[B, T, U]` float with **`U >= 1`** (`U=0` is
+  rejected; use `None` for unconditioned),
+- `episode_ids` is a length-`B` sequence of string identifiers (not a Tensor),
 - every row has `>= 1` valid transition,
 - no `NaN`/`Inf` in `observations` or `conditions`.
 
@@ -194,6 +208,8 @@ non-coercing checks:
 |---|-----------|--------|
 | 1 | New `DynamicsBatch` contract | ✅ `dynamics/contracts.py` |
 | 2 | `conditions=None` and conditioned inputs | ✅ both paths tested |
+| 2a | **`conditions=None` is the ONLY unconditioned representation** (`U=0` rejected; all-zero `U>=1` still conditioned) | ✅ `test_zero_width_conditions_*` / `test_none_vs_all_zero_are_distinct` |
+| 2b | `episode_ids` are string metadata, not a Tensor | ✅ `test_episode_ids_are_string_metadata_not_tensor` |
 | 3 | Variable-length episodes | ✅ padding + mask |
 | 4 | Strict `x_t, u_t -> x_{t+1}` alignment | ✅ `training_pairs` + integration test |
 | 5 | Episode-isolation test | ✅ `test_episode_isolation.py` |

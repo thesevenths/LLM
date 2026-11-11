@@ -14,7 +14,11 @@ Design rules checked
 - ``observations`` is a 3-D float tensor ``[B, T+1, D]`` with ``T+1 >= 2``.
 - ``valid_mask`` is a 2-D **bool** tensor ``[B, T]`` (``T = T_obs - 1``).
 - ``episode_ids`` is a sequence of length ``B``.
-- If present, ``conditions`` is a 3-D float tensor ``[B, T, U]``.
+- If present, ``conditions`` is a 3-D float tensor ``[B, T, U]`` with ``U >= 1``.
+  ``U=0`` is rejected: ``conditions=None`` is the *only* representation of an
+  unconditioned system (no second "zero-width / all-zero => unconditioned"
+  convention). A genuine ``[B,T,U>=1]`` tensor of zeros is valid and means a
+  control channel exists but the input is zero.
 - Every sample (row) has at least one valid transition.
 - No non-finite (NaN / Inf) values in ``observations`` or ``conditions``.
 """
@@ -70,6 +74,14 @@ def validate_dynamics_batch(batch: "DynamicsBatch") -> bool:
             )
         if cond.dtype not in _FLOAT_DTYPES:
             raise TypeError(f"conditions must be a float dtype, got {cond.dtype}")
+        if cond.shape[-1] < 1:
+            raise ValueError(
+                "conditions must have U >= 1; a zero-width condition tensor "
+                "(U=0) is not a valid representation of unconditioned "
+                "dynamics. Use conditions=None instead. A real tensor of zeros "
+                "with U>=1 IS valid and means 'control channel present, zero "
+                "input' -- a different data-generating process from None."
+            )
 
     if len(batch.episode_ids) != B:
         raise ValueError(

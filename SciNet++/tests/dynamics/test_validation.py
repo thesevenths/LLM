@@ -102,6 +102,36 @@ class TestValidatorRejections(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_dynamics_batch(b)
 
+    def test_zero_width_conditions_rejected(self):
+        # U=0 is a second "unconditioned" representation and must NOT be
+        # accepted; conditions=None is the only unconditioned representation.
+        b = _raw(
+            torch.randn(2, 11, 3),
+            torch.zeros(2, 10, 0),
+            torch.ones(2, 10, dtype=torch.bool),
+            ["a", "b"],
+        )
+        with self.assertRaises(ValueError):
+            validate_dynamics_batch(b)
+
+    def test_zero_valued_conditions_are_still_conditioned(self):
+        # A genuine [B,T,U>=1] all-zero tensor is VALID: the control channel
+        # exists but the input is zero. It is a different process from None.
+        import numpy as np
+
+        obs = [np.random.randn(11, 3).astype(np.float32) for _ in range(2)]
+        act = [np.zeros((10, 2), dtype=np.float32) for _ in range(2)]
+        b = dynamics_batch_from_episodes(obs, act)
+        self.assertIsNotNone(b.conditions)
+        self.assertTrue(b.is_conditioned)
+        self.assertEqual(b.cond_dim, 2)
+        self.assertTrue(validate_dynamics_batch(b))
+        # None, by contrast, is unconditioned.
+        b_none = dynamics_batch_from_episodes(obs)
+        self.assertIsNone(b_none.conditions)
+        self.assertFalse(b_none.is_conditioned)
+        self.assertIsNone(b_none.cond_dim)
+
     def test_empty_transition_rejected(self):
         # Row 0 has 1 transition, row 1 has 0 -> must be rejected.
         b = _raw(
