@@ -32,6 +32,18 @@ from .contracts import (
     training_pairs,
 )
 from .validation import summarize_batch, validate_dynamics_batch
+# P2-02 additions (pure additive re-exports; the A1 contract is unchanged).
+from .normalization import NormalizationStats, fit_normalization
+from .metrics import (
+    describe,
+    episode_errors,
+    masked_mse,
+    masked_mse_loss,
+    one_step_metrics,
+    paired_bootstrap_ci,
+    persistence_skill_score,
+)
+from .evaluation import evaluate_model, open_loop_rollout, training_tensors
 
 __all__ = [
     "DynamicsBatch",
@@ -41,4 +53,16 @@ __all__ = [
     "slice_rows",
     "validate_dynamics_batch",
     "summarize_batch",
+    "NormalizationStats",
+    "fit_normalization",
+    "masked_mse",
+    "masked_mse_loss",
+    "one_step_metrics",
+    "episode_errors",
+    "persistence_skill_score",
+    "paired_bootstrap_ci",
+    "describe",
+    "training_tensors",
+    "open_loop_rollout",
+    "evaluate_model",
 ]
