@@ -357,9 +357,13 @@ group, so a failure can be attributed to one physical parameter.
   vs E4`, with `E2 vs E1` reported as a secondary comparison with the capacity
   difference stated explicitly.
 
-All of E1–E5 share capacity, epochs, batch, seeds and the same train/validation
-protocol. E3 uses a fixed-seed `shuffle_conditions` (generic helper from
-`models/state_dynamics.py`, no domain constants).
+E1 and E2 use **identical training budgets** (epochs, batch, seeds,
+train/validation protocol) and evaluation protocols, but their **parameter
+counts differ by construction** (see the AMENDED note above). E2, E3 and E4
+share **identical architecture and parameter count**; the capacity-comparability
+rules in the AMENDED note above supersede this paragraph. E3 uses a fixed-seed
+`shuffle_conditions` (generic helper from `models/state_dynamics.py`, no domain
+constants).
 
 ## 6. Evaluation
 
