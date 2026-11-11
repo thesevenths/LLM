@@ -1,0 +1,176 @@
+{
+  "principle": "Split at the EPISODE level, never at the window/transition level. All windows derived from one episode must land in the same subset; otherwise overlapping windows leak.",
+  "proposed_split_for_pilot": {
+    "train": [
+      "S0_alternating",
+      "S0_random",
+      "S0_sinusoid",
+      "S0_step",
+      "S1_alternating",
+      "S1_random",
+      "S1_step",
+      "S2_alternating",
+      "S2_random",
+      "S2_sinusoid",
+      "S3_alternating",
+      "S3_random",
+      "S3_step",
+      "S4_alternating"
+    ],
+    "validation": [
+      "S1_sinusoid",
+      "S3_sinusoid",
+      "S4_sinusoid"
+    ],
+    "test": [
+      "S2_step",
+      "S4_random",
+      "S4_step"
+    ]
+  },
+  "split_counts": {
+    "train": 14,
+    "validation": 3,
+    "test": 3
+  },
+  "target_ratio": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "split_coverage": {
+    "train": {
+      "n_episodes": 14,
+      "scenarios": [
+        "heavy_bob",
+        "high_damping",
+        "low_gravity",
+        "nominal",
+        "short_rod"
+      ],
+      "profiles": [
+        "alternating",
+        "random",
+        "sinusoid",
+        "step"
+      ]
+    },
+    "validation": {
+      "n_episodes": 3,
+      "scenarios": [
+        "high_damping",
+        "low_gravity",
+        "short_rod"
+      ],
+      "profiles": [
+        "sinusoid"
+      ]
+    },
+    "test": {
+      "n_episodes": 3,
+      "scenarios": [
+        "heavy_bob",
+        "low_gravity"
+      ],
+      "profiles": [
+        "random",
+        "step"
+      ]
+    }
+  },
+  "seed_management": {
+    "master_seed": 20261111,
+    "split_rng": "RandomState(master_seed % 2**31) = RandomState(20261111)",
+    "episode_seed_rule": "SHA256('ms=<master>|s=<s_idx>|p=<p_idx>')[:4]",
+    "dataset_version": "cpilot-41bb7d668870",
+    "config_hash": "41bb7d66887037e64da18626084f704e001f49ed6bbd92cebe8356a8cb936b82",
+    "npz_sha256": "8d769ff576a5c6e855947c43b2bf697f200f59a04cdb0e19c787ad684af4ed89"
+  },
+  "leakage_audit": {
+    "train_val_overlap": [],
+    "train_test_overlap": [],
+    "val_test_overlap": [],
+    "n_total_assigned": 20,
+    "n_episodes": 20,
+    "all_episodes_assigned_once": true,
+    "no_empty_split": true
+  },
+  "window_isolation_demo": {
+    "window_len": 11,
+    "stride": 5,
+    "n_windows": 780,
+    "expected_windows_per_episode": 39,
+    "windows_per_episode": {
+      "S0_random": 39,
+      "S0_step": 39,
+      "S0_sinusoid": 39,
+      "S0_alternating": 39,
+      "S1_random": 39,
+      "S1_step": 39,
+      "S1_sinusoid": 39,
+      "S1_alternating": 39,
+      "S2_random": 39,
+      "S2_step": 39,
+      "S2_sinusoid": 39,
+      "S2_alternating": 39,
+      "S3_random": 39,
+      "S3_step": 39,
+      "S3_sinusoid": 39,
+      "S3_alternating": 39,
+      "S4_random": 39,
+      "S4_step": 39,
+      "S4_sinusoid": 39,
+      "S4_alternating": 39
+    },
+    "all_windows_fully_valid": true,
+    "unique_source_episodes": 20,
+    "per_split": {
+      "train": {
+        "n_episodes": 14,
+        "n_windows": 546,
+        "source_episode_ids": [
+          "S0_alternating",
+          "S0_random",
+          "S0_sinusoid",
+          "S0_step",
+          "S1_alternating",
+          "S1_random",
+          "S1_step",
+          "S2_alternating",
+          "S2_random",
+          "S2_sinusoid",
+          "S3_alternating",
+          "S3_random",
+          "S3_step",
+          "S4_alternating"
+        ],
+        "all_windows_fully_valid": true,
+        "all_sources_in_split": true
+      },
+      "validation": {
+        "n_episodes": 3,
+        "n_windows": 117,
+        "source_episode_ids": [
+          "S1_sinusoid",
+          "S3_sinusoid",
+          "S4_sinusoid"
+        ],
+        "all_windows_fully_valid": true,
+        "all_sources_in_split": true
+      },
+      "test": {
+        "n_episodes": 3,
+        "n_windows": 117,
+        "source_episode_ids": [
+          "S2_step",
+          "S4_random",
+          "S4_step"
+        ],
+        "all_windows_fully_valid": true,
+        "all_sources_in_split": true
+      }
+    }
+  },
+  "caveat": "The 20-episode PILOT is an acceptance artifact, NOT a trainable dataset (only 4 episodes per scenario and a single initial condition; the 3-episode test set cannot cover all 5 physical scenarios). This split is a PROTOCOL demonstration; the real split must be defined on the full dataset with a separate dataset_version and its own manifest, using stratification by (scenario x profile x regime) so every subset covers every physical regime.",
+  "per_scenario_split_defect_note": "A naive per-scenario 70/15/15 gives round(0.15*4)=1 validation and 0 test episodes per scenario -> an EMPTY test set. The global episode-level split avoids this."
+}

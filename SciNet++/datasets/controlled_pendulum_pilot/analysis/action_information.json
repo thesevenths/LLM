@@ -1,0 +1,94 @@
+{
+  "design": "All arms share the SAME scenario + SAME initial state; only the torque sequence changes. Shuffled/reversed arms reuse the exact same action multiset as `random` (permutation only).",
+  "arms": {
+    "zero": {
+      "final_theta_rad": -1.2935344418352308,
+      "final_omega_rad_s": 2.366338667925091,
+      "max_abs_theta_rad": 2.0,
+      "max_abs_omega_rad_s": 5.124709683228386,
+      "action_L2_norm": 0.0,
+      "action_mean": 0.0,
+      "net_work_J_approx": 0.0,
+      "final_energy_J": 9.924555385955676
+    },
+    "positive_constant": {
+      "final_theta_rad": -0.27297066896428246,
+      "final_omega_rad_s": 3.19665136140421,
+      "max_abs_theta_rad": 2.0,
+      "max_abs_omega_rad_s": 4.166165261712763,
+      "action_L2_norm": 35.35533905932738,
+      "action_mean": 2.5,
+      "net_work_J_approx": -5.761406117213819,
+      "final_energy_J": 5.472512333720519
+    },
+    "negative_constant": {
+      "final_theta_rad": -23.01596774280248,
+      "final_omega_rad_s": -9.340495639480817,
+      "max_abs_theta_rad": 23.01596774280248,
+      "max_abs_omega_rad_s": 10.206136341406495,
+      "action_L2_norm": 35.35533905932738,
+      "action_mean": -2.5,
+      "net_work_J_approx": 62.306287757224275,
+      "final_energy_J": 58.52630562530489
+    },
+    "random": {
+      "final_theta_rad": -1.7412779789992479,
+      "final_omega_rad_s": 0.6689773732748718,
+      "max_abs_theta_rad": 2.088619936582639,
+      "max_abs_omega_rad_s": 5.391938130918169,
+      "action_L2_norm": 41.80149208506701,
+      "action_mean": -0.25350256386730474,
+      "net_work_J_approx": 2.0585461116821673,
+      "final_energy_J": 11.698100910661774
+    },
+    "shuffled_random": {
+      "final_theta_rad": -1.0674117547027706,
+      "final_omega_rad_s": 2.3724234409651386,
+      "max_abs_theta_rad": 2.0,
+      "max_abs_omega_rad_s": 5.383224380858929,
+      "action_L2_norm": 41.80149208506702,
+      "action_mean": -0.25350256386730463,
+      "net_work_J_approx": -2.5391317257445385,
+      "final_energy_J": 7.891920883065167
+    },
+    "reversed_random": {
+      "final_theta_rad": -1.5891600251514715,
+      "final_omega_rad_s": 1.6640667097847217,
+      "max_abs_theta_rad": 2.0,
+      "max_abs_omega_rad_s": 5.052939900044733,
+      "action_L2_norm": 41.80149208506701,
+      "action_mean": -0.25350256386730474,
+      "net_work_J_approx": 1.176899447836654,
+      "final_energy_J": 11.374696763281543
+    }
+  },
+  "pairwise_final_theta_abs_differences": {
+    "positive_vs_zero_final_theta_abs_diff": 1.0205637728709482,
+    "positive_vs_negative_constant_final_theta_abs_diff": 22.742997073838197,
+    "positive_vs_random_final_theta_abs_diff": 1.4683073100349655,
+    "positive_vs_shuffled_random_final_theta_abs_diff": 0.7944410857384882,
+    "positive_vs_reversed_random_final_theta_abs_diff": 1.3161893561871891
+  },
+  "same_action_different_initial_state": {
+    "variants": {
+      "theta0=2.0,omega0=0.0": {
+        "final_theta_rad": -0.27297066896428246,
+        "final_omega_rad_s": 3.19665136140421
+      },
+      "theta0=2.0,omega0=0.5": {
+        "final_theta_rad": -0.5486688331878549,
+        "final_omega_rad_s": 2.648917608835214
+      },
+      "theta0=1.0,omega0=0.0": {
+        "final_theta_rad": 0.7510090499906256,
+        "final_omega_rad_s": 0.9641778379598989
+      },
+      "theta0=-1.0,omega0=0.0": {
+        "final_theta_rad": 0.4178791230383273,
+        "final_omega_rad_s": -3.145478365054275
+      }
+    },
+    "n_distinct_final_thetas": 4
+  },
+  "interpretation": "These establish ACTION SENSITIVITY of the physical system (the data-generating process), NOT that any model has learned to use actions. A shuffled-action control that reaches the same loss in E2/E3 would falsify the action-information claim at training time."
+}

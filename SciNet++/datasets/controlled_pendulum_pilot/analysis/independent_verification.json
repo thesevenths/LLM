@@ -1,0 +1,450 @@
+{
+  "integrity": {
+    "npz_sha256_recomputed": "8d769ff576a5c6e855947c43b2bf697f200f59a04cdb0e19c787ad684af4ed89",
+    "manifest_npz_sha256": "8d769ff576a5c6e855947c43b2bf697f200f59a04cdb0e19c787ad684af4ed89",
+    "match": true
+  },
+  "deterministic_replay": {
+    "n": 20,
+    "all_obs_bitwise": true,
+    "all_cond_bitwise": true,
+    "all_seed_derivation_ok": true,
+    "per_episode": [
+      {
+        "episode_id": "S0_random",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S0_step",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S0_sinusoid",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S0_alternating",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S1_random",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S1_step",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S1_sinusoid",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S1_alternating",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S2_random",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S2_step",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S2_sinusoid",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S2_alternating",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S3_random",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S3_step",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S3_sinusoid",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S3_alternating",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S4_random",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S4_step",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S4_sinusoid",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      },
+      {
+        "episode_id": "S4_alternating",
+        "seed_derivation_ok": true,
+        "obs_bitwise": true,
+        "cond_bitwise": true
+      }
+    ]
+  },
+  "independent_ode_crosscheck_scipy_dop853": {
+    "method": "solve_ivp DOP853 rtol=1e-12 atol=1e-14, per-step constant torque",
+    "max_abs_state_error_over_all_episodes": 0.007627625006331851,
+    "per_episode": [
+      {
+        "episode_id": "S0_random",
+        "max_abs_state_error_vs_scipy": 2.6621741544552435e-06
+      },
+      {
+        "episode_id": "S0_step",
+        "max_abs_state_error_vs_scipy": 5.184319692985717e-06
+      },
+      {
+        "episode_id": "S0_sinusoid",
+        "max_abs_state_error_vs_scipy": 2.8750915520570075e-06
+      },
+      {
+        "episode_id": "S0_alternating",
+        "max_abs_state_error_vs_scipy": 2.3375173014983375e-06
+      },
+      {
+        "episode_id": "S1_random",
+        "max_abs_state_error_vs_scipy": 0.0002372827619305795
+      },
+      {
+        "episode_id": "S1_step",
+        "max_abs_state_error_vs_scipy": 0.007627625006331851
+      },
+      {
+        "episode_id": "S1_sinusoid",
+        "max_abs_state_error_vs_scipy": 0.0003149348789275308
+      },
+      {
+        "episode_id": "S1_alternating",
+        "max_abs_state_error_vs_scipy": 8.34427844873531e-05
+      },
+      {
+        "episode_id": "S2_random",
+        "max_abs_state_error_vs_scipy": 2.3042560675090584e-06
+      },
+      {
+        "episode_id": "S2_step",
+        "max_abs_state_error_vs_scipy": 1.6955552122333017e-06
+      },
+      {
+        "episode_id": "S2_sinusoid",
+        "max_abs_state_error_vs_scipy": 2.6287958308501835e-06
+      },
+      {
+        "episode_id": "S2_alternating",
+        "max_abs_state_error_vs_scipy": 2.231048057632634e-06
+      },
+      {
+        "episode_id": "S3_random",
+        "max_abs_state_error_vs_scipy": 1.170429677510576e-06
+      },
+      {
+        "episode_id": "S3_step",
+        "max_abs_state_error_vs_scipy": 1.077926709225352e-06
+      },
+      {
+        "episode_id": "S3_sinusoid",
+        "max_abs_state_error_vs_scipy": 9.694587745912031e-07
+      },
+      {
+        "episode_id": "S3_alternating",
+        "max_abs_state_error_vs_scipy": 1.2217091216459863e-06
+      },
+      {
+        "episode_id": "S4_random",
+        "max_abs_state_error_vs_scipy": 2.224112127802158e-08
+      },
+      {
+        "episode_id": "S4_step",
+        "max_abs_state_error_vs_scipy": 2.266484555590864e-08
+      },
+      {
+        "episode_id": "S4_sinusoid",
+        "max_abs_state_error_vs_scipy": 2.8913899940974375e-08
+      },
+      {
+        "episode_id": "S4_alternating",
+        "max_abs_state_error_vs_scipy": 3.057507780290791e-08
+      }
+    ]
+  },
+  "energy_balance_identity": {
+    "identity": "dE/dt = tau*omega - b*I*omega^2, I=m*L^2",
+    "max_rel_residual_over_all_episodes": 0.0011634146811005735,
+    "per_episode": [
+      {
+        "episode_id": "S0_random",
+        "energy_balance_rel_residual": 0.000297914878080102
+      },
+      {
+        "episode_id": "S0_step",
+        "energy_balance_rel_residual": 0.00035199268412036954
+      },
+      {
+        "episode_id": "S0_sinusoid",
+        "energy_balance_rel_residual": 0.0003176527957917624
+      },
+      {
+        "episode_id": "S0_alternating",
+        "energy_balance_rel_residual": 0.00037603359543373016
+      },
+      {
+        "episode_id": "S1_random",
+        "energy_balance_rel_residual": 0.0009161944396723483
+      },
+      {
+        "episode_id": "S1_step",
+        "energy_balance_rel_residual": 0.0011634146811005735
+      },
+      {
+        "episode_id": "S1_sinusoid",
+        "energy_balance_rel_residual": 0.0010398802102053245
+      },
+      {
+        "episode_id": "S1_alternating",
+        "energy_balance_rel_residual": 0.00109513091637975
+      },
+      {
+        "episode_id": "S2_random",
+        "energy_balance_rel_residual": 0.00039965691299676995
+      },
+      {
+        "episode_id": "S2_step",
+        "energy_balance_rel_residual": 0.0004281137110747621
+      },
+      {
+        "episode_id": "S2_sinusoid",
+        "energy_balance_rel_residual": 0.0004102646415624168
+      },
+      {
+        "episode_id": "S2_alternating",
+        "energy_balance_rel_residual": 0.00044686031522387515
+      },
+      {
+        "episode_id": "S3_random",
+        "energy_balance_rel_residual": 0.0003943281097077474
+      },
+      {
+        "episode_id": "S3_step",
+        "energy_balance_rel_residual": 0.00039728947596900525
+      },
+      {
+        "episode_id": "S3_sinusoid",
+        "energy_balance_rel_residual": 0.0003794051752579372
+      },
+      {
+        "episode_id": "S3_alternating",
+        "energy_balance_rel_residual": 0.0004325156146648119
+      },
+      {
+        "episode_id": "S4_random",
+        "energy_balance_rel_residual": 6.745423851723761e-05
+      },
+      {
+        "episode_id": "S4_step",
+        "energy_balance_rel_residual": 5.485640873082826e-05
+      },
+      {
+        "episode_id": "S4_sinusoid",
+        "energy_balance_rel_residual": 3.995125764699184e-05
+      },
+      {
+        "episode_id": "S4_alternating",
+        "energy_balance_rel_residual": 5.307837783025075e-05
+      }
+    ]
+  },
+  "physical_parameter_units": {
+    "state_units": {
+      "theta": "rad (unwrapped)",
+      "omega": "rad/s"
+    },
+    "action_units": {
+      "torque": "N*m"
+    },
+    "dt_s": 0.02,
+    "integrator": "RK4, fixed step, float64",
+    "b_semantics": "b multiplies -omega directly => NORMALIZED damping rate [1/s], i.e. c/(m*L^2) for physical viscous coefficient c [N*m*s]. It is NOT c itself.",
+    "table": [
+      {
+        "scenario": "nominal",
+        "g_m_s2": 9.81,
+        "L_m": 1.0,
+        "m_kg": 1.0,
+        "b_1_per_s": 0.1,
+        "I_kg_m2": 1.0,
+        "theta0_rad": 2.0,
+        "omega0_rad_s": 0.0,
+        "tau_max_over_I_rad_s2": 5.0,
+        "E_barrier_J": 19.62,
+        "E0_J": 13.892400466527468
+      },
+      {
+        "scenario": "short_rod",
+        "g_m_s2": 9.81,
+        "L_m": 0.3,
+        "m_kg": 1.0,
+        "b_1_per_s": 0.1,
+        "I_kg_m2": 0.09,
+        "theta0_rad": 2.0,
+        "omega0_rad_s": 0.0,
+        "tau_max_over_I_rad_s2": 55.55555555555556,
+        "E_barrier_J": 5.886,
+        "E0_J": 4.16772013995824
+      },
+      {
+        "scenario": "heavy_bob",
+        "g_m_s2": 9.81,
+        "L_m": 1.0,
+        "m_kg": 3.0,
+        "b_1_per_s": 0.1,
+        "I_kg_m2": 3.0,
+        "theta0_rad": 2.0,
+        "omega0_rad_s": 0.0,
+        "tau_max_over_I_rad_s2": 1.6666666666666667,
+        "E_barrier_J": 58.86,
+        "E0_J": 41.6772013995824
+      },
+      {
+        "scenario": "high_damping",
+        "g_m_s2": 9.81,
+        "L_m": 1.0,
+        "m_kg": 1.0,
+        "b_1_per_s": 1.0,
+        "I_kg_m2": 1.0,
+        "theta0_rad": 2.0,
+        "omega0_rad_s": 0.0,
+        "tau_max_over_I_rad_s2": 5.0,
+        "E_barrier_J": 19.62,
+        "E0_J": 13.892400466527468
+      },
+      {
+        "scenario": "low_gravity",
+        "g_m_s2": 1.62,
+        "L_m": 1.0,
+        "m_kg": 1.0,
+        "b_1_per_s": 0.1,
+        "I_kg_m2": 1.0,
+        "theta0_rad": 2.0,
+        "omega0_rad_s": 0.0,
+        "tau_max_over_I_rad_s2": 5.0,
+        "E_barrier_J": 3.24,
+        "E0_J": 2.2941578752063707
+      }
+    ]
+  },
+  "initial_condition_distribution": {
+    "distinct_theta0": [
+      2.0
+    ],
+    "distinct_omega0": [
+      0.0
+    ],
+    "n_distinct_initial_conditions": 1,
+    "note": "If n_distinct_initial_conditions == 1, the pilot has a POINT initial condition, not a distribution."
+  },
+  "action_distribution": {
+    "global_min": -4.986321694362146,
+    "global_max": 4.999908468929801,
+    "global_mean": 0.018689213751954967,
+    "global_std": 2.714057524042436,
+    "bound": 5.0,
+    "n_samples": 4000,
+    "n_out_of_bounds": 0,
+    "saturation_fraction_at_99pct": 0.00225,
+    "per_profile": {
+      "random": {
+        "min": -4.986321694362146,
+        "max": 4.999908468929801,
+        "mean": 0.0747568550078198,
+        "std": 2.8434559139746534,
+        "unique_values": 1000,
+        "zero_fraction": 0.0
+      },
+      "step": {
+        "min": -3.0,
+        "max": 3.0,
+        "mean": 0.0,
+        "std": 3.0,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "sinusoid": {
+        "min": -3.5,
+        "max": 3.5,
+        "mean": 1.4210854715202004e-17,
+        "std": 2.4748737341529163,
+        "unique_values": 51,
+        "zero_fraction": 0.02
+      },
+      "alternating": {
+        "min": -2.5,
+        "max": 2.5,
+        "mean": 0.0,
+        "std": 2.5,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      }
+    }
+  },
+  "dynamics_batch_contract": {
+    "validated": true,
+    "observations_dtype": "torch.float64",
+    "batch_size": 20,
+    "num_steps": 200,
+    "obs_dim": 2,
+    "cond_dim": 1,
+    "is_conditioned": true,
+    "n_valid_transitions": 4000
+  }
+}

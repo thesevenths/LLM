@@ -1,0 +1,273 @@
+{
+  "verdict": "PASS",
+  "n_pass": 28,
+  "n_total": 28,
+  "reports_checked": [
+    "P1_A_BRANCH_INTEGRITY_REPORT.md",
+    "P1_A_SCIENTIFIC_REVIEW.md",
+    "P1_A_TRAJECTORY_DISTRIBUTION.md",
+    "P2_03A_READINESS_PLAN.md"
+  ],
+  "evidence_sources": [
+    "independent_verification.json",
+    "step_convergence.json",
+    "trajectory_distribution.json",
+    "action_information.json",
+    "split_proposal.json"
+  ],
+  "method": "literal must appear in a report AND agree with the JSON source value within the report's rounding precision",
+  "rows": [
+    {
+      "label": "scipy_dop853_max_state_error",
+      "source_value": 0.007627625006331851,
+      "report_literal": "7.628e-03",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "energy_balance_max_rel_residual",
+      "source_value": 0.0011634146811005735,
+      "report_literal": "1.163e-03",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "torque_global_min",
+      "source_value": -4.986321694362146,
+      "report_literal": "-4.9863",
+      "decimals": 4,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "torque_global_std",
+      "source_value": 2.714057524042436,
+      "report_literal": "2.714",
+      "decimals": 3,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "short_rod_tau_over_I",
+      "source_value": 55.55555555555556,
+      "report_literal": "55.56",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "short_rod_E_barrier",
+      "source_value": 5.886,
+      "report_literal": "5.89",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "short_rod_E0",
+      "source_value": 4.16772013995824,
+      "report_literal": "4.17",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "nominal_E_barrier",
+      "source_value": 19.62,
+      "report_literal": "19.62",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "theta_global_max",
+      "source_value": 82.1151103488298,
+      "report_literal": "82.115",
+      "decimals": 3,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "theta_global_std",
+      "source_value": 12.684610588300314,
+      "report_literal": "12.685",
+      "decimals": 3,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "omega_global_max",
+      "source_value": 51.26387567890554,
+      "report_literal": "51.264",
+      "decimals": 3,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "abs_delta_theta_max",
+      "source_value": 1.0254772583035745,
+      "report_literal": "1.0255",
+      "decimals": 4,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "top1_episode_share_of_abs_theta_pct",
+      "source_value": 53.518467497848164,
+      "report_literal": "53.5%",
+      "decimals": 1,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "S1_step_theta_final",
+      "source_value": 79.11208669618831,
+      "report_literal": "79.11",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "S1_step_turns",
+      "source_value": 12.591079656012942,
+      "report_literal": "12.59",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "S1_step_winding",
+      "source_value": 12.272769769829152,
+      "report_literal": "12.27",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "S1_step_fraction_above_barrier",
+      "source_value": 0.7164179104477612,
+      "report_literal": "0.72",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "S1_sinusoid_theta_final",
+      "source_value": -34.18529115806325,
+      "report_literal": "-34.19",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "S4_step_theta_final",
+      "source_value": 8.054394464538296,
+      "report_literal": "8.05",
+      "decimals": 2,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "step_convergence_dt_16",
+      "source_value": 2.286776501492227e-08,
+      "report_literal": "2.287e-08",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "pos_vs_neg_final_theta_diff",
+      "source_value": 22.742997073838197,
+      "report_literal": "22.743",
+      "decimals": 3,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "pos_vs_shuffled_final_theta_diff",
+      "source_value": 0.7944410857384882,
+      "report_literal": "0.794",
+      "decimals": 3,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "split_train_count",
+      "source_value": 14,
+      "report_literal": "**14**",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "split_validation_count",
+      "source_value": 3,
+      "report_literal": "**3**",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "split_test_count",
+      "source_value": 3,
+      "report_literal": "**3**",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "windows_train",
+      "source_value": 546,
+      "report_literal": "**546**",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "windows_total",
+      "source_value": 780,
+      "report_literal": "780",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    },
+    {
+      "label": "p2_02_evidence_file_count",
+      "source_value": 78,
+      "report_literal": "**78**",
+      "decimals": null,
+      "literal_present": true,
+      "numeric_match": true,
+      "passed": true
+    }
+  ]
+}
