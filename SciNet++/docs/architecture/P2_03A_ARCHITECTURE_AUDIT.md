@@ -263,3 +263,52 @@ Delivered (documents only, no code):
 **STOP.** No production module was modified, no dataset generated, no model
 trained, no merge to `main`. Await review of the module boundary and the
 implementation plan before P0-fix / P1.
+
+---
+
+## 10. AMENDMENT — Phase 0.1 review + P0-fix (historical Phase 0 text above preserved)
+
+The Phase 0 audit (§1–§9) remains valid as read-only evidence. This section
+records only what changed afterwards; it does not rewrite the audit record.
+
+### 10.1 Specification defect found during review (not caught in Phase 0)
+
+A reviewer found that `P2_03_ACTION_JEPA.md` §2.2 wrote the multi-step target as
+`flatten(obs[s+k : s+k+K+1])` — **K+1 frames**, which is incompatible with
+`Encoder.forward`'s `[B, K*D]` contract (`encoder.py:139-150`, F2/I3 above).
+Corrected to `flatten(obs[s+k : s+k+K])`. This is exactly the kind of
+off-by-one that F2/R2 warned about, and it validates the decision to require
+an explicit, unit-tested index contract.
+
+Empirical verification performed during the amendment (synthetic `obs[60,2]`,
+`cond[59,1]`, `K=10, s=3`): the corrected formula yields shape `(1,20)` for
+all horizons k ∈ {1,2,5,10,20}, with k=1 elementwise identical to the
+single-step target; the erroneous formula yields `(1,22)` for all k.
+
+**Additional finding not in the review:** a valid multi-step window also needs
+`s <= L - K - k_max`. With `K=10, L=60, k_max=20` the bound is `s <= 30`,
+whereas the single-step bound `L-K-1 = 49` would let NumPy silently produce
+short windows. P1 MUST use the `k_max` bound. This is now a required test.
+
+### 10.2 Status of the three §6 validation issues after P0-fix
+
+| §6 issue | Phase 0 | P0-fix (Commit B) |
+|---|---|---|
+| 6.1 `int(h)` truncation in `state_dynamics.py:78` | proposed | **FIXED** — `numbers.Integral` + explicit bool exclusion; accepts Python int and numpy integer scalars; rejects float (incl. 3.0/3.7), bool, `np.bool_`, str; zero new dependencies |
+| 6.2 `NormalizationStats.from_dict` schema | proposed | **FIXED** — required fields, 1-D, equal lengths, finite values, strictly positive std, paired `cond_*`, positive finite eps, `source_split=="train"`, non-negative non-bool integer count; the already-persisted `outputs/dynamics/pusher_v1/normalization.json` was verified to still load |
+| 6.3 exact action dtype | proposed | **NOT APPLIED (by design)** — `pusher_v1` / `RobotTransition` stay byte-identical; the requirement belongs to the NEW controlled-pendulum pipeline in P1 (persist the exact float64 action handed to the simulator) |
+
+**Residual risk (unchanged):** `models/conditional_predictor.py:91` has the same
+`int(h)` pattern but is on the §8 do-not-modify list. Q5 was closed as "no
+change in P0-fix"; the residual risk remains explicitly documented.
+
+### 10.3 Boundary invariants re-verified for Phase 0.1 / P0-fix
+
+- No §8-banned file was modified (`world_model.py`, `predictor.py`,
+  `conditional_predictor.py`, `train.py`, `utils/losses.py`, `data/pendulum.py`,
+  `datasets/pusher_v1`, historical checkpoints).
+- `main` was NOT merged; no PR was created; work stays on
+  `feature/p2-03a-action-jepa`.
+- No dataset, simulator, model or JEPA training code was implemented.
+- The already-collected P2-02 evidence (`normalization.json`, 20 checkpoints,
+  metrics) is untouched and remains loadable.

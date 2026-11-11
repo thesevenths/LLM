@@ -1,8 +1,16 @@
 # P2-03A — Action-conditioned JEPA: Architecture Specification & Staged Plan
 
-> **Design document only (Phase 0).** No code is implemented here. Every
-> interface below is derived from the audited source; see
-> `P2_03A_ARCHITECTURE_AUDIT.md` for `file:line` evidence.
+> **Design document only (Phase 0 + Phase 0.1 review amendments).** No dataset,
+> simulator, model or training code is implemented here. Every interface below
+> is derived from the audited source; see `P2_03A_ARCHITECTURE_AUDIT.md` for
+> `file:line` evidence.
+>
+> **Phase 0.1 (this revision):** the multi-step target-window formula, E0/E1
+> definitions, Parameter-OOD grouping, G2/G3 metrics, collapse criteria, physics
+> config and model dispatch were corrected/locked per the review. The full
+> item-by-item change log (with the original text preserved) is
+> `P2_03A_REVIEW_AMENDMENT.md`. Historical Phase 0 audit evidence is NOT
+> deleted; corrections are marked **AMENDED (Phase 0.1)** inline.
 > Implementation begins only after review of the audit + this plan.
 
 ## 1. Research objective
@@ -71,14 +79,50 @@ action_t                     == u_t  where (x_t, u_t) -> x_{t+1}
 every window's episode_id is single-valued (no cross-episode stitching)
 ```
 
-For horizon `k` (multi-step):
+**AMENDED (Phase 0.1, review item 1) — multi-step target window.** The Phase 0
+draft wrote `target_k_block = flatten(obs[s+k : s+k+K+1])`, which slices **K+1**
+frames and therefore cannot be fed to an `Encoder` that requires `[B, K*D]`.
+Corrected to exactly K frames:
 
 ```
-target_k_block = flatten(obs[s+k : s+k+K+1])       # start shifted by k
-action_seq     = cond[s+K-1 : s+K-1+k]             # u_t ... u_{t+k-1}
-z_pred_k      = ConditionalPredictor.rollout(z_context, action_seq)[:, k-1]
-z_target_k    = stop_gradient(target_encoder(target_k_block))
+target_k_block = flatten(obs[s+k : s+k+K])         # EXACTLY K frames -> [B, K*D]
+action_seq     = cond[s+K-1 : s+K-1+k]             # u_t ... u_{t+k-1}  (k actions)
+z_pred_k       = ConditionalPredictor.rollout(z_context, action_seq)[:, k-1]
+z_target_k     = stop_gradient(target_encoder(target_k_block))
 ```
+
+With `t = s+K-1`, the last frame of `target_k_block` is `obs[s+k+K-1] = x_{t+k}`,
+so `z_pred_k` (the k-th autoregressive step) and `z_target_k` are aligned.
+
+**Specification-level shape assertions** to be implemented as unit tests in P2
+(`tests/dynamics/test_trajectory_windows.py`, NOT yet implemented — this phase
+is documentation + validation hardening only). Verified numerically against a
+synthetic `obs[L,D]`, `cond[L-1,U]` with `K=10, D=2, L=60, s=3, t=12`:
+
+| Horizon k | `target_k_block` shape | `action_seq` shape | last frame index | expected `x_{t+k}` | equals one-step target? |
+|---|---|---|---|---|---|
+| 1 | `(B, K*D)` = (1,20) | (1,1,U) | 13 | `x_13` | **YES (elementwise identical)** |
+| 2 | `(B, K*D)` = (1,20) | (1,2,U) | 14 | `x_14` | no |
+| 5 | `(B, K*D)` = (1,20) | (1,5,U) | 17 | `x_17` | no |
+| 10 | `(B, K*D)` = (1,20) | (1,10,U) | 22 | `x_22` | no |
+| 20 | `(B, K*D)` = (1,20) | (1,20,U) | 32 | `x_32` | no |
+
+The erroneous `K+1` formula yields `(1,22)` for every horizon, confirming the
+dimensionality bug. **Horizon 1 MUST be asserted elementwise equal to the
+single-step `target_block`** (`obs[s+1:s+K+1]`), which the corrected formula
+satisfies.
+
+**Additional boundary discovered during the amendment (not in the review):**
+a valid multi-step window requires `s+k+K <= L` and `s+K-1+k <= L-2`, i.e.
+
+```
+0 <= s <= L - K - k_max        (single-step bound L-K-1 is only valid for k=1)
+```
+
+With `K=10, L=60, k_max=20` the start bound is `s <= 30` (not 49). P1 MUST
+derive windows using `k_max`, otherwise horizon-20 slices are silently
+truncated by NumPy and become short `[B, <K*D]` tensors. This is a required
+test case, not an optional detail.
 
 `ConditionalPredictor.rollout` (`conditional_predictor.py:148-197`) already feeds
 predicted latents back and preserves the graph, so **no ground-truth latent is
@@ -101,20 +145,35 @@ models/action_conditioned_world_model.py   (NEW — never edit WorldModel)
 
 Constructor (proposed, all configurable):
 
+**AMENDED (Phase 0.1, review item 8) — explicit model dispatch.** The Phase 0
+skeleton contained an incomplete `self.is_conditioned = isinstance(predictor, ...)`
+and an ambiguous `predictor or ConditionalPredictor(...)` default. Replaced by a
+single explicit, config-driven `predictor_mode` string. Neither existing predictor
+implementation is modified; they are only instantiated/called.
+
 ```python
+PREDICTOR_MODES = ("conditional", "unconditioned")
+
 class ActionConditionedWorldModel(nn.Module):
     def __init__(self, block_size, state_dim, condition_dim,
                  latent_dim=8, encoder_hidden=(64, 32),
                  predictor_hidden=(64, 64), encoder_type="mlp",
-                 predictor=None, ema_momentum=0.996):
+                 predictor_mode="conditional",              # EXPLICIT, not isinstance
+                 ema_momentum=0.996):
+        if predictor_mode not in PREDICTOR_MODES:
+            raise ValueError(f"predictor_mode must be one of {PREDICTOR_MODES}")
+        self.predictor_mode = predictor_mode
         self.encoder = Encoder(block_size, state_dim, encoder_hidden,
-                              latent_dim, kind=encoder_type)       # REUSE
-        self.predictor = predictor or ConditionalPredictor(         # REUSE
-            latent_dim, condition_dim, predictor_hidden)
-        self.target_encoder = copy.deepcopy(self.encoder)            # EMA PATTERN
+                              latent_dim, kind=encoder_type)        # REUSE
+        if predictor_mode == "conditional":
+            self.predictor = ConditionalPredictor(                 # REUSE, no edits
+                latent_dim, condition_dim, predictor_hidden)
+        else:                       # E1 unconditioned JEPA ablation
+            self.predictor = Predictor(                            # REUSE, no edits
+                latent_dim, predictor_hidden, kind="mlp")
+        self.target_encoder = copy.deepcopy(self.encoder)           # EMA PATTERN
         for p in self.target_encoder.parameters():
             p.requires_grad_(False)
-        self.is_conditioned = isinstance(predictor, ...)
 ```
 
 Methods:
@@ -123,10 +182,15 @@ Methods:
 |---|---|
 | `encode(block_flat)` | online encoder, differentiable |
 | `encode_target(block_flat)` | `@torch.no_grad()` EMA encoder (mirrors `world_model.py:76-79`) |
-| `predict_step(z, condition)` | `ConditionalPredictor(z, condition)`; for the E1 ablation the injected legacy `Predictor(z)` is called with no condition |
-| `rollout_latent(z0, conditions)` | delegates to `ConditionalPredictor.rollout` |
+| `predict_step(z, condition)` | dispatch on `self.predictor_mode`: `conditional` → `self.predictor(z, condition)` (condition MUST be a tensor, never `None`); `unconditioned` → `self.predictor(z)` (condition MUST be `None`/ignored, and passing a tensor raises `ValueError`) |
+| `rollout_latent(z0, conditions)` | only valid for `predictor_mode="conditional"`; delegates to `ConditionalPredictor.rollout`; raises otherwise |
 | `update_target_encoder(momentum)` | `@torch.no_grad()` EMA copy (`world_model.py:128-134`) |
 | `forward(context, action, targets_by_horizon, horizons)` | returns `(preds_by_horizon, targets_by_horizon, z_context)` |
+
+Dispatch tests required in P2: both modes produce `[B,L]`; a tensor passed to
+`unconditioned` and `None` passed to `conditional` are both rejected; E1 and E2
+constructors differ ONLY in the predictor submodule. Capturing exact parameter
+counts is mandatory (review item 4 / §5 below).
 
 **Checkpoint isolation:** new checkpoints are separate files with a
 `model_class = "ActionConditionedWorldModel"` tag; a two-way load test must
@@ -187,16 +251,111 @@ device, dataset version, config hash, git commit, duration. Exactly one unique
 | `seeds` | 5 independent model seeds (dataset_seed strictly separate) |
 | `device` | CPU smoke first; GPU optional |
 
+**AMENDED (Phase 0.1, review item 7) — complete physics configuration.** All of
+the following MUST be explicit config keys and recorded in the dataset manifest.
+Values below are **pilot starting points, NOT validated results**; P1-A must run
+20 pilot episodes and prove numerical stability BEFORE full collection (review §6).
+
+| Key | Pilot value | Status |
+|---|---|---|
+| `gravity_g` | `9.81` | unverified starting value |
+| `dt` | `0.02` | unverified starting value |
+| `integrator` | deterministic RK4, fixed `dt` | required |
+| `episode_steps` | `1000` | unverified starting value |
+| `theta` representation | **unwrapped** (never wrapped to ±π) | required — avoids artificial discontinuities |
+| `theta0_range` / `omega0_range` | e.g. `[-π, π]` / `[-1, 1]` | unverified starting values |
+| `torque_bounds` | `[-1.0, 1.0]` | unverified starting value |
+| `action_hold_steps` | piecewise-constant hold duration, configurable | required |
+| `action_profiles` | random / step / sinusoid / sign-alternating, diverse in sign & duration | required |
+| `mass` / `length` / `damping` distributions | uniform over the train ranges in §5.1 | required |
+| `parameter_ood_ranges` | see §5.1 four-group design | required |
+| `collision / NaN / Inf guards` | assert finite state at every RK4 step | required |
+
+Pilot stability checks (must all pass before full collection): RK4 finite over
+all 20 pilot episodes; zero-torque trajectory matches the expected damped
+pendulum behaviour; positive vs negative torque produce distinguishable state
+trajectories; exact-action replay error within declared tolerance; no NaN/Inf or
+unintended blow-up. These are **gates, not assumptions**.
+
+**AMENDED (Phase 0.1, review item 6) — pre-registered collapse criteria.** The
+following thresholds MUST live in `configs/dynamics/controlled_pendulum_jepa.yaml`
+and MUST be frozen BEFORE any `frozen_test` / `parameter_ood_test` result is
+inspected (no post-hoc threshold selection):
+
+| Criterion | Config key | Pilot threshold | Gate |
+|---|---|---|---|
+| per-dimension latent std | `collapse.min_latent_std` | `0.1` | G1 |
+| fraction of collapsed dims | `collapse.max_collapsed_fraction` | `0.25` | G1 |
+| covariance off-diagonal magnitude | `collapse.max_cov_offdiag` | `0.1` | G1 |
+| finite latent check | `collapse.require_finite` | `true` | G1 |
+
+These values are also unverified starting points; they may be revised ONLY on
+`train`/`validation` evidence and every revision must be logged with its reason.
+
 ## 5. Six experiments (E0–E5)
 
 | ID | Encoder | Predictor | Action | Role |
 |---|---|---|---|---|
-| E0 | — | Persistence | — | lowest baseline (Q1: define precisely) |
-| E1 | MLP | unconditioned | none | ordinary JEPA |
+| E0 | — | Persistence | — | lowest baseline (locked below) |
+| E1 | MLP | unconditioned (legacy `Predictor(z)`) | none | ordinary JEPA |
 | E2 | MLP | conditional | correct | **target model** |
 | E3 | MLP | conditional | shuffled | negative control |
 | E4 | MLP | conditional | zero tensor | action-contribution check |
 | E5 | MLP | conditional | correct | multi-step rollout |
+
+### 5.0 AMENDED (Phase 0.1, review item 2) — E0 Persistence locked
+
+```
+x_hat[t+h] = x[t]        for every horizon h >= 1     (raw state, unwrapped theta)
+```
+
+- E0 uses **no Encoder, no Predictor, no Linear Probe, no training**.
+- Its raw-state MSE / MAE are computed on **exactly the same evaluation episodes
+  and timesteps** as every learned model (identical mask, identical split).
+- `Skill = 1 - MSE_model / MSE_persistence`. Report **the denominator
+  `MSE_persistence` explicitly** in every table. If `MSE_persistence` is near
+  zero (below a config-declared `min_denominator`), report `skill=None` with an
+  explicit "baseline degenerate" flag instead of dividing (no Inf, no silent
+  clipping). `Skill > 0` = better than standing still, `= 0` = equal, `< 0` =
+  worse.
+- E0 is the denominator of G4 and of all skill scores; it is NOT a latent
+  persistence model with a random encoder.
+
+### 5.1 AMENDED (Phase 0.1, review item 3) — Parameter OOD split into four groups
+
+The Phase 0 design changed all three physical parameters simultaneously, making
+it impossible to attribute any degradation. Retain the ranges but partition the
+300 OOD episodes into four **disjoint, labelled** groups of 75 episodes each:
+
+| OOD group | Mass | Length | Damping | Episodes |
+|---|---|---|---|---|
+| `mass_ood` | **1.4–1.6** | train 0.8–1.2 | train 0.05–0.15 | 75 |
+| `length_ood` | train 0.8–1.2 | **1.4–1.6** | train 0.05–0.15 | 75 |
+| `damping_ood` | train 0.8–1.2 | train 0.8–1.2 | **0.20–0.30** | 75 |
+| `joint_ood` | **1.4–1.6** | **1.4–1.6** | **0.20–0.30** | 75 |
+
+For each single-parameter group the other two MUST remain inside their train
+ranges. Per-episode `(m, L, b)` values, the four group ranges, and the group
+episode counts MUST be written into `manifest.json`; the audit script must
+assert the OOD ranges are disjoint from train (R8). Report G6 separately per
+group, so a failure can be attributed to one physical parameter.
+
+### 5.2 AMENDED (Phase 0.1, review item 4) — capacity comparability
+
+- E1 = legacy `Predictor(z)`; E2 = `ConditionalPredictor(z, u)`. Their first
+  layers have different input widths (`L` vs `L+U`), so **parameter counts
+  differ by construction**. This is expected and MUST be reported, not hidden.
+- E1 and E2 share the **identical Encoder architecture**, identical
+  `latent_dim`, identical `predictor_hidden`, identical epochs / batch / seeds /
+  train-validation protocol. Record `sum(p.numel())` for encoder, predictor and
+  total for every variant.
+- **E2, E3 and E4 MUST have exactly the same architecture and parameter count**
+  (they differ only in the action tensor supplied). This makes `E2 vs E3` and
+  `E2 vs E4` clean action-information tests.
+- Consequence: a win of E2 over E1 cannot be attributed *solely* to action
+  conditioning; the primary evidence for action information is `E2 vs E3` / `E2
+  vs E4`, with `E2 vs E1` reported as a secondary comparison with the capacity
+  difference stated explicitly.
 
 All of E1–E5 share capacity, epochs, batch, seeds and the same train/validation
 protocol. E3 uses a fixed-seed `shuffle_conditions` (generic helper from
@@ -218,36 +377,66 @@ protocol. E3 uses a fixed-seed `shuffle_conditions` (generic helper from
 5. **Statistics:** 5 seeds, episode-level paired bootstrap (10,000 resamples,
    95% CI), mean AND median. Correlated timesteps are never independent samples.
 
+### 6.1 AMENDED (Phase 0.1, review item 5) — G2/G3 primary metrics are raw-state
+
+Different models learn latent spaces with different scales, rotations and
+coordinate systems, so a lower **latent** MSE alone does not establish better
+physical prediction. Therefore:
+
+| Comparison | PRIMARY metric (gate decision) | SECONDARY (diagnostic only) |
+|---|---|---|
+| G2: E2 vs E1 | **train-only Linear-Probe raw-state RMSE** + Frozen-Test raw-state MAE | latent prediction MSE |
+| G3: E2 vs E3 | **train-only Linear-Probe raw-state RMSE** + Frozen-Test raw-state MAE | latent prediction MSE |
+| all | paired per-episode errors, 95% episode-level paired bootstrap CI | — |
+
+Protocol constraints (all MUST hold):
+
+- Fit **each** variant's probe on TRAIN representations only.
+- Use **VALIDATION** for probe hyper-parameter selection (ridge alpha, etc.).
+- NEVER fit or tune a probe on `frozen_test` or `parameter_ood_test`.
+- Evaluate both test splits **without refitting**.
+- Compare E0 on the identical episodes/timesteps and report the denominator.
+- Latent prediction loss remains a **training diagnostic**, never the sole
+  cross-model physical-capability metric. This directly addresses the fact that
+  E1/E2 have different capacity (§5.2).
+
 ## 7. Acceptance gates (operational criteria — to be reviewed)
 
 | Gate | Criterion |
 |---|---|
-| G0 | RK4 replay with the exact persisted action reproduces `x[t+1]`; manifest SHA-256 + parameter ranges + split isolation verified |
-| G1 | No latent collapse: per-dim std above declared threshold, off-diagonal covariance bounded |
-| G2 | E2 error < E1, paired 95% CI excludes 0 |
-| G3 | E2 error < E3 shuffled-action, paired 95% CI excludes 0 |
-| G4 | E2 Linear-Probe raw-state RMSE < E0 Persistence, skill > 0 |
-| G5 | Horizons 1/2/5/10/20 finite, no divergence |
-| G6 | Parameter OOD measured and degradation reported honestly (no pass/fail on magnitude) |
+| G0 | RK4 replay with the exact persisted action reproduces `x[t+1]`; manifest SHA-256 + parameter ranges + four OOD group ranges/counts + split isolation verified |
+| G1 | No latent collapse against the **pre-registered** thresholds in config (§4.4): per-dim std, collapsed fraction, covariance off-diagonal |
+| G2 | E2 **train-only Linear-Probe raw-state RMSE/MAE** < E1, paired 95% episode-level CI excludes 0; capacity difference reported |
+| G3 | E2 **train-only Linear-Probe raw-state RMSE/MAE** < E3 shuffled-action, paired 95% episode-level CI excludes 0 |
+| G4 | E2 Linear-Probe raw-state RMSE < E0 Persistence, skill > 0, denominator reported |
+| G5 | Horizons 1/2/5/10/20 finite, no divergence, open-loop feedback of predicted latents |
+| G6 | Parameter OOD measured **per four groups** and degradation reported honestly (no pass/fail on magnitude) |
 
 **Failed gates must be reported, never hidden.** A low latent prediction loss
 alone is not evidence of learned physics, nor of planning/control ability.
+**Stage gates:** if P1's G0 fails, P2 training MUST NOT start; if P2's
+single-step G1–G3 fail, P4 multi-step MUST NOT start.
 
 ## 8. Staged development order (task §6)
 
 | Stage | Work | Acceptance |
 |---|---|---|
-| **P0** | Architecture audit + parameter-validation hardening | **This phase: audit DONE, fixes identified but NOT applied**; no regression to A1/A2/P2-02 |
-| P0-fix | Apply the 3 validation fixes (§6 of audit) + tests | 210+ regression green; §8-banned files untouched |
-| P1 | Controlled Pendulum simulator + dataset + audit script | G0 |
-| P2 | Single-step `ActionConditionedWorldModel` + E0–E4 | G1–G3 |
-| P3 | EMA + VICReg diagnostics (if not fully in P2) | no collapse |
-| P4 | Multi-step JEPA + E5 | G4–G5 |
-| P5 | Linear Probe + Parameter OOD | G6 |
+| **P0** | Architecture audit (read-only) | **DONE** (`144a300`), 4 documents |
+| **P0.1** | Review amendments: fix window formula, lock E0/E1, four OOD groups, G2/G3 metrics, collapse criteria, physics config, model dispatch | **current phase** — docs only, Commit A |
+| **P0-fix** | Narrow validation hardening in `state_dynamics.py` + `normalization.py`, tests, full regression | **current phase** — Commit B; compare against the **actual** baseline (210 passed + 22 subtests, measured at `144a300`) |
+| P1-A | ODE + RK4 + control signal generator + 20 pilot episodes | numerical stability |
+| P1-B | Full dataset (train/val/frozen/four-group OOD) + manifest | manifest complete |
+| P1-C | Data acceptance: exact-action replay, physics sanity, split isolation | **G0** (STOP GATE) |
+| P2 | Single-step `ActionConditionedWorldModel` + E0–E4, 5 seeds | G1–G3 |
+| P3 | EMA + VICReg diagnostics | no collapse |
+| P4 | Multi-step JEPA + E5, horizons 1/2/5/10/20 | G4–G5 |
+| P5 | Linear Probe (train-only) + four-group Parameter OOD | G6 |
 | P6 | `P2_03A_FINAL_REPORT.md` + feature-branch commits | independent reproduction |
 
-**P0 and P0-fix are separate commits.** Single-step JEPA must pass before any
-multi-step loss is introduced (one variable at a time).
+**P0 / P0.1 / P0-fix are separate commits.** Single-step JEPA must pass before
+any multi-step loss is introduced (one variable at a time). Per review §5, P1
+starts with **20 pilot episodes only**; full collection follows only after the
+pilot stability checks pass. Stage gates: G0 failure ⇒ no P2; P2 failure ⇒ no P4.
 
 ## 9. Proposed new files (all NET-NEW)
 
@@ -285,7 +474,16 @@ docs/architecture/P2_03A_FINAL_REPORT.md           (P6)
 
 ## 11. Stop condition
 
-Phase 0 delivered the audit, dependency map, gap analysis and this
-specification. **No production code was modified.** Await review of the module
-boundary, the exact window-index contract (§2.2), the E0/E1 definitions (Q1/Q2),
-and the staged plan before P0-fix.
+Phase 0 delivered the audit, dependency map, gap analysis and this specification
+with **zero production code changes**. Phase 0.1 (review amendments) + P0-fix
+deliver the corrected specification, one narrow validation-hardening commit and
+the full regression evidence, also with **no dataset, simulator, model or
+training code**.
+
+**STOP after P0-fix.** Per the review task book §7, do NOT implement
+`controlled_pendulum.py`, do NOT generate the dataset, do NOT train JEPA, do NOT
+implement MPC, do NOT modify robotics, do NOT merge `main`, and do NOT open a
+PR. Wait for explicit review approval before starting P1. The remaining
+unresolved scientific decisions (Q3 physics-range stability, Q4 latent_dim,
+Q5 `conditional_predictor.py` validation, Q6 child naming) stay explicitly
+documented in `P2_03A_GAP_ANALYSIS.md`; Q7 (push feature branch) is CLOSED.

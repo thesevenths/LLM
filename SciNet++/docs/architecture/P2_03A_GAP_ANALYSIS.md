@@ -157,3 +157,34 @@
 | Q7 | Push the feature branch to GitHub for review (without merging main)? | Task says commit to branch first; user historically reviews GitHub `main` |
 
 **Phase 0 stops here.** No implementation, no training, no merge to `main`.
+
+---
+
+## 12. AMENDED (Phase 0.1) — decision log after review
+
+The Phase 0 table above is preserved as historical evidence. Review decisions:
+
+| # | Resolution | Evidence |
+|---|---|---|
+| **Q1** | **CLOSED.** E0 = `x_hat[t+h] = x[t]` in raw state, no Encoder / Predictor / Linear Probe / training; MSE+MAE on the identical evaluation episodes; `Skill = 1 - MSE_model/MSE_persistence` with the denominator reported and a near-zero-denominator guard. This is the G4 denominator. | `P2_03_ACTION_JEPA.md` §5.0 |
+| **Q2** | **CLOSED.** E1 = instantiated legacy `Predictor(z)` (no edits). `condition=None` must NEVER be passed to A2 `ConditionalPredictor`. Encoder/hidden config identical to E2; **exact parameter counts and the capacity difference recorded**; E2/E3/E4 share an identical architecture and parameter count. | `P2_03_ACTION_JEPA.md` §3, §5.2 |
+| **Q3** | **OPEN (scientific).** Pilot values `g=9.81, dt=0.02, episode_steps=1000, torque_bounds=[-1,1]` are recorded as unverified starting points; P1-A must run 20 pilot episodes and pass stability checks before full collection. | §4.4 of spec |
+| **Q4** | **OPEN (scientific).** latent_dim 8/16, block_size 10, horizons remain first-round design values. | §4.4 / §7 of spec |
+| **Q5** | **CLOSED for P0-fix.** `conditional_predictor.py:91` is on the explicit do-not-modify list; its `int(h)` truncation remains a **documented residual risk**, to be decided by a later explicit approval. | `P2_03A_P0_FIX_REPORT.md` |
+| **Q6** | **OPEN (engineering).** `model_class` field + two-way checkpoint load tests remain required. | map §4 |
+| **Q7** | **CLOSED.** The feature branch was pushed at Phase 0 (`144a300`), read back from `origin/feature/p2-03a-action-jepa` and reviewed; per the current task book, `main` is still NOT merged and no PR is created. | review §1 |
+
+### 12.1 Requirement-status deltas caused by the review
+
+| Item | Phase 0 status | Phase 0.1 status |
+|---|---|---|
+| Multi-step target window indexing | MISSING / incorrect `K+1` formula | **SPEC CORRECTED** to `[s+k:s+k+K]`, `[B,K*D]` asserted for k∈{1,2,5,10,20}, h=1 identity + `s<=L-K-k_max` bound added (numerically verified) |
+| Parameter OOD design | single joint OOD group | **SPEC CORRECTED** to 4 labelled groups × 75 episodes, ranges + counts in manifest, per-group G6 reporting |
+| G2 / G3 evaluation | latent loss based | **SPEC CORRECTED** to train-only Linear-Probe raw-state RMSE/MAE + validation-only probe tuning + paired episode-level bootstrap CI; latent loss demoted to diagnostic |
+| Collapse criteria | "declared threshold" (unspecified) | **PRE-REGISTERED** in config (min std / collapsed fraction / cov offdiag), frozen before any test inspection |
+| Physics configuration | partial | **COMPLETED** (g, dt, RK4, unwrapped theta, initial ranges, torque bounds, hold duration, profiles, distributions, stability gates) |
+| Model dispatch | incomplete `isinstance(...)` | **REPLACED** by explicit `predictor_mode` with validated dispatch |
+| P0-fix validation gaps | IDENTIFIED, NOT FIXED | **APPLIED (2 of 3)** in Commit B; 3rd (exact action dtype) belongs to the P1 new pipeline, intentionally not applied |
+
+**Phase 0.1 / P0-fix stop here.** No dataset, simulator, model or training code
+is implemented. Await explicit approval before P1.

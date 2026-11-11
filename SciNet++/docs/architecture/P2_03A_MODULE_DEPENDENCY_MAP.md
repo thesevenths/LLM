@@ -173,3 +173,37 @@ out-of-distribution).
    hyper-parameter selection or Linear-Probe fitting.
 6. Every new experiment gets a unique `experiment_id` (config hash + variant +
    seed); nothing is silently overwritten.
+
+## 7. AMENDED (Phase 0.1) — config / manifest dependency changes
+
+The graph in §1–§5 is preserved as historical evidence. Review amendments add
+the following required nodes/edges (no new code, no new cross-domain import):
+
+```
+configs/dynamics/controlled_pendulum_jepa.yaml   (NEW, P1 — not yet implemented)
+   ├── physics: g, dt, integrator=RK4, episode_steps, unwrapped theta,
+   │            theta0/omega0 ranges, torque_bounds, action_hold_steps,
+   │            action_profiles, mass/length/damping distributions
+   ├── collapse: min_latent_std, max_collapsed_fraction,
+   │             max_cov_offdiag, require_finite       ← PRE-REGISTERED (G1)
+   ├── evaluation: min_denominator for Persistence skill (E0 near-zero guard)
+   ├── probe: train-only fit, VALIDATION-only hyper-param selection
+   └── predictor_mode: "conditional" | "unconditioned"  ← replaces isinstance(...)
+
+datasets/controlled_pendulum_v1/manifest.json     (NEW, P1 — not yet implemented)
+   ├── split_episode_ids
+   ├── split_file_hashes (SHA-256)
+   ├── per-episode (m, L, b) values
+   ├── parameter_ood_groups: {mass_ood:75, length_ood:75,
+   │                          damping_ood:75, joint_ood:75}  ← review item 3
+   ├── train/param-OOD physical ranges (asserted disjoint by audit script)
+   ├── exact action dtype (float64, action passed to the simulator)
+   └── integrator / g / dt / version
+```
+
+**Boundary impact: none.** All physics semantics still live in `configs/`,
+`scripts/` and the domain adapter; generic `models/` and `dynamics/` gain no
+new import of a domain module, and no arrow points to `robotics/` or
+`datasets/pusher_v1`. The only production files touched in P0-fix are
+`models/state_dynamics.py` and `dynamics/normalization.py` (validation
+hardening only); their dependency edges are unchanged.
