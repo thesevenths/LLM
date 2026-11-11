@@ -40,6 +40,16 @@ from data.controlled_pendulum_v2 import (  # noqa: E402
     ValidatedPendulum, classify_regime, generate_torque_sequence_v2,
     sample_episode_specs,
 )
+from data.source_provenance import (  # noqa: E402
+    ProvenanceError,
+    assert_provenance_ok,
+    capture_source_identity,
+    file_sha256,
+    git_head_sha,
+    git_tracked_clean,
+    git_worktree_isolation,
+    verify_identity_stable,
+)
 from dynamics.contracts import DynamicsBatch  # noqa: E402
 import torch  # noqa: E402
 
@@ -61,12 +71,9 @@ def sha256_file(p: Path) -> str:
 
 
 def git_sha() -> str:
-    try:
-        return subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT,
-                              capture_output=True, text=True,
-                              check=True).stdout.strip()
-    except Exception:
-        return "unavailable"
+    """Backward-compatible HEAD SHA helper (returns 'unavailable' on failure)."""
+    sha = git_head_sha(ROOT)
+    return sha if sha else "unavailable"
 
 
 def resolved_config(cfg: dict) -> dict:
@@ -104,8 +111,56 @@ def main(argv=None) -> int:
     ap.add_argument("--config", type=Path,
                     default=ROOT / "configs/dynamics/controlled_pendulum_v2_pilot.yaml")
     ap.add_argument("--output-dir", type=Path, default=None)
-    ap.add_argument("--force", action="store_true")
+    ap.add_argument("--force", action="store_true",
+                    help="Overwrite an existing pilot (v2 dir only).")
+    ap.add_argument("--allow-dirty", action="store_true",
+                    help="Do NOT use: only for broken CI envs; records a "
+                         "provenance risk instead of blocking on a dirty tree.")
+    ap.add_argument("--isolated", action="store_true",
+                    help="Run generation inside a throwaway git worktree at HEAD "
+                         "so mid-run source edits cannot affect provenance.")
+    ap.add_argument("--no-isolate", action="store_true",
+                    help="Internal: used by --isolated to prevent recursion.")
     args = ap.parse_args(argv)
+
+    # --isolated: run the real collection inside a committed worktree snapshot --
+    if args.isolated and not args.no_isolate:
+        sha = git_head_sha(ROOT)
+        if not sha:
+            print("ERROR: --isolated requires a valid git HEAD SHA.", file=sys.stderr)
+            return 2
+        if not git_tracked_clean(ROOT):
+            print("ERROR: --isolated requires a clean tracked tree first.",
+                  file=sys.stderr)
+            return 2
+        real_out = (args.output_dir
+                    or (ROOT / yaml.safe_load(
+                        args.config.resolve().read_text(encoding="utf-8"))
+                        ["experiment"]["output_root"]))
+        try:
+            rel_cfg = str(args.config.resolve().relative_to(ROOT))
+        except ValueError:
+            rel_cfg = str(args.config.resolve())
+        # SciNet++ may be a subdirectory of a larger repo; the worktree is created
+        # at the repo root, so the collector/config live under ROOT's relative
+        # path within that worktree.
+        repo_root = git_repo_root(ROOT)
+        repo_rel = ROOT.relative_to(repo_root) if repo_root else Path(".")
+        print(f"[collect-v2] isolated worktree mode -> real output {real_out}")
+
+        def _run_in_worktree(wt: Path) -> int:
+            inner_cwd = Path(wt) / repo_rel
+            inner_cfg = inner_cwd / rel_cfg
+            inner = subprocess.run(
+                [sys.executable,
+                 str(inner_cwd / "scripts" / "collect_controlled_pendulum_v2.py"),
+                 "--config", str(inner_cfg),
+                 "--output-dir", str(real_out.resolve()),
+                 "--no-isolate"],
+                cwd=str(inner_cwd), capture_output=False, text=True)
+            return inner.returncode
+
+        return git_worktree_isolation(ROOT, _run_in_worktree)
 
     args.config = args.config.resolve()
     try:
@@ -120,6 +175,28 @@ def main(argv=None) -> int:
         print(f"ERROR: {npz_path} exists. Use --force (v2 dir only).", file=sys.stderr)
         return 2
     out.mkdir(parents=True, exist_ok=True)
+
+    # ---- P6: source-provenance precondition (fail-closed) ------------------- #
+    simulator_path = ROOT / "data" / "controlled_pendulum_v2.py"
+    git_commit_required = bool(cfg["experiment"].get("git_commit_required", False))
+    try:
+        before = capture_source_identity(
+            collector_path=Path(__file__).resolve(),
+            simulator_path=simulator_path,
+            config_path=args.config,
+            cwd=ROOT,
+        )
+        before["_tracked_clean"] = git_tracked_clean(ROOT)
+        assert_provenance_ok(before, git_commit_required,
+                             allow_dirty=args.allow_dirty)
+    except ProvenanceError as exc:
+        print(f"ERROR [provenance]: {exc}", file=sys.stderr)
+        return 2
+    print(f"[collect-v2] provenance OK: git={before['git_commit']} "
+          f"clean={before['_tracked_clean']} "
+          f"collector_sha={before['collector_sha256'][:12]} "
+          f"sim_sha={before['simulator_sha256'][:12]} "
+          f"config_sha={before['config_sha256'][:12]}")
 
     sim = cfg["simulator"]
     T = int(sim["episode_steps"])
@@ -240,13 +317,37 @@ def main(argv=None) -> int:
         "n_valid_transitions": batch.num_valid_transitions(),
     }
 
+    # ---- P6: post-collection source-identity re-verification (fail-closed) --- #
+    after = capture_source_identity(
+        collector_path=Path(__file__).resolve(),
+        simulator_path=simulator_path,
+        config_path=args.config,
+        cwd=ROOT,
+    )
+    identity_stable = verify_identity_stable(before, after)
+    if not identity_stable:
+        # Source identity changed mid-run: the dataset is NOT reproducible from
+        # the recorded provenance, so we MUST NOT publish it. Delete outputs.
+        try:
+            if npz_path.exists():
+                npz_path.unlink()
+            if man_path.exists():
+                man_path.unlink()
+        except OSError:
+            pass
+        print("ERROR [provenance]: source identity changed DURING collection "
+              "(HEAD/version/source-file hash differ before vs after). "
+              "Outputs deleted; collection aborted to avoid unverifiable data.",
+              file=sys.stderr)
+        return 3
+
     res = resolved_config(cfg)
     man = {
         "dataset_version": f"cpv2-{_sha_text(_canonical(res))[:12]}",
         "config_hash": _sha_text(_canonical(res)),
         "config_file": config_rel,
         "resolved_config": res,
-        "git_commit": git_sha(),
+        "git_commit": before["git_commit"],
         "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "python_version": platform.python_version(),
         "numpy_version": np.__version__,
@@ -266,6 +367,19 @@ def main(argv=None) -> int:
                                     "continuous_rotation")},
         "dynamics_batch_contract": contract,
         "historical_pilot_preserved": "datasets/controlled_pendulum_pilot",
+        "source_provenance": {
+            "git_commit_required": git_commit_required,
+            "git_commit_required_enforced": True,
+            "tracked_tree_clean_before": bool(before["_tracked_clean"]),
+            "tracked_tree_clean_allowed_dirty": bool(args.allow_dirty),
+            "identity_stable_during_run": bool(identity_stable),
+            "before": {k: before[k] for k in (
+                "git_commit", "collector_sha256", "simulator_sha256",
+                "config_sha256", "dependency_versions", "captured_at")},
+            "after": {k: after[k] for k in (
+                "git_commit", "collector_sha256", "simulator_sha256",
+                "config_sha256", "dependency_versions", "captured_at")},
+        },
     }
     man_path.write_text(json.dumps(man, indent=2, sort_keys=True), encoding="utf-8")
 

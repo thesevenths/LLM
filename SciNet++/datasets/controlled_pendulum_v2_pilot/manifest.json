@@ -1084,6 +1084,13 @@
   "npz_sha256": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
   "numpy_version": "2.2.6",
   "obs_dim": 2,
+  "provenance": {
+    "annotated_by": "P1-B1.1 / P6 source-provenance hardening",
+    "current_head_at_annotation": "ee514640ba9d82d3a139397022f0c18968fbafd3",
+    "note": "The recorded git_commit predates the collector/simulator source files that generated this dataset, and no source-file SHA-256 or dependency versions were recorded at collection time. The source identity used to produce this dataset is therefore NOT verifiable against the current tree. Per P1-B1.1/P6 this dataset is retained byte-for-byte (npz unchanged) as historical evidence, but it MUST NOT be treated as provenance-backed. Future collections use the hardened collector, which writes a source_provenance block with HEAD SHA, source-file SHA-256s, dependency versions, and a fail-closed identity re-check.",
+    "recorded_git_commit": "3143772cf8ede786254a01ee6d0013a4d4c243d1",
+    "status": "incomplete_historical"
+  },
   "python_version": "3.13.0",
   "regime_counts": {
     "bounded_oscillation": 20,
