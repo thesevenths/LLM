@@ -32,25 +32,46 @@
 
 对 `configs/dynamics/controlled_pendulum_jepa.yaml` 逐键实测：
 
-| 规格 §4.4 要求的键 / 值 | 规格 pilot 值 | 实际 pilot 值 | 判定 |
+> **AMENDED (P1-A' review fix P4).** 原表格把 `integrator` 与 `theta unwrapped`
+> 直接标为 ✅，混淆了三个不同层次。独立 GitHub 审查指出：规格要求的是
+> **「所有物理配置必须是显式配置项，并记录到 manifest」**，而当时 YAML 里
+> 根本没有 `integrator` / `theta_representation` 两个键。现按三层重新判定：
+>
+> | 层次 | 当时实际情况 | 判定 |
+> |------|--------------|------|
+> | 代码实现行为（确为 RK4、确实不 mod 2π） | 源码可确认 | ✅ 通过 |
+> | YAML 显式声明 | 两键均缺失 | ❌ 不通过 |
+> | Manifest 记录完整配置 | 无完整 resolved config | ❌ 不通过 |
+>
+> **本轮修复**：v1 config 补齐 `integrator` / `theta_representation` 等显式键并加
+> `resolved_pilot_config`（P3）；v2 config 补齐全部规格键且 collector 写入 manifest
+> 完整 `resolved_config` + `git_commit`（见 `P1_B1_V2_PILOT_REPORT.md` §2–§3）。
+> 下表「判定」列保留的是**修复前**的审计结论，作为历史记录不予篡改。
+
+| 规格 §4.4 要求的键 / 值 | 规格 pilot 值 | 修复前实际 pilot 值 | 判定（修复前） |
 |--------------------------|---------------|---------------|------|
 | `gravity_g` | `9.81` | 9.81 / **1.62** | ⚠️ 部分偏差 |
 | `dt` | `0.02` | `0.02` | ✅ |
-| `integrator` | deterministic RK4 | RK4 | ✅ |
+| `integrator` | deterministic RK4 | 代码为 RK4，**但 YAML 无显式键** | ❌ 显式声明缺失（代码 ✅） |
 | **`episode_steps`** | **`1000`** | **`horizon_steps: 200`** | ❌ **1/5，且键名不同** |
-| `theta` unwrapped | required | unwrapped | ✅ |
+| `theta` unwrapped | required | 代码 unwrapped，**但 YAML 无显式键** | ❌ 显式声明缺失（代码 ✅） |
 | **`theta0_range` / `omega0_range`** | **`[-π,π]` / `[-1,1]`** | **固定 `θ0=2.0, ω0=0.0`** | ❌ **退化为单点** |
 | **`torque_bounds`** | **`[-1.0, 1.0]`** | **`action_max_torque: 5.0` → `[-5,5]`** | ❌ **5 倍，且键名不同** |
 | `action_hold_steps` | required（piecewise-constant hold） | **无**（每步一个独立力矩） | ❌ 缺失 |
 | `action_profiles` | 4 类，sign/duration 多样 | 4 类 | ✅ |
 | **`mass` / `length` / `damping` 分布** | **uniform over train ranges §5.1**（m 0.8–1.2 / L 0.8–1.2 / b 0.05–0.15） | **5 个固定场景**，含 `m=3.0`、`L=0.3`、`b=1.0` | ❌ **远超 train range，无分布采样** |
 | **`parameter_ood_ranges`** | 四组 × 75 episodes | **无** | ❌ 缺失 |
-| `collision / NaN / Inf guards` | **assert finite at every RK4 step** | 仅 audit 事后检查，仿真器内**逐步断言缺失** | ⚠️ 部分 |
+| `collision / NaN / Inf guards` | **assert finite at every RK4 step** | 仅 audit 事后检查，仿真器内**逐步断言缺失** | ⚠️ 部分（已由 P4 `ValidatedPendulum` 补齐） |
 | `collapse.min_latent_std` | `0.1` | **无** | ❌ 缺失 |
 | `collapse.max_collapsed_fraction` | `0.25` | **无** | ❌ 缺失 |
 | `collapse.max_cov_offdiag` | `0.1` | **无** | ❌ 缺失 |
 | `collapse.require_finite` | `true` | **无** | ❌ 缺失 |
 | `latent_dim` / `block_size` / `batch_size` / `seeds`（§4.4 首表） | 8/16, 10, 128, 5 seeds | pilot config 中无（仅 `experiment.seed`） | ⚠️ 尚未到训练阶段，但需在 P1-B/P2 补齐 |
+
+> **Q3 状态更新**：规格 GAP_ANALYSIS.md:171 要求「P1-A 用这些起始值跑 20 pilot 并证明稳定性」。
+> 由于既有 8/8 PASS 是在**偏离规格的配置**上完成的，Q3 **不能沿用该结论关闭**；
+> 本轮按 Q-A 恢复规格后，已在新的 20 条 V2 pilot 上重新完成 10/10 独立验收
+> （`P1_B1_V2_SCIENTIFIC_REVIEW.md` §8），Q3 的数值稳定性部分据此可复核关闭。
 
 ### 2.1 根因链（why → why-not → what removes it）
 
@@ -228,15 +249,26 @@ collapse 阈值（`0.1 / 0.25 / 0.1 / true`）**必须在 P1-B 前写入 config 
 
 ### 5.6 新增诊断 D-A：Action Intervention（ChatGPT 建议，不改 E0–E5）
 
-固定同一初态 `x_t` 与同一训练好的 E2，输入 4 组未来动作序列
-（全零 / 全正 / 全负 / 交替），在 latent 与 probe raw-state 两个层面比较预测轨迹：
+> **AMENDED (P1-A' review fix P1).** 原验收条件写「正/负力矩导致相反方向的角加速度」，
+> 在 nominal 初态 `θ0=2.0, ω0=0` 下**不成立**，属于验收条件设计错误（非模拟器错误）。
+> 角加速度 `α = −(g/L)sinθ − bω + τ/(mL²)`；代入 `g=9.81, L=1, m=1, b=0.1, θ=2, ω=0`
+> 得基项 `−9.81·sin(2) = −8.920208 rad/s²`，于是 `τ=+2.5 → −6.420208`、
+> `τ=−2.5 → −11.420208`，**两者同为负**。正力矩只是削弱重力项，未改变方向。
+> 已改用 `θ0=0, ω0=0`（重力矩为零）使 `α = τ/(mL²)`，方向性才可直接检验。
 
-| 必测 | 验收 |
-|------|------|
-| 4 组预测终态 θ 不全相同 | 至少 3 个互不相同（本 pilot 的受控对照已证明物理系统满足，`action_information.json`） |
+固定**同一 context block**（同一 episode、同一起点 `s`，因此 `z_context` 完全相同）
+与同一训练好的 E2，输入 4 组未来动作序列（全零 / 全正 / 全负 / 交替），
+在 latent 与 probe raw-state 两个层面比较预测轨迹：
+
+| 必测 | 修正后的验收条件 |
+|------|------------------|
+| **解析级前置断言**（新增，必做） | 取 `θ0=0, ω0=0`：正力矩 `α>0`、负力矩 `α<0`、零力矩 `α≈0`；解析值 `α=τ/(mL²)` 与 `ControlledPendulum.derivatives` 数值逐元素相等（单测 `test_action_intervention_analytic_signs`） |
+| 相同 context block 下的 4 组预测终态 θ 不全相同 | 至少 3 个互不相同；**必须固定 `s` 与 `episode_id`**，只改变动作序列，避免把不同状态误当成动作效应 |
 | 动作打乱后预测随之改变 | 与 E3 结论一致 |
-| 预测差异方向与能量/做功一致 | 正/负力矩导致相反方向的角加速度 |
+| 预测差异方向与能量/做功一致 | 在**消除重力偏置的初态**（`θ0=0`）下，正/负力矩产生相反方向角加速度；在 `θ0=2` 等一般初态下只要求"差异方向与 `Δα=Δτ/I` 一致"，**不**要求符号相反 |
 | **不宣称** | 不把此项当作"模型学会动力学"的替代证据；G2/G3 仍是主判据 |
+
+D-A 仍是**附加诊断**，不替代、不改变 E0–E5 与 G0–G6 定义。
 
 ---
 

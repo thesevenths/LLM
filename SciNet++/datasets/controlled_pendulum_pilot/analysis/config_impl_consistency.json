@@ -1,0 +1,89 @@
+{
+  "verdict": "PASS",
+  "n_pass": 10,
+  "n_total": 10,
+  "config": "configs\\dynamics\\controlled_pendulum_jepa.yaml",
+  "checks": [
+    {
+      "check": "no_stale_seed_formula_in_header",
+      "passed": true,
+      "detail": {
+        "stale_header_line_found": false
+      }
+    },
+    {
+      "check": "sha256_seed_declaration_matches_impl",
+      "passed": true,
+      "detail": {
+        "declared": true,
+        "seed_0_0": 392489750,
+        "seed_2_3": 792668707,
+        "within_32bit": true
+      }
+    },
+    {
+      "check": "integrator_declared_rk4",
+      "passed": true,
+      "detail": {
+        "value": "rk4"
+      }
+    },
+    {
+      "check": "theta_representation_unwrapped",
+      "passed": true,
+      "detail": {
+        "value": "unwrapped"
+      }
+    },
+    {
+      "check": "torque_bounds_match_action_max_torque",
+      "passed": true,
+      "detail": {
+        "torque_bounds": [
+          -5.0,
+          5.0
+        ],
+        "action_max_torque": 5.0
+      }
+    },
+    {
+      "check": "episode_steps_match_horizon_steps",
+      "passed": true,
+      "detail": {
+        "episode_steps": 200,
+        "horizon_steps": 200
+      }
+    },
+    {
+      "check": "resolved_integrator",
+      "passed": true,
+      "detail": {
+        "resolved": "rk4",
+        "simulator": "rk4"
+      }
+    },
+    {
+      "check": "resolved_seed_derivation",
+      "passed": true,
+      "detail": {
+        "value": "sha256_first4_bytes"
+      }
+    },
+    {
+      "check": "resolved_storage_dtype",
+      "passed": true,
+      "detail": {
+        "resolved": "float64",
+        "pilot": "float64"
+      }
+    },
+    {
+      "check": "simulator_does_not_wrap_theta",
+      "passed": true,
+      "detail": {
+        "theta0_stored": 6.383185307179586,
+        "theta_final": 6.188089188694462
+      }
+    }
+  ]
+}

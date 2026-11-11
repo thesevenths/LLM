@@ -1,9 +1,20 @@
 # P1-A — Git 分支完整性报告 (Branch Integrity Report)
 
-**结论先行：✅ 当前 `feature/p2-03a-action-jepa` 完整包含 P2-02 的全部代码与证据；与 `origin/main` 无冲突、无重复实现、无旧代码重新引入。**
+> ## ⚠️ 历史审计快照声明（P1-A' review fix P5）
+>
+> **本文件 §1–§6 是 `a5b8396` 时的历史审计快照，其内容与数字（HEAD `a5b8396`、
+> 相对 main 9 个提交、18 个文件变更、4853 insertions）均按当时实测记录，
+> 现予以保留、不修改、不覆盖**，作为该时间点的不可变证据。
+>
+> 该快照之后分支又新增了两个审查提交（`eb1dc51` analysis、`3143772` docs）。
+> **当前实际状态见本报告末尾的 §7「当前 HEAD 审计」**：
+> HEAD `3143772...`、`0 11`（**11** ahead / **0** behind）、**36** files
+> （34 A + 2 M + 0 D）。请勿再用 §1–§6 的旧数字描述当前分支。
 
-- 核验时间：2026-11-11
-- 当前分支 / HEAD：`feature/p2-03a-action-jepa` @ `a5b8396`（=`origin/feature/p2-03a-action-jepa`）
+**结论先行（历史快照）：✅ 在 `a5b8396` 时，`feature/p2-03a-action-jepa` 完整包含 P2-02 的全部代码与证据；与 `origin/main` 无冲突、无重复实现、无旧代码重新引入。**
+
+- 核验时间：2026-11-11（**快照基准 HEAD `a5b8396`**）
+- 快照时分支 / HEAD：`feature/p2-03a-action-jepa` @ `a5b8396`（=`origin/feature/p2-03a-action-jepa`）
 - 参照：`origin/main` @ `e4eccc0`、此前报告 P2-02 HEAD `e4eccc0`
 - 仓库根：`E:/LLM`（远程 `https://github.com/thesevenths/LLM.git`），`SciNet++/` 为子目录
 - **未执行** `merge` / `rebase` / `reset` / `force-push` 中的任何一项（仅 `git fetch` + 只读查询）
@@ -182,4 +193,64 @@ git diff --stat origin/main...HEAD
 git diff --name-status origin/main...HEAD
 git log --stat 0c06b78..HEAD
 git ls-tree -r HEAD --name-only | grep -c "outputs/dynamics/pusher_v1/"
+```
+
+---
+
+## 7. 当前 HEAD 审计（P1-A' review fix P5，追加章节，不覆盖 §1–§6）
+
+以下为**追加审计**，基准为 2026-11-11 16:01 的当前 HEAD。全部数字来自
+`scripts/capture_git_integrity.py` 的实际 git 命令输出，机器可读快照保存在
+`datasets/controlled_pendulum_pilot/analysis/git_integrity.json`。
+
+### 7.1 当前状态实测
+
+| 项 | 实测值 |
+|----|--------|
+| 分支 | `feature/p2-03a-action-jepa` |
+| HEAD full SHA | `3143772cf8ede786254a01ee6d0013a4d4c243d1` |
+| `origin/main` full SHA | `e4eccc0b1da2c8a365706f97ded95f3723e0f5e9` |
+| merge base | `e4eccc0b1da2c8a365706f97ded95f3723e0f5e9`（= `origin/main`，即 main 是 HEAD 的祖先） |
+| `git rev-list --left-right --count origin/main...HEAD` | **0** behind / **11** ahead |
+| 相对 main 文件变更 | **36** files（34 A + 2 M + 0 D） |
+| P2-02 证据文件数（`git ls-tree` 实读） | **78** |
+| 工作树 | clean（采集时有本轮未提交的新增文件，故快照记 `false`；提交后复核） |
+
+### 7.2 `a5b8396` 之后新增的两个审查提交
+
+```
+$ git log --oneline a5b8396..HEAD
+3143772 docs(p1-a): add four acceptance-review reports (STOP, no JEPA training)
+eb1dc51 analysis(p1-a): add independent review scripts + machine-readable evidence
+```
+
+这两个提交**只新增**分析脚本、机器可读证据和四份审查报告，
+未修改任何生产代码、simulator、配置、pilot 数据或已有历史证据。
+
+### 7.3 与 ChatGPT 独立 GitHub 核验的一致性
+
+| 检查项 | ChatGPT GitHub 实测 | 本次本地实测 | 一致 |
+|--------|---------------------|--------------|------|
+| Base | `main` | `origin/main` | ✅ |
+| Head | `feature/p2-03a-action-jepa` | 同 | ✅ |
+| Merge base | `e4eccc0` | `e4eccc0b1da...` | ✅ |
+| Ahead | 11 commits | **11** | ✅ |
+| Behind | 0 | **0** | ✅ |
+| 文件变更 | 34 added + 2 modified + 0 deleted | **36** = 34 + 2 + 0 | ✅ |
+| 删除文件 | 0 | 0 | ✅ |
+
+### 7.4 结论（当前 HEAD）
+
+- ✅ 当前 feature 分支仍**完整包含 P2-02 基线**（`origin/main` 是直接祖先），可快进、无分叉。
+- ✅ 78 个 P2-02 证据文件与 6 个关键 blob hash 未被覆盖或改动。
+- ✅ 两个新审查提交为净新增，不含重复实现或旧代码回退。
+- ✅ **未合并 main、未开 PR、未 rebase/reset/force-push**。
+- ⚠️ 数字口径：§1–§6 中的「9 个提交 / 18 文件」是 `a5b8396` 快照值；
+  当前值应为「**11** 个提交 / **36** 文件」。后续引用须注明基准。
+
+### 7.5 复现
+
+```bash
+python scripts/capture_git_integrity.py
+# -> datasets/controlled_pendulum_pilot/analysis/git_integrity.json
 ```
