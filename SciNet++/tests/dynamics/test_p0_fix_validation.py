@@ -183,6 +183,48 @@ class TestNormalizationDeserializationSchema(unittest.TestCase):
         with self.assertRaises(TypeError):
             NormalizationStats.from_dict(d)
 
+    def test_rejects_numpy_bool_ndarray(self):
+        # Genuine bool ndarray (dtype=bool). Note: np.array([0.0, True, 0.0])
+        # is promoted to float64 and is *valid* numeric data; the vulnerability
+        # is a true bool dtype, which must be rejected before float coercion.
+        d = _base_dict()
+        d["state_mean"] = np.array([True, False, True], dtype=bool)
+        with self.assertRaises(TypeError):
+            NormalizationStats.from_dict(d)
+
+    def test_rejects_torch_bool_tensor(self):
+        d = _base_dict()
+        d["state_mean"] = torch.tensor([0.0, True, 0.0], dtype=torch.bool)
+        with self.assertRaises(TypeError):
+            NormalizationStats.from_dict(d)
+
+    def test_rejects_numpy_object_array_with_bool(self):
+        d = _base_dict()
+        d["state_mean"] = np.array([0.0, True, 0.0], dtype=object)
+        with self.assertRaises(TypeError):
+            NormalizationStats.from_dict(d)
+
+    def test_rejects_2d_float_array(self):
+        # Nested arrays must be rejected explicitly, not silently flattened.
+        d = _base_dict()
+        d["state_mean"] = np.array([[0.0, 1.0], [2.0, 3.0]])
+        with self.assertRaises(ValueError):
+            NormalizationStats.from_dict(d)
+
+    def test_accepts_float32_float64_ndarrays_and_int_tensors(self):
+        for vec in (
+            np.array([0.0, 1.0, 2.0], dtype=np.float32),
+            np.array([0.0, 1.0, 2.0], dtype=np.float64),
+            torch.tensor([0.0, 1.0, 2.0]),
+            torch.tensor([0, 1, 2]),  # int tensors are numeric, cast to float32
+            np.array([0, 1, 2], dtype=np.int64),
+        ):
+            with self.subTest(type=type(vec).__name__):
+                d = _base_dict()
+                d["state_mean"] = vec
+                st = NormalizationStats.from_dict(d)
+                self.assertEqual(tuple(st.state_mean.shape), (3,))
+
     def test_rejects_state_vector_length_mismatch(self):
         d = _base_dict()
         d["state_std"] = [1.0, 1.0]

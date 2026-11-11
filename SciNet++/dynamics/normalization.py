@@ -27,6 +27,8 @@ import math
 import numbers
 from collections.abc import Mapping
 from dataclasses import dataclass
+
+import numpy as np
 from pathlib import Path
 from typing import Optional
 
@@ -63,6 +65,21 @@ def _validate_vector(value, name: str, *, strictly_positive: bool = False):
             f"{name} must be a 1-D numeric sequence, got "
             f"{type(value).__name__}"
         )
+    # Boolean / object / string arrays are rejected explicitly. ``torch.as_tensor``
+    # silently casts ``True/False -> 1.0/0.0`` and would otherwise turn a corrupt
+    # boolean vector into a plausible-looking statistic, so this guard runs BEFORE
+    # any float32 coercion. Numeric int/float tensors and 1-D numeric ndarrays are
+    # still accepted and converted normally.
+    if isinstance(value, torch.Tensor):
+        if value.dtype == torch.bool:
+            raise TypeError(f"{name} must not be a boolean tensor")
+    elif isinstance(value, np.ndarray):
+        if value.dtype.kind in ("b", "O", "U", "S"):
+            raise TypeError(
+                f"{name} must be a 1-D numeric array, got dtype {value.dtype}"
+            )
+        if value.ndim != 1:
+            raise ValueError(f"{name} must be 1-D, got shape {value.shape}")
     if isinstance(value, (list, tuple)):
         for i, v in enumerate(value):
             if isinstance(v, bool) or not isinstance(v, numbers.Real):
