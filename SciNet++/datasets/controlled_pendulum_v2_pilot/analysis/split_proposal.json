@@ -1,0 +1,84 @@
+{
+  "principle": "episode-level split; windows never cross episode boundaries",
+  "split_counts": {
+    "train": 14,
+    "validation": 3,
+    "test": 3
+  },
+  "target_ratio": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "splits": {
+    "train": [
+      "E00_random",
+      "E01_step",
+      "E02_sinusoid",
+      "E04_zero",
+      "E05_random",
+      "E06_step",
+      "E07_sinusoid",
+      "E09_zero",
+      "E10_random",
+      "E13_alternating",
+      "E14_zero",
+      "E15_random",
+      "E16_step",
+      "E17_sinusoid"
+    ],
+    "validation": [
+      "E03_alternating",
+      "E08_alternating",
+      "E18_alternating"
+    ],
+    "test": [
+      "E11_step",
+      "E12_sinusoid",
+      "E19_zero"
+    ]
+  },
+  "stratification_dimensions": [
+    "scenario",
+    "profile",
+    "regime",
+    "IC bin"
+  ],
+  "seed_management": {
+    "master_seed": 20261112,
+    "episode_seed_rule": "SHA256('ms=<master>|s=<s>|p=<p>')[:4]",
+    "dataset_version": "cpv2-ff53b15f8996",
+    "config_hash": "ff53b15f8996f9577ab06ec7def6ebaa7b5688adeac644415a9ecde85b6a2d70",
+    "npz_sha256": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
+    "git_commit": "3143772cf8ede786254a01ee6d0013a4d4c243d1"
+  },
+  "leakage_audit": {
+    "counts": {
+      "train": 14,
+      "validation": 3,
+      "test": 3
+    },
+    "overlaps": [],
+    "windows": {
+      "train": {
+        "n_episodes": 14,
+        "n_windows": 2786,
+        "all_sources_in_split": true,
+        "all_valid": true
+      },
+      "validation": {
+        "n_episodes": 3,
+        "n_windows": 597,
+        "all_sources_in_split": true,
+        "all_valid": true
+      },
+      "test": {
+        "n_episodes": 3,
+        "n_windows": 597,
+        "all_sources_in_split": true,
+        "all_valid": true
+      }
+    }
+  },
+  "caveat": "20-episode pilot is an acceptance artifact, not a trainable dataset; the full dataset must define its own version+manifest."
+}

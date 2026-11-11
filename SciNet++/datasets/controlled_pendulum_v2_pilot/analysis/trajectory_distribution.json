@@ -1,0 +1,265 @@
+{
+  "global_distribution": {
+    "theta_rad": {
+      "min": -9.075243684367525,
+      "max": 8.818841171980672,
+      "mean": 0.002162640957704807,
+      "std": 2.2126785149757997,
+      "p1": -7.082919791919894,
+      "p5": -2.8035832264849163,
+      "p25": -0.6760914887758848,
+      "p50": -0.006510589091232793,
+      "p75": 0.6806875682591708,
+      "p95": 2.985215436520223,
+      "p99": 7.5228121473998675
+    },
+    "omega_rad_s": {
+      "min": -6.659304324532566,
+      "max": 6.950182753198391,
+      "mean": -0.0048087013255315465,
+      "std": 2.495122357582414,
+      "p1": -5.454582530013583,
+      "p5": -4.290228058944409,
+      "p25": -1.5913541348892424,
+      "p50": -0.003115951904663905,
+      "p75": 1.57647427399665,
+      "p95": 4.289434309408638,
+      "p99": 5.4350411316055505
+    },
+    "torque_Nm": {
+      "min": -0.9981030589227038,
+      "max": 0.9998028054185812,
+      "mean": -0.004239167941303888,
+      "std": 0.48904455016782483,
+      "p1": -0.9060472318369561,
+      "p5": -0.665739561406608,
+      "p25": -0.5,
+      "p50": 0.0,
+      "p75": 0.5,
+      "p95": 0.6657395614066075,
+      "p99": 0.8884819566988029
+    },
+    "delta_theta_rad_per_step": {
+      "min": -0.13314797426917302,
+      "max": 0.13895734139794236,
+      "mean": -9.674661935841526e-05,
+      "std": 0.049916263565035736,
+      "p1": -0.10908723085311989,
+      "p5": -0.08573238001676405,
+      "p25": -0.03191491525979041,
+      "p50": -0.00012550862696270038,
+      "p75": 0.03153923282369749,
+      "p95": 0.08599373468311292,
+      "p99": 0.10921833100014551
+    },
+    "abs_delta_theta_rad_per_step": {
+      "min": 2.7328761720291084e-07,
+      "max": 0.13895734139794236,
+      "mean": 0.03973986745072654,
+      "std": 0.030205722358539234,
+      "p1": 0.0006208703930264154,
+      "p5": 0.0031827411330045217,
+      "p25": 0.015010811311555315,
+      "p50": 0.031693721326563284,
+      "p75": 0.0609210535348802,
+      "p95": 0.09823406443264443,
+      "p99": 0.11653050355615788
+    }
+  },
+  "regime_counts": {
+    "bounded_oscillation": 20,
+    "continuous_rotation": 0,
+    "transitional": 0
+  },
+  "initial_state_diversity": {
+    "distinct_theta0": 20,
+    "distinct_omega0": 20,
+    "theta0_observed_range": [
+      -3.0871236848541685,
+      3.1331722808622535
+    ],
+    "omega0_observed_range": [
+      -0.9366420421346389,
+      0.9639902759086845
+    ],
+    "theta0_std": 2.1698628786916117
+  },
+  "dominance": {
+    "share_of_abs_theta_from_top1_episode": 0.23963680618646596,
+    "episodes_with_abs_theta_gt_2pi": [
+      "E02_sinusoid"
+    ]
+  },
+  "per_episode": [
+    {
+      "episode_id": "E00_random",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.6899737958311298,
+      "max_abs_omega_rad_s": 6.451643680401804,
+      "max_abs_delta_theta": 0.12893182534612274,
+      "winding_number": 0.30951728207984286
+    },
+    {
+      "episode_id": "E01_step",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.000349604736701533,
+      "max_abs_omega_rad_s": 2.1794465342760736,
+      "max_abs_delta_theta": 0.04358585242359999,
+      "winding_number": 0.10452675041169598
+    },
+    {
+      "episode_id": "E02_sinusoid",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -6.351678175631312,
+      "max_abs_omega_rad_s": 6.950182753198391,
+      "max_abs_delta_theta": 0.13895734139794236,
+      "winding_number": -0.5195699842000276
+    },
+    {
+      "episode_id": "E03_alternating",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 5.239793425905046,
+      "max_abs_omega_rad_s": 6.30317407689929,
+      "max_abs_delta_theta": 0.1260205659336613,
+      "winding_number": 0.33527916845546907
+    },
+    {
+      "episode_id": "E04_zero",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.3389427672264462,
+      "max_abs_omega_rad_s": 5.212547300876265,
+      "max_abs_delta_theta": 0.10424996301119256,
+      "winding_number": -0.2386661961031865
+    },
+    {
+      "episode_id": "E05_random",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -1.4270883554796236,
+      "max_abs_omega_rad_s": 6.590088909421965,
+      "max_abs_delta_theta": 0.13184898885286137,
+      "winding_number": -0.6238329950200568
+    },
+    {
+      "episode_id": "E06_step",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -1.08609712261504,
+      "max_abs_omega_rad_s": 6.16788721037257,
+      "max_abs_delta_theta": 0.12328695580696178,
+      "winding_number": 0.20812828231049793
+    },
+    {
+      "episode_id": "E07_sinusoid",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.4462690658698537,
+      "max_abs_omega_rad_s": 5.364022557964419,
+      "max_abs_delta_theta": 0.1072681945607387,
+      "winding_number": 0.23395962763221612
+    },
+    {
+      "episode_id": "E08_alternating",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.14758401439954488,
+      "max_abs_omega_rad_s": 2.070985836885284,
+      "max_abs_delta_theta": 0.04137641963486045,
+      "winding_number": 0.09157284017199133
+    },
+    {
+      "episode_id": "E09_zero",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.2623088011174556,
+      "max_abs_omega_rad_s": 3.1625266769704745,
+      "max_abs_delta_theta": 0.06322134283752132,
+      "winding_number": -0.21299454716965144
+    },
+    {
+      "episode_id": "E10_random",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.6620845083873199,
+      "max_abs_omega_rad_s": 6.295875615791063,
+      "max_abs_delta_theta": 0.12593000483767197,
+      "winding_number": 0.5367185553626419
+    },
+    {
+      "episode_id": "E11_step",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.8734086007561678,
+      "max_abs_omega_rad_s": 6.029673391247688,
+      "max_abs_delta_theta": 0.12059666847193364,
+      "winding_number": -0.6128797173214827
+    },
+    {
+      "episode_id": "E12_sinusoid",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -1.1524275227577059,
+      "max_abs_omega_rad_s": 5.367418823590678,
+      "max_abs_delta_theta": 0.1073311230367299,
+      "winding_number": -0.5261695969091127
+    },
+    {
+      "episode_id": "E13_alternating",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.11967555831122863,
+      "max_abs_omega_rad_s": 4.981497374126553,
+      "max_abs_delta_theta": 0.09960654429317672,
+      "winding_number": -0.26574296542602305
+    },
+    {
+      "episode_id": "E14_zero",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.2592984076877148,
+      "max_abs_omega_rad_s": 5.362069743736531,
+      "max_abs_delta_theta": 0.10720652327455123,
+      "winding_number": 0.38893269579059
+    },
+    {
+      "episode_id": "E15_random",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.23511859243197647,
+      "max_abs_omega_rad_s": 5.602483516680383,
+      "max_abs_delta_theta": 0.11206243947996816,
+      "winding_number": -0.35595967439030646
+    },
+    {
+      "episode_id": "E16_step",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.051146676797176036,
+      "max_abs_omega_rad_s": 1.4196479988532311,
+      "max_abs_delta_theta": 0.028384645963896372,
+      "winding_number": 0.06893053372095748
+    },
+    {
+      "episode_id": "E17_sinusoid",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.6052224444984423,
+      "max_abs_omega_rad_s": 5.48569193163989,
+      "max_abs_delta_theta": 0.1097285668320466,
+      "winding_number": 0.3463173378645577
+    },
+    {
+      "episode_id": "E18_alternating",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": -0.367209148436057,
+      "max_abs_omega_rad_s": 5.263669383586451,
+      "max_abs_delta_theta": 0.10529489713952862,
+      "winding_number": 0.27641705058023114
+    },
+    {
+      "episode_id": "E19_zero",
+      "regime": "bounded_oscillation",
+      "theta_final_rad": 0.24441593266560557,
+      "max_abs_omega_rad_s": 2.260284424102952,
+      "max_abs_delta_theta": 0.04521356513321621,
+      "winding_number": 0.14756149819271916
+    }
+  ],
+  "v1_comparison": {
+    "v1_theta_global_max": 82.115,
+    "v1_theta_std": 12.685,
+    "v1_top1_share": 0.535,
+    "v1_n_gt_2pi": 3,
+    "v2_theta_global_max": 8.818841171980672,
+    "v2_theta_std": 2.2126785149757997,
+    "v2_top1_share": 0.23963680618646596,
+    "v2_n_gt_2pi": 1
+  }
+}

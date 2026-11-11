@@ -1,0 +1,1250 @@
+{
+  "T": 1000,
+  "cond_dim": 1,
+  "config_file": "configs\\dynamics\\controlled_pendulum_v2_pilot.yaml",
+  "config_hash": "ff53b15f8996f9577ab06ec7def6ebaa7b5688adeac644415a9ecde85b6a2d70",
+  "created_at": "2026-11-11T08:23:43.008871+00:00",
+  "dataset_version": "cpv2-ff53b15f8996",
+  "dt": 0.02,
+  "dynamics_batch_contract": {
+    "batch_size": 20,
+    "cond_dim": 1,
+    "is_conditioned": true,
+    "n_valid_transitions": 20000,
+    "num_steps": 1000,
+    "obs_dim": 2,
+    "validated": true
+  },
+  "episodes": [
+    {
+      "action_hold_steps": 1,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "random"
+      },
+      "action_stats": {
+        "abs_max": 0.9998028054185812,
+        "in_bounds": true,
+        "max": 0.9998028054185812,
+        "mean": 0.0298758659994819,
+        "min": -0.9981030589227038,
+        "std": 0.5700010644981314,
+        "unique_values": 1000,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E00_random",
+      "episode_sha256": "2b299921e8c047ce4b9b3a86c4a1c0baf6abfa389eb57a6b1b1dc4c97f96509e",
+      "final_theta_rad": -0.6899737958311298,
+      "initial_state": [
+        -2.634728234913358,
+        0.0625198625695429
+      ],
+      "max_abs_omega_rad_s": 6.451643680401804,
+      "physical_parameters": {
+        "I_kg_m2": 0.8479510985550499,
+        "L": 0.8603156215702765,
+        "b": 0.07755867854728346,
+        "g": 9.81,
+        "m": 1.1456585205746865,
+        "normalized_damping_rate_1_per_s": 0.07755867854728346
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 19.33801983426041,
+        "final_theta_rad": -0.6899737958311298,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 6.451643680401804,
+        "max_energy_J": 18.143829593835623,
+        "omega_sign_changes": 17,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 5.109614215909419,
+        "winding_number": 0.30951728207984286
+      },
+      "seed": 1694357830,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 2,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "step"
+      },
+      "action_stats": {
+        "abs_max": 0.6,
+        "in_bounds": true,
+        "max": 0.6,
+        "mean": 0.0,
+        "min": -0.6,
+        "std": 0.6,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E01_step",
+      "episode_sha256": "8f5d0d6df85f3550a85341d949953f738cc104daf009025b0c4914b72ed8e038",
+      "final_theta_rad": 0.000349604736701533,
+      "initial_state": [
+        -0.6564113376572944,
+        -0.4110582911466347
+      ],
+      "max_abs_omega_rad_s": 2.1794465342760736,
+      "physical_parameters": {
+        "I_kg_m2": 1.1831816828505313,
+        "L": 1.002005607484981,
+        "b": 0.07291856545267372,
+        "g": 9.81,
+        "m": 1.1784499265943031,
+        "normalized_damping_rate_1_per_s": 0.07291856545267372
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 23.167559586611773,
+        "final_theta_rad": 0.000349604736701533,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 2.1794465342760736,
+        "max_energy_J": 3.1443366430802375,
+        "omega_sign_changes": 20,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 1.423866869568158,
+        "winding_number": 0.10452675041169598
+      },
+      "seed": 2896850717,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 5,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "sinusoid"
+      },
+      "action_stats": {
+        "abs_max": 0.7,
+        "in_bounds": true,
+        "max": 0.7,
+        "mean": 7.105427357601002e-18,
+        "min": -0.7,
+        "std": 0.4949747468305833,
+        "unique_values": 11,
+        "zero_fraction": 0.1
+      },
+      "episode_id": "E02_sinusoid",
+      "episode_sha256": "055e4a472952bac351c8487e6c166bb0e83e653613fc4dd2ff1395cb80af538f",
+      "final_theta_rad": -6.351678175631312,
+      "initial_state": [
+        -3.0871236848541685,
+        -0.7842054892239185
+      ],
+      "max_abs_omega_rad_s": 6.950182753198391,
+      "physical_parameters": {
+        "I_kg_m2": 0.6790922945119632,
+        "L": 0.814901611152,
+        "b": 0.08513114845923461,
+        "g": 9.81,
+        "m": 1.0226298131874145,
+        "normalized_damping_rate_1_per_s": 0.08513114845923461
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 16.35018342826603,
+        "final_theta_rad": -6.351678175631312,
+        "fraction_timesteps_above_barrier": 0.04095904095904096,
+        "max_abs_omega_rad_s": 6.950182753198391,
+        "max_energy_J": 16.546872710224587,
+        "omega_sign_changes": 17,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 5.988119999513357,
+        "winding_number": -0.5195699842000276
+      },
+      "seed": 3541546547,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 10,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "alternating"
+      },
+      "action_stats": {
+        "abs_max": 0.5,
+        "in_bounds": true,
+        "max": 0.5,
+        "mean": 0.0,
+        "min": -0.5,
+        "std": 0.5,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E03_alternating",
+      "episode_sha256": "3eeb995154cd794dc840d61ea55abd0a35a2b757f57cfd9c3a3182cfaaabf4ee",
+      "final_theta_rad": 5.239793425905046,
+      "initial_state": [
+        3.1331722808622535,
+        0.36338646539061337
+      ],
+      "max_abs_omega_rad_s": 6.30317407689929,
+      "physical_parameters": {
+        "I_kg_m2": 0.8157753031968781,
+        "L": 0.9462139820148892,
+        "b": 0.07986302162952533,
+        "g": 9.81,
+        "m": 0.9111540939289188,
+        "normalized_damping_rate_1_per_s": 0.07986302162952533
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 16.915319106403665,
+        "final_theta_rad": 5.239793425905046,
+        "fraction_timesteps_above_barrier": 0.04095904095904096,
+        "max_abs_omega_rad_s": 6.30317407689929,
+        "max_energy_J": 17.032900907490397,
+        "omega_sign_changes": 16,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 5.685668891118419,
+        "winding_number": 0.33527916845546907
+      },
+      "seed": 2129635491,
+      "split": "validation"
+    },
+    {
+      "action_hold_steps": 1,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "zero",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "zero"
+      },
+      "action_stats": {
+        "abs_max": 0.0,
+        "in_bounds": true,
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "std": 0.0,
+        "unique_values": 1,
+        "zero_fraction": 1.0
+      },
+      "episode_id": "E04_zero",
+      "episode_sha256": "070e1198900994ce6aca3ac5df3f79b1b93b526437bc6e6f7feea1b79b2b1f02",
+      "final_theta_rad": 0.3389427672264462,
+      "initial_state": [
+        1.8385267039024296,
+        0.9639902759086845
+      ],
+      "max_abs_omega_rad_s": 5.212547300876265,
+      "physical_parameters": {
+        "I_kg_m2": 0.6474245633518602,
+        "L": 0.8750618521955594,
+        "b": 0.14325446946155718,
+        "g": 9.81,
+        "m": 0.8454962187385267,
+        "normalized_damping_rate_1_per_s": 0.14325446946155718
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 14.516082378739943,
+        "final_theta_rad": 0.3389427672264462,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.212547300876265,
+        "max_energy_J": 9.47892621652555,
+        "omega_sign_changes": 20,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 3.5777544527872718,
+        "winding_number": -0.2386661961031865
+      },
+      "seed": 3658243691,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 2,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "random"
+      },
+      "action_stats": {
+        "abs_max": 0.9951096673423712,
+        "in_bounds": true,
+        "max": 0.9938934330172444,
+        "mean": -0.05064697734574558,
+        "min": -0.9951096673423712,
+        "std": 0.5662918435098508,
+        "unique_values": 500,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E05_random",
+      "episode_sha256": "a601edb09a4e035b9ce4a443ae71fa8764928fc97208d39f47c43998d111a979",
+      "final_theta_rad": -1.4270883554796236,
+      "initial_state": [
+        2.4925699529642333,
+        -0.4367298866022915
+      ],
+      "max_abs_omega_rad_s": 6.590088909421965,
+      "physical_parameters": {
+        "I_kg_m2": 0.587378297447213,
+        "L": 0.807453869772162,
+        "b": 0.06138200688751186,
+        "g": 9.81,
+        "m": 0.9009121740240832,
+        "normalized_damping_rate_1_per_s": 0.06138200688751186
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 14.272471316740521,
+        "final_theta_rad": -1.4270883554796236,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 6.590088909421965,
+        "max_energy_J": 13.068869415832683,
+        "omega_sign_changes": 17,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.970268625978922,
+        "winding_number": -0.6238329950200568
+      },
+      "seed": 1323080860,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 5,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "step"
+      },
+      "action_stats": {
+        "abs_max": 0.6,
+        "in_bounds": true,
+        "max": 0.6,
+        "mean": 0.0,
+        "min": -0.6,
+        "std": 0.6,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E06_step",
+      "episode_sha256": "45744279d2dc2b30c3e295ff00ef4395234b1588b2e9fd5d10a7fc2b761b2e36",
+      "final_theta_rad": -1.08609712261504,
+      "initial_state": [
+        -2.3938056880368856,
+        -0.43488432559774814
+      ],
+      "max_abs_omega_rad_s": 6.16788721037257,
+      "physical_parameters": {
+        "I_kg_m2": 1.0369667623765562,
+        "L": 0.9349972437619328,
+        "b": 0.06013514142062516,
+        "g": 9.81,
+        "m": 1.1861624593723556,
+        "normalized_damping_rate_1_per_s": 0.06013514142062516
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 21.759730323877093,
+        "final_theta_rad": -1.08609712261504,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 6.16788721037257,
+        "max_energy_J": 20.611476291051616,
+        "omega_sign_changes": 16,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 5.0840912217363705,
+        "winding_number": 0.20812828231049793
+      },
+      "seed": 2224440547,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 10,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "sinusoid"
+      },
+      "action_stats": {
+        "abs_max": 0.6657395614066086,
+        "in_bounds": true,
+        "max": 0.6657395614066086,
+        "mean": 1.7408297026122455e-16,
+        "min": -0.665739561406608,
+        "std": 0.49497474683058307,
+        "unique_values": 5,
+        "zero_fraction": 0.2
+      },
+      "episode_id": "E07_sinusoid",
+      "episode_sha256": "ea141d222c4f29a0e75e85ef8c3a92f75c5a70803b32ccf89501a59ae19ab6f3",
+      "final_theta_rad": -0.4462690658698537,
+      "initial_state": [
+        -1.916280760681801,
+        -0.23306976719802375
+      ],
+      "max_abs_omega_rad_s": 5.364022557964419,
+      "physical_parameters": {
+        "I_kg_m2": 1.0493406325940298,
+        "L": 0.9595742113566718,
+        "b": 0.09172000093484825,
+        "g": 9.81,
+        "m": 1.1396181423549545,
+        "normalized_damping_rate_1_per_s": 0.09172000093484825
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 21.455415295484972,
+        "final_theta_rad": -0.4462690658698537,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.364022557964419,
+        "max_energy_J": 15.161622511343928,
+        "omega_sign_changes": 19,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 3.8730953521894054,
+        "winding_number": 0.23395962763221612
+      },
+      "seed": 987940895,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 1,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "alternating"
+      },
+      "action_stats": {
+        "abs_max": 0.5,
+        "in_bounds": true,
+        "max": 0.5,
+        "mean": 0.0,
+        "min": -0.5,
+        "std": 0.5,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E08_alternating",
+      "episode_sha256": "e23d9e6e26105445f99d1f9fd5a7379be2d8656664cc927001283c36471a46b2",
+      "final_theta_rad": -0.14758401439954488,
+      "initial_state": [
+        -0.7229531383049053,
+        -0.5263445972799521
+      ],
+      "max_abs_omega_rad_s": 2.070985836885284,
+      "physical_parameters": {
+        "I_kg_m2": 1.1116258052581556,
+        "L": 1.1451742780594216,
+        "b": 0.1137563979904558,
+        "g": 9.81,
+        "m": 0.847647822136552,
+        "normalized_damping_rate_1_per_s": 0.1137563979904558
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 19.04522195182707,
+        "final_theta_rad": -0.14758401439954488,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 2.070985836885284,
+        "max_energy_J": 2.5360132699303057,
+        "omega_sign_changes": 19,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 1.4457887257427797,
+        "winding_number": 0.09157284017199133
+      },
+      "seed": 1920427595,
+      "split": "validation"
+    },
+    {
+      "action_hold_steps": 2,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "zero",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "zero"
+      },
+      "action_stats": {
+        "abs_max": 0.0,
+        "in_bounds": true,
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "std": 0.0,
+        "unique_values": 1,
+        "zero_fraction": 1.0
+      },
+      "episode_id": "E09_zero",
+      "episode_sha256": "a38192d4022bcc2ae3e9af4aa3b165627ff0af4285bee03dc5a0a3bf5ed5d318",
+      "final_theta_rad": -0.2623088011174556,
+      "initial_state": [
+        1.0759754081682678,
+        -0.9366420421346389
+      ],
+      "max_abs_omega_rad_s": 3.1625266769704745,
+      "physical_parameters": {
+        "I_kg_m2": 1.0411330410929915,
+        "L": 1.0443143038645282,
+        "b": 0.13741269554363547,
+        "g": 9.81,
+        "m": 0.9546491193788522,
+        "normalized_damping_rate_1_per_s": 0.13741269554363547
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 19.560232193175395,
+        "final_theta_rad": -0.2623088011174556,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 3.1625266769704745,
+        "max_energy_J": 5.592484812887315,
+        "omega_sign_changes": 19,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 2.1166753477635023,
+        "winding_number": -0.21299454716965144
+      },
+      "seed": 725237484,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 5,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "random"
+      },
+      "action_stats": {
+        "abs_max": 0.9965955322938163,
+        "in_bounds": true,
+        "max": 0.9965955322938163,
+        "mean": 0.03888976814860796,
+        "min": -0.9696443107309844,
+        "std": 0.5663381547896773,
+        "unique_values": 200,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E10_random",
+      "episode_sha256": "2826b9fc1f3701b7ec35a95d31b0a0eaaf4a8f075df89202595d70f8d07f9a28",
+      "final_theta_rad": 0.6620845083873199,
+      "initial_state": [
+        -2.7102176327578853,
+        -0.600829645612798
+      ],
+      "max_abs_omega_rad_s": 6.295875615791063,
+      "physical_parameters": {
+        "I_kg_m2": 0.7540186945053763,
+        "L": 0.8742683819639578,
+        "b": 0.10416576621389367,
+        "g": 9.81,
+        "m": 0.9864897311496333,
+        "normalized_damping_rate_1_per_s": 0.10416576621389367
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 16.921402044716018,
+        "final_theta_rad": 0.6620845083873199,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 6.295875615791063,
+        "max_energy_J": 16.483086459128433,
+        "omega_sign_changes": 18,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 5.274039569525282,
+        "winding_number": 0.5367185553626419
+      },
+      "seed": 425101581,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 10,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "step"
+      },
+      "action_stats": {
+        "abs_max": 0.6,
+        "in_bounds": true,
+        "max": 0.6,
+        "mean": 0.0,
+        "min": -0.6,
+        "std": 0.6,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E11_step",
+      "episode_sha256": "10fb5024ce1c9c1267ae89ff5ad416689bb42d0ea2c74b49f182ece19b97a6e8",
+      "final_theta_rad": -0.8734086007561678,
+      "initial_state": [
+        2.977428234186551,
+        -0.09145242790448105
+      ],
+      "max_abs_omega_rad_s": 6.029673391247688,
+      "physical_parameters": {
+        "I_kg_m2": 0.6869271654899769,
+        "L": 0.8959485560047956,
+        "b": 0.08819491587803895,
+        "g": 9.81,
+        "m": 0.8557453418569868,
+        "normalized_damping_rate_1_per_s": 0.08819491587803895
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 15.042728621621002,
+        "final_theta_rad": -0.8734086007561678,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 6.029673391247688,
+        "max_energy_J": 14.944478385385255,
+        "omega_sign_changes": 17,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.983379369194914,
+        "winding_number": -0.6128797173214827
+      },
+      "seed": 385208162,
+      "split": "test"
+    },
+    {
+      "action_hold_steps": 1,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "sinusoid"
+      },
+      "action_stats": {
+        "abs_max": 0.7,
+        "in_bounds": true,
+        "max": 0.7,
+        "mean": 7.105427357601002e-18,
+        "min": -0.7,
+        "std": 0.49497474683058323,
+        "unique_values": 51,
+        "zero_fraction": 0.02
+      },
+      "episode_id": "E12_sinusoid",
+      "episode_sha256": "4b1e641e8261c80f5aeba4959a61bbdc4d7de477ce01b1d8a5d4d9ba9e520908",
+      "final_theta_rad": -1.1524275227577059,
+      "initial_state": [
+        2.1535935576262366,
+        0.7145002274026382
+      ],
+      "max_abs_omega_rad_s": 5.367418823590678,
+      "physical_parameters": {
+        "I_kg_m2": 1.0277238654382772,
+        "L": 0.9913143750969493,
+        "b": 0.07145469722738221,
+        "g": 9.81,
+        "m": 1.0458120313416759,
+        "normalized_damping_rate_1_per_s": 0.07145469722738221
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 20.34061317624592,
+        "final_theta_rad": -1.1524275227577059,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.367418823590678,
+        "max_energy_J": 16.0302237542175,
+        "omega_sign_changes": 17,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.158720278919947,
+        "winding_number": -0.5261695969091127
+      },
+      "seed": 1130804797,
+      "split": "test"
+    },
+    {
+      "action_hold_steps": 2,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "alternating"
+      },
+      "action_stats": {
+        "abs_max": 0.5,
+        "in_bounds": true,
+        "max": 0.5,
+        "mean": 0.0,
+        "min": -0.5,
+        "std": 0.5,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E13_alternating",
+      "episode_sha256": "6269c09a58df76d13fc43f29348f5af54714285a6c80f4d5a27463029e3a747b",
+      "final_theta_rad": 0.11967555831122863,
+      "initial_state": [
+        1.7893878541623494,
+        -0.8215164955270584
+      ],
+      "max_abs_omega_rad_s": 4.981497374126553,
+      "physical_parameters": {
+        "I_kg_m2": 0.6772548388058099,
+        "L": 0.913931272640308,
+        "b": 0.1381847349731546,
+        "g": 9.81,
+        "m": 0.8108210972524414,
+        "normalized_damping_rate_1_per_s": 0.1381847349731546
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 14.539101938138392,
+        "final_theta_rad": 0.11967555831122863,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 4.981497374126553,
+        "max_energy_J": 9.074524628084328,
+        "omega_sign_changes": 19,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 3.438716303986804,
+        "winding_number": -0.26574296542602305
+      },
+      "seed": 3011668941,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 5,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "zero",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "zero"
+      },
+      "action_stats": {
+        "abs_max": 0.0,
+        "in_bounds": true,
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "std": 0.0,
+        "unique_values": 1,
+        "zero_fraction": 1.0
+      },
+      "episode_id": "E14_zero",
+      "episode_sha256": "1d2f1aa42fde5a88323dc4929b0875176a10c0f5a7518e6d8d8be093b32dd156",
+      "final_theta_rad": 0.2592984076877148,
+      "initial_state": [
+        -2.184437791985468,
+        -0.14184048171187835
+      ],
+      "max_abs_omega_rad_s": 5.362069743736531,
+      "physical_parameters": {
+        "I_kg_m2": 1.1208931107255053,
+        "L": 1.0378476973159372,
+        "b": 0.061487968324948294,
+        "g": 9.81,
+        "m": 1.0406314516824384,
+        "normalized_damping_rate_1_per_s": 0.061487968324948294
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 21.189932674427595,
+        "final_theta_rad": 0.2592984076877148,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.362069743736531,
+        "max_energy_J": 16.707335954745652,
+        "omega_sign_changes": 17,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.242936141552482,
+        "winding_number": 0.38893269579059
+      },
+      "seed": 261418777,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 10,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "random"
+      },
+      "action_stats": {
+        "abs_max": 0.9946118013379528,
+        "in_bounds": true,
+        "max": 0.9946118013379528,
+        "mean": -0.10290201562842223,
+        "min": -0.9532909669947731,
+        "std": 0.6178716356799409,
+        "unique_values": 100,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E15_random",
+      "episode_sha256": "4c0cd5feaf5d1a9d206afecc709e217ad9b7a2288919f00e40745ca8587703d0",
+      "final_theta_rad": 0.23511859243197647,
+      "initial_state": [
+        2.4716791885095795,
+        0.7790332875310291
+      ],
+      "max_abs_omega_rad_s": 5.602483516680383,
+      "physical_parameters": {
+        "I_kg_m2": 1.322793582454722,
+        "L": 1.0688389987013034,
+        "b": 0.07010786741306702,
+        "g": 9.81,
+        "m": 1.157890514650696,
+        "normalized_damping_rate_1_per_s": 0.07010786741306702
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 24.28168332115144,
+        "final_theta_rad": 0.23511859243197647,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.602483516680383,
+        "max_energy_J": 22.104777635511958,
+        "omega_sign_changes": 16,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.793410693213386,
+        "winding_number": -0.35595967439030646
+      },
+      "seed": 593266401,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 1,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "step"
+      },
+      "action_stats": {
+        "abs_max": 0.6,
+        "in_bounds": true,
+        "max": 0.6,
+        "mean": 0.0,
+        "min": -0.6,
+        "std": 0.6,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E16_step",
+      "episode_sha256": "b43ade027e083fc3bdcdcc7b5bc7dd1fa7e189bc02b6bba6323cafefee95eedf",
+      "final_theta_rad": 0.051146676797176036,
+      "initial_state": [
+        -0.381956639894391,
+        0.5656986962315926
+      ],
+      "max_abs_omega_rad_s": 1.4196479988532311,
+      "physical_parameters": {
+        "I_kg_m2": 0.9622118277933058,
+        "L": 1.0769547714364185,
+        "b": 0.13039674434954363,
+        "g": 9.81,
+        "m": 0.829613406479131,
+        "normalized_damping_rate_1_per_s": 0.13039674434954363
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 17.5296090068154,
+        "final_theta_rad": 0.051146676797176036,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 1.4196479988532311,
+        "max_energy_J": 1.2018574939082425,
+        "omega_sign_changes": 19,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 0.9118100445580803,
+        "winding_number": 0.06893053372095748
+      },
+      "seed": 3751195714,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 2,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "sinusoid"
+      },
+      "action_stats": {
+        "abs_max": 0.6986187098997902,
+        "in_bounds": true,
+        "max": 0.6986187098997902,
+        "mean": 7.105427357601002e-18,
+        "min": -0.6986187098997902,
+        "std": 0.4949747468305833,
+        "unique_values": 25,
+        "zero_fraction": 0.04
+      },
+      "episode_id": "E17_sinusoid",
+      "episode_sha256": "7ae5f249e17523b3f9c3ab7084fa02b11588e53627f29145c9e88c6d29c32482",
+      "final_theta_rad": -0.6052224444984423,
+      "initial_state": [
+        -2.78119845339058,
+        -0.20976932831268336
+      ],
+      "max_abs_omega_rad_s": 5.48569193163989,
+      "physical_parameters": {
+        "I_kg_m2": 1.544270518622876,
+        "L": 1.1883065275512723,
+        "b": 0.13846336836373108,
+        "g": 9.81,
+        "m": 1.0936199269114268,
+        "normalized_damping_rate_1_per_s": 0.13846336836373108
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 25.497282791012463,
+        "final_theta_rad": -0.6052224444984423,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.48569193163989,
+        "max_energy_J": 24.90450667726182,
+        "omega_sign_changes": 16,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.974293006641464,
+        "winding_number": 0.3463173378645577
+      },
+      "seed": 4088843733,
+      "split": "train"
+    },
+    {
+      "action_hold_steps": 5,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "alternating"
+      },
+      "action_stats": {
+        "abs_max": 0.5,
+        "in_bounds": true,
+        "max": 0.5,
+        "mean": 0.0,
+        "min": -0.5,
+        "std": 0.5,
+        "unique_values": 2,
+        "zero_fraction": 0.0
+      },
+      "episode_id": "E18_alternating",
+      "episode_sha256": "c1d06d1ecb2c6932a14f0711fed696dc6c2aa7639a7a4eef96739cff9b29bad8",
+      "final_theta_rad": -0.367209148436057,
+      "initial_state": [
+        -2.103988699295682,
+        -0.6833358071584372
+      ],
+      "max_abs_omega_rad_s": 5.263669383586451,
+      "physical_parameters": {
+        "I_kg_m2": 0.9276204354154408,
+        "L": 1.013464698756132,
+        "b": 0.10679367233698027,
+        "g": 9.81,
+        "m": 0.9031357957489768,
+        "normalized_damping_rate_1_per_s": 0.10679367233698027
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 17.958112369565974,
+        "final_theta_rad": -0.367209148436057,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 5.263669383586451,
+        "max_energy_J": 13.763750447797923,
+        "omega_sign_changes": 18,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 4.062749487499834,
+        "winding_number": 0.27641705058023114
+      },
+      "seed": 678692917,
+      "split": "validation"
+    },
+    {
+      "action_hold_steps": 10,
+      "action_profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "zero",
+        "phase": 0.0,
+        "torque_max": 1.0,
+        "type": "zero"
+      },
+      "action_stats": {
+        "abs_max": 0.0,
+        "in_bounds": true,
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "std": 0.0,
+        "unique_values": 1,
+        "zero_fraction": 1.0
+      },
+      "episode_id": "E19_zero",
+      "episode_sha256": "89361434c46a4fdb664e51a2eea08427ec6c434ac86dac28a6763508e199f738",
+      "final_theta_rad": 0.24441593266560557,
+      "initial_state": [
+        -0.6827403046842946,
+        0.6574550711239953
+      ],
+      "max_abs_omega_rad_s": 2.260284424102952,
+      "physical_parameters": {
+        "I_kg_m2": 0.7080754539801177,
+        "L": 0.8911065646923036,
+        "b": 0.1031786353412341,
+        "g": 9.81,
+        "m": 0.8917030524429677,
+        "normalized_damping_rate_1_per_s": 0.1031786353412341
+      },
+      "regime": "bounded_oscillation",
+      "regime_detail": {
+        "E_barrier_J": 15.590099947122404,
+        "final_theta_rad": 0.24441593266560557,
+        "fraction_timesteps_above_barrier": 0.0,
+        "max_abs_omega_rad_s": 2.260284424102952,
+        "max_energy_J": 1.9003178489608186,
+        "omega_sign_changes": 20,
+        "regime": "bounded_oscillation",
+        "theta_range_rad": 1.3602280005865208,
+        "winding_number": 0.14756149819271916
+      },
+      "seed": 1681077770,
+      "split": "test"
+    }
+  ],
+  "git_commit": "3143772cf8ede786254a01ee6d0013a4d4c243d1",
+  "historical_pilot_preserved": "datasets/controlled_pendulum_pilot",
+  "n_episodes": 20,
+  "npz_file": "pilot_episodes.npz",
+  "npz_sha256": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
+  "numpy_version": "2.2.6",
+  "obs_dim": 2,
+  "python_version": "3.13.0",
+  "regime_counts": {
+    "bounded_oscillation": 20,
+    "continuous_rotation": 0,
+    "transitional": 0
+  },
+  "resolved_config": {
+    "action_dim": 1,
+    "action_hold_steps_options": [
+      1,
+      2,
+      5,
+      10
+    ],
+    "action_profiles": [
+      {
+        "name": "random",
+        "type": "random"
+      },
+      {
+        "fraction": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "type": "step"
+      },
+      {
+        "amplitude": 0.7,
+        "frequency_hz": 0.5,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "type": "sinusoid"
+      },
+      {
+        "magnitude": 0.5,
+        "name": "alternating",
+        "type": "alternating"
+      },
+      {
+        "name": "zero",
+        "type": "zero"
+      }
+    ],
+    "collapse_thresholds": {
+      "max_collapsed_fraction": 0.25,
+      "max_cov_offdiag": 0.1,
+      "min_latent_std": 0.1,
+      "require_finite": true
+    },
+    "damping_rate_range": [
+      0.05,
+      0.15
+    ],
+    "dt": 0.02,
+    "episode_steps": 1000,
+    "gravity_g": 9.81,
+    "integrator": "rk4",
+    "length_range": [
+      0.8,
+      1.2
+    ],
+    "mass_range": [
+      0.8,
+      1.2
+    ],
+    "observation_dim": 2,
+    "omega0_range": [
+      -1.0,
+      1.0
+    ],
+    "parameter_ood_groups": {
+      "damping_ood": {
+        "damping": [
+          0.2,
+          0.3
+        ],
+        "episodes": 75,
+        "length": [
+          0.8,
+          1.2
+        ],
+        "mass": [
+          0.8,
+          1.2
+        ]
+      },
+      "joint_ood": {
+        "damping": [
+          0.2,
+          0.3
+        ],
+        "episodes": 75,
+        "length": [
+          1.4,
+          1.6
+        ],
+        "mass": [
+          1.4,
+          1.6
+        ]
+      },
+      "length_ood": {
+        "damping": [
+          0.05,
+          0.15
+        ],
+        "episodes": 75,
+        "length": [
+          1.4,
+          1.6
+        ],
+        "mass": [
+          0.8,
+          1.2
+        ]
+      },
+      "mass_ood": {
+        "damping": [
+          0.05,
+          0.15
+        ],
+        "episodes": 75,
+        "length": [
+          0.8,
+          1.2
+        ],
+        "mass": [
+          1.4,
+          1.6
+        ]
+      }
+    },
+    "parameter_validation": true,
+    "per_step_finite_guard": true,
+    "regime_criteria": {
+      "bounded_oscillation": {
+        "max_theta_range_rad": 6.283185307179586,
+        "min_omega_sign_changes": 2
+      },
+      "continuous_rotation": {
+        "max_omega_sign_changes": 2,
+        "min_abs_winding": 1.0
+      },
+      "transitional": "otherwise"
+    },
+    "seed_derivation": "sha256_first4_bytes",
+    "storage_dtype": "float64",
+    "theta0_range": [
+      -3.141592653589793,
+      3.141592653589793
+    ],
+    "theta_representation": "unwrapped",
+    "torque_bounds": [
+      -1.0,
+      1.0
+    ]
+  },
+  "split_counts": {
+    "test": 3,
+    "train": 14,
+    "validation": 3
+  },
+  "storage_dtype": "float64",
+  "torch_version": "2.14.1+cu126"
+}

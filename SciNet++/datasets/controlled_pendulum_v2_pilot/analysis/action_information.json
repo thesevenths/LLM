@@ -1,0 +1,53 @@
+{
+  "design": "Identical IC theta0=0 (zero gravity torque), identical physical params; only torque sequence changes. Shuffled/reversed reuse the exact same action multiset.",
+  "corrected_initial_state": {
+    "theta0": 0.0,
+    "omega0": 0.0,
+    "reason": "alpha = tau/(m L^2), so positive/negative torque give OPPOSITE initial angular acceleration"
+  },
+  "arms": {
+    "zero": {
+      "final_theta_rad": 0.0,
+      "final_omega_rad_s": 0.0,
+      "initial_alpha_rad_s2": 0.0
+    },
+    "positive_constant": {
+      "final_theta_rad": 0.11452748705289209,
+      "final_omega_rad_s": -0.1570635018120465,
+      "initial_alpha_rad_s2": 1.1793132902404972
+    },
+    "negative_constant": {
+      "final_theta_rad": -0.11452748705289209,
+      "final_omega_rad_s": 0.1570635018120465,
+      "initial_alpha_rad_s2": -1.1793132902404972
+    },
+    "random": {
+      "final_theta_rad": -0.06923442637797793,
+      "final_omega_rad_s": 0.05148229365591487,
+      "initial_alpha_rad_s2": -1.0881443661803185
+    },
+    "shuffled_random": {
+      "final_theta_rad": -0.010154290326025795,
+      "final_omega_rad_s": 0.14926581543026957,
+      "initial_alpha_rad_s2": -1.1753252389414957
+    },
+    "reversed_random": {
+      "final_theta_rad": -0.017953171439729503,
+      "final_omega_rad_s": 0.2362765010513053,
+      "initial_alpha_rad_s2": 0.933391207335305
+    }
+  },
+  "analytic_initial_alpha": {
+    "positive": 1.1793132902404972,
+    "negative": -1.1793132902404972,
+    "zero": 0.0
+  },
+  "pairwise_final_theta_abs_diff": {
+    "positive_vs_zero": 0.11452748705289209,
+    "positive_vs_negative_constant": 0.22905497410578418,
+    "positive_vs_random": 0.18376191343087,
+    "positive_vs_shuffled_random": 0.12468177737891789,
+    "positive_vs_reversed_random": 0.13248065849262158
+  },
+  "interpretation": "Establishes ACTION SENSITIVITY of the data-generating process, NOT that a model has learned to use actions."
+}

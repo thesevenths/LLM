@@ -1,0 +1,347 @@
+{
+  "verdict": "PASS",
+  "n_pass": 10,
+  "n_total": 10,
+  "dataset_version": "cpv2-ff53b15f8996",
+  "npz_sha256": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
+  "git_commit": "3143772cf8ede786254a01ee6d0013a4d4c243d1",
+  "checks": [
+    {
+      "check": "exact_replay_from_persisted_conditions",
+      "passed": true,
+      "detail": {
+        "n": 20,
+        "mismatches": [],
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "check": "independent_dop853_crosscheck",
+      "passed": true,
+      "detail": {
+        "max_abs_state_error_over_all": 1.65150759665611e-05,
+        "tolerance": 0.0001,
+        "per_episode": [
+          {
+            "episode_id": "E00_random",
+            "max_abs_state_error": 1.3537000534635801e-05
+          },
+          {
+            "episode_id": "E01_step",
+            "max_abs_state_error": 7.707269853773902e-06
+          },
+          {
+            "episode_id": "E02_sinusoid",
+            "max_abs_state_error": 1.65150759665611e-05
+          },
+          {
+            "episode_id": "E03_alternating",
+            "max_abs_state_error": 1.116461114090972e-05
+          },
+          {
+            "episode_id": "E04_zero",
+            "max_abs_state_error": 1.1715705247619668e-05
+          },
+          {
+            "episode_id": "E05_random",
+            "max_abs_state_error": 4.02074864469526e-06
+          },
+          {
+            "episode_id": "E06_step",
+            "max_abs_state_error": 5.8234027355830165e-06
+          },
+          {
+            "episode_id": "E07_sinusoid",
+            "max_abs_state_error": 7.0636229876352985e-06
+          },
+          {
+            "episode_id": "E08_alternating",
+            "max_abs_state_error": 3.6907692369629597e-06
+          },
+          {
+            "episode_id": "E09_zero",
+            "max_abs_state_error": 5.457347462781148e-06
+          },
+          {
+            "episode_id": "E10_random",
+            "max_abs_state_error": 1.2347666661916001e-05
+          },
+          {
+            "episode_id": "E11_step",
+            "max_abs_state_error": 9.619614626865669e-06
+          },
+          {
+            "episode_id": "E12_sinusoid",
+            "max_abs_state_error": 1.5473941388233214e-05
+          },
+          {
+            "episode_id": "E13_alternating",
+            "max_abs_state_error": 1.046045279720631e-05
+          },
+          {
+            "episode_id": "E14_zero",
+            "max_abs_state_error": 8.091888558631188e-06
+          },
+          {
+            "episode_id": "E15_random",
+            "max_abs_state_error": 9.040101765833697e-06
+          },
+          {
+            "episode_id": "E16_step",
+            "max_abs_state_error": 2.5401783128597977e-06
+          },
+          {
+            "episode_id": "E17_sinusoid",
+            "max_abs_state_error": 5.701263742441398e-06
+          },
+          {
+            "episode_id": "E18_alternating",
+            "max_abs_state_error": 9.57716620103577e-06
+          },
+          {
+            "episode_id": "E19_zero",
+            "max_abs_state_error": 8.130594625559151e-06
+          }
+        ]
+      }
+    },
+    {
+      "check": "energy_balance_identity",
+      "passed": true,
+      "detail": {
+        "identity": "dE/dt = tau*omega - b*I*omega^2",
+        "max_rel_residual": 0.0007451187359681276,
+        "tolerance": 0.01,
+        "per_episode": [
+          {
+            "episode_id": "E00_random",
+            "rel_residual": 0.000498742057338587
+          },
+          {
+            "episode_id": "E01_step",
+            "rel_residual": 0.0004008336480546666
+          },
+          {
+            "episode_id": "E02_sinusoid",
+            "rel_residual": 0.0005392128415346951
+          },
+          {
+            "episode_id": "E03_alternating",
+            "rel_residual": 0.000489992569631458
+          },
+          {
+            "episode_id": "E04_zero",
+            "rel_residual": 0.0007451187359681276
+          },
+          {
+            "episode_id": "E05_random",
+            "rel_residual": 0.00047587849382160476
+          },
+          {
+            "episode_id": "E06_step",
+            "rel_residual": 0.00048146128365867655
+          },
+          {
+            "episode_id": "E07_sinusoid",
+            "rel_residual": 0.00044560832469362995
+          },
+          {
+            "episode_id": "E08_alternating",
+            "rel_residual": 0.00038193308372142534
+          },
+          {
+            "episode_id": "E09_zero",
+            "rel_residual": 0.000624311448402297
+          },
+          {
+            "episode_id": "E10_random",
+            "rel_residual": 0.00047195090695046797
+          },
+          {
+            "episode_id": "E11_step",
+            "rel_residual": 0.0004998031131520165
+          },
+          {
+            "episode_id": "E12_sinusoid",
+            "rel_residual": 0.00043962460501359066
+          },
+          {
+            "episode_id": "E13_alternating",
+            "rel_residual": 0.0005254341289665775
+          },
+          {
+            "episode_id": "E14_zero",
+            "rel_residual": 0.0006296293436123189
+          },
+          {
+            "episode_id": "E15_random",
+            "rel_residual": 0.00042345355638523325
+          },
+          {
+            "episode_id": "E16_step",
+            "rel_residual": 0.00036791747345746897
+          },
+          {
+            "episode_id": "E17_sinusoid",
+            "rel_residual": 0.000471809669586803
+          },
+          {
+            "episode_id": "E18_alternating",
+            "rel_residual": 0.0004837221261895153
+          },
+          {
+            "episode_id": "E19_zero",
+            "rel_residual": 0.0007333952978341063
+          }
+        ]
+      }
+    },
+    {
+      "check": "parameter_and_action_bounds",
+      "passed": true,
+      "detail": {
+        "parameter_violations": [],
+        "action_violations": [],
+        "torque_bounds": [
+          -1.0,
+          1.0
+        ],
+        "train_ranges": {
+          "mass_range": [
+            0.8,
+            1.2
+          ],
+          "length_range": [
+            0.8,
+            1.2
+          ],
+          "damping_rate_range": [
+            0.05,
+            0.15
+          ],
+          "theta0_range": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "omega0_range": [
+            -1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    {
+      "check": "per_step_finite_state",
+      "passed": true,
+      "detail": {
+        "all_finite": true,
+        "max_abs_delta_theta_per_step": 0.13895734139794236,
+        "pi_threshold": 3.141592653589793
+      }
+    },
+    {
+      "check": "regime_classification_preregistered",
+      "passed": true,
+      "detail": {
+        "counts": {
+          "bounded_oscillation": 20,
+          "continuous_rotation": 0,
+          "transitional": 0
+        },
+        "primary_training_all_bounded": true,
+        "note": "v1 historical pilot retains transitional/rotation as eval-only stress evidence; no strong-drive samples mixed in."
+      }
+    },
+    {
+      "check": "initial_state_diversity",
+      "passed": true,
+      "detail": {
+        "distinct_theta0": 20,
+        "distinct_omega0": 20,
+        "theta0_range_observed": [
+          -3.0871236848541685,
+          3.1331722808622535
+        ],
+        "omega0_range_observed": [
+          -0.9366420421346389,
+          0.9639902759086845
+        ],
+        "theta0_std": 2.1698628786916117,
+        "n": 20,
+        "v1_baseline": "single point (theta0=2.0, omega0=0.0)"
+      }
+    },
+    {
+      "check": "episode_level_split_isolation",
+      "passed": true,
+      "detail": {
+        "counts": {
+          "train": 14,
+          "validation": 3,
+          "test": 3
+        },
+        "overlaps": [],
+        "windows": {
+          "train": {
+            "n_episodes": 14,
+            "n_windows": 2786,
+            "all_sources_in_split": true,
+            "all_valid": true
+          },
+          "validation": {
+            "n_episodes": 3,
+            "n_windows": 597,
+            "all_sources_in_split": true,
+            "all_valid": true
+          },
+          "test": {
+            "n_episodes": 3,
+            "n_windows": 597,
+            "all_sources_in_split": true,
+            "all_valid": true
+          }
+        }
+      }
+    },
+    {
+      "check": "sha256_integrity",
+      "passed": true,
+      "detail": {
+        "npz_match": true,
+        "npz_sha256": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
+        "episode_hash_failures": [],
+        "git_commit": "3143772cf8ede786254a01ee6d0013a4d4c243d1"
+      }
+    },
+    {
+      "check": "report_number_traceability_v2",
+      "passed": true,
+      "detail": {
+        "v2_reports": {
+          "verdict": "PASS",
+          "n_pass": 32,
+          "n_total": 32
+        },
+        "v1_reports": {
+          "verdict": "PASS",
+          "n_pass": 48,
+          "n_total": 48
+        },
+        "all_cases_numerically_compared": true
+      }
+    }
+  ],
+  "stress_test_q_c": {
+    "source_episode": "S1_step",
+    "original_dt": 0.02,
+    "original_steps": 200,
+    "stress_dt": 0.005,
+    "stress_internal_steps": 800,
+    "physical_duration_s": 4.0,
+    "preserves_duration": true,
+    "torque_waveform": "np.repeat(original, 4) -- identical physical input",
+    "max_abs_error_dt_002": 0.007627625006331851,
+    "max_abs_error_dt_0005": 1.0946009648904464e-05,
+    "error_reduction": 696.8406982077953
+  }
+}

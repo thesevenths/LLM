@@ -1,0 +1,44 @@
+{
+  "audit_report_reference": "../audit_report.json",
+  "exact_replay": {
+    "method": "persisted conditions array",
+    "n": 20,
+    "all_bitwise": true
+  },
+  "independent_dop853": {
+    "max_abs_state_error": 1.65150759665611e-05,
+    "method": "scipy solve_ivp DOP853 rtol=1e-12, ODE re-implemented",
+    "caveat": "supports consistency of equation implementation and numerical integration; it does NOT prove that all physical modelling assumptions match a real apparatus"
+  },
+  "energy_balance": {
+    "max_rel_residual": 0.0007451187359681276
+  },
+  "physical_parameter_units": {
+    "state": {
+      "theta": "rad (unwrapped)",
+      "omega": "rad/s"
+    },
+    "action": {
+      "torque": "N*m"
+    },
+    "g": "m/s^2",
+    "L": "m",
+    "m": "kg",
+    "b": "normalized damping rate 1/s = c/(m*L^2)",
+    "dt": "s"
+  },
+  "config_impl_consistency": "PASS (10/10) -- see datasets/controlled_pendulum_pilot/analysis/config_impl_consistency.json",
+  "stress_test_q_c": {
+    "source_episode": "S1_step",
+    "original_dt": 0.02,
+    "original_steps": 200,
+    "stress_dt": 0.005,
+    "stress_internal_steps": 800,
+    "physical_duration_s": 4.0,
+    "preserves_duration": true,
+    "torque_waveform": "np.repeat(original, 4) -- identical physical input",
+    "max_abs_error_dt_002": 0.007627625006331851,
+    "max_abs_error_dt_0005": 1.0946009648904464e-05,
+    "error_reduction": 696.8406982077953
+  }
+}
