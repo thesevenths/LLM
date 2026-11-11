@@ -1,0 +1,346 @@
+split,baseline,label,dim,rmse_mean,rmse_std
+validation,B0,Persistence,0,0.01169832,0.00000000
+validation,B0,Persistence,1,0.01454441,0.00000000
+validation,B0,Persistence,2,0.06185446,0.00000000
+validation,B0,Persistence,3,0.05081362,0.00000000
+validation,B0,Persistence,4,0.07287214,0.00000000
+validation,B0,Persistence,5,0.05898180,0.00000000
+validation,B0,Persistence,6,0.07020555,0.00000000
+validation,B0,Persistence,7,0.09491923,0.00000000
+validation,B0,Persistence,8,0.15040807,0.00000000
+validation,B0,Persistence,9,0.77773011,0.00000000
+validation,B0,Persistence,10,0.61516076,0.00000000
+validation,B0,Persistence,11,1.04747248,0.00000000
+validation,B0,Persistence,12,1.11464286,0.00000000
+validation,B0,Persistence,13,1.02058077,0.00000000
+validation,B0,Persistence,14,0.01114677,0.00000000
+validation,B0,Persistence,15,0.01128488,0.00000000
+validation,B0,Persistence,16,0.01048280,0.00000000
+validation,B0,Persistence,17,0.00024733,0.00000000
+validation,B0,Persistence,18,0.00026973,0.00000000
+validation,B0,Persistence,19,0.00000000,0.00000000
+validation,B0,Persistence,20,0.00000000,0.00000000
+validation,B0,Persistence,21,0.00000000,0.00000000
+validation,B0,Persistence,22,0.00000000,0.00000000
+validation,B1,Unconditioned MLP,0,0.00435953,0.00035905
+validation,B1,Unconditioned MLP,1,0.00561984,0.00010102
+validation,B1,Unconditioned MLP,2,0.02594913,0.00075443
+validation,B1,Unconditioned MLP,3,0.02151750,0.00056986
+validation,B1,Unconditioned MLP,4,0.03332086,0.00049801
+validation,B1,Unconditioned MLP,5,0.03074549,0.00029759
+validation,B1,Unconditioned MLP,6,0.03318792,0.00044961
+validation,B1,Unconditioned MLP,7,0.09045120,0.00036784
+validation,B1,Unconditioned MLP,8,0.14132971,0.00048349
+validation,B1,Unconditioned MLP,9,0.73242069,0.00365146
+validation,B1,Unconditioned MLP,10,0.56834953,0.00458416
+validation,B1,Unconditioned MLP,11,0.95710098,0.00549906
+validation,B1,Unconditioned MLP,12,0.91493213,0.00201735
+validation,B1,Unconditioned MLP,13,0.95363941,0.00237303
+validation,B1,Unconditioned MLP,14,0.00584934,0.00009645
+validation,B1,Unconditioned MLP,15,0.00715154,0.00016272
+validation,B1,Unconditioned MLP,16,0.00712490,0.00019840
+validation,B1,Unconditioned MLP,17,0.00055240,0.00029862
+validation,B1,Unconditioned MLP,18,0.00042737,0.00023010
+validation,B1,Unconditioned MLP,19,0.00000000,0.00000000
+validation,B1,Unconditioned MLP,20,0.00000000,0.00000000
+validation,B1,Unconditioned MLP,21,0.00000000,0.00000000
+validation,B1,Unconditioned MLP,22,0.00000000,0.00000000
+validation,B2,Action-conditioned MLP,0,0.00312263,0.00045760
+validation,B2,Action-conditioned MLP,1,0.00376876,0.00044307
+validation,B2,Action-conditioned MLP,2,0.01281513,0.00089013
+validation,B2,Action-conditioned MLP,3,0.01035649,0.00029415
+validation,B2,Action-conditioned MLP,4,0.01608605,0.00077358
+validation,B2,Action-conditioned MLP,5,0.01151161,0.00058067
+validation,B2,Action-conditioned MLP,6,0.01330282,0.00049823
+validation,B2,Action-conditioned MLP,7,0.02739289,0.00063963
+validation,B2,Action-conditioned MLP,8,0.05956227,0.00100365
+validation,B2,Action-conditioned MLP,9,0.24531730,0.00595155
+validation,B2,Action-conditioned MLP,10,0.23327213,0.00736506
+validation,B2,Action-conditioned MLP,11,0.34400040,0.00914270
+validation,B2,Action-conditioned MLP,12,0.29492402,0.00979283
+validation,B2,Action-conditioned MLP,13,0.33825352,0.01978123
+validation,B2,Action-conditioned MLP,14,0.00499899,0.00007248
+validation,B2,Action-conditioned MLP,15,0.00603661,0.00015375
+validation,B2,Action-conditioned MLP,16,0.00571121,0.00022013
+validation,B2,Action-conditioned MLP,17,0.00031002,0.00004456
+validation,B2,Action-conditioned MLP,18,0.00033944,0.00006485
+validation,B2,Action-conditioned MLP,19,0.00000000,0.00000000
+validation,B2,Action-conditioned MLP,20,0.00000000,0.00000000
+validation,B2,Action-conditioned MLP,21,0.00000000,0.00000000
+validation,B2,Action-conditioned MLP,22,0.00000000,0.00000000
+validation,B3,Linear / Ridge,0,0.00175210,0.00000000
+validation,B3,Linear / Ridge,1,0.00288939,0.00000000
+validation,B3,Linear / Ridge,2,0.01128742,0.00000000
+validation,B3,Linear / Ridge,3,0.01003335,0.00000000
+validation,B3,Linear / Ridge,4,0.01370923,0.00000000
+validation,B3,Linear / Ridge,5,0.01734217,0.00000000
+validation,B3,Linear / Ridge,6,0.00980478,0.00000000
+validation,B3,Linear / Ridge,7,0.05719586,0.00000000
+validation,B3,Linear / Ridge,8,0.09607720,0.00000000
+validation,B3,Linear / Ridge,9,0.35778111,0.00000000
+validation,B3,Linear / Ridge,10,0.32899806,0.00000000
+validation,B3,Linear / Ridge,11,0.45104674,0.00000000
+validation,B3,Linear / Ridge,12,0.55381185,0.00000000
+validation,B3,Linear / Ridge,13,0.38474751,0.00000000
+validation,B3,Linear / Ridge,14,0.00654836,0.00000000
+validation,B3,Linear / Ridge,15,0.00867844,0.00000000
+validation,B3,Linear / Ridge,16,0.00959900,0.00000000
+validation,B3,Linear / Ridge,17,0.00024560,0.00000000
+validation,B3,Linear / Ridge,18,0.00026702,0.00000000
+validation,B3,Linear / Ridge,19,0.00000000,0.00000000
+validation,B3,Linear / Ridge,20,0.00000000,0.00000000
+validation,B3,Linear / Ridge,21,0.00000000,0.00000000
+validation,B3,Linear / Ridge,22,0.00000000,0.00000000
+validation,B4,Shuffled-action control,0,0.00533547,0.00053671
+validation,B4,Shuffled-action control,1,0.00613721,0.00019420
+validation,B4,Shuffled-action control,2,0.02796776,0.00045648
+validation,B4,Shuffled-action control,3,0.02184009,0.00041040
+validation,B4,Shuffled-action control,4,0.03525998,0.00067253
+validation,B4,Shuffled-action control,5,0.03182302,0.00036584
+validation,B4,Shuffled-action control,6,0.03368332,0.00108251
+validation,B4,Shuffled-action control,7,0.09100269,0.00116049
+validation,B4,Shuffled-action control,8,0.14170818,0.00074857
+validation,B4,Shuffled-action control,9,0.73044416,0.00772919
+validation,B4,Shuffled-action control,10,0.57971994,0.00362972
+validation,B4,Shuffled-action control,11,0.97279625,0.01511578
+validation,B4,Shuffled-action control,12,0.93266864,0.00600909
+validation,B4,Shuffled-action control,13,0.95607647,0.00313100
+validation,B4,Shuffled-action control,14,0.00622045,0.00011799
+validation,B4,Shuffled-action control,15,0.00784897,0.00013416
+validation,B4,Shuffled-action control,16,0.00773645,0.00012375
+validation,B4,Shuffled-action control,17,0.00058040,0.00023022
+validation,B4,Shuffled-action control,18,0.00058012,0.00020876
+validation,B4,Shuffled-action control,19,0.00000000,0.00000000
+validation,B4,Shuffled-action control,20,0.00000000,0.00000000
+validation,B4,Shuffled-action control,21,0.00000000,0.00000000
+validation,B4,Shuffled-action control,22,0.00000000,0.00000000
+frozen_test,B0,Persistence,0,0.01179002,0.00000000
+frozen_test,B0,Persistence,1,0.01362528,0.00000000
+frozen_test,B0,Persistence,2,0.05216581,0.00000000
+frozen_test,B0,Persistence,3,0.05458158,0.00000000
+frozen_test,B0,Persistence,4,0.08371192,0.00000000
+frozen_test,B0,Persistence,5,0.06067289,0.00000000
+frozen_test,B0,Persistence,6,0.07353061,0.00000000
+frozen_test,B0,Persistence,7,0.08450993,0.00000000
+frozen_test,B0,Persistence,8,0.15095492,0.00000000
+frozen_test,B0,Persistence,9,0.72298509,0.00000000
+frozen_test,B0,Persistence,10,0.59161228,0.00000000
+frozen_test,B0,Persistence,11,1.10120094,0.00000000
+frozen_test,B0,Persistence,12,1.09862244,0.00000000
+frozen_test,B0,Persistence,13,1.06784880,0.00000000
+frozen_test,B0,Persistence,14,0.01278322,0.00000000
+frozen_test,B0,Persistence,15,0.01081111,0.00000000
+frozen_test,B0,Persistence,16,0.01085061,0.00000000
+frozen_test,B0,Persistence,17,0.00013639,0.00000000
+frozen_test,B0,Persistence,18,0.00015829,0.00000000
+frozen_test,B0,Persistence,19,0.00000000,0.00000000
+frozen_test,B0,Persistence,20,0.00000000,0.00000000
+frozen_test,B0,Persistence,21,0.00000000,0.00000000
+frozen_test,B0,Persistence,22,0.00000000,0.00000000
+frozen_test,B1,Unconditioned MLP,0,0.00431473,0.00016009
+frozen_test,B1,Unconditioned MLP,1,0.00573211,0.00022817
+frozen_test,B1,Unconditioned MLP,2,0.02523298,0.00078294
+frozen_test,B1,Unconditioned MLP,3,0.02118364,0.00071294
+frozen_test,B1,Unconditioned MLP,4,0.03559936,0.00030343
+frozen_test,B1,Unconditioned MLP,5,0.03088700,0.00112610
+frozen_test,B1,Unconditioned MLP,6,0.03452268,0.00037593
+frozen_test,B1,Unconditioned MLP,7,0.08220328,0.00029128
+frozen_test,B1,Unconditioned MLP,8,0.14081085,0.00071121
+frozen_test,B1,Unconditioned MLP,9,0.68179352,0.00508971
+frozen_test,B1,Unconditioned MLP,10,0.55757535,0.00342151
+frozen_test,B1,Unconditioned MLP,11,1.00345879,0.00763265
+frozen_test,B1,Unconditioned MLP,12,0.91664906,0.00586822
+frozen_test,B1,Unconditioned MLP,13,1.00599563,0.00693850
+frozen_test,B1,Unconditioned MLP,14,0.00696922,0.00012635
+frozen_test,B1,Unconditioned MLP,15,0.00806829,0.00047653
+frozen_test,B1,Unconditioned MLP,16,0.00726847,0.00033759
+frozen_test,B1,Unconditioned MLP,17,0.00049667,0.00031533
+frozen_test,B1,Unconditioned MLP,18,0.00035273,0.00025200
+frozen_test,B1,Unconditioned MLP,19,0.00000000,0.00000000
+frozen_test,B1,Unconditioned MLP,20,0.00000000,0.00000000
+frozen_test,B1,Unconditioned MLP,21,0.00000000,0.00000000
+frozen_test,B1,Unconditioned MLP,22,0.00000000,0.00000000
+frozen_test,B2,Action-conditioned MLP,0,0.00313581,0.00034101
+frozen_test,B2,Action-conditioned MLP,1,0.00404283,0.00041250
+frozen_test,B2,Action-conditioned MLP,2,0.01380832,0.00085423
+frozen_test,B2,Action-conditioned MLP,3,0.01120183,0.00078002
+frozen_test,B2,Action-conditioned MLP,4,0.01752902,0.00112196
+frozen_test,B2,Action-conditioned MLP,5,0.01161557,0.00051691
+frozen_test,B2,Action-conditioned MLP,6,0.01411086,0.00040331
+frozen_test,B2,Action-conditioned MLP,7,0.02515637,0.00148093
+frozen_test,B2,Action-conditioned MLP,8,0.05742731,0.00122045
+frozen_test,B2,Action-conditioned MLP,9,0.29749302,0.02354178
+frozen_test,B2,Action-conditioned MLP,10,0.25213454,0.01792835
+frozen_test,B2,Action-conditioned MLP,11,0.40395274,0.02913285
+frozen_test,B2,Action-conditioned MLP,12,0.33347459,0.00981454
+frozen_test,B2,Action-conditioned MLP,13,0.35761459,0.00504639
+frozen_test,B2,Action-conditioned MLP,14,0.00593293,0.00018621
+frozen_test,B2,Action-conditioned MLP,15,0.00698550,0.00021890
+frozen_test,B2,Action-conditioned MLP,16,0.00572285,0.00023176
+frozen_test,B2,Action-conditioned MLP,17,0.00024597,0.00006626
+frozen_test,B2,Action-conditioned MLP,18,0.00025966,0.00009565
+frozen_test,B2,Action-conditioned MLP,19,0.00000000,0.00000000
+frozen_test,B2,Action-conditioned MLP,20,0.00000000,0.00000000
+frozen_test,B2,Action-conditioned MLP,21,0.00000000,0.00000000
+frozen_test,B2,Action-conditioned MLP,22,0.00000000,0.00000000
+frozen_test,B3,Linear / Ridge,0,0.00157018,0.00000000
+frozen_test,B3,Linear / Ridge,1,0.00305738,0.00000000
+frozen_test,B3,Linear / Ridge,2,0.01184049,0.00000000
+frozen_test,B3,Linear / Ridge,3,0.00950910,0.00000000
+frozen_test,B3,Linear / Ridge,4,0.01919989,0.00000000
+frozen_test,B3,Linear / Ridge,5,0.01773404,0.00000000
+frozen_test,B3,Linear / Ridge,6,0.01174694,0.00000000
+frozen_test,B3,Linear / Ridge,7,0.05101063,0.00000000
+frozen_test,B3,Linear / Ridge,8,0.09515243,0.00000000
+frozen_test,B3,Linear / Ridge,9,0.36494648,0.00000000
+frozen_test,B3,Linear / Ridge,10,0.29003757,0.00000000
+frozen_test,B3,Linear / Ridge,11,0.55011153,0.00000000
+frozen_test,B3,Linear / Ridge,12,0.59226513,0.00000000
+frozen_test,B3,Linear / Ridge,13,0.43199584,0.00000000
+frozen_test,B3,Linear / Ridge,14,0.00742148,0.00000000
+frozen_test,B3,Linear / Ridge,15,0.00955901,0.00000000
+frozen_test,B3,Linear / Ridge,16,0.01083568,0.00000000
+frozen_test,B3,Linear / Ridge,17,0.00014387,0.00000000
+frozen_test,B3,Linear / Ridge,18,0.00015413,0.00000000
+frozen_test,B3,Linear / Ridge,19,0.00000000,0.00000000
+frozen_test,B3,Linear / Ridge,20,0.00000000,0.00000000
+frozen_test,B3,Linear / Ridge,21,0.00000000,0.00000000
+frozen_test,B3,Linear / Ridge,22,0.00000000,0.00000000
+frozen_test,B4,Shuffled-action control,0,0.00551273,0.00067640
+frozen_test,B4,Shuffled-action control,1,0.00633861,0.00034721
+frozen_test,B4,Shuffled-action control,2,0.02620715,0.00119297
+frozen_test,B4,Shuffled-action control,3,0.02156606,0.00061299
+frozen_test,B4,Shuffled-action control,4,0.03698131,0.00088306
+frozen_test,B4,Shuffled-action control,5,0.03073781,0.00026147
+frozen_test,B4,Shuffled-action control,6,0.03509974,0.00151102
+frozen_test,B4,Shuffled-action control,7,0.08284405,0.00107643
+frozen_test,B4,Shuffled-action control,8,0.14049789,0.00162990
+frozen_test,B4,Shuffled-action control,9,0.67843572,0.00978169
+frozen_test,B4,Shuffled-action control,10,0.56133466,0.00467137
+frozen_test,B4,Shuffled-action control,11,1.02287949,0.01306982
+frozen_test,B4,Shuffled-action control,12,0.92210429,0.00590933
+frozen_test,B4,Shuffled-action control,13,1.00433589,0.00643481
+frozen_test,B4,Shuffled-action control,14,0.00717516,0.00014933
+frozen_test,B4,Shuffled-action control,15,0.00861608,0.00042769
+frozen_test,B4,Shuffled-action control,16,0.00782486,0.00018922
+frozen_test,B4,Shuffled-action control,17,0.00055342,0.00024764
+frozen_test,B4,Shuffled-action control,18,0.00055020,0.00024974
+frozen_test,B4,Shuffled-action control,19,0.00000000,0.00000000
+frozen_test,B4,Shuffled-action control,20,0.00000000,0.00000000
+frozen_test,B4,Shuffled-action control,21,0.00000000,0.00000000
+frozen_test,B4,Shuffled-action control,22,0.00000000,0.00000000
+ood_test,B0,Persistence,0,0.01241728,0.00000000
+ood_test,B0,Persistence,1,0.01375937,0.00000000
+ood_test,B0,Persistence,2,0.06367797,0.00000000
+ood_test,B0,Persistence,3,0.04967687,0.00000000
+ood_test,B0,Persistence,4,0.07371698,0.00000000
+ood_test,B0,Persistence,5,0.05663463,0.00000000
+ood_test,B0,Persistence,6,0.08230181,0.00000000
+ood_test,B0,Persistence,7,0.08934013,0.00000000
+ood_test,B0,Persistence,8,0.14895214,0.00000000
+ood_test,B0,Persistence,9,0.75775927,0.00000000
+ood_test,B0,Persistence,10,0.59105670,0.00000000
+ood_test,B0,Persistence,11,1.02199328,0.00000000
+ood_test,B0,Persistence,12,1.09465122,0.00000000
+ood_test,B0,Persistence,13,1.15353572,0.00000000
+ood_test,B0,Persistence,14,0.01232977,0.00000000
+ood_test,B0,Persistence,15,0.01091855,0.00000000
+ood_test,B0,Persistence,16,0.00983366,0.00000000
+ood_test,B0,Persistence,17,0.00027376,0.00000000
+ood_test,B0,Persistence,18,0.00030747,0.00000000
+ood_test,B0,Persistence,19,0.00000000,0.00000000
+ood_test,B0,Persistence,20,0.00000000,0.00000000
+ood_test,B0,Persistence,21,0.00000000,0.00000000
+ood_test,B0,Persistence,22,0.00000000,0.00000000
+ood_test,B1,Unconditioned MLP,0,0.00442869,0.00035024
+ood_test,B1,Unconditioned MLP,1,0.00592981,0.00019760
+ood_test,B1,Unconditioned MLP,2,0.02648865,0.00033317
+ood_test,B1,Unconditioned MLP,3,0.02088091,0.00020822
+ood_test,B1,Unconditioned MLP,4,0.03287983,0.00032851
+ood_test,B1,Unconditioned MLP,5,0.03082782,0.00073793
+ood_test,B1,Unconditioned MLP,6,0.03828216,0.00048309
+ood_test,B1,Unconditioned MLP,7,0.08633491,0.00037220
+ood_test,B1,Unconditioned MLP,8,0.13650739,0.00062674
+ood_test,B1,Unconditioned MLP,9,0.71437272,0.00472281
+ood_test,B1,Unconditioned MLP,10,0.54057027,0.00186581
+ood_test,B1,Unconditioned MLP,11,0.93139609,0.00633532
+ood_test,B1,Unconditioned MLP,12,0.91311855,0.00518908
+ood_test,B1,Unconditioned MLP,13,1.05284448,0.00487974
+ood_test,B1,Unconditioned MLP,14,0.00639895,0.00018414
+ood_test,B1,Unconditioned MLP,15,0.00739649,0.00015636
+ood_test,B1,Unconditioned MLP,16,0.00666741,0.00016879
+ood_test,B1,Unconditioned MLP,17,0.00054074,0.00025494
+ood_test,B1,Unconditioned MLP,18,0.00042808,0.00018747
+ood_test,B1,Unconditioned MLP,19,0.00000000,0.00000000
+ood_test,B1,Unconditioned MLP,20,0.00000000,0.00000000
+ood_test,B1,Unconditioned MLP,21,0.00000000,0.00000000
+ood_test,B1,Unconditioned MLP,22,0.00000000,0.00000000
+ood_test,B2,Action-conditioned MLP,0,0.00306929,0.00047481
+ood_test,B2,Action-conditioned MLP,1,0.00389640,0.00041204
+ood_test,B2,Action-conditioned MLP,2,0.01305218,0.00044543
+ood_test,B2,Action-conditioned MLP,3,0.01059486,0.00025277
+ood_test,B2,Action-conditioned MLP,4,0.01543914,0.00047717
+ood_test,B2,Action-conditioned MLP,5,0.01220486,0.00031730
+ood_test,B2,Action-conditioned MLP,6,0.01901715,0.00068021
+ood_test,B2,Action-conditioned MLP,7,0.02474467,0.00096464
+ood_test,B2,Action-conditioned MLP,8,0.05121157,0.00158370
+ood_test,B2,Action-conditioned MLP,9,0.23657594,0.01547249
+ood_test,B2,Action-conditioned MLP,10,0.21111505,0.00819139
+ood_test,B2,Action-conditioned MLP,11,0.36071377,0.03251474
+ood_test,B2,Action-conditioned MLP,12,0.30570912,0.01316319
+ood_test,B2,Action-conditioned MLP,13,0.41977414,0.01829713
+ood_test,B2,Action-conditioned MLP,14,0.00539817,0.00015341
+ood_test,B2,Action-conditioned MLP,15,0.00614386,0.00019246
+ood_test,B2,Action-conditioned MLP,16,0.00548474,0.00027607
+ood_test,B2,Action-conditioned MLP,17,0.00033137,0.00003443
+ood_test,B2,Action-conditioned MLP,18,0.00036244,0.00005770
+ood_test,B2,Action-conditioned MLP,19,0.00000000,0.00000000
+ood_test,B2,Action-conditioned MLP,20,0.00000000,0.00000000
+ood_test,B2,Action-conditioned MLP,21,0.00000000,0.00000000
+ood_test,B2,Action-conditioned MLP,22,0.00000000,0.00000000
+ood_test,B3,Linear / Ridge,0,0.00164680,0.00000000
+ood_test,B3,Linear / Ridge,1,0.00316413,0.00000000
+ood_test,B3,Linear / Ridge,2,0.01290225,0.00000000
+ood_test,B3,Linear / Ridge,3,0.00952906,0.00000000
+ood_test,B3,Linear / Ridge,4,0.01421127,0.00000000
+ood_test,B3,Linear / Ridge,5,0.01851568,0.00000000
+ood_test,B3,Linear / Ridge,6,0.02230457,0.00000000
+ood_test,B3,Linear / Ridge,7,0.05268024,0.00000000
+ood_test,B3,Linear / Ridge,8,0.09144334,0.00000000
+ood_test,B3,Linear / Ridge,9,0.34469941,0.00000000
+ood_test,B3,Linear / Ridge,10,0.28736320,0.00000000
+ood_test,B3,Linear / Ridge,11,0.49938339,0.00000000
+ood_test,B3,Linear / Ridge,12,0.54841036,0.00000000
+ood_test,B3,Linear / Ridge,13,0.57999164,0.00000000
+ood_test,B3,Linear / Ridge,14,0.00727143,0.00000000
+ood_test,B3,Linear / Ridge,15,0.00877055,0.00000000
+ood_test,B3,Linear / Ridge,16,0.00925163,0.00000000
+ood_test,B3,Linear / Ridge,17,0.00027663,0.00000000
+ood_test,B3,Linear / Ridge,18,0.00030067,0.00000000
+ood_test,B3,Linear / Ridge,19,0.00000000,0.00000000
+ood_test,B3,Linear / Ridge,20,0.00000000,0.00000000
+ood_test,B3,Linear / Ridge,21,0.00000000,0.00000000
+ood_test,B3,Linear / Ridge,22,0.00000000,0.00000000
+ood_test,B4,Shuffled-action control,0,0.00534352,0.00062142
+ood_test,B4,Shuffled-action control,1,0.00624497,0.00014191
+ood_test,B4,Shuffled-action control,2,0.02844784,0.00078393
+ood_test,B4,Shuffled-action control,3,0.02205592,0.00058762
+ood_test,B4,Shuffled-action control,4,0.03454196,0.00049262
+ood_test,B4,Shuffled-action control,5,0.03134785,0.00045749
+ood_test,B4,Shuffled-action control,6,0.03904083,0.00079366
+ood_test,B4,Shuffled-action control,7,0.08697989,0.00141237
+ood_test,B4,Shuffled-action control,8,0.13646871,0.00145790
+ood_test,B4,Shuffled-action control,9,0.71922151,0.00909938
+ood_test,B4,Shuffled-action control,10,0.54988916,0.00422117
+ood_test,B4,Shuffled-action control,11,0.94226180,0.01218148
+ood_test,B4,Shuffled-action control,12,0.92957214,0.00818860
+ood_test,B4,Shuffled-action control,13,1.05780411,0.00717684
+ood_test,B4,Shuffled-action control,14,0.00683975,0.00027184
+ood_test,B4,Shuffled-action control,15,0.00796267,0.00034570
+ood_test,B4,Shuffled-action control,16,0.00717812,0.00018221
+ood_test,B4,Shuffled-action control,17,0.00060340,0.00022114
+ood_test,B4,Shuffled-action control,18,0.00060627,0.00021009
+ood_test,B4,Shuffled-action control,19,0.00000000,0.00000000
+ood_test,B4,Shuffled-action control,20,0.00000000,0.00000000
+ood_test,B4,Shuffled-action control,21,0.00000000,0.00000000
+ood_test,B4,Shuffled-action control,22,0.00000000,0.00000000

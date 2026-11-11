@@ -1,0 +1,88 @@
+{
+  "G0": {
+    "pass": true,
+    "criterion": "Phase 0 data integrity + temporal alignment",
+    "evidence": {
+      "integrity_pass": true,
+      "audit_verdict": "PASS - proceed to P2-02 Phase 1"
+    }
+  },
+  "G1": {
+    "pass": true,
+    "criterion": "B2 one-step MSE < Persistence on primary group 'robot_kinematics' (frozen_test)",
+    "evidence": {
+      "b2_mse_mean": 0.033013510331511495,
+      "persistence_mse": 0.2638280391693115,
+      "skill": {
+        "mean": 0.8748673172288367,
+        "std": 0.007338035898216905,
+        "median": 0.8739500401012132,
+        "n": 5
+      }
+    }
+  },
+  "G2": {
+    "pass": true,
+    "criterion": "B2 one-step MSE < B1 (action conditioning value)",
+    "evidence": {
+      "b2_mse_mean": 0.024401294812560082,
+      "b1_mse_mean": 0.15940952003002168,
+      "bootstrap": {
+        "n_pairs": 15,
+        "n_boot": 10000,
+        "alpha": 0.05,
+        "seed": 20261110,
+        "mean_a": 0.02440129523941626,
+        "mean_b": 0.15940952512280396,
+        "median_a": 0.01152920089662075,
+        "median_b": 0.16838168799877168,
+        "mean_diff": -0.1350082298833877,
+        "median_diff": -0.15534893218427898,
+        "ci_low": -0.1854071420889377,
+        "ci_high": -0.08311998574783504,
+        "significant_a_better": true,
+        "significant_b_better": false
+      }
+    }
+  },
+  "G3": {
+    "pass": true,
+    "criterion": "B2 one-step MSE < B4 shuffled-action control",
+    "evidence": {
+      "b2_mse_mean": 0.024401294812560082,
+      "b4_mse_mean": 0.16141532361507416,
+      "bootstrap": {
+        "n_pairs": 15,
+        "n_boot": 10000,
+        "alpha": 0.05,
+        "seed": 20261110,
+        "mean_a": 0.02440129523941626,
+        "mean_b": 0.1614153277889515,
+        "median_a": 0.01152920089662075,
+        "median_b": 0.17230951488018037,
+        "mean_diff": -0.13701403254953523,
+        "median_diff": -0.16078031398355963,
+        "ci_low": -0.18796439680046265,
+        "ci_high": -0.08420957754433522,
+        "significant_a_better": true,
+        "significant_b_better": false
+      }
+    }
+  },
+  "G4": {
+    "pass": true,
+    "criterion": "horizon 5/10 rollouts finite and skill > 0 vs Persistence",
+    "evidence": {
+      "h5": {
+        "mse": 0.036420729011297226,
+        "skill_vs_persistence": 0.9187541800405805
+      },
+      "h10": {
+        "mse": 0.04752865731716156,
+        "skill_vs_persistence": 0.925846788622604
+      }
+    }
+  },
+  "overall_pass": true,
+  "note": "Gates use mean improvements on frozen_test; paired bootstrap CIs are reported separately as statistical support, not as a substituted claim."
+}

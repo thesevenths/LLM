@@ -1,0 +1,1501 @@
+split,baseline,label,seed,episode_id,one_step_mse,h5_mse,h10_mse,h20_mse
+validation,B0,Persistence,11,validation_guided_00000,0.00105545,0.00226007,0.00447154,0.01046017
+validation,B0,Persistence,11,validation_guided_00001,0.00113637,0.00181002,0.00238594,0.00412361
+validation,B0,Persistence,11,validation_guided_00002,0.00114911,0.00203748,0.00364711,0.00834197
+validation,B0,Persistence,11,validation_guided_00003,0.00102389,0.00164648,0.00216111,0.00382595
+validation,B0,Persistence,11,validation_guided_00004,0.00125186,0.00277872,0.00622355,0.01717580
+validation,B0,Persistence,11,validation_guided_00005,0.00099930,0.00148911,0.00205645,0.00363275
+validation,B0,Persistence,11,validation_guided_00006,0.00110284,0.00196958,0.00327457,0.00719598
+validation,B0,Persistence,11,validation_guided_00007,0.00114029,0.00218896,0.00419290,0.01023041
+validation,B0,Persistence,11,validation_guided_00008,0.00107679,0.00194840,0.00344325,0.00794964
+validation,B0,Persistence,11,validation_guided_00009,0.00121861,0.00281335,0.00645726,0.01791021
+validation,B0,Persistence,11,validation_mixture_00000,0.15362024,0.28278992,0.33862054,0.37174284
+validation,B0,Persistence,11,validation_mixture_00001,0.18029620,0.27798915,0.31102696,0.35325488
+validation,B0,Persistence,11,validation_mixture_00002,0.27216971,0.49508920,0.59498250,0.70355242
+validation,B0,Persistence,11,validation_mixture_00003,0.17972524,0.34847203,0.44181585,0.49317631
+validation,B0,Persistence,11,validation_mixture_00004,0.17135294,0.33440855,0.40025681,0.47981992
+validation,B0,Persistence,11,validation_mixture_00005,0.20534578,0.37078449,0.40648684,0.44024169
+validation,B0,Persistence,11,validation_mixture_00006,0.19707713,0.36007872,0.43034443,0.48770550
+validation,B0,Persistence,11,validation_mixture_00007,0.15109795,0.25227228,0.29492247,0.36593524
+validation,B0,Persistence,11,validation_mixture_00008,0.16368037,0.28253344,0.35059804,0.43146816
+validation,B0,Persistence,11,validation_mixture_00009,0.24652679,0.42954767,0.50498605,0.59433985
+validation,B0,Persistence,11,validation_random_00000,0.37958679,1.04547191,1.62192750,1.98117626
+validation,B0,Persistence,11,validation_random_00001,0.40281284,1.07134628,1.54999900,1.88367474
+validation,B0,Persistence,11,validation_random_00002,0.40180251,0.90697509,1.37190902,1.99786401
+validation,B0,Persistence,11,validation_random_00003,0.36232144,0.91444522,1.26158690,1.49997139
+validation,B0,Persistence,11,validation_random_00004,0.38558632,0.90747958,1.35926569,1.69792378
+validation,B0,Persistence,11,validation_random_00005,0.37300548,0.95837408,1.55953038,2.16571307
+validation,B0,Persistence,11,validation_random_00006,0.38920072,0.86730736,1.13113725,1.32417345
+validation,B0,Persistence,11,validation_random_00007,0.35900480,0.91713399,1.48033154,2.13254356
+validation,B0,Persistence,11,validation_random_00008,0.38023421,0.88767004,1.30085313,1.60114360
+validation,B0,Persistence,11,validation_random_00009,0.39565998,0.87879783,1.25363934,1.72960389
+frozen_test,B0,Persistence,11,frozen_test_guided_00000,0.00115643,0.00156304,0.00203090,0.00327640
+frozen_test,B0,Persistence,11,frozen_test_guided_00001,0.00099042,0.00136639,0.00173856,0.00288164
+frozen_test,B0,Persistence,11,frozen_test_guided_00002,0.00103939,0.00165607,0.00224165,0.00407588
+frozen_test,B0,Persistence,11,frozen_test_guided_00003,0.00115241,0.00244875,0.00502019,0.01259234
+frozen_test,B0,Persistence,11,frozen_test_guided_00004,0.00109177,0.00258019,0.00480764,0.01164143
+frozen_test,B0,Persistence,11,frozen_test_mixture_00000,0.22053064,0.37056673,0.44334576,0.54097217
+frozen_test,B0,Persistence,11,frozen_test_mixture_00001,0.19029687,0.36867976,0.42795819,0.49132970
+frozen_test,B0,Persistence,11,frozen_test_mixture_00002,0.21675718,0.38717338,0.50232017,0.59479189
+frozen_test,B0,Persistence,11,frozen_test_mixture_00003,0.20699638,0.39461717,0.48719180,0.55581719
+frozen_test,B0,Persistence,11,frozen_test_mixture_00004,0.20605385,0.36314234,0.41331443,0.45846069
+frozen_test,B0,Persistence,11,frozen_test_random_00000,0.40014726,0.95680213,1.47283840,2.10828376
+frozen_test,B0,Persistence,11,frozen_test_random_00001,0.31354740,0.73097205,1.05685759,1.39466941
+frozen_test,B0,Persistence,11,frozen_test_random_00002,0.41643456,1.11917007,1.72055268,2.51106668
+frozen_test,B0,Persistence,11,frozen_test_random_00003,0.37215501,0.91467667,1.37880552,1.68772054
+frozen_test,B0,Persistence,11,frozen_test_random_00004,0.37670028,1.10875833,1.69525683,2.39039898
+ood_test,B0,Persistence,11,ood_test_guided_00000,0.00098616,0.00164369,0.00231053,0.00430749
+ood_test,B0,Persistence,11,ood_test_guided_00001,0.00118488,0.00274474,0.00561384,0.01389535
+ood_test,B0,Persistence,11,ood_test_guided_00002,0.00107180,0.00185422,0.00316335,0.00666133
+ood_test,B0,Persistence,11,ood_test_guided_00003,0.00111332,0.00154790,0.00206960,0.00363067
+ood_test,B0,Persistence,11,ood_test_guided_00004,0.00114665,0.00285568,0.00629723,0.01597458
+ood_test,B0,Persistence,11,ood_test_mixture_00000,0.18907863,0.31078458,0.37093407,0.43389681
+ood_test,B0,Persistence,11,ood_test_mixture_00001,0.22129887,0.40153214,0.49548310,0.59422857
+ood_test,B0,Persistence,11,ood_test_mixture_00002,0.21982501,0.44377148,0.57802731,0.67991543
+ood_test,B0,Persistence,11,ood_test_mixture_00003,0.17812693,0.32422313,0.38970527,0.43830955
+ood_test,B0,Persistence,11,ood_test_mixture_00004,0.21244252,0.38816202,0.47331908,0.45925480
+ood_test,B0,Persistence,11,ood_test_random_00000,0.39801654,1.05151653,1.57695019,2.23351359
+ood_test,B0,Persistence,11,ood_test_random_00001,0.40578461,1.09608555,1.58239496,1.99262023
+ood_test,B0,Persistence,11,ood_test_random_00002,0.42156425,1.04845238,1.55314875,2.33081794
+ood_test,B0,Persistence,11,ood_test_random_00003,0.34010121,0.68214989,0.89764565,1.16093874
+ood_test,B0,Persistence,11,ood_test_random_00004,0.37548119,0.95993114,1.50457585,2.40225887
+validation,B0,Persistence,22,validation_guided_00000,0.00105545,0.00226007,0.00447154,0.01046017
+validation,B0,Persistence,22,validation_guided_00001,0.00113637,0.00181002,0.00238594,0.00412361
+validation,B0,Persistence,22,validation_guided_00002,0.00114911,0.00203748,0.00364711,0.00834197
+validation,B0,Persistence,22,validation_guided_00003,0.00102389,0.00164648,0.00216111,0.00382595
+validation,B0,Persistence,22,validation_guided_00004,0.00125186,0.00277872,0.00622355,0.01717580
+validation,B0,Persistence,22,validation_guided_00005,0.00099930,0.00148911,0.00205645,0.00363275
+validation,B0,Persistence,22,validation_guided_00006,0.00110284,0.00196958,0.00327457,0.00719598
+validation,B0,Persistence,22,validation_guided_00007,0.00114029,0.00218896,0.00419290,0.01023041
+validation,B0,Persistence,22,validation_guided_00008,0.00107679,0.00194840,0.00344325,0.00794964
+validation,B0,Persistence,22,validation_guided_00009,0.00121861,0.00281335,0.00645726,0.01791021
+validation,B0,Persistence,22,validation_mixture_00000,0.15362024,0.28278992,0.33862054,0.37174284
+validation,B0,Persistence,22,validation_mixture_00001,0.18029620,0.27798915,0.31102696,0.35325488
+validation,B0,Persistence,22,validation_mixture_00002,0.27216971,0.49508920,0.59498250,0.70355242
+validation,B0,Persistence,22,validation_mixture_00003,0.17972524,0.34847203,0.44181585,0.49317631
+validation,B0,Persistence,22,validation_mixture_00004,0.17135294,0.33440855,0.40025681,0.47981992
+validation,B0,Persistence,22,validation_mixture_00005,0.20534578,0.37078449,0.40648684,0.44024169
+validation,B0,Persistence,22,validation_mixture_00006,0.19707713,0.36007872,0.43034443,0.48770550
+validation,B0,Persistence,22,validation_mixture_00007,0.15109795,0.25227228,0.29492247,0.36593524
+validation,B0,Persistence,22,validation_mixture_00008,0.16368037,0.28253344,0.35059804,0.43146816
+validation,B0,Persistence,22,validation_mixture_00009,0.24652679,0.42954767,0.50498605,0.59433985
+validation,B0,Persistence,22,validation_random_00000,0.37958679,1.04547191,1.62192750,1.98117626
+validation,B0,Persistence,22,validation_random_00001,0.40281284,1.07134628,1.54999900,1.88367474
+validation,B0,Persistence,22,validation_random_00002,0.40180251,0.90697509,1.37190902,1.99786401
+validation,B0,Persistence,22,validation_random_00003,0.36232144,0.91444522,1.26158690,1.49997139
+validation,B0,Persistence,22,validation_random_00004,0.38558632,0.90747958,1.35926569,1.69792378
+validation,B0,Persistence,22,validation_random_00005,0.37300548,0.95837408,1.55953038,2.16571307
+validation,B0,Persistence,22,validation_random_00006,0.38920072,0.86730736,1.13113725,1.32417345
+validation,B0,Persistence,22,validation_random_00007,0.35900480,0.91713399,1.48033154,2.13254356
+validation,B0,Persistence,22,validation_random_00008,0.38023421,0.88767004,1.30085313,1.60114360
+validation,B0,Persistence,22,validation_random_00009,0.39565998,0.87879783,1.25363934,1.72960389
+frozen_test,B0,Persistence,22,frozen_test_guided_00000,0.00115643,0.00156304,0.00203090,0.00327640
+frozen_test,B0,Persistence,22,frozen_test_guided_00001,0.00099042,0.00136639,0.00173856,0.00288164
+frozen_test,B0,Persistence,22,frozen_test_guided_00002,0.00103939,0.00165607,0.00224165,0.00407588
+frozen_test,B0,Persistence,22,frozen_test_guided_00003,0.00115241,0.00244875,0.00502019,0.01259234
+frozen_test,B0,Persistence,22,frozen_test_guided_00004,0.00109177,0.00258019,0.00480764,0.01164143
+frozen_test,B0,Persistence,22,frozen_test_mixture_00000,0.22053064,0.37056673,0.44334576,0.54097217
+frozen_test,B0,Persistence,22,frozen_test_mixture_00001,0.19029687,0.36867976,0.42795819,0.49132970
+frozen_test,B0,Persistence,22,frozen_test_mixture_00002,0.21675718,0.38717338,0.50232017,0.59479189
+frozen_test,B0,Persistence,22,frozen_test_mixture_00003,0.20699638,0.39461717,0.48719180,0.55581719
+frozen_test,B0,Persistence,22,frozen_test_mixture_00004,0.20605385,0.36314234,0.41331443,0.45846069
+frozen_test,B0,Persistence,22,frozen_test_random_00000,0.40014726,0.95680213,1.47283840,2.10828376
+frozen_test,B0,Persistence,22,frozen_test_random_00001,0.31354740,0.73097205,1.05685759,1.39466941
+frozen_test,B0,Persistence,22,frozen_test_random_00002,0.41643456,1.11917007,1.72055268,2.51106668
+frozen_test,B0,Persistence,22,frozen_test_random_00003,0.37215501,0.91467667,1.37880552,1.68772054
+frozen_test,B0,Persistence,22,frozen_test_random_00004,0.37670028,1.10875833,1.69525683,2.39039898
+ood_test,B0,Persistence,22,ood_test_guided_00000,0.00098616,0.00164369,0.00231053,0.00430749
+ood_test,B0,Persistence,22,ood_test_guided_00001,0.00118488,0.00274474,0.00561384,0.01389535
+ood_test,B0,Persistence,22,ood_test_guided_00002,0.00107180,0.00185422,0.00316335,0.00666133
+ood_test,B0,Persistence,22,ood_test_guided_00003,0.00111332,0.00154790,0.00206960,0.00363067
+ood_test,B0,Persistence,22,ood_test_guided_00004,0.00114665,0.00285568,0.00629723,0.01597458
+ood_test,B0,Persistence,22,ood_test_mixture_00000,0.18907863,0.31078458,0.37093407,0.43389681
+ood_test,B0,Persistence,22,ood_test_mixture_00001,0.22129887,0.40153214,0.49548310,0.59422857
+ood_test,B0,Persistence,22,ood_test_mixture_00002,0.21982501,0.44377148,0.57802731,0.67991543
+ood_test,B0,Persistence,22,ood_test_mixture_00003,0.17812693,0.32422313,0.38970527,0.43830955
+ood_test,B0,Persistence,22,ood_test_mixture_00004,0.21244252,0.38816202,0.47331908,0.45925480
+ood_test,B0,Persistence,22,ood_test_random_00000,0.39801654,1.05151653,1.57695019,2.23351359
+ood_test,B0,Persistence,22,ood_test_random_00001,0.40578461,1.09608555,1.58239496,1.99262023
+ood_test,B0,Persistence,22,ood_test_random_00002,0.42156425,1.04845238,1.55314875,2.33081794
+ood_test,B0,Persistence,22,ood_test_random_00003,0.34010121,0.68214989,0.89764565,1.16093874
+ood_test,B0,Persistence,22,ood_test_random_00004,0.37548119,0.95993114,1.50457585,2.40225887
+validation,B0,Persistence,33,validation_guided_00000,0.00105545,0.00226007,0.00447154,0.01046017
+validation,B0,Persistence,33,validation_guided_00001,0.00113637,0.00181002,0.00238594,0.00412361
+validation,B0,Persistence,33,validation_guided_00002,0.00114911,0.00203748,0.00364711,0.00834197
+validation,B0,Persistence,33,validation_guided_00003,0.00102389,0.00164648,0.00216111,0.00382595
+validation,B0,Persistence,33,validation_guided_00004,0.00125186,0.00277872,0.00622355,0.01717580
+validation,B0,Persistence,33,validation_guided_00005,0.00099930,0.00148911,0.00205645,0.00363275
+validation,B0,Persistence,33,validation_guided_00006,0.00110284,0.00196958,0.00327457,0.00719598
+validation,B0,Persistence,33,validation_guided_00007,0.00114029,0.00218896,0.00419290,0.01023041
+validation,B0,Persistence,33,validation_guided_00008,0.00107679,0.00194840,0.00344325,0.00794964
+validation,B0,Persistence,33,validation_guided_00009,0.00121861,0.00281335,0.00645726,0.01791021
+validation,B0,Persistence,33,validation_mixture_00000,0.15362024,0.28278992,0.33862054,0.37174284
+validation,B0,Persistence,33,validation_mixture_00001,0.18029620,0.27798915,0.31102696,0.35325488
+validation,B0,Persistence,33,validation_mixture_00002,0.27216971,0.49508920,0.59498250,0.70355242
+validation,B0,Persistence,33,validation_mixture_00003,0.17972524,0.34847203,0.44181585,0.49317631
+validation,B0,Persistence,33,validation_mixture_00004,0.17135294,0.33440855,0.40025681,0.47981992
+validation,B0,Persistence,33,validation_mixture_00005,0.20534578,0.37078449,0.40648684,0.44024169
+validation,B0,Persistence,33,validation_mixture_00006,0.19707713,0.36007872,0.43034443,0.48770550
+validation,B0,Persistence,33,validation_mixture_00007,0.15109795,0.25227228,0.29492247,0.36593524
+validation,B0,Persistence,33,validation_mixture_00008,0.16368037,0.28253344,0.35059804,0.43146816
+validation,B0,Persistence,33,validation_mixture_00009,0.24652679,0.42954767,0.50498605,0.59433985
+validation,B0,Persistence,33,validation_random_00000,0.37958679,1.04547191,1.62192750,1.98117626
+validation,B0,Persistence,33,validation_random_00001,0.40281284,1.07134628,1.54999900,1.88367474
+validation,B0,Persistence,33,validation_random_00002,0.40180251,0.90697509,1.37190902,1.99786401
+validation,B0,Persistence,33,validation_random_00003,0.36232144,0.91444522,1.26158690,1.49997139
+validation,B0,Persistence,33,validation_random_00004,0.38558632,0.90747958,1.35926569,1.69792378
+validation,B0,Persistence,33,validation_random_00005,0.37300548,0.95837408,1.55953038,2.16571307
+validation,B0,Persistence,33,validation_random_00006,0.38920072,0.86730736,1.13113725,1.32417345
+validation,B0,Persistence,33,validation_random_00007,0.35900480,0.91713399,1.48033154,2.13254356
+validation,B0,Persistence,33,validation_random_00008,0.38023421,0.88767004,1.30085313,1.60114360
+validation,B0,Persistence,33,validation_random_00009,0.39565998,0.87879783,1.25363934,1.72960389
+frozen_test,B0,Persistence,33,frozen_test_guided_00000,0.00115643,0.00156304,0.00203090,0.00327640
+frozen_test,B0,Persistence,33,frozen_test_guided_00001,0.00099042,0.00136639,0.00173856,0.00288164
+frozen_test,B0,Persistence,33,frozen_test_guided_00002,0.00103939,0.00165607,0.00224165,0.00407588
+frozen_test,B0,Persistence,33,frozen_test_guided_00003,0.00115241,0.00244875,0.00502019,0.01259234
+frozen_test,B0,Persistence,33,frozen_test_guided_00004,0.00109177,0.00258019,0.00480764,0.01164143
+frozen_test,B0,Persistence,33,frozen_test_mixture_00000,0.22053064,0.37056673,0.44334576,0.54097217
+frozen_test,B0,Persistence,33,frozen_test_mixture_00001,0.19029687,0.36867976,0.42795819,0.49132970
+frozen_test,B0,Persistence,33,frozen_test_mixture_00002,0.21675718,0.38717338,0.50232017,0.59479189
+frozen_test,B0,Persistence,33,frozen_test_mixture_00003,0.20699638,0.39461717,0.48719180,0.55581719
+frozen_test,B0,Persistence,33,frozen_test_mixture_00004,0.20605385,0.36314234,0.41331443,0.45846069
+frozen_test,B0,Persistence,33,frozen_test_random_00000,0.40014726,0.95680213,1.47283840,2.10828376
+frozen_test,B0,Persistence,33,frozen_test_random_00001,0.31354740,0.73097205,1.05685759,1.39466941
+frozen_test,B0,Persistence,33,frozen_test_random_00002,0.41643456,1.11917007,1.72055268,2.51106668
+frozen_test,B0,Persistence,33,frozen_test_random_00003,0.37215501,0.91467667,1.37880552,1.68772054
+frozen_test,B0,Persistence,33,frozen_test_random_00004,0.37670028,1.10875833,1.69525683,2.39039898
+ood_test,B0,Persistence,33,ood_test_guided_00000,0.00098616,0.00164369,0.00231053,0.00430749
+ood_test,B0,Persistence,33,ood_test_guided_00001,0.00118488,0.00274474,0.00561384,0.01389535
+ood_test,B0,Persistence,33,ood_test_guided_00002,0.00107180,0.00185422,0.00316335,0.00666133
+ood_test,B0,Persistence,33,ood_test_guided_00003,0.00111332,0.00154790,0.00206960,0.00363067
+ood_test,B0,Persistence,33,ood_test_guided_00004,0.00114665,0.00285568,0.00629723,0.01597458
+ood_test,B0,Persistence,33,ood_test_mixture_00000,0.18907863,0.31078458,0.37093407,0.43389681
+ood_test,B0,Persistence,33,ood_test_mixture_00001,0.22129887,0.40153214,0.49548310,0.59422857
+ood_test,B0,Persistence,33,ood_test_mixture_00002,0.21982501,0.44377148,0.57802731,0.67991543
+ood_test,B0,Persistence,33,ood_test_mixture_00003,0.17812693,0.32422313,0.38970527,0.43830955
+ood_test,B0,Persistence,33,ood_test_mixture_00004,0.21244252,0.38816202,0.47331908,0.45925480
+ood_test,B0,Persistence,33,ood_test_random_00000,0.39801654,1.05151653,1.57695019,2.23351359
+ood_test,B0,Persistence,33,ood_test_random_00001,0.40578461,1.09608555,1.58239496,1.99262023
+ood_test,B0,Persistence,33,ood_test_random_00002,0.42156425,1.04845238,1.55314875,2.33081794
+ood_test,B0,Persistence,33,ood_test_random_00003,0.34010121,0.68214989,0.89764565,1.16093874
+ood_test,B0,Persistence,33,ood_test_random_00004,0.37548119,0.95993114,1.50457585,2.40225887
+validation,B0,Persistence,44,validation_guided_00000,0.00105545,0.00226007,0.00447154,0.01046017
+validation,B0,Persistence,44,validation_guided_00001,0.00113637,0.00181002,0.00238594,0.00412361
+validation,B0,Persistence,44,validation_guided_00002,0.00114911,0.00203748,0.00364711,0.00834197
+validation,B0,Persistence,44,validation_guided_00003,0.00102389,0.00164648,0.00216111,0.00382595
+validation,B0,Persistence,44,validation_guided_00004,0.00125186,0.00277872,0.00622355,0.01717580
+validation,B0,Persistence,44,validation_guided_00005,0.00099930,0.00148911,0.00205645,0.00363275
+validation,B0,Persistence,44,validation_guided_00006,0.00110284,0.00196958,0.00327457,0.00719598
+validation,B0,Persistence,44,validation_guided_00007,0.00114029,0.00218896,0.00419290,0.01023041
+validation,B0,Persistence,44,validation_guided_00008,0.00107679,0.00194840,0.00344325,0.00794964
+validation,B0,Persistence,44,validation_guided_00009,0.00121861,0.00281335,0.00645726,0.01791021
+validation,B0,Persistence,44,validation_mixture_00000,0.15362024,0.28278992,0.33862054,0.37174284
+validation,B0,Persistence,44,validation_mixture_00001,0.18029620,0.27798915,0.31102696,0.35325488
+validation,B0,Persistence,44,validation_mixture_00002,0.27216971,0.49508920,0.59498250,0.70355242
+validation,B0,Persistence,44,validation_mixture_00003,0.17972524,0.34847203,0.44181585,0.49317631
+validation,B0,Persistence,44,validation_mixture_00004,0.17135294,0.33440855,0.40025681,0.47981992
+validation,B0,Persistence,44,validation_mixture_00005,0.20534578,0.37078449,0.40648684,0.44024169
+validation,B0,Persistence,44,validation_mixture_00006,0.19707713,0.36007872,0.43034443,0.48770550
+validation,B0,Persistence,44,validation_mixture_00007,0.15109795,0.25227228,0.29492247,0.36593524
+validation,B0,Persistence,44,validation_mixture_00008,0.16368037,0.28253344,0.35059804,0.43146816
+validation,B0,Persistence,44,validation_mixture_00009,0.24652679,0.42954767,0.50498605,0.59433985
+validation,B0,Persistence,44,validation_random_00000,0.37958679,1.04547191,1.62192750,1.98117626
+validation,B0,Persistence,44,validation_random_00001,0.40281284,1.07134628,1.54999900,1.88367474
+validation,B0,Persistence,44,validation_random_00002,0.40180251,0.90697509,1.37190902,1.99786401
+validation,B0,Persistence,44,validation_random_00003,0.36232144,0.91444522,1.26158690,1.49997139
+validation,B0,Persistence,44,validation_random_00004,0.38558632,0.90747958,1.35926569,1.69792378
+validation,B0,Persistence,44,validation_random_00005,0.37300548,0.95837408,1.55953038,2.16571307
+validation,B0,Persistence,44,validation_random_00006,0.38920072,0.86730736,1.13113725,1.32417345
+validation,B0,Persistence,44,validation_random_00007,0.35900480,0.91713399,1.48033154,2.13254356
+validation,B0,Persistence,44,validation_random_00008,0.38023421,0.88767004,1.30085313,1.60114360
+validation,B0,Persistence,44,validation_random_00009,0.39565998,0.87879783,1.25363934,1.72960389
+frozen_test,B0,Persistence,44,frozen_test_guided_00000,0.00115643,0.00156304,0.00203090,0.00327640
+frozen_test,B0,Persistence,44,frozen_test_guided_00001,0.00099042,0.00136639,0.00173856,0.00288164
+frozen_test,B0,Persistence,44,frozen_test_guided_00002,0.00103939,0.00165607,0.00224165,0.00407588
+frozen_test,B0,Persistence,44,frozen_test_guided_00003,0.00115241,0.00244875,0.00502019,0.01259234
+frozen_test,B0,Persistence,44,frozen_test_guided_00004,0.00109177,0.00258019,0.00480764,0.01164143
+frozen_test,B0,Persistence,44,frozen_test_mixture_00000,0.22053064,0.37056673,0.44334576,0.54097217
+frozen_test,B0,Persistence,44,frozen_test_mixture_00001,0.19029687,0.36867976,0.42795819,0.49132970
+frozen_test,B0,Persistence,44,frozen_test_mixture_00002,0.21675718,0.38717338,0.50232017,0.59479189
+frozen_test,B0,Persistence,44,frozen_test_mixture_00003,0.20699638,0.39461717,0.48719180,0.55581719
+frozen_test,B0,Persistence,44,frozen_test_mixture_00004,0.20605385,0.36314234,0.41331443,0.45846069
+frozen_test,B0,Persistence,44,frozen_test_random_00000,0.40014726,0.95680213,1.47283840,2.10828376
+frozen_test,B0,Persistence,44,frozen_test_random_00001,0.31354740,0.73097205,1.05685759,1.39466941
+frozen_test,B0,Persistence,44,frozen_test_random_00002,0.41643456,1.11917007,1.72055268,2.51106668
+frozen_test,B0,Persistence,44,frozen_test_random_00003,0.37215501,0.91467667,1.37880552,1.68772054
+frozen_test,B0,Persistence,44,frozen_test_random_00004,0.37670028,1.10875833,1.69525683,2.39039898
+ood_test,B0,Persistence,44,ood_test_guided_00000,0.00098616,0.00164369,0.00231053,0.00430749
+ood_test,B0,Persistence,44,ood_test_guided_00001,0.00118488,0.00274474,0.00561384,0.01389535
+ood_test,B0,Persistence,44,ood_test_guided_00002,0.00107180,0.00185422,0.00316335,0.00666133
+ood_test,B0,Persistence,44,ood_test_guided_00003,0.00111332,0.00154790,0.00206960,0.00363067
+ood_test,B0,Persistence,44,ood_test_guided_00004,0.00114665,0.00285568,0.00629723,0.01597458
+ood_test,B0,Persistence,44,ood_test_mixture_00000,0.18907863,0.31078458,0.37093407,0.43389681
+ood_test,B0,Persistence,44,ood_test_mixture_00001,0.22129887,0.40153214,0.49548310,0.59422857
+ood_test,B0,Persistence,44,ood_test_mixture_00002,0.21982501,0.44377148,0.57802731,0.67991543
+ood_test,B0,Persistence,44,ood_test_mixture_00003,0.17812693,0.32422313,0.38970527,0.43830955
+ood_test,B0,Persistence,44,ood_test_mixture_00004,0.21244252,0.38816202,0.47331908,0.45925480
+ood_test,B0,Persistence,44,ood_test_random_00000,0.39801654,1.05151653,1.57695019,2.23351359
+ood_test,B0,Persistence,44,ood_test_random_00001,0.40578461,1.09608555,1.58239496,1.99262023
+ood_test,B0,Persistence,44,ood_test_random_00002,0.42156425,1.04845238,1.55314875,2.33081794
+ood_test,B0,Persistence,44,ood_test_random_00003,0.34010121,0.68214989,0.89764565,1.16093874
+ood_test,B0,Persistence,44,ood_test_random_00004,0.37548119,0.95993114,1.50457585,2.40225887
+validation,B0,Persistence,55,validation_guided_00000,0.00105545,0.00226007,0.00447154,0.01046017
+validation,B0,Persistence,55,validation_guided_00001,0.00113637,0.00181002,0.00238594,0.00412361
+validation,B0,Persistence,55,validation_guided_00002,0.00114911,0.00203748,0.00364711,0.00834197
+validation,B0,Persistence,55,validation_guided_00003,0.00102389,0.00164648,0.00216111,0.00382595
+validation,B0,Persistence,55,validation_guided_00004,0.00125186,0.00277872,0.00622355,0.01717580
+validation,B0,Persistence,55,validation_guided_00005,0.00099930,0.00148911,0.00205645,0.00363275
+validation,B0,Persistence,55,validation_guided_00006,0.00110284,0.00196958,0.00327457,0.00719598
+validation,B0,Persistence,55,validation_guided_00007,0.00114029,0.00218896,0.00419290,0.01023041
+validation,B0,Persistence,55,validation_guided_00008,0.00107679,0.00194840,0.00344325,0.00794964
+validation,B0,Persistence,55,validation_guided_00009,0.00121861,0.00281335,0.00645726,0.01791021
+validation,B0,Persistence,55,validation_mixture_00000,0.15362024,0.28278992,0.33862054,0.37174284
+validation,B0,Persistence,55,validation_mixture_00001,0.18029620,0.27798915,0.31102696,0.35325488
+validation,B0,Persistence,55,validation_mixture_00002,0.27216971,0.49508920,0.59498250,0.70355242
+validation,B0,Persistence,55,validation_mixture_00003,0.17972524,0.34847203,0.44181585,0.49317631
+validation,B0,Persistence,55,validation_mixture_00004,0.17135294,0.33440855,0.40025681,0.47981992
+validation,B0,Persistence,55,validation_mixture_00005,0.20534578,0.37078449,0.40648684,0.44024169
+validation,B0,Persistence,55,validation_mixture_00006,0.19707713,0.36007872,0.43034443,0.48770550
+validation,B0,Persistence,55,validation_mixture_00007,0.15109795,0.25227228,0.29492247,0.36593524
+validation,B0,Persistence,55,validation_mixture_00008,0.16368037,0.28253344,0.35059804,0.43146816
+validation,B0,Persistence,55,validation_mixture_00009,0.24652679,0.42954767,0.50498605,0.59433985
+validation,B0,Persistence,55,validation_random_00000,0.37958679,1.04547191,1.62192750,1.98117626
+validation,B0,Persistence,55,validation_random_00001,0.40281284,1.07134628,1.54999900,1.88367474
+validation,B0,Persistence,55,validation_random_00002,0.40180251,0.90697509,1.37190902,1.99786401
+validation,B0,Persistence,55,validation_random_00003,0.36232144,0.91444522,1.26158690,1.49997139
+validation,B0,Persistence,55,validation_random_00004,0.38558632,0.90747958,1.35926569,1.69792378
+validation,B0,Persistence,55,validation_random_00005,0.37300548,0.95837408,1.55953038,2.16571307
+validation,B0,Persistence,55,validation_random_00006,0.38920072,0.86730736,1.13113725,1.32417345
+validation,B0,Persistence,55,validation_random_00007,0.35900480,0.91713399,1.48033154,2.13254356
+validation,B0,Persistence,55,validation_random_00008,0.38023421,0.88767004,1.30085313,1.60114360
+validation,B0,Persistence,55,validation_random_00009,0.39565998,0.87879783,1.25363934,1.72960389
+frozen_test,B0,Persistence,55,frozen_test_guided_00000,0.00115643,0.00156304,0.00203090,0.00327640
+frozen_test,B0,Persistence,55,frozen_test_guided_00001,0.00099042,0.00136639,0.00173856,0.00288164
+frozen_test,B0,Persistence,55,frozen_test_guided_00002,0.00103939,0.00165607,0.00224165,0.00407588
+frozen_test,B0,Persistence,55,frozen_test_guided_00003,0.00115241,0.00244875,0.00502019,0.01259234
+frozen_test,B0,Persistence,55,frozen_test_guided_00004,0.00109177,0.00258019,0.00480764,0.01164143
+frozen_test,B0,Persistence,55,frozen_test_mixture_00000,0.22053064,0.37056673,0.44334576,0.54097217
+frozen_test,B0,Persistence,55,frozen_test_mixture_00001,0.19029687,0.36867976,0.42795819,0.49132970
+frozen_test,B0,Persistence,55,frozen_test_mixture_00002,0.21675718,0.38717338,0.50232017,0.59479189
+frozen_test,B0,Persistence,55,frozen_test_mixture_00003,0.20699638,0.39461717,0.48719180,0.55581719
+frozen_test,B0,Persistence,55,frozen_test_mixture_00004,0.20605385,0.36314234,0.41331443,0.45846069
+frozen_test,B0,Persistence,55,frozen_test_random_00000,0.40014726,0.95680213,1.47283840,2.10828376
+frozen_test,B0,Persistence,55,frozen_test_random_00001,0.31354740,0.73097205,1.05685759,1.39466941
+frozen_test,B0,Persistence,55,frozen_test_random_00002,0.41643456,1.11917007,1.72055268,2.51106668
+frozen_test,B0,Persistence,55,frozen_test_random_00003,0.37215501,0.91467667,1.37880552,1.68772054
+frozen_test,B0,Persistence,55,frozen_test_random_00004,0.37670028,1.10875833,1.69525683,2.39039898
+ood_test,B0,Persistence,55,ood_test_guided_00000,0.00098616,0.00164369,0.00231053,0.00430749
+ood_test,B0,Persistence,55,ood_test_guided_00001,0.00118488,0.00274474,0.00561384,0.01389535
+ood_test,B0,Persistence,55,ood_test_guided_00002,0.00107180,0.00185422,0.00316335,0.00666133
+ood_test,B0,Persistence,55,ood_test_guided_00003,0.00111332,0.00154790,0.00206960,0.00363067
+ood_test,B0,Persistence,55,ood_test_guided_00004,0.00114665,0.00285568,0.00629723,0.01597458
+ood_test,B0,Persistence,55,ood_test_mixture_00000,0.18907863,0.31078458,0.37093407,0.43389681
+ood_test,B0,Persistence,55,ood_test_mixture_00001,0.22129887,0.40153214,0.49548310,0.59422857
+ood_test,B0,Persistence,55,ood_test_mixture_00002,0.21982501,0.44377148,0.57802731,0.67991543
+ood_test,B0,Persistence,55,ood_test_mixture_00003,0.17812693,0.32422313,0.38970527,0.43830955
+ood_test,B0,Persistence,55,ood_test_mixture_00004,0.21244252,0.38816202,0.47331908,0.45925480
+ood_test,B0,Persistence,55,ood_test_random_00000,0.39801654,1.05151653,1.57695019,2.23351359
+ood_test,B0,Persistence,55,ood_test_random_00001,0.40578461,1.09608555,1.58239496,1.99262023
+ood_test,B0,Persistence,55,ood_test_random_00002,0.42156425,1.04845238,1.55314875,2.33081794
+ood_test,B0,Persistence,55,ood_test_random_00003,0.34010121,0.68214989,0.89764565,1.16093874
+ood_test,B0,Persistence,55,ood_test_random_00004,0.37548119,0.95993114,1.50457585,2.40225887
+validation,B1,Unconditioned MLP,11,validation_guided_00000,0.00131931,0.00349920,0.00625506,0.01100978
+validation,B1,Unconditioned MLP,11,validation_guided_00001,0.00162676,0.00367899,0.00561487,0.00793806
+validation,B1,Unconditioned MLP,11,validation_guided_00002,0.00153565,0.00367576,0.00619296,0.01007683
+validation,B1,Unconditioned MLP,11,validation_guided_00003,0.00117528,0.00190976,0.00286867,0.00540735
+validation,B1,Unconditioned MLP,11,validation_guided_00004,0.00164791,0.00456421,0.00837635,0.01650231
+validation,B1,Unconditioned MLP,11,validation_guided_00005,0.00112803,0.00193641,0.00283162,0.00485458
+validation,B1,Unconditioned MLP,11,validation_guided_00006,0.00145928,0.00352444,0.00611691,0.01047028
+validation,B1,Unconditioned MLP,11,validation_guided_00007,0.00163254,0.00414481,0.00690397,0.01180779
+validation,B1,Unconditioned MLP,11,validation_guided_00008,0.00164178,0.00453316,0.00757460,0.01214169
+validation,B1,Unconditioned MLP,11,validation_guided_00009,0.00156863,0.00412545,0.00750102,0.01359683
+validation,B1,Unconditioned MLP,11,validation_mixture_00000,0.12341369,0.17713778,0.19533409,0.21948190
+validation,B1,Unconditioned MLP,11,validation_mixture_00001,0.14041460,0.17954855,0.19543348,0.21353747
+validation,B1,Unconditioned MLP,11,validation_mixture_00002,0.21706465,0.33315268,0.37025627,0.39456260
+validation,B1,Unconditioned MLP,11,validation_mixture_00003,0.15533926,0.23865123,0.26504785,0.28733718
+validation,B1,Unconditioned MLP,11,validation_mixture_00004,0.13743365,0.20514353,0.23018739,0.27321553
+validation,B1,Unconditioned MLP,11,validation_mixture_00005,0.16684423,0.24364161,0.27338612,0.30024540
+validation,B1,Unconditioned MLP,11,validation_mixture_00006,0.15311344,0.21766947,0.23130509,0.25993127
+validation,B1,Unconditioned MLP,11,validation_mixture_00007,0.12152048,0.17160730,0.20170614,0.23318024
+validation,B1,Unconditioned MLP,11,validation_mixture_00008,0.13429923,0.19311409,0.22170639,0.25610891
+validation,B1,Unconditioned MLP,11,validation_mixture_00009,0.18580909,0.27030572,0.30377179,0.32257035
+validation,B1,Unconditioned MLP,11,validation_random_00000,0.29410478,0.59555858,0.78269231,0.98109406
+validation,B1,Unconditioned MLP,11,validation_random_00001,0.31443456,0.63461894,0.79568195,0.96607399
+validation,B1,Unconditioned MLP,11,validation_random_00002,0.31608620,0.57177824,0.76168913,0.94835210
+validation,B1,Unconditioned MLP,11,validation_random_00003,0.29362446,0.60701126,0.75664711,0.90262407
+validation,B1,Unconditioned MLP,11,validation_random_00004,0.31951362,0.63424146,0.78967839,0.85715306
+validation,B1,Unconditioned MLP,11,validation_random_00005,0.33206186,0.63792354,0.81055176,1.02122629
+validation,B1,Unconditioned MLP,11,validation_random_00006,0.31150332,0.59499711,0.74578863,0.83041060
+validation,B1,Unconditioned MLP,11,validation_random_00007,0.30153430,0.61070961,0.84056318,1.03918111
+validation,B1,Unconditioned MLP,11,validation_random_00008,0.29308718,0.52517003,0.69289511,0.85507464
+validation,B1,Unconditioned MLP,11,validation_random_00009,0.30964011,0.57780766,0.73568100,0.93806040
+frozen_test,B1,Unconditioned MLP,11,frozen_test_guided_00000,0.00123000,0.00201810,0.00281999,0.00485861
+frozen_test,B1,Unconditioned MLP,11,frozen_test_guided_00001,0.00120888,0.00236589,0.00381956,0.00659441
+frozen_test,B1,Unconditioned MLP,11,frozen_test_guided_00002,0.00115211,0.00184789,0.00277249,0.00534151
+frozen_test,B1,Unconditioned MLP,11,frozen_test_guided_00003,0.00144353,0.00329940,0.00563135,0.00951880
+frozen_test,B1,Unconditioned MLP,11,frozen_test_guided_00004,0.00145217,0.00368928,0.00631132,0.01052871
+frozen_test,B1,Unconditioned MLP,11,frozen_test_mixture_00000,0.17792088,0.25170454,0.27195531,0.30735129
+frozen_test,B1,Unconditioned MLP,11,frozen_test_mixture_00001,0.15988918,0.23079483,0.26334473,0.27012786
+frozen_test,B1,Unconditioned MLP,11,frozen_test_mixture_00002,0.19006836,0.28176951,0.31939968,0.36058217
+frozen_test,B1,Unconditioned MLP,11,frozen_test_mixture_00003,0.16979504,0.26546532,0.30233550,0.32809693
+frozen_test,B1,Unconditioned MLP,11,frozen_test_mixture_00004,0.16800873,0.23686855,0.25411716,0.26597860
+frozen_test,B1,Unconditioned MLP,11,frozen_test_random_00000,0.33848923,0.66026551,0.82476521,1.02584302
+frozen_test,B1,Unconditioned MLP,11,frozen_test_random_00001,0.26424637,0.47691190,0.61805999,0.74045980
+frozen_test,B1,Unconditioned MLP,11,frozen_test_random_00002,0.32054263,0.66260922,0.88854676,1.14585173
+frozen_test,B1,Unconditioned MLP,11,frozen_test_random_00003,0.29437906,0.58571005,0.76865381,0.90283740
+frozen_test,B1,Unconditioned MLP,11,frozen_test_random_00004,0.31430486,0.72337127,0.90749943,1.05917788
+ood_test,B1,Unconditioned MLP,11,ood_test_guided_00000,0.00124158,0.00231677,0.00361993,0.00651557
+ood_test,B1,Unconditioned MLP,11,ood_test_guided_00001,0.00158106,0.00406501,0.00717022,0.01240405
+ood_test,B1,Unconditioned MLP,11,ood_test_guided_00002,0.00140293,0.00330126,0.00579664,0.01003183
+ood_test,B1,Unconditioned MLP,11,ood_test_guided_00003,0.00136639,0.00290669,0.00497920,0.00860613
+ood_test,B1,Unconditioned MLP,11,ood_test_guided_00004,0.00152526,0.00427556,0.00773582,0.01401753
+ood_test,B1,Unconditioned MLP,11,ood_test_mixture_00000,0.15004936,0.19615541,0.21409933,0.24469261
+ood_test,B1,Unconditioned MLP,11,ood_test_mixture_00001,0.16948605,0.24448879,0.27608955,0.32480949
+ood_test,B1,Unconditioned MLP,11,ood_test_mixture_00002,0.18075037,0.28726980,0.33328587,0.40577194
+ood_test,B1,Unconditioned MLP,11,ood_test_mixture_00003,0.14798573,0.21705063,0.23610346,0.25923234
+ood_test,B1,Unconditioned MLP,11,ood_test_mixture_00004,0.17750153,0.25913188,0.28494886,0.28733587
+ood_test,B1,Unconditioned MLP,11,ood_test_random_00000,0.33680645,0.68175703,0.88359773,1.07962871
+ood_test,B1,Unconditioned MLP,11,ood_test_random_00001,0.31451324,0.67290014,0.89599055,1.08082509
+ood_test,B1,Unconditioned MLP,11,ood_test_random_00002,0.31653342,0.61865073,0.83825338,1.14513254
+ood_test,B1,Unconditioned MLP,11,ood_test_random_00003,0.27458057,0.44300091,0.52840185,0.64200312
+ood_test,B1,Unconditioned MLP,11,ood_test_random_00004,0.28816319,0.53373224,0.66911280,0.89860874
+validation,B1,Unconditioned MLP,22,validation_guided_00000,0.00194603,0.00549000,0.00838944,0.01255836
+validation,B1,Unconditioned MLP,22,validation_guided_00001,0.00145270,0.00374411,0.00627420,0.00998906
+validation,B1,Unconditioned MLP,22,validation_guided_00002,0.00155152,0.00399750,0.00659222,0.01101821
+validation,B1,Unconditioned MLP,22,validation_guided_00003,0.00174068,0.00480248,0.00727333,0.01056821
+validation,B1,Unconditioned MLP,22,validation_guided_00004,0.00215678,0.00601179,0.00947342,0.01539117
+validation,B1,Unconditioned MLP,22,validation_guided_00005,0.00148227,0.00422871,0.00685946,0.01001050
+validation,B1,Unconditioned MLP,22,validation_guided_00006,0.00143863,0.00379917,0.00639523,0.01054754
+validation,B1,Unconditioned MLP,22,validation_guided_00007,0.00141478,0.00367795,0.00623013,0.01039308
+validation,B1,Unconditioned MLP,22,validation_guided_00008,0.00142091,0.00419228,0.00769157,0.01339437
+validation,B1,Unconditioned MLP,22,validation_guided_00009,0.00189377,0.00532105,0.00854258,0.01306904
+validation,B1,Unconditioned MLP,22,validation_mixture_00000,0.12086988,0.16913755,0.18630467,0.20468445
+validation,B1,Unconditioned MLP,22,validation_mixture_00001,0.14222144,0.18184954,0.19352326,0.21721873
+validation,B1,Unconditioned MLP,22,validation_mixture_00002,0.21164566,0.32559291,0.36079630,0.39313596
+validation,B1,Unconditioned MLP,22,validation_mixture_00003,0.14934057,0.23102157,0.26577458,0.29922113
+validation,B1,Unconditioned MLP,22,validation_mixture_00004,0.13852057,0.21438886,0.24398288,0.28746656
+validation,B1,Unconditioned MLP,22,validation_mixture_00005,0.16884060,0.25649348,0.29274109,0.33166307
+validation,B1,Unconditioned MLP,22,validation_mixture_00006,0.15419212,0.22194237,0.24230219,0.28263950
+validation,B1,Unconditioned MLP,22,validation_mixture_00007,0.12217047,0.17329174,0.20226860,0.23434424
+validation,B1,Unconditioned MLP,22,validation_mixture_00008,0.13558163,0.19039291,0.22012104,0.26549324
+validation,B1,Unconditioned MLP,22,validation_mixture_00009,0.18798588,0.26787570,0.29627365,0.31231982
+validation,B1,Unconditioned MLP,22,validation_random_00000,0.29741347,0.59928328,0.78396374,0.96741158
+validation,B1,Unconditioned MLP,22,validation_random_00001,0.32359025,0.66411215,0.82128972,0.97972608
+validation,B1,Unconditioned MLP,22,validation_random_00002,0.31679088,0.56374800,0.70566678,0.83946455
+validation,B1,Unconditioned MLP,22,validation_random_00003,0.29023406,0.55786139,0.66356450,0.75748736
+validation,B1,Unconditioned MLP,22,validation_random_00004,0.32328930,0.63187999,0.79767853,0.85519087
+validation,B1,Unconditioned MLP,22,validation_random_00005,0.32578850,0.63058037,0.79041338,0.95294988
+validation,B1,Unconditioned MLP,22,validation_random_00006,0.31030720,0.59197813,0.72526854,0.79206568
+validation,B1,Unconditioned MLP,22,validation_random_00007,0.29979491,0.56923872,0.75075102,0.96174115
+validation,B1,Unconditioned MLP,22,validation_random_00008,0.30701035,0.56373906,0.71305853,0.86047024
+validation,B1,Unconditioned MLP,22,validation_random_00009,0.31602991,0.57707107,0.71781361,0.87366652
+frozen_test,B1,Unconditioned MLP,22,frozen_test_guided_00000,0.00158645,0.00467899,0.00777183,0.01142568
+frozen_test,B1,Unconditioned MLP,22,frozen_test_guided_00001,0.00151481,0.00442532,0.00712809,0.01041388
+frozen_test,B1,Unconditioned MLP,22,frozen_test_guided_00002,0.00181747,0.00496003,0.00714116,0.00999964
+frozen_test,B1,Unconditioned MLP,22,frozen_test_guided_00003,0.00184641,0.00495873,0.00779630,0.01171108
+frozen_test,B1,Unconditioned MLP,22,frozen_test_guided_00004,0.00169840,0.00485097,0.00767721,0.01181732
+frozen_test,B1,Unconditioned MLP,22,frozen_test_mixture_00000,0.18050189,0.24644245,0.26936364,0.30916613
+frozen_test,B1,Unconditioned MLP,22,frozen_test_mixture_00001,0.15693383,0.22512366,0.25235936,0.26872927
+frozen_test,B1,Unconditioned MLP,22,frozen_test_mixture_00002,0.18046224,0.27548003,0.32384366,0.36824745
+frozen_test,B1,Unconditioned MLP,22,frozen_test_mixture_00003,0.16755617,0.25574273,0.29024661,0.32553351
+frozen_test,B1,Unconditioned MLP,22,frozen_test_mixture_00004,0.16654125,0.23293440,0.25055632,0.26454505
+frozen_test,B1,Unconditioned MLP,22,frozen_test_random_00000,0.33427536,0.63342804,0.81422895,1.02922583
+frozen_test,B1,Unconditioned MLP,22,frozen_test_random_00001,0.26499212,0.47566161,0.59262556,0.69001687
+frozen_test,B1,Unconditioned MLP,22,frozen_test_random_00002,0.31960464,0.64277560,0.81564665,1.05164754
+frozen_test,B1,Unconditioned MLP,22,frozen_test_random_00003,0.30014518,0.57647282,0.73044151,0.82988608
+frozen_test,B1,Unconditioned MLP,22,frozen_test_random_00004,0.31441981,0.70591801,0.86730766,1.01182723
+ood_test,B1,Unconditioned MLP,22,ood_test_guided_00000,0.00182287,0.00525912,0.00790544,0.01183078
+ood_test,B1,Unconditioned MLP,22,ood_test_guided_00001,0.00166577,0.00459778,0.00759307,0.01197281
+ood_test,B1,Unconditioned MLP,22,ood_test_guided_00002,0.00143995,0.00365611,0.00611191,0.00996176
+ood_test,B1,Unconditioned MLP,22,ood_test_guided_00003,0.00142705,0.00370678,0.00611981,0.00977850
+ood_test,B1,Unconditioned MLP,22,ood_test_guided_00004,0.00169169,0.00480034,0.00760040,0.01181740
+ood_test,B1,Unconditioned MLP,22,ood_test_mixture_00000,0.15265213,0.20106341,0.21886860,0.25145122
+ood_test,B1,Unconditioned MLP,22,ood_test_mixture_00001,0.16420564,0.23492499,0.26868293,0.31001589
+ood_test,B1,Unconditioned MLP,22,ood_test_mixture_00002,0.18086581,0.28579801,0.33046189,0.38513565
+ood_test,B1,Unconditioned MLP,22,ood_test_mixture_00003,0.14294060,0.21232939,0.24077348,0.28471687
+ood_test,B1,Unconditioned MLP,22,ood_test_mixture_00004,0.17526183,0.24717136,0.26745617,0.27375412
+ood_test,B1,Unconditioned MLP,22,ood_test_random_00000,0.33989352,0.67069674,0.82193607,0.95132363
+ood_test,B1,Unconditioned MLP,22,ood_test_random_00001,0.31590459,0.65146357,0.86490202,1.04287159
+ood_test,B1,Unconditioned MLP,22,ood_test_random_00002,0.31830934,0.59863603,0.78698933,0.98675132
+ood_test,B1,Unconditioned MLP,22,ood_test_random_00003,0.27711162,0.45469573,0.53887248,0.63197452
+ood_test,B1,Unconditioned MLP,22,ood_test_random_00004,0.30192721,0.56774795,0.71318918,0.97333652
+validation,B1,Unconditioned MLP,33,validation_guided_00000,0.00124256,0.00291969,0.00484127,0.00843967
+validation,B1,Unconditioned MLP,33,validation_guided_00001,0.00128911,0.00252366,0.00391272,0.00630306
+validation,B1,Unconditioned MLP,33,validation_guided_00002,0.00125170,0.00248789,0.00399045,0.00740685
+validation,B1,Unconditioned MLP,33,validation_guided_00003,0.00158085,0.00344490,0.00476842,0.00608854
+validation,B1,Unconditioned MLP,33,validation_guided_00004,0.00136874,0.00330476,0.00563871,0.00980343
+validation,B1,Unconditioned MLP,33,validation_guided_00005,0.00143807,0.00334528,0.00497465,0.00687192
+validation,B1,Unconditioned MLP,33,validation_guided_00006,0.00119655,0.00246603,0.00396871,0.00653318
+validation,B1,Unconditioned MLP,33,validation_guided_00007,0.00121757,0.00232048,0.00376052,0.00669075
+validation,B1,Unconditioned MLP,33,validation_guided_00008,0.00117856,0.00245061,0.00423531,0.00759768
+validation,B1,Unconditioned MLP,33,validation_guided_00009,0.00119916,0.00233849,0.00360415,0.00597309
+validation,B1,Unconditioned MLP,33,validation_mixture_00000,0.12484006,0.18006887,0.19929680,0.21945114
+validation,B1,Unconditioned MLP,33,validation_mixture_00001,0.14243950,0.18240035,0.19683699,0.22357807
+validation,B1,Unconditioned MLP,33,validation_mixture_00002,0.21589696,0.32269475,0.35498378,0.38617846
+validation,B1,Unconditioned MLP,33,validation_mixture_00003,0.15014276,0.23020171,0.26144558,0.29197115
+validation,B1,Unconditioned MLP,33,validation_mixture_00004,0.14078462,0.22054626,0.25367448,0.29805672
+validation,B1,Unconditioned MLP,33,validation_mixture_00005,0.16630323,0.25269485,0.27685520,0.29842514
+validation,B1,Unconditioned MLP,33,validation_mixture_00006,0.15488438,0.22467846,0.24380487,0.27719396
+validation,B1,Unconditioned MLP,33,validation_mixture_00007,0.12503569,0.18128802,0.21153666,0.24081400
+validation,B1,Unconditioned MLP,33,validation_mixture_00008,0.13498260,0.18971907,0.21380995,0.25642747
+validation,B1,Unconditioned MLP,33,validation_mixture_00009,0.19006683,0.27754951,0.30782053,0.32733148
+validation,B1,Unconditioned MLP,33,validation_random_00000,0.29730046,0.58304721,0.74956918,0.92838526
+validation,B1,Unconditioned MLP,33,validation_random_00001,0.31947610,0.65176153,0.80451053,0.97541422
+validation,B1,Unconditioned MLP,33,validation_random_00002,0.30814224,0.57005304,0.73211688,0.87101227
+validation,B1,Unconditioned MLP,33,validation_random_00003,0.28313833,0.54883283,0.65709972,0.73944730
+validation,B1,Unconditioned MLP,33,validation_random_00004,0.31121576,0.61132509,0.77995324,0.87310302
+validation,B1,Unconditioned MLP,33,validation_random_00005,0.32196152,0.63383019,0.80728847,0.99889928
+validation,B1,Unconditioned MLP,33,validation_random_00006,0.31722307,0.60752457,0.75996816,0.85722589
+validation,B1,Unconditioned MLP,33,validation_random_00007,0.30470893,0.57481873,0.76707709,0.99173236
+validation,B1,Unconditioned MLP,33,validation_random_00008,0.29461461,0.52808315,0.67596698,0.81997919
+validation,B1,Unconditioned MLP,33,validation_random_00009,0.31324485,0.56996012,0.71021503,0.87741691
+frozen_test,B1,Unconditioned MLP,33,frozen_test_guided_00000,0.00134092,0.00287976,0.00438036,0.00615058
+frozen_test,B1,Unconditioned MLP,33,frozen_test_guided_00001,0.00115282,0.00237967,0.00350795,0.00496489
+frozen_test,B1,Unconditioned MLP,33,frozen_test_guided_00002,0.00159392,0.00335370,0.00450835,0.00565899
+frozen_test,B1,Unconditioned MLP,33,frozen_test_guided_00003,0.00127854,0.00259067,0.00409707,0.00712960
+frozen_test,B1,Unconditioned MLP,33,frozen_test_guided_00004,0.00121694,0.00248728,0.00359942,0.00633339
+frozen_test,B1,Unconditioned MLP,33,frozen_test_mixture_00000,0.17724720,0.23808104,0.25783068,0.29752967
+frozen_test,B1,Unconditioned MLP,33,frozen_test_mixture_00001,0.15938678,0.23298199,0.26304543,0.27795908
+frozen_test,B1,Unconditioned MLP,33,frozen_test_mixture_00002,0.18062326,0.26702023,0.31093353,0.34718835
+frozen_test,B1,Unconditioned MLP,33,frozen_test_mixture_00003,0.16417038,0.24253857,0.27373120,0.30258068
+frozen_test,B1,Unconditioned MLP,33,frozen_test_mixture_00004,0.16772224,0.23702157,0.26416945,0.28383669
+frozen_test,B1,Unconditioned MLP,33,frozen_test_random_00000,0.33997554,0.63508952,0.79784417,0.98240870
+frozen_test,B1,Unconditioned MLP,33,frozen_test_random_00001,0.25686717,0.45279333,0.59502220,0.77516341
+frozen_test,B1,Unconditioned MLP,33,frozen_test_random_00002,0.31395146,0.63019866,0.80454195,1.02262473
+frozen_test,B1,Unconditioned MLP,33,frozen_test_random_00003,0.29919663,0.58879894,0.76202846,0.87803215
+frozen_test,B1,Unconditioned MLP,33,frozen_test_random_00004,0.30636719,0.71080118,0.87505198,1.04324341
+ood_test,B1,Unconditioned MLP,33,ood_test_guided_00000,0.00165007,0.00367702,0.00502697,0.00629272
+ood_test,B1,Unconditioned MLP,33,ood_test_guided_00001,0.00122289,0.00234892,0.00356377,0.00611947
+ood_test,B1,Unconditioned MLP,33,ood_test_guided_00002,0.00119889,0.00237947,0.00385981,0.00624454
+ood_test,B1,Unconditioned MLP,33,ood_test_guided_00003,0.00135667,0.00309117,0.00487612,0.00712718
+ood_test,B1,Unconditioned MLP,33,ood_test_guided_00004,0.00118792,0.00244422,0.00366247,0.00642857
+ood_test,B1,Unconditioned MLP,33,ood_test_mixture_00000,0.15414418,0.21413940,0.23610640,0.26517466
+ood_test,B1,Unconditioned MLP,33,ood_test_mixture_00001,0.16761908,0.23644847,0.26630607,0.31460616
+ood_test,B1,Unconditioned MLP,33,ood_test_mixture_00002,0.18236299,0.29202148,0.33735439,0.39502612
+ood_test,B1,Unconditioned MLP,33,ood_test_mixture_00003,0.14268725,0.20607418,0.22655322,0.25449288
+ood_test,B1,Unconditioned MLP,33,ood_test_mixture_00004,0.17506880,0.25177872,0.27587909,0.28166893
+ood_test,B1,Unconditioned MLP,33,ood_test_random_00000,0.33949429,0.69427872,0.87670922,0.97334534
+ood_test,B1,Unconditioned MLP,33,ood_test_random_00001,0.32200530,0.67211264,0.86623728,1.03179061
+ood_test,B1,Unconditioned MLP,33,ood_test_random_00002,0.31691608,0.59967846,0.81422156,1.06749499
+ood_test,B1,Unconditioned MLP,33,ood_test_random_00003,0.27747619,0.44598567,0.51301438,0.59991616
+ood_test,B1,Unconditioned MLP,33,ood_test_random_00004,0.30351064,0.57151526,0.71794832,0.94716543
+validation,B1,Unconditioned MLP,44,validation_guided_00000,0.00103155,0.00190538,0.00271998,0.00407563
+validation,B1,Unconditioned MLP,44,validation_guided_00001,0.00114382,0.00184903,0.00255254,0.00372552
+validation,B1,Unconditioned MLP,44,validation_guided_00002,0.00113813,0.00185725,0.00252124,0.00375592
+validation,B1,Unconditioned MLP,44,validation_guided_00003,0.00111116,0.00214424,0.00281287,0.00371452
+validation,B1,Unconditioned MLP,44,validation_guided_00004,0.00127129,0.00256595,0.00389611,0.00608061
+validation,B1,Unconditioned MLP,44,validation_guided_00005,0.00097640,0.00164091,0.00215388,0.00289557
+validation,B1,Unconditioned MLP,44,validation_guided_00006,0.00107349,0.00182850,0.00260192,0.00397660
+validation,B1,Unconditioned MLP,44,validation_guided_00007,0.00142691,0.00312262,0.00470363,0.00734770
+validation,B1,Unconditioned MLP,44,validation_guided_00008,0.00134934,0.00284969,0.00426685,0.00721476
+validation,B1,Unconditioned MLP,44,validation_guided_00009,0.00121990,0.00229673,0.00322964,0.00435362
+validation,B1,Unconditioned MLP,44,validation_mixture_00000,0.12233820,0.18081385,0.20342498,0.22394295
+validation,B1,Unconditioned MLP,44,validation_mixture_00001,0.14033906,0.17932956,0.19235148,0.21332614
+validation,B1,Unconditioned MLP,44,validation_mixture_00002,0.21273726,0.31012344,0.34682712,0.39138481
+validation,B1,Unconditioned MLP,44,validation_mixture_00003,0.15083216,0.22052352,0.24751663,0.27468497
+validation,B1,Unconditioned MLP,44,validation_mixture_00004,0.14226167,0.23971088,0.28688914,0.33457264
+validation,B1,Unconditioned MLP,44,validation_mixture_00005,0.16675137,0.24570554,0.27391750,0.29644415
+validation,B1,Unconditioned MLP,44,validation_mixture_00006,0.15194114,0.21958162,0.24105464,0.27590421
+validation,B1,Unconditioned MLP,44,validation_mixture_00007,0.12197063,0.17543115,0.20559065,0.23384172
+validation,B1,Unconditioned MLP,44,validation_mixture_00008,0.13487224,0.18746001,0.21579923,0.26280233
+validation,B1,Unconditioned MLP,44,validation_mixture_00009,0.18848118,0.27304086,0.30595225,0.33369577
+validation,B1,Unconditioned MLP,44,validation_random_00000,0.29914132,0.60024875,0.79903746,0.99740255
+validation,B1,Unconditioned MLP,44,validation_random_00001,0.30670035,0.62525880,0.77324116,0.92783844
+validation,B1,Unconditioned MLP,44,validation_random_00002,0.31693831,0.59772158,0.77693611,0.96205479
+validation,B1,Unconditioned MLP,44,validation_random_00003,0.29313260,0.60419792,0.75378072,0.90357876
+validation,B1,Unconditioned MLP,44,validation_random_00004,0.31312987,0.60407275,0.76749337,0.84965307
+validation,B1,Unconditioned MLP,44,validation_random_00005,0.33288142,0.63629800,0.80915517,0.99466723
+validation,B1,Unconditioned MLP,44,validation_random_00006,0.31179044,0.61493987,0.77946240,0.89458871
+validation,B1,Unconditioned MLP,44,validation_random_00007,0.30290321,0.60294920,0.82252723,1.08255148
+validation,B1,Unconditioned MLP,44,validation_random_00008,0.29406250,0.53899223,0.68324172,0.82730478
+validation,B1,Unconditioned MLP,44,validation_random_00009,0.31818283,0.57851744,0.71300530,0.83671808
+frozen_test,B1,Unconditioned MLP,44,frozen_test_guided_00000,0.00109959,0.00178172,0.00231742,0.00292217
+frozen_test,B1,Unconditioned MLP,44,frozen_test_guided_00001,0.00098592,0.00152855,0.00195481,0.00257611
+frozen_test,B1,Unconditioned MLP,44,frozen_test_guided_00002,0.00109424,0.00204874,0.00277184,0.00385502
+frozen_test,B1,Unconditioned MLP,44,frozen_test_guided_00003,0.00112449,0.00196618,0.00275200,0.00388354
+frozen_test,B1,Unconditioned MLP,44,frozen_test_guided_00004,0.00109512,0.00218863,0.00314046,0.00478528
+frozen_test,B1,Unconditioned MLP,44,frozen_test_mixture_00000,0.17634875,0.23854797,0.25943363,0.28563190
+frozen_test,B1,Unconditioned MLP,44,frozen_test_mixture_00001,0.16039093,0.23585467,0.26936212,0.29242787
+frozen_test,B1,Unconditioned MLP,44,frozen_test_mixture_00002,0.18543750,0.27309674,0.30048466,0.33694091
+frozen_test,B1,Unconditioned MLP,44,frozen_test_mixture_00003,0.16136597,0.24221106,0.27451199,0.30170998
+frozen_test,B1,Unconditioned MLP,44,frozen_test_mixture_00004,0.17180355,0.24533500,0.26673490,0.27795807
+frozen_test,B1,Unconditioned MLP,44,frozen_test_random_00000,0.34065694,0.61715084,0.75726396,0.93751460
+frozen_test,B1,Unconditioned MLP,44,frozen_test_random_00001,0.26718491,0.48461083,0.63086808,0.80044538
+frozen_test,B1,Unconditioned MLP,44,frozen_test_random_00002,0.33304918,0.70320541,0.96387380,1.19179022
+frozen_test,B1,Unconditioned MLP,44,frozen_test_random_00003,0.30340248,0.60998917,0.82364011,0.95737994
+frozen_test,B1,Unconditioned MLP,44,frozen_test_random_00004,0.31238574,0.71136266,0.87943059,1.02933383
+ood_test,B1,Unconditioned MLP,44,ood_test_guided_00000,0.00111862,0.00230826,0.00322587,0.00447348
+ood_test,B1,Unconditioned MLP,44,ood_test_guided_00001,0.00117339,0.00232307,0.00346077,0.00525242
+ood_test,B1,Unconditioned MLP,44,ood_test_guided_00002,0.00111034,0.00182383,0.00247505,0.00363237
+ood_test,B1,Unconditioned MLP,44,ood_test_guided_00003,0.00108596,0.00168355,0.00222840,0.00299680
+ood_test,B1,Unconditioned MLP,44,ood_test_guided_00004,0.00115892,0.00247944,0.00368570,0.00551577
+ood_test,B1,Unconditioned MLP,44,ood_test_mixture_00000,0.14848848,0.19759512,0.21333706,0.23832349
+ood_test,B1,Unconditioned MLP,44,ood_test_mixture_00001,0.17153969,0.24834658,0.28337079,0.32978708
+ood_test,B1,Unconditioned MLP,44,ood_test_mixture_00002,0.18263075,0.29621071,0.34774837,0.39907941
+ood_test,B1,Unconditioned MLP,44,ood_test_mixture_00003,0.14159967,0.20101596,0.22298303,0.25402084
+ood_test,B1,Unconditioned MLP,44,ood_test_mixture_00004,0.17848986,0.25176322,0.27037320,0.27822948
+ood_test,B1,Unconditioned MLP,44,ood_test_random_00000,0.34632033,0.72204304,0.92984319,1.04984283
+ood_test,B1,Unconditioned MLP,44,ood_test_random_00001,0.32189584,0.68546265,0.92443490,1.15643573
+ood_test,B1,Unconditioned MLP,44,ood_test_random_00002,0.31795189,0.61327487,0.83164191,1.08839226
+ood_test,B1,Unconditioned MLP,44,ood_test_random_00003,0.27914405,0.46068466,0.56129867,0.65541190
+ood_test,B1,Unconditioned MLP,44,ood_test_random_00004,0.29885793,0.55856323,0.69639742,0.92868346
+validation,B1,Unconditioned MLP,55,validation_guided_00000,0.00119520,0.00259051,0.00380239,0.00576618
+validation,B1,Unconditioned MLP,55,validation_guided_00001,0.00128785,0.00294207,0.00474786,0.00717457
+validation,B1,Unconditioned MLP,55,validation_guided_00002,0.00138852,0.00349685,0.00573484,0.00825426
+validation,B1,Unconditioned MLP,55,validation_guided_00003,0.00148361,0.00403297,0.00628988,0.00962107
+validation,B1,Unconditioned MLP,55,validation_guided_00004,0.00162696,0.00361304,0.00531233,0.00897661
+validation,B1,Unconditioned MLP,55,validation_guided_00005,0.00132117,0.00349476,0.00532778,0.00794054
+validation,B1,Unconditioned MLP,55,validation_guided_00006,0.00128510,0.00300663,0.00471435,0.00646765
+validation,B1,Unconditioned MLP,55,validation_guided_00007,0.00149301,0.00383056,0.00610414,0.00878491
+validation,B1,Unconditioned MLP,55,validation_guided_00008,0.00131456,0.00308048,0.00485018,0.00751715
+validation,B1,Unconditioned MLP,55,validation_guided_00009,0.00144860,0.00318286,0.00476093,0.00756246
+validation,B1,Unconditioned MLP,55,validation_mixture_00000,0.12577330,0.18470074,0.20790426,0.24133673
+validation,B1,Unconditioned MLP,55,validation_mixture_00001,0.13888976,0.17348929,0.18347195,0.20087904
+validation,B1,Unconditioned MLP,55,validation_mixture_00002,0.21154368,0.31724834,0.35327950,0.38359997
+validation,B1,Unconditioned MLP,55,validation_mixture_00003,0.14703643,0.21920049,0.24916591,0.27615315
+validation,B1,Unconditioned MLP,55,validation_mixture_00004,0.14065395,0.21474297,0.24526812,0.29193711
+validation,B1,Unconditioned MLP,55,validation_mixture_00005,0.17195560,0.26091653,0.28945646,0.32164156
+validation,B1,Unconditioned MLP,55,validation_mixture_00006,0.15834932,0.22372009,0.23841703,0.26635411
+validation,B1,Unconditioned MLP,55,validation_mixture_00007,0.12145336,0.16662611,0.18863231,0.21163416
+validation,B1,Unconditioned MLP,55,validation_mixture_00008,0.13468896,0.18229203,0.20697887,0.24240188
+validation,B1,Unconditioned MLP,55,validation_mixture_00009,0.19001938,0.27187291,0.30280811,0.33120149
+validation,B1,Unconditioned MLP,55,validation_random_00000,0.29361403,0.59529048,0.79655635,0.97472984
+validation,B1,Unconditioned MLP,55,validation_random_00001,0.31463847,0.64281213,0.79468310,0.95190090
+validation,B1,Unconditioned MLP,55,validation_random_00002,0.31569609,0.57871258,0.72211456,0.84896219
+validation,B1,Unconditioned MLP,55,validation_random_00003,0.28684491,0.59348530,0.75300515,0.91646624
+validation,B1,Unconditioned MLP,55,validation_random_00004,0.31513384,0.61245924,0.78568715,0.87831485
+validation,B1,Unconditioned MLP,55,validation_random_00005,0.33056962,0.63751471,0.80383319,0.97468567
+validation,B1,Unconditioned MLP,55,validation_random_00006,0.31741232,0.61115539,0.77507365,0.86675054
+validation,B1,Unconditioned MLP,55,validation_random_00007,0.29625902,0.56893873,0.76489574,0.97623783
+validation,B1,Unconditioned MLP,55,validation_random_00008,0.29022527,0.52360767,0.66722584,0.83667558
+validation,B1,Unconditioned MLP,55,validation_random_00009,0.31232914,0.58649772,0.73781765,0.90340471
+frozen_test,B1,Unconditioned MLP,55,frozen_test_guided_00000,0.00147713,0.00368949,0.00552792,0.00765031
+frozen_test,B1,Unconditioned MLP,55,frozen_test_guided_00001,0.00120921,0.00274307,0.00414509,0.00620925
+frozen_test,B1,Unconditioned MLP,55,frozen_test_guided_00002,0.00163356,0.00447930,0.00705352,0.01107257
+frozen_test,B1,Unconditioned MLP,55,frozen_test_guided_00003,0.00138781,0.00319417,0.00480552,0.00702736
+frozen_test,B1,Unconditioned MLP,55,frozen_test_guided_00004,0.00142274,0.00384671,0.00609429,0.00897076
+frozen_test,B1,Unconditioned MLP,55,frozen_test_mixture_00000,0.17865501,0.24462904,0.26595175,0.29470098
+frozen_test,B1,Unconditioned MLP,55,frozen_test_mixture_00001,0.16033334,0.23748644,0.26770985,0.27558425
+frozen_test,B1,Unconditioned MLP,55,frozen_test_mixture_00002,0.18649621,0.28627634,0.32940200,0.36606607
+frozen_test,B1,Unconditioned MLP,55,frozen_test_mixture_00003,0.16774906,0.25612438,0.29099774,0.32436779
+frozen_test,B1,Unconditioned MLP,55,frozen_test_mixture_00004,0.16783267,0.23051132,0.25142783,0.27061749
+frozen_test,B1,Unconditioned MLP,55,frozen_test_random_00000,0.33782232,0.63605708,0.79747874,1.00299180
+frozen_test,B1,Unconditioned MLP,55,frozen_test_random_00001,0.25375375,0.44315407,0.55939966,0.66190708
+frozen_test,B1,Unconditioned MLP,55,frozen_test_random_00002,0.31103349,0.65065438,0.90445137,1.14911163
+frozen_test,B1,Unconditioned MLP,55,frozen_test_random_00003,0.29860801,0.56723571,0.72570992,0.81862783
+frozen_test,B1,Unconditioned MLP,55,frozen_test_random_00004,0.29875672,0.68219239,0.84827119,0.97986907
+ood_test,B1,Unconditioned MLP,55,ood_test_guided_00000,0.00138192,0.00352563,0.00549563,0.00864524
+ood_test,B1,Unconditioned MLP,55,ood_test_guided_00001,0.00152650,0.00407320,0.00648772,0.00964851
+ood_test,B1,Unconditioned MLP,55,ood_test_guided_00002,0.00120669,0.00250285,0.00385626,0.00622364
+ood_test,B1,Unconditioned MLP,55,ood_test_guided_00003,0.00124981,0.00259176,0.00382367,0.00562903
+ood_test,B1,Unconditioned MLP,55,ood_test_guided_00004,0.00145231,0.00390089,0.00622581,0.00929496
+ood_test,B1,Unconditioned MLP,55,ood_test_mixture_00000,0.14745396,0.19287689,0.20909135,0.23873803
+ood_test,B1,Unconditioned MLP,55,ood_test_mixture_00001,0.16917795,0.23804158,0.26366338,0.30527496
+ood_test,B1,Unconditioned MLP,55,ood_test_mixture_00002,0.18133318,0.28881148,0.33979335,0.39723846
+ood_test,B1,Unconditioned MLP,55,ood_test_mixture_00003,0.14466919,0.20718183,0.22791924,0.25530517
+ood_test,B1,Unconditioned MLP,55,ood_test_mixture_00004,0.17399588,0.25443709,0.27590832,0.27074829
+ood_test,B1,Unconditioned MLP,55,ood_test_random_00000,0.33415669,0.70002031,0.89724672,1.06538105
+ood_test,B1,Unconditioned MLP,55,ood_test_random_00001,0.31927443,0.65920007,0.87781614,1.09099841
+ood_test,B1,Unconditioned MLP,55,ood_test_random_00002,0.30878958,0.59308475,0.80005556,1.03320873
+ood_test,B1,Unconditioned MLP,55,ood_test_random_00003,0.27404270,0.43876800,0.51419950,0.59925610
+ood_test,B1,Unconditioned MLP,55,ood_test_random_00004,0.29969457,0.56588447,0.70078254,0.93267953
+validation,B2,Action-conditioned MLP,11,validation_guided_00000,0.00019019,0.00092394,0.00223563,0.00505543
+validation,B2,Action-conditioned MLP,11,validation_guided_00001,0.00015338,0.00052737,0.00120705,0.00329381
+validation,B2,Action-conditioned MLP,11,validation_guided_00002,0.00016832,0.00078503,0.00192138,0.00461047
+validation,B2,Action-conditioned MLP,11,validation_guided_00003,0.00014925,0.00078841,0.00200096,0.00570668
+validation,B2,Action-conditioned MLP,11,validation_guided_00004,0.00018212,0.00088114,0.00197177,0.00449077
+validation,B2,Action-conditioned MLP,11,validation_guided_00005,0.00014690,0.00055673,0.00140130,0.00404199
+validation,B2,Action-conditioned MLP,11,validation_guided_00006,0.00015842,0.00062694,0.00137975,0.00317693
+validation,B2,Action-conditioned MLP,11,validation_guided_00007,0.00015993,0.00060313,0.00121726,0.00258820
+validation,B2,Action-conditioned MLP,11,validation_guided_00008,0.00014778,0.00045016,0.00092161,0.00244266
+validation,B2,Action-conditioned MLP,11,validation_guided_00009,0.00019062,0.00082302,0.00197559,0.00507976
+validation,B2,Action-conditioned MLP,11,validation_mixture_00000,0.00699228,0.01373043,0.02357679,0.03954240
+validation,B2,Action-conditioned MLP,11,validation_mixture_00001,0.00316415,0.00694453,0.00986421,0.01547082
+validation,B2,Action-conditioned MLP,11,validation_mixture_00002,0.01179505,0.02191371,0.03030635,0.04972727
+validation,B2,Action-conditioned MLP,11,validation_mixture_00003,0.00658646,0.01363511,0.01896028,0.02503881
+validation,B2,Action-conditioned MLP,11,validation_mixture_00004,0.01698067,0.03004368,0.04254591,0.07076921
+validation,B2,Action-conditioned MLP,11,validation_mixture_00005,0.01639077,0.02481422,0.03297742,0.03877008
+validation,B2,Action-conditioned MLP,11,validation_mixture_00006,0.00761339,0.01238843,0.01790334,0.02744998
+validation,B2,Action-conditioned MLP,11,validation_mixture_00007,0.00616501,0.01411770,0.02152192,0.02729785
+validation,B2,Action-conditioned MLP,11,validation_mixture_00008,0.00675170,0.01038944,0.01836535,0.02936362
+validation,B2,Action-conditioned MLP,11,validation_mixture_00009,0.01126433,0.02206776,0.03254102,0.04948732
+validation,B2,Action-conditioned MLP,11,validation_random_00000,0.04075974,0.06672087,0.08539543,0.12096775
+validation,B2,Action-conditioned MLP,11,validation_random_00001,0.05650772,0.06846834,0.08900356,0.12903175
+validation,B2,Action-conditioned MLP,11,validation_random_00002,0.03982214,0.06298158,0.09095520,0.14160709
+validation,B2,Action-conditioned MLP,11,validation_random_00003,0.04289617,0.06573081,0.07182399,0.09245445
+validation,B2,Action-conditioned MLP,11,validation_random_00004,0.05057120,0.07978530,0.10166021,0.12890437
+validation,B2,Action-conditioned MLP,11,validation_random_00005,0.04064219,0.07850904,0.11506300,0.20088212
+validation,B2,Action-conditioned MLP,11,validation_random_00006,0.04859197,0.07929887,0.10701764,0.15716921
+validation,B2,Action-conditioned MLP,11,validation_random_00007,0.04432988,0.07699599,0.10666617,0.14531402
+validation,B2,Action-conditioned MLP,11,validation_random_00008,0.04796145,0.07550538,0.10304273,0.15215822
+validation,B2,Action-conditioned MLP,11,validation_random_00009,0.06085100,0.08520710,0.11639005,0.14759372
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_guided_00000,0.00017524,0.00069816,0.00162916,0.00433179
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_guided_00001,0.00013148,0.00052432,0.00109422,0.00244867
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_guided_00002,0.00017887,0.00094485,0.00248637,0.00724593
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_guided_00003,0.00014291,0.00070343,0.00179154,0.00467307
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_guided_00004,0.00018139,0.00070868,0.00165647,0.00439290
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_mixture_00000,0.00763368,0.01414711,0.01954968,0.03284887
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_mixture_00001,0.00832113,0.01189911,0.01487984,0.02077006
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_mixture_00002,0.01119464,0.01867793,0.02424569,0.03204032
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_mixture_00003,0.01164120,0.02261944,0.03213537,0.04453982
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_mixture_00004,0.01396850,0.02486070,0.03591694,0.05615071
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_random_00000,0.05642402,0.08213615,0.10160799,0.12697801
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_random_00001,0.04694044,0.06699678,0.07958067,0.10451623
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_random_00002,0.07577433,0.11170477,0.14431676,0.19553339
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_random_00003,0.05409682,0.08046991,0.10852040,0.13647328
+frozen_test,B2,Action-conditioned MLP,11,frozen_test_random_00004,0.04578444,0.07917807,0.10780161,0.15846068
+ood_test,B2,Action-conditioned MLP,11,ood_test_guided_00000,0.00012869,0.00066124,0.00173323,0.00512536
+ood_test,B2,Action-conditioned MLP,11,ood_test_guided_00001,0.00018268,0.00074674,0.00164551,0.00427673
+ood_test,B2,Action-conditioned MLP,11,ood_test_guided_00002,0.00013769,0.00064127,0.00150688,0.00333184
+ood_test,B2,Action-conditioned MLP,11,ood_test_guided_00003,0.00012956,0.00052523,0.00120103,0.00312979
+ood_test,B2,Action-conditioned MLP,11,ood_test_guided_00004,0.00021747,0.00081043,0.00179873,0.00422418
+ood_test,B2,Action-conditioned MLP,11,ood_test_mixture_00000,0.01006461,0.01826706,0.02654669,0.04415184
+ood_test,B2,Action-conditioned MLP,11,ood_test_mixture_00001,0.01703905,0.02738858,0.03408436,0.05434189
+ood_test,B2,Action-conditioned MLP,11,ood_test_mixture_00002,0.01523752,0.03148289,0.04550312,0.06076659
+ood_test,B2,Action-conditioned MLP,11,ood_test_mixture_00003,0.00511689,0.01106603,0.01564292,0.02620986
+ood_test,B2,Action-conditioned MLP,11,ood_test_mixture_00004,0.01673218,0.02303723,0.02811278,0.03686749
+ood_test,B2,Action-conditioned MLP,11,ood_test_random_00000,0.05853340,0.09189128,0.12502670,0.17485432
+ood_test,B2,Action-conditioned MLP,11,ood_test_random_00001,0.03866228,0.08043100,0.11957758,0.18143043
+ood_test,B2,Action-conditioned MLP,11,ood_test_random_00002,0.06248863,0.09212496,0.11906829,0.18348834
+ood_test,B2,Action-conditioned MLP,11,ood_test_random_00003,0.02869668,0.04873253,0.06151367,0.08469148
+ood_test,B2,Action-conditioned MLP,11,ood_test_random_00004,0.05237444,0.07951564,0.10409652,0.14697303
+validation,B2,Action-conditioned MLP,22,validation_guided_00000,0.00025670,0.00126049,0.00271930,0.00665995
+validation,B2,Action-conditioned MLP,22,validation_guided_00001,0.00024193,0.00117120,0.00245100,0.00497102
+validation,B2,Action-conditioned MLP,22,validation_guided_00002,0.00024752,0.00126815,0.00282036,0.00539916
+validation,B2,Action-conditioned MLP,22,validation_guided_00003,0.00023860,0.00127499,0.00282707,0.00588176
+validation,B2,Action-conditioned MLP,22,validation_guided_00004,0.00028763,0.00140477,0.00296962,0.00653148
+validation,B2,Action-conditioned MLP,22,validation_guided_00005,0.00026254,0.00141705,0.00305985,0.00598692
+validation,B2,Action-conditioned MLP,22,validation_guided_00006,0.00026416,0.00124414,0.00271643,0.00573036
+validation,B2,Action-conditioned MLP,22,validation_guided_00007,0.00024107,0.00117033,0.00254501,0.00551610
+validation,B2,Action-conditioned MLP,22,validation_guided_00008,0.00023087,0.00111259,0.00239317,0.00502649
+validation,B2,Action-conditioned MLP,22,validation_guided_00009,0.00028490,0.00148102,0.00328132,0.00674773
+validation,B2,Action-conditioned MLP,22,validation_mixture_00000,0.01037515,0.01942637,0.02951813,0.04658371
+validation,B2,Action-conditioned MLP,22,validation_mixture_00001,0.00396494,0.01012556,0.01667270,0.02725739
+validation,B2,Action-conditioned MLP,22,validation_mixture_00002,0.00990933,0.01629642,0.02285739,0.03963438
+validation,B2,Action-conditioned MLP,22,validation_mixture_00003,0.00451657,0.00987058,0.01647447,0.02967427
+validation,B2,Action-conditioned MLP,22,validation_mixture_00004,0.02005567,0.03325266,0.04275059,0.05759787
+validation,B2,Action-conditioned MLP,22,validation_mixture_00005,0.01927375,0.03475303,0.04968492,0.07779612
+validation,B2,Action-conditioned MLP,22,validation_mixture_00006,0.01234791,0.01939321,0.02723342,0.03929568
+validation,B2,Action-conditioned MLP,22,validation_mixture_00007,0.00675144,0.01328973,0.02073403,0.02964454
+validation,B2,Action-conditioned MLP,22,validation_mixture_00008,0.00853951,0.01002682,0.01641248,0.02816258
+validation,B2,Action-conditioned MLP,22,validation_mixture_00009,0.01212473,0.02127033,0.03169579,0.04956875
+validation,B2,Action-conditioned MLP,22,validation_random_00000,0.04065989,0.06465151,0.09353431,0.13778499
+validation,B2,Action-conditioned MLP,22,validation_random_00001,0.04307092,0.05995309,0.07801123,0.10718751
+validation,B2,Action-conditioned MLP,22,validation_random_00002,0.04055398,0.05945958,0.07670430,0.12351047
+validation,B2,Action-conditioned MLP,22,validation_random_00003,0.03259051,0.05252123,0.06585430,0.11348386
+validation,B2,Action-conditioned MLP,22,validation_random_00004,0.05588315,0.08370157,0.10294159,0.11717876
+validation,B2,Action-conditioned MLP,22,validation_random_00005,0.04435113,0.07494763,0.09776524,0.16575111
+validation,B2,Action-conditioned MLP,22,validation_random_00006,0.05682849,0.08851288,0.09786455,0.12490954
+validation,B2,Action-conditioned MLP,22,validation_random_00007,0.05553252,0.08283497,0.10442337,0.14058490
+validation,B2,Action-conditioned MLP,22,validation_random_00008,0.04871322,0.07590588,0.10737585,0.13914903
+validation,B2,Action-conditioned MLP,22,validation_random_00009,0.06561054,0.09576929,0.11288586,0.14294602
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_guided_00000,0.00022141,0.00101760,0.00202021,0.00363530
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_guided_00001,0.00028952,0.00160616,0.00329395,0.00679703
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_guided_00002,0.00020806,0.00117114,0.00276423,0.00615468
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_guided_00003,0.00025423,0.00126417,0.00274716,0.00619897
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_guided_00004,0.00023825,0.00112726,0.00240734,0.00450757
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_mixture_00000,0.00421671,0.00739935,0.01141296,0.02120330
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_mixture_00001,0.00979294,0.01577051,0.02301589,0.03454927
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_mixture_00002,0.01425618,0.02460717,0.03604115,0.05784476
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_mixture_00003,0.01328322,0.01921744,0.02700298,0.03660391
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_mixture_00004,0.00910846,0.02036257,0.02982479,0.04740501
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_random_00000,0.05389344,0.07456333,0.09212261,0.12830496
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_random_00001,0.04265163,0.06513153,0.08463812,0.10699574
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_random_00002,0.10090745,0.12047634,0.14151266,0.19120058
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_random_00003,0.07367819,0.10488554,0.12706311,0.18822168
+frozen_test,B2,Action-conditioned MLP,22,frozen_test_random_00004,0.04570283,0.07165033,0.10044213,0.14784138
+ood_test,B2,Action-conditioned MLP,22,ood_test_guided_00000,0.00022151,0.00131257,0.00309128,0.00727401
+ood_test,B2,Action-conditioned MLP,22,ood_test_guided_00001,0.00024838,0.00127719,0.00271674,0.00503969
+ood_test,B2,Action-conditioned MLP,22,ood_test_guided_00002,0.00021303,0.00120541,0.00283526,0.00695929
+ood_test,B2,Action-conditioned MLP,22,ood_test_guided_00003,0.00021524,0.00121812,0.00274238,0.00639747
+ood_test,B2,Action-conditioned MLP,22,ood_test_guided_00004,0.00028222,0.00135269,0.00277995,0.00499785
+ood_test,B2,Action-conditioned MLP,22,ood_test_mixture_00000,0.00582441,0.01318155,0.02091436,0.03420438
+ood_test,B2,Action-conditioned MLP,22,ood_test_mixture_00001,0.02490342,0.03977868,0.05605265,0.08168902
+ood_test,B2,Action-conditioned MLP,22,ood_test_mixture_00002,0.01678115,0.02861173,0.04405367,0.07212821
+ood_test,B2,Action-conditioned MLP,22,ood_test_mixture_00003,0.00393941,0.00892824,0.01475845,0.02761460
+ood_test,B2,Action-conditioned MLP,22,ood_test_mixture_00004,0.01184035,0.01944182,0.02656486,0.03949087
+ood_test,B2,Action-conditioned MLP,22,ood_test_random_00000,0.08152267,0.12299382,0.15814084,0.20552473
+ood_test,B2,Action-conditioned MLP,22,ood_test_random_00001,0.03720834,0.07752189,0.11234636,0.17553298
+ood_test,B2,Action-conditioned MLP,22,ood_test_random_00002,0.05630396,0.08171145,0.11432976,0.19446704
+ood_test,B2,Action-conditioned MLP,22,ood_test_random_00003,0.03146926,0.05473351,0.07109480,0.09784433
+ood_test,B2,Action-conditioned MLP,22,ood_test_random_00004,0.05951919,0.08400818,0.10837833,0.16708919
+validation,B2,Action-conditioned MLP,33,validation_guided_00000,0.00019550,0.00094315,0.00213629,0.00471367
+validation,B2,Action-conditioned MLP,33,validation_guided_00001,0.00028502,0.00175696,0.00480234,0.01377263
+validation,B2,Action-conditioned MLP,33,validation_guided_00002,0.00024028,0.00132391,0.00344642,0.00933283
+validation,B2,Action-conditioned MLP,33,validation_guided_00003,0.00029490,0.00183463,0.00468521,0.01230884
+validation,B2,Action-conditioned MLP,33,validation_guided_00004,0.00020368,0.00101749,0.00225582,0.00492629
+validation,B2,Action-conditioned MLP,33,validation_guided_00005,0.00028301,0.00187647,0.00512827,0.01414210
+validation,B2,Action-conditioned MLP,33,validation_guided_00006,0.00025308,0.00144506,0.00369315,0.00980257
+validation,B2,Action-conditioned MLP,33,validation_guided_00007,0.00028831,0.00174081,0.00422273,0.00912560
+validation,B2,Action-conditioned MLP,33,validation_guided_00008,0.00022359,0.00123761,0.00302602,0.00718393
+validation,B2,Action-conditioned MLP,33,validation_guided_00009,0.00019724,0.00096905,0.00223758,0.00479653
+validation,B2,Action-conditioned MLP,33,validation_mixture_00000,0.00909792,0.01722212,0.02481800,0.03678293
+validation,B2,Action-conditioned MLP,33,validation_mixture_00001,0.00289105,0.00794791,0.01372690,0.02304288
+validation,B2,Action-conditioned MLP,33,validation_mixture_00002,0.00989290,0.01475226,0.02142339,0.04078745
+validation,B2,Action-conditioned MLP,33,validation_mixture_00003,0.00600525,0.01087849,0.01743285,0.03061701
+validation,B2,Action-conditioned MLP,33,validation_mixture_00004,0.02127021,0.03460489,0.04326897,0.06228232
+validation,B2,Action-conditioned MLP,33,validation_mixture_00005,0.01837830,0.03215862,0.04732445,0.07319000
+validation,B2,Action-conditioned MLP,33,validation_mixture_00006,0.01142066,0.01925368,0.02851699,0.04800446
+validation,B2,Action-conditioned MLP,33,validation_mixture_00007,0.00900973,0.01493848,0.02040766,0.02624856
+validation,B2,Action-conditioned MLP,33,validation_mixture_00008,0.00701518,0.00961584,0.01699353,0.02963348
+validation,B2,Action-conditioned MLP,33,validation_mixture_00009,0.01219585,0.01734133,0.02393810,0.03238928
+validation,B2,Action-conditioned MLP,33,validation_random_00000,0.03344975,0.05879581,0.08531181,0.12129554
+validation,B2,Action-conditioned MLP,33,validation_random_00001,0.04164653,0.05741229,0.07216714,0.10725240
+validation,B2,Action-conditioned MLP,33,validation_random_00002,0.03593542,0.05730848,0.07627092,0.13581012
+validation,B2,Action-conditioned MLP,33,validation_random_00003,0.03732118,0.06964014,0.08984791,0.12966223
+validation,B2,Action-conditioned MLP,33,validation_random_00004,0.04578505,0.06755254,0.09593762,0.11918285
+validation,B2,Action-conditioned MLP,33,validation_random_00005,0.05120284,0.08140776,0.10684099,0.17342412
+validation,B2,Action-conditioned MLP,33,validation_random_00006,0.04545550,0.07448956,0.08863964,0.13033743
+validation,B2,Action-conditioned MLP,33,validation_random_00007,0.03422038,0.05386238,0.07971402,0.12535296
+validation,B2,Action-conditioned MLP,33,validation_random_00008,0.05796684,0.10249364,0.14343663,0.19324662
+validation,B2,Action-conditioned MLP,33,validation_random_00009,0.05136295,0.08059460,0.10306809,0.12445334
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_guided_00000,0.00025844,0.00152011,0.00386383,0.01082596
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_guided_00001,0.00024102,0.00159172,0.00402525,0.00931339
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_guided_00002,0.00029913,0.00211707,0.00567497,0.01568009
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_guided_00003,0.00017135,0.00089173,0.00215493,0.00477498
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_guided_00004,0.00025585,0.00133797,0.00332977,0.00821080
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_mixture_00000,0.00548858,0.01223231,0.01900874,0.02973615
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_mixture_00001,0.00992125,0.01702005,0.02446480,0.03976405
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_mixture_00002,0.03643101,0.04040691,0.04900535,0.06642110
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_mixture_00003,0.01083315,0.02295068,0.03508335,0.05115811
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_mixture_00004,0.01302574,0.02274589,0.03124355,0.04813797
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_random_00000,0.05232632,0.07498880,0.10106429,0.13063514
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_random_00001,0.05533995,0.08154207,0.10348091,0.13019098
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_random_00002,0.09908359,0.14310405,0.18498957,0.26620531
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_random_00003,0.06009645,0.08669923,0.10631700,0.14259177
+frozen_test,B2,Action-conditioned MLP,33,frozen_test_random_00004,0.05173684,0.07990921,0.10978657,0.15771921
+ood_test,B2,Action-conditioned MLP,33,ood_test_guided_00000,0.00032186,0.00211264,0.00538016,0.01543147
+ood_test,B2,Action-conditioned MLP,33,ood_test_guided_00001,0.00026217,0.00149723,0.00369465,0.00896405
+ood_test,B2,Action-conditioned MLP,33,ood_test_guided_00002,0.00018785,0.00100090,0.00250252,0.00677437
+ood_test,B2,Action-conditioned MLP,33,ood_test_guided_00003,0.00017742,0.00106595,0.00275253,0.00754073
+ood_test,B2,Action-conditioned MLP,33,ood_test_guided_00004,0.00026997,0.00132478,0.00313307,0.00718655
+ood_test,B2,Action-conditioned MLP,33,ood_test_mixture_00000,0.00727070,0.01553430,0.02783196,0.05376919
+ood_test,B2,Action-conditioned MLP,33,ood_test_mixture_00001,0.01918624,0.03395277,0.05165095,0.07622807
+ood_test,B2,Action-conditioned MLP,33,ood_test_mixture_00002,0.01434562,0.03085182,0.04863971,0.07005784
+ood_test,B2,Action-conditioned MLP,33,ood_test_mixture_00003,0.00517234,0.01002790,0.01424047,0.02254447
+ood_test,B2,Action-conditioned MLP,33,ood_test_mixture_00004,0.01184898,0.01875132,0.02864069,0.04288244
+ood_test,B2,Action-conditioned MLP,33,ood_test_random_00000,0.07988201,0.11801487,0.16476385,0.23080346
+ood_test,B2,Action-conditioned MLP,33,ood_test_random_00001,0.04881949,0.09182990,0.12552431,0.17121348
+ood_test,B2,Action-conditioned MLP,33,ood_test_random_00002,0.05825268,0.08815104,0.11929873,0.18290012
+ood_test,B2,Action-conditioned MLP,33,ood_test_random_00003,0.03392398,0.06231923,0.08338818,0.11339492
+ood_test,B2,Action-conditioned MLP,33,ood_test_random_00004,0.05060395,0.07642052,0.10402469,0.17550044
+validation,B2,Action-conditioned MLP,44,validation_guided_00000,0.00019007,0.00092624,0.00203001,0.00450828
+validation,B2,Action-conditioned MLP,44,validation_guided_00001,0.00019848,0.00097927,0.00215703,0.00446931
+validation,B2,Action-conditioned MLP,44,validation_guided_00002,0.00021323,0.00111005,0.00249741,0.00566092
+validation,B2,Action-conditioned MLP,44,validation_guided_00003,0.00030139,0.00131521,0.00306310,0.00710312
+validation,B2,Action-conditioned MLP,44,validation_guided_00004,0.00020371,0.00099031,0.00209863,0.00478315
+validation,B2,Action-conditioned MLP,44,validation_guided_00005,0.00018507,0.00093589,0.00227663,0.00593189
+validation,B2,Action-conditioned MLP,44,validation_guided_00006,0.00021873,0.00118937,0.00278133,0.00662315
+validation,B2,Action-conditioned MLP,44,validation_guided_00007,0.00019836,0.00112250,0.00256111,0.00609449
+validation,B2,Action-conditioned MLP,44,validation_guided_00008,0.00020184,0.00110998,0.00238794,0.00601744
+validation,B2,Action-conditioned MLP,44,validation_guided_00009,0.00019668,0.00092673,0.00200619,0.00463693
+validation,B2,Action-conditioned MLP,44,validation_mixture_00000,0.00987988,0.01846461,0.02495691,0.03529307
+validation,B2,Action-conditioned MLP,44,validation_mixture_00001,0.00396118,0.00782476,0.01406320,0.01942531
+validation,B2,Action-conditioned MLP,44,validation_mixture_00002,0.01022606,0.01487440,0.02148281,0.04647358
+validation,B2,Action-conditioned MLP,44,validation_mixture_00003,0.00477514,0.01165555,0.02080446,0.03984439
+validation,B2,Action-conditioned MLP,44,validation_mixture_00004,0.01723009,0.02879020,0.03776354,0.05806061
+validation,B2,Action-conditioned MLP,44,validation_mixture_00005,0.01353453,0.02871867,0.04323972,0.06573113
+validation,B2,Action-conditioned MLP,44,validation_mixture_00006,0.00927357,0.01538762,0.02210596,0.03102827
+validation,B2,Action-conditioned MLP,44,validation_mixture_00007,0.00811057,0.01540634,0.02426120,0.03026456
+validation,B2,Action-conditioned MLP,44,validation_mixture_00008,0.00699692,0.00720089,0.01074439,0.01706889
+validation,B2,Action-conditioned MLP,44,validation_mixture_00009,0.01175563,0.02084565,0.03189922,0.04833874
+validation,B2,Action-conditioned MLP,44,validation_random_00000,0.04239052,0.07158925,0.10403399,0.15396075
+validation,B2,Action-conditioned MLP,44,validation_random_00001,0.05311380,0.06290516,0.08668910,0.11990141
+validation,B2,Action-conditioned MLP,44,validation_random_00002,0.03533697,0.05954603,0.07816733,0.10635360
+validation,B2,Action-conditioned MLP,44,validation_random_00003,0.03169067,0.05672671,0.07051421,0.09475813
+validation,B2,Action-conditioned MLP,44,validation_random_00004,0.04596661,0.07713364,0.09872053,0.12984167
+validation,B2,Action-conditioned MLP,44,validation_random_00005,0.04595343,0.07013223,0.08684611,0.12881295
+validation,B2,Action-conditioned MLP,44,validation_random_00006,0.06173244,0.08361933,0.10610820,0.12493515
+validation,B2,Action-conditioned MLP,44,validation_random_00007,0.05082226,0.07239771,0.09445751,0.14190911
+validation,B2,Action-conditioned MLP,44,validation_random_00008,0.04812867,0.08146321,0.11362562,0.15859680
+validation,B2,Action-conditioned MLP,44,validation_random_00009,0.05771509,0.09300765,0.11610410,0.14944500
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_guided_00000,0.00020110,0.00093028,0.00213819,0.00538615
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_guided_00001,0.00018148,0.00099864,0.00234350,0.00608939
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_guided_00002,0.00029162,0.00154901,0.00362982,0.00843193
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_guided_00003,0.00019798,0.00105318,0.00234049,0.00526557
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_guided_00004,0.00020090,0.00110188,0.00257185,0.00628789
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_mixture_00000,0.00604226,0.01228398,0.01887633,0.03683137
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_mixture_00001,0.01055559,0.01474946,0.01877446,0.02565908
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_mixture_00002,0.01258529,0.01950228,0.02734131,0.04275272
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_mixture_00003,0.01185940,0.01942307,0.02728099,0.04499864
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_mixture_00004,0.01817266,0.02433643,0.03277172,0.04676276
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_random_00000,0.06905931,0.11082023,0.12729143,0.13788992
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_random_00001,0.04354052,0.05574599,0.06640893,0.09006801
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_random_00002,0.09162943,0.12989581,0.15778476,0.20180117
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_random_00003,0.06084933,0.09430046,0.12922247,0.18413176
+frozen_test,B2,Action-conditioned MLP,44,frozen_test_random_00004,0.05369844,0.09522892,0.12764826,0.17536718
+ood_test,B2,Action-conditioned MLP,44,ood_test_guided_00000,0.00035108,0.00154019,0.00358759,0.00907819
+ood_test,B2,Action-conditioned MLP,44,ood_test_guided_00001,0.00018303,0.00097923,0.00205064,0.00489517
+ood_test,B2,Action-conditioned MLP,44,ood_test_guided_00002,0.00020555,0.00124751,0.00282491,0.00626596
+ood_test,B2,Action-conditioned MLP,44,ood_test_guided_00003,0.00018932,0.00107454,0.00234706,0.00504908
+ood_test,B2,Action-conditioned MLP,44,ood_test_guided_00004,0.00019822,0.00092112,0.00189934,0.00423498
+ood_test,B2,Action-conditioned MLP,44,ood_test_mixture_00000,0.00734712,0.01452289,0.02276371,0.03938954
+ood_test,B2,Action-conditioned MLP,44,ood_test_mixture_00001,0.01562138,0.02868510,0.03807931,0.05783850
+ood_test,B2,Action-conditioned MLP,44,ood_test_mixture_00002,0.01546333,0.02221735,0.02888235,0.03715325
+ood_test,B2,Action-conditioned MLP,44,ood_test_mixture_00003,0.00401911,0.00963007,0.01539845,0.02728440
+ood_test,B2,Action-conditioned MLP,44,ood_test_mixture_00004,0.00995633,0.01477410,0.01712386,0.02539638
+ood_test,B2,Action-conditioned MLP,44,ood_test_random_00000,0.07264955,0.11670501,0.15596837,0.20769840
+ood_test,B2,Action-conditioned MLP,44,ood_test_random_00001,0.05243776,0.08769666,0.11956261,0.17615700
+ood_test,B2,Action-conditioned MLP,44,ood_test_random_00002,0.06849906,0.10692409,0.15937030,0.25257257
+ood_test,B2,Action-conditioned MLP,44,ood_test_random_00003,0.04290069,0.07740092,0.09585162,0.12221375
+ood_test,B2,Action-conditioned MLP,44,ood_test_random_00004,0.05403936,0.07488716,0.09533048,0.13284098
+validation,B2,Action-conditioned MLP,55,validation_guided_00000,0.00018670,0.00080386,0.00188025,0.00419249
+validation,B2,Action-conditioned MLP,55,validation_guided_00001,0.00016385,0.00071322,0.00158009,0.00348981
+validation,B2,Action-conditioned MLP,55,validation_guided_00002,0.00019606,0.00084047,0.00197847,0.00420780
+validation,B2,Action-conditioned MLP,55,validation_guided_00003,0.00016697,0.00066624,0.00127829,0.00281320
+validation,B2,Action-conditioned MLP,55,validation_guided_00004,0.00018236,0.00087617,0.00196463,0.00410543
+validation,B2,Action-conditioned MLP,55,validation_guided_00005,0.00018213,0.00080969,0.00163173,0.00340561
+validation,B2,Action-conditioned MLP,55,validation_guided_00006,0.00019109,0.00098046,0.00232318,0.00486573
+validation,B2,Action-conditioned MLP,55,validation_guided_00007,0.00019987,0.00093889,0.00223144,0.00605435
+validation,B2,Action-conditioned MLP,55,validation_guided_00008,0.00023278,0.00092261,0.00207685,0.00578628
+validation,B2,Action-conditioned MLP,55,validation_guided_00009,0.00019397,0.00086211,0.00194625,0.00448151
+validation,B2,Action-conditioned MLP,55,validation_mixture_00000,0.00704375,0.01124234,0.01622380,0.02206583
+validation,B2,Action-conditioned MLP,55,validation_mixture_00001,0.00171954,0.00429943,0.00677455,0.00861842
+validation,B2,Action-conditioned MLP,55,validation_mixture_00002,0.01178751,0.01667157,0.02162166,0.03787335
+validation,B2,Action-conditioned MLP,55,validation_mixture_00003,0.00632107,0.01372311,0.02289834,0.03006139
+validation,B2,Action-conditioned MLP,55,validation_mixture_00004,0.01922912,0.03561275,0.05056532,0.07773386
+validation,B2,Action-conditioned MLP,55,validation_mixture_00005,0.01721710,0.02648014,0.03327288,0.04877479
+validation,B2,Action-conditioned MLP,55,validation_mixture_00006,0.00953467,0.01331492,0.01811241,0.02825155
+validation,B2,Action-conditioned MLP,55,validation_mixture_00007,0.01009438,0.01900616,0.02590947,0.02865708
+validation,B2,Action-conditioned MLP,55,validation_mixture_00008,0.00750843,0.01019037,0.01645563,0.02729207
+validation,B2,Action-conditioned MLP,55,validation_mixture_00009,0.01698581,0.02311130,0.03316423,0.04851672
+validation,B2,Action-conditioned MLP,55,validation_random_00000,0.03705029,0.05774248,0.07845934,0.10088000
+validation,B2,Action-conditioned MLP,55,validation_random_00001,0.04296108,0.06269751,0.08222950,0.11161557
+validation,B2,Action-conditioned MLP,55,validation_random_00002,0.04826131,0.06807679,0.09322340,0.13471696
+validation,B2,Action-conditioned MLP,55,validation_random_00003,0.02927686,0.05470337,0.07967683,0.12779613
+validation,B2,Action-conditioned MLP,55,validation_random_00004,0.06437775,0.08989835,0.11392201,0.12159557
+validation,B2,Action-conditioned MLP,55,validation_random_00005,0.04024816,0.07315926,0.09789395,0.14857644
+validation,B2,Action-conditioned MLP,55,validation_random_00006,0.05872555,0.07538383,0.08335698,0.10073511
+validation,B2,Action-conditioned MLP,55,validation_random_00007,0.03955495,0.06548988,0.08787284,0.14308916
+validation,B2,Action-conditioned MLP,55,validation_random_00008,0.05215457,0.09068462,0.12587965,0.17597100
+validation,B2,Action-conditioned MLP,55,validation_random_00009,0.07205668,0.11145794,0.13647106,0.16220780
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_guided_00000,0.00016948,0.00063022,0.00128262,0.00230127
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_guided_00001,0.00016132,0.00078234,0.00176707,0.00403119
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_guided_00002,0.00015798,0.00073053,0.00152881,0.00344334
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_guided_00003,0.00017249,0.00091548,0.00214492,0.00481448
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_guided_00004,0.00022629,0.00113441,0.00274171,0.00636042
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_mixture_00000,0.00507013,0.01036697,0.01473438,0.02289982
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_mixture_00001,0.01342807,0.01578623,0.02031510,0.02913874
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_mixture_00002,0.01757215,0.02216395,0.02768015,0.03870066
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_mixture_00003,0.01002903,0.02107532,0.03488618,0.05911812
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_mixture_00004,0.01088843,0.01984567,0.02758809,0.04532319
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_random_00000,0.06372652,0.09606532,0.11963736,0.15167296
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_random_00001,0.04253288,0.05789271,0.07376836,0.10569625
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_random_00002,0.07625052,0.10668864,0.13924815,0.18272966
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_random_00003,0.05876955,0.07858104,0.10332666,0.14675012
+frozen_test,B2,Action-conditioned MLP,55,frozen_test_random_00004,0.05507671,0.08139861,0.10056049,0.13703874
+ood_test,B2,Action-conditioned MLP,55,ood_test_guided_00000,0.00015325,0.00073455,0.00148026,0.00326758
+ood_test,B2,Action-conditioned MLP,55,ood_test_guided_00001,0.00023380,0.00119665,0.00287176,0.00691183
+ood_test,B2,Action-conditioned MLP,55,ood_test_guided_00002,0.00016449,0.00086712,0.00201795,0.00463069
+ood_test,B2,Action-conditioned MLP,55,ood_test_guided_00003,0.00016246,0.00087964,0.00197944,0.00424222
+ood_test,B2,Action-conditioned MLP,55,ood_test_guided_00004,0.00026858,0.00125854,0.00295757,0.00754175
+ood_test,B2,Action-conditioned MLP,55,ood_test_mixture_00000,0.00575602,0.01007378,0.01447471,0.02060400
+ood_test,B2,Action-conditioned MLP,55,ood_test_mixture_00001,0.02454378,0.02831115,0.03255145,0.04178876
+ood_test,B2,Action-conditioned MLP,55,ood_test_mixture_00002,0.01211293,0.02077732,0.02930360,0.03959494
+ood_test,B2,Action-conditioned MLP,55,ood_test_mixture_00003,0.01810237,0.02244914,0.02791304,0.03656092
+ood_test,B2,Action-conditioned MLP,55,ood_test_mixture_00004,0.01398774,0.01682705,0.02285267,0.03517634
+ood_test,B2,Action-conditioned MLP,55,ood_test_random_00000,0.06828937,0.11281075,0.14987899,0.18353538
+ood_test,B2,Action-conditioned MLP,55,ood_test_random_00001,0.04389005,0.08134370,0.11357638,0.15046073
+ood_test,B2,Action-conditioned MLP,55,ood_test_random_00002,0.07008323,0.10165582,0.14629698,0.21932039
+ood_test,B2,Action-conditioned MLP,55,ood_test_random_00003,0.03441251,0.05760701,0.08154538,0.12150311
+ood_test,B2,Action-conditioned MLP,55,ood_test_random_00004,0.04892890,0.06987578,0.08995076,0.12760828
+validation,B3,Linear / Ridge,11,validation_guided_00000,0.00108196,0.00437526,0.00605370,0.00738569
+validation,B3,Linear / Ridge,11,validation_guided_00001,0.00082610,0.00323094,0.00434912,0.00519865
+validation,B3,Linear / Ridge,11,validation_guided_00002,0.00065579,0.00258447,0.00369041,0.00475435
+validation,B3,Linear / Ridge,11,validation_guided_00003,0.00081128,0.00325806,0.00438831,0.00496879
+validation,B3,Linear / Ridge,11,validation_guided_00004,0.00101684,0.00411861,0.00582250,0.00757448
+validation,B3,Linear / Ridge,11,validation_guided_00005,0.00090566,0.00371743,0.00505397,0.00585096
+validation,B3,Linear / Ridge,11,validation_guided_00006,0.00077569,0.00311014,0.00437876,0.00556341
+validation,B3,Linear / Ridge,11,validation_guided_00007,0.00070085,0.00283263,0.00399591,0.00498819
+validation,B3,Linear / Ridge,11,validation_guided_00008,0.00069238,0.00269962,0.00371757,0.00470315
+validation,B3,Linear / Ridge,11,validation_guided_00009,0.00118776,0.00486188,0.00673785,0.00833326
+validation,B3,Linear / Ridge,11,validation_mixture_00000,0.01800550,0.04235633,0.06004497,0.07789379
+validation,B3,Linear / Ridge,11,validation_mixture_00001,0.00796051,0.01904699,0.02621686,0.03068498
+validation,B3,Linear / Ridge,11,validation_mixture_00002,0.03389534,0.05907318,0.07744560,0.09522976
+validation,B3,Linear / Ridge,11,validation_mixture_00003,0.00990400,0.02601376,0.03766743,0.04857891
+validation,B3,Linear / Ridge,11,validation_mixture_00004,0.03245641,0.06200408,0.07787829,0.09446589
+validation,B3,Linear / Ridge,11,validation_mixture_00005,0.02095182,0.04955278,0.06754403,0.08502937
+validation,B3,Linear / Ridge,11,validation_mixture_00006,0.01819141,0.04297909,0.06107789,0.08118121
+validation,B3,Linear / Ridge,11,validation_mixture_00007,0.01326240,0.03024966,0.04008838,0.04868863
+validation,B3,Linear / Ridge,11,validation_mixture_00008,0.01308945,0.02160495,0.03128136,0.04050950
+validation,B3,Linear / Ridge,11,validation_mixture_00009,0.02754096,0.05666785,0.07359883,0.08798657
+validation,B3,Linear / Ridge,11,validation_random_00000,0.09839019,0.18818080,0.22497341,0.25396848
+validation,B3,Linear / Ridge,11,validation_random_00001,0.08779749,0.15997797,0.19078347,0.21048464
+validation,B3,Linear / Ridge,11,validation_random_00002,0.08814699,0.16316378,0.20531408,0.25174832
+validation,B3,Linear / Ridge,11,validation_random_00003,0.10232976,0.16559538,0.18381749,0.19356862
+validation,B3,Linear / Ridge,11,validation_random_00004,0.10436933,0.20330530,0.23658721,0.24288531
+validation,B3,Linear / Ridge,11,validation_random_00005,0.08559909,0.18117078,0.22850604,0.28273538
+validation,B3,Linear / Ridge,11,validation_random_00006,0.11423226,0.18603136,0.18694970,0.20490593
+validation,B3,Linear / Ridge,11,validation_random_00007,0.07593073,0.16739710,0.22291800,0.27759334
+validation,B3,Linear / Ridge,11,validation_random_00008,0.09157403,0.17382210,0.21343601,0.25830314
+validation,B3,Linear / Ridge,11,validation_random_00009,0.13202068,0.24434491,0.28336567,0.30569446
+frozen_test,B3,Linear / Ridge,11,frozen_test_guided_00000,0.00097758,0.00394606,0.00541612,0.00646487
+frozen_test,B3,Linear / Ridge,11,frozen_test_guided_00001,0.00112493,0.00454275,0.00605610,0.00706691
+frozen_test,B3,Linear / Ridge,11,frozen_test_guided_00002,0.00090917,0.00372346,0.00507767,0.00594976
+frozen_test,B3,Linear / Ridge,11,frozen_test_guided_00003,0.00128497,0.00517268,0.00690429,0.00804464
+frozen_test,B3,Linear / Ridge,11,frozen_test_guided_00004,0.00125818,0.00504457,0.00665404,0.00713881
+frozen_test,B3,Linear / Ridge,11,frozen_test_mixture_00000,0.01664877,0.04505533,0.06671625,0.08677377
+frozen_test,B3,Linear / Ridge,11,frozen_test_mixture_00001,0.01524485,0.03742380,0.05258448,0.06577810
+frozen_test,B3,Linear / Ridge,11,frozen_test_mixture_00002,0.01994830,0.04123873,0.05778523,0.07418937
+frozen_test,B3,Linear / Ridge,11,frozen_test_mixture_00003,0.02506573,0.06140922,0.08515521,0.10409522
+frozen_test,B3,Linear / Ridge,11,frozen_test_mixture_00004,0.02896401,0.06425761,0.08409208,0.10992352
+frozen_test,B3,Linear / Ridge,11,frozen_test_random_00000,0.11352386,0.25124577,0.33667985,0.39502397
+frozen_test,B3,Linear / Ridge,11,frozen_test_random_00001,0.09325954,0.17187224,0.21257818,0.26462594
+frozen_test,B3,Linear / Ridge,11,frozen_test_random_00002,0.15337490,0.25237194,0.28230646,0.31322840
+frozen_test,B3,Linear / Ridge,11,frozen_test_random_00003,0.12180538,0.22443570,0.26853827,0.29340616
+frozen_test,B3,Linear / Ridge,11,frozen_test_random_00004,0.10463960,0.18692201,0.23110823,0.25521600
+ood_test,B3,Linear / Ridge,11,ood_test_guided_00000,0.00077963,0.00322456,0.00437692,0.00518018
+ood_test,B3,Linear / Ridge,11,ood_test_guided_00001,0.00125079,0.00510131,0.00676605,0.00759029
+ood_test,B3,Linear / Ridge,11,ood_test_guided_00002,0.00063331,0.00267304,0.00391850,0.00534069
+ood_test,B3,Linear / Ridge,11,ood_test_guided_00003,0.00061211,0.00263274,0.00393137,0.00553993
+ood_test,B3,Linear / Ridge,11,ood_test_guided_00004,0.00104955,0.00422814,0.00591849,0.00725803
+ood_test,B3,Linear / Ridge,11,ood_test_mixture_00000,0.01691522,0.03647475,0.04900479,0.06095022
+ood_test,B3,Linear / Ridge,11,ood_test_mixture_00001,0.03678700,0.07616820,0.09712881,0.12219516
+ood_test,B3,Linear / Ridge,11,ood_test_mixture_00002,0.03230424,0.07306700,0.09900005,0.12196819
+ood_test,B3,Linear / Ridge,11,ood_test_mixture_00003,0.01647088,0.03741887,0.05237725,0.07055487
+ood_test,B3,Linear / Ridge,11,ood_test_mixture_00004,0.01920250,0.03940186,0.05055435,0.06329399
+ood_test,B3,Linear / Ridge,11,ood_test_random_00000,0.10802770,0.21965861,0.26357228,0.30081102
+ood_test,B3,Linear / Ridge,11,ood_test_random_00001,0.10607038,0.21828781,0.26928002,0.29633436
+ood_test,B3,Linear / Ridge,11,ood_test_random_00002,0.18133311,0.29558179,0.34024030,0.39918715
+ood_test,B3,Linear / Ridge,11,ood_test_random_00003,0.08206010,0.15629466,0.19383761,0.24159111
+ood_test,B3,Linear / Ridge,11,ood_test_random_00004,0.11427838,0.22069375,0.26354855,0.32932919
+validation,B3,Linear / Ridge,22,validation_guided_00000,0.00108196,0.00437526,0.00605370,0.00738569
+validation,B3,Linear / Ridge,22,validation_guided_00001,0.00082610,0.00323094,0.00434912,0.00519865
+validation,B3,Linear / Ridge,22,validation_guided_00002,0.00065579,0.00258447,0.00369041,0.00475435
+validation,B3,Linear / Ridge,22,validation_guided_00003,0.00081128,0.00325806,0.00438831,0.00496879
+validation,B3,Linear / Ridge,22,validation_guided_00004,0.00101684,0.00411861,0.00582250,0.00757448
+validation,B3,Linear / Ridge,22,validation_guided_00005,0.00090566,0.00371743,0.00505397,0.00585096
+validation,B3,Linear / Ridge,22,validation_guided_00006,0.00077569,0.00311014,0.00437876,0.00556341
+validation,B3,Linear / Ridge,22,validation_guided_00007,0.00070085,0.00283263,0.00399591,0.00498819
+validation,B3,Linear / Ridge,22,validation_guided_00008,0.00069238,0.00269962,0.00371757,0.00470315
+validation,B3,Linear / Ridge,22,validation_guided_00009,0.00118776,0.00486188,0.00673785,0.00833326
+validation,B3,Linear / Ridge,22,validation_mixture_00000,0.01800550,0.04235633,0.06004497,0.07789379
+validation,B3,Linear / Ridge,22,validation_mixture_00001,0.00796051,0.01904699,0.02621686,0.03068498
+validation,B3,Linear / Ridge,22,validation_mixture_00002,0.03389534,0.05907318,0.07744560,0.09522976
+validation,B3,Linear / Ridge,22,validation_mixture_00003,0.00990400,0.02601376,0.03766743,0.04857891
+validation,B3,Linear / Ridge,22,validation_mixture_00004,0.03245641,0.06200408,0.07787829,0.09446589
+validation,B3,Linear / Ridge,22,validation_mixture_00005,0.02095182,0.04955278,0.06754403,0.08502937
+validation,B3,Linear / Ridge,22,validation_mixture_00006,0.01819141,0.04297909,0.06107789,0.08118121
+validation,B3,Linear / Ridge,22,validation_mixture_00007,0.01326240,0.03024966,0.04008838,0.04868863
+validation,B3,Linear / Ridge,22,validation_mixture_00008,0.01308945,0.02160495,0.03128136,0.04050950
+validation,B3,Linear / Ridge,22,validation_mixture_00009,0.02754096,0.05666785,0.07359883,0.08798657
+validation,B3,Linear / Ridge,22,validation_random_00000,0.09839019,0.18818080,0.22497341,0.25396848
+validation,B3,Linear / Ridge,22,validation_random_00001,0.08779749,0.15997797,0.19078347,0.21048464
+validation,B3,Linear / Ridge,22,validation_random_00002,0.08814699,0.16316378,0.20531408,0.25174832
+validation,B3,Linear / Ridge,22,validation_random_00003,0.10232976,0.16559538,0.18381749,0.19356862
+validation,B3,Linear / Ridge,22,validation_random_00004,0.10436933,0.20330530,0.23658721,0.24288531
+validation,B3,Linear / Ridge,22,validation_random_00005,0.08559909,0.18117078,0.22850604,0.28273538
+validation,B3,Linear / Ridge,22,validation_random_00006,0.11423226,0.18603136,0.18694970,0.20490593
+validation,B3,Linear / Ridge,22,validation_random_00007,0.07593073,0.16739710,0.22291800,0.27759334
+validation,B3,Linear / Ridge,22,validation_random_00008,0.09157403,0.17382210,0.21343601,0.25830314
+validation,B3,Linear / Ridge,22,validation_random_00009,0.13202068,0.24434491,0.28336567,0.30569446
+frozen_test,B3,Linear / Ridge,22,frozen_test_guided_00000,0.00097758,0.00394606,0.00541612,0.00646487
+frozen_test,B3,Linear / Ridge,22,frozen_test_guided_00001,0.00112493,0.00454275,0.00605610,0.00706691
+frozen_test,B3,Linear / Ridge,22,frozen_test_guided_00002,0.00090917,0.00372346,0.00507767,0.00594976
+frozen_test,B3,Linear / Ridge,22,frozen_test_guided_00003,0.00128497,0.00517268,0.00690429,0.00804464
+frozen_test,B3,Linear / Ridge,22,frozen_test_guided_00004,0.00125818,0.00504457,0.00665404,0.00713881
+frozen_test,B3,Linear / Ridge,22,frozen_test_mixture_00000,0.01664877,0.04505533,0.06671625,0.08677377
+frozen_test,B3,Linear / Ridge,22,frozen_test_mixture_00001,0.01524485,0.03742380,0.05258448,0.06577810
+frozen_test,B3,Linear / Ridge,22,frozen_test_mixture_00002,0.01994830,0.04123873,0.05778523,0.07418937
+frozen_test,B3,Linear / Ridge,22,frozen_test_mixture_00003,0.02506573,0.06140922,0.08515521,0.10409522
+frozen_test,B3,Linear / Ridge,22,frozen_test_mixture_00004,0.02896401,0.06425761,0.08409208,0.10992352
+frozen_test,B3,Linear / Ridge,22,frozen_test_random_00000,0.11352386,0.25124577,0.33667985,0.39502397
+frozen_test,B3,Linear / Ridge,22,frozen_test_random_00001,0.09325954,0.17187224,0.21257818,0.26462594
+frozen_test,B3,Linear / Ridge,22,frozen_test_random_00002,0.15337490,0.25237194,0.28230646,0.31322840
+frozen_test,B3,Linear / Ridge,22,frozen_test_random_00003,0.12180538,0.22443570,0.26853827,0.29340616
+frozen_test,B3,Linear / Ridge,22,frozen_test_random_00004,0.10463960,0.18692201,0.23110823,0.25521600
+ood_test,B3,Linear / Ridge,22,ood_test_guided_00000,0.00077963,0.00322456,0.00437692,0.00518018
+ood_test,B3,Linear / Ridge,22,ood_test_guided_00001,0.00125079,0.00510131,0.00676605,0.00759029
+ood_test,B3,Linear / Ridge,22,ood_test_guided_00002,0.00063331,0.00267304,0.00391850,0.00534069
+ood_test,B3,Linear / Ridge,22,ood_test_guided_00003,0.00061211,0.00263274,0.00393137,0.00553993
+ood_test,B3,Linear / Ridge,22,ood_test_guided_00004,0.00104955,0.00422814,0.00591849,0.00725803
+ood_test,B3,Linear / Ridge,22,ood_test_mixture_00000,0.01691522,0.03647475,0.04900479,0.06095022
+ood_test,B3,Linear / Ridge,22,ood_test_mixture_00001,0.03678700,0.07616820,0.09712881,0.12219516
+ood_test,B3,Linear / Ridge,22,ood_test_mixture_00002,0.03230424,0.07306700,0.09900005,0.12196819
+ood_test,B3,Linear / Ridge,22,ood_test_mixture_00003,0.01647088,0.03741887,0.05237725,0.07055487
+ood_test,B3,Linear / Ridge,22,ood_test_mixture_00004,0.01920250,0.03940186,0.05055435,0.06329399
+ood_test,B3,Linear / Ridge,22,ood_test_random_00000,0.10802770,0.21965861,0.26357228,0.30081102
+ood_test,B3,Linear / Ridge,22,ood_test_random_00001,0.10607038,0.21828781,0.26928002,0.29633436
+ood_test,B3,Linear / Ridge,22,ood_test_random_00002,0.18133311,0.29558179,0.34024030,0.39918715
+ood_test,B3,Linear / Ridge,22,ood_test_random_00003,0.08206010,0.15629466,0.19383761,0.24159111
+ood_test,B3,Linear / Ridge,22,ood_test_random_00004,0.11427838,0.22069375,0.26354855,0.32932919
+validation,B3,Linear / Ridge,33,validation_guided_00000,0.00108196,0.00437526,0.00605370,0.00738569
+validation,B3,Linear / Ridge,33,validation_guided_00001,0.00082610,0.00323094,0.00434912,0.00519865
+validation,B3,Linear / Ridge,33,validation_guided_00002,0.00065579,0.00258447,0.00369041,0.00475435
+validation,B3,Linear / Ridge,33,validation_guided_00003,0.00081128,0.00325806,0.00438831,0.00496879
+validation,B3,Linear / Ridge,33,validation_guided_00004,0.00101684,0.00411861,0.00582250,0.00757448
+validation,B3,Linear / Ridge,33,validation_guided_00005,0.00090566,0.00371743,0.00505397,0.00585096
+validation,B3,Linear / Ridge,33,validation_guided_00006,0.00077569,0.00311014,0.00437876,0.00556341
+validation,B3,Linear / Ridge,33,validation_guided_00007,0.00070085,0.00283263,0.00399591,0.00498819
+validation,B3,Linear / Ridge,33,validation_guided_00008,0.00069238,0.00269962,0.00371757,0.00470315
+validation,B3,Linear / Ridge,33,validation_guided_00009,0.00118776,0.00486188,0.00673785,0.00833326
+validation,B3,Linear / Ridge,33,validation_mixture_00000,0.01800550,0.04235633,0.06004497,0.07789379
+validation,B3,Linear / Ridge,33,validation_mixture_00001,0.00796051,0.01904699,0.02621686,0.03068498
+validation,B3,Linear / Ridge,33,validation_mixture_00002,0.03389534,0.05907318,0.07744560,0.09522976
+validation,B3,Linear / Ridge,33,validation_mixture_00003,0.00990400,0.02601376,0.03766743,0.04857891
+validation,B3,Linear / Ridge,33,validation_mixture_00004,0.03245641,0.06200408,0.07787829,0.09446589
+validation,B3,Linear / Ridge,33,validation_mixture_00005,0.02095182,0.04955278,0.06754403,0.08502937
+validation,B3,Linear / Ridge,33,validation_mixture_00006,0.01819141,0.04297909,0.06107789,0.08118121
+validation,B3,Linear / Ridge,33,validation_mixture_00007,0.01326240,0.03024966,0.04008838,0.04868863
+validation,B3,Linear / Ridge,33,validation_mixture_00008,0.01308945,0.02160495,0.03128136,0.04050950
+validation,B3,Linear / Ridge,33,validation_mixture_00009,0.02754096,0.05666785,0.07359883,0.08798657
+validation,B3,Linear / Ridge,33,validation_random_00000,0.09839019,0.18818080,0.22497341,0.25396848
+validation,B3,Linear / Ridge,33,validation_random_00001,0.08779749,0.15997797,0.19078347,0.21048464
+validation,B3,Linear / Ridge,33,validation_random_00002,0.08814699,0.16316378,0.20531408,0.25174832
+validation,B3,Linear / Ridge,33,validation_random_00003,0.10232976,0.16559538,0.18381749,0.19356862
+validation,B3,Linear / Ridge,33,validation_random_00004,0.10436933,0.20330530,0.23658721,0.24288531
+validation,B3,Linear / Ridge,33,validation_random_00005,0.08559909,0.18117078,0.22850604,0.28273538
+validation,B3,Linear / Ridge,33,validation_random_00006,0.11423226,0.18603136,0.18694970,0.20490593
+validation,B3,Linear / Ridge,33,validation_random_00007,0.07593073,0.16739710,0.22291800,0.27759334
+validation,B3,Linear / Ridge,33,validation_random_00008,0.09157403,0.17382210,0.21343601,0.25830314
+validation,B3,Linear / Ridge,33,validation_random_00009,0.13202068,0.24434491,0.28336567,0.30569446
+frozen_test,B3,Linear / Ridge,33,frozen_test_guided_00000,0.00097758,0.00394606,0.00541612,0.00646487
+frozen_test,B3,Linear / Ridge,33,frozen_test_guided_00001,0.00112493,0.00454275,0.00605610,0.00706691
+frozen_test,B3,Linear / Ridge,33,frozen_test_guided_00002,0.00090917,0.00372346,0.00507767,0.00594976
+frozen_test,B3,Linear / Ridge,33,frozen_test_guided_00003,0.00128497,0.00517268,0.00690429,0.00804464
+frozen_test,B3,Linear / Ridge,33,frozen_test_guided_00004,0.00125818,0.00504457,0.00665404,0.00713881
+frozen_test,B3,Linear / Ridge,33,frozen_test_mixture_00000,0.01664877,0.04505533,0.06671625,0.08677377
+frozen_test,B3,Linear / Ridge,33,frozen_test_mixture_00001,0.01524485,0.03742380,0.05258448,0.06577810
+frozen_test,B3,Linear / Ridge,33,frozen_test_mixture_00002,0.01994830,0.04123873,0.05778523,0.07418937
+frozen_test,B3,Linear / Ridge,33,frozen_test_mixture_00003,0.02506573,0.06140922,0.08515521,0.10409522
+frozen_test,B3,Linear / Ridge,33,frozen_test_mixture_00004,0.02896401,0.06425761,0.08409208,0.10992352
+frozen_test,B3,Linear / Ridge,33,frozen_test_random_00000,0.11352386,0.25124577,0.33667985,0.39502397
+frozen_test,B3,Linear / Ridge,33,frozen_test_random_00001,0.09325954,0.17187224,0.21257818,0.26462594
+frozen_test,B3,Linear / Ridge,33,frozen_test_random_00002,0.15337490,0.25237194,0.28230646,0.31322840
+frozen_test,B3,Linear / Ridge,33,frozen_test_random_00003,0.12180538,0.22443570,0.26853827,0.29340616
+frozen_test,B3,Linear / Ridge,33,frozen_test_random_00004,0.10463960,0.18692201,0.23110823,0.25521600
+ood_test,B3,Linear / Ridge,33,ood_test_guided_00000,0.00077963,0.00322456,0.00437692,0.00518018
+ood_test,B3,Linear / Ridge,33,ood_test_guided_00001,0.00125079,0.00510131,0.00676605,0.00759029
+ood_test,B3,Linear / Ridge,33,ood_test_guided_00002,0.00063331,0.00267304,0.00391850,0.00534069
+ood_test,B3,Linear / Ridge,33,ood_test_guided_00003,0.00061211,0.00263274,0.00393137,0.00553993
+ood_test,B3,Linear / Ridge,33,ood_test_guided_00004,0.00104955,0.00422814,0.00591849,0.00725803
+ood_test,B3,Linear / Ridge,33,ood_test_mixture_00000,0.01691522,0.03647475,0.04900479,0.06095022
+ood_test,B3,Linear / Ridge,33,ood_test_mixture_00001,0.03678700,0.07616820,0.09712881,0.12219516
+ood_test,B3,Linear / Ridge,33,ood_test_mixture_00002,0.03230424,0.07306700,0.09900005,0.12196819
+ood_test,B3,Linear / Ridge,33,ood_test_mixture_00003,0.01647088,0.03741887,0.05237725,0.07055487
+ood_test,B3,Linear / Ridge,33,ood_test_mixture_00004,0.01920250,0.03940186,0.05055435,0.06329399
+ood_test,B3,Linear / Ridge,33,ood_test_random_00000,0.10802770,0.21965861,0.26357228,0.30081102
+ood_test,B3,Linear / Ridge,33,ood_test_random_00001,0.10607038,0.21828781,0.26928002,0.29633436
+ood_test,B3,Linear / Ridge,33,ood_test_random_00002,0.18133311,0.29558179,0.34024030,0.39918715
+ood_test,B3,Linear / Ridge,33,ood_test_random_00003,0.08206010,0.15629466,0.19383761,0.24159111
+ood_test,B3,Linear / Ridge,33,ood_test_random_00004,0.11427838,0.22069375,0.26354855,0.32932919
+validation,B3,Linear / Ridge,44,validation_guided_00000,0.00108196,0.00437526,0.00605370,0.00738569
+validation,B3,Linear / Ridge,44,validation_guided_00001,0.00082610,0.00323094,0.00434912,0.00519865
+validation,B3,Linear / Ridge,44,validation_guided_00002,0.00065579,0.00258447,0.00369041,0.00475435
+validation,B3,Linear / Ridge,44,validation_guided_00003,0.00081128,0.00325806,0.00438831,0.00496879
+validation,B3,Linear / Ridge,44,validation_guided_00004,0.00101684,0.00411861,0.00582250,0.00757448
+validation,B3,Linear / Ridge,44,validation_guided_00005,0.00090566,0.00371743,0.00505397,0.00585096
+validation,B3,Linear / Ridge,44,validation_guided_00006,0.00077569,0.00311014,0.00437876,0.00556341
+validation,B3,Linear / Ridge,44,validation_guided_00007,0.00070085,0.00283263,0.00399591,0.00498819
+validation,B3,Linear / Ridge,44,validation_guided_00008,0.00069238,0.00269962,0.00371757,0.00470315
+validation,B3,Linear / Ridge,44,validation_guided_00009,0.00118776,0.00486188,0.00673785,0.00833326
+validation,B3,Linear / Ridge,44,validation_mixture_00000,0.01800550,0.04235633,0.06004497,0.07789379
+validation,B3,Linear / Ridge,44,validation_mixture_00001,0.00796051,0.01904699,0.02621686,0.03068498
+validation,B3,Linear / Ridge,44,validation_mixture_00002,0.03389534,0.05907318,0.07744560,0.09522976
+validation,B3,Linear / Ridge,44,validation_mixture_00003,0.00990400,0.02601376,0.03766743,0.04857891
+validation,B3,Linear / Ridge,44,validation_mixture_00004,0.03245641,0.06200408,0.07787829,0.09446589
+validation,B3,Linear / Ridge,44,validation_mixture_00005,0.02095182,0.04955278,0.06754403,0.08502937
+validation,B3,Linear / Ridge,44,validation_mixture_00006,0.01819141,0.04297909,0.06107789,0.08118121
+validation,B3,Linear / Ridge,44,validation_mixture_00007,0.01326240,0.03024966,0.04008838,0.04868863
+validation,B3,Linear / Ridge,44,validation_mixture_00008,0.01308945,0.02160495,0.03128136,0.04050950
+validation,B3,Linear / Ridge,44,validation_mixture_00009,0.02754096,0.05666785,0.07359883,0.08798657
+validation,B3,Linear / Ridge,44,validation_random_00000,0.09839019,0.18818080,0.22497341,0.25396848
+validation,B3,Linear / Ridge,44,validation_random_00001,0.08779749,0.15997797,0.19078347,0.21048464
+validation,B3,Linear / Ridge,44,validation_random_00002,0.08814699,0.16316378,0.20531408,0.25174832
+validation,B3,Linear / Ridge,44,validation_random_00003,0.10232976,0.16559538,0.18381749,0.19356862
+validation,B3,Linear / Ridge,44,validation_random_00004,0.10436933,0.20330530,0.23658721,0.24288531
+validation,B3,Linear / Ridge,44,validation_random_00005,0.08559909,0.18117078,0.22850604,0.28273538
+validation,B3,Linear / Ridge,44,validation_random_00006,0.11423226,0.18603136,0.18694970,0.20490593
+validation,B3,Linear / Ridge,44,validation_random_00007,0.07593073,0.16739710,0.22291800,0.27759334
+validation,B3,Linear / Ridge,44,validation_random_00008,0.09157403,0.17382210,0.21343601,0.25830314
+validation,B3,Linear / Ridge,44,validation_random_00009,0.13202068,0.24434491,0.28336567,0.30569446
+frozen_test,B3,Linear / Ridge,44,frozen_test_guided_00000,0.00097758,0.00394606,0.00541612,0.00646487
+frozen_test,B3,Linear / Ridge,44,frozen_test_guided_00001,0.00112493,0.00454275,0.00605610,0.00706691
+frozen_test,B3,Linear / Ridge,44,frozen_test_guided_00002,0.00090917,0.00372346,0.00507767,0.00594976
+frozen_test,B3,Linear / Ridge,44,frozen_test_guided_00003,0.00128497,0.00517268,0.00690429,0.00804464
+frozen_test,B3,Linear / Ridge,44,frozen_test_guided_00004,0.00125818,0.00504457,0.00665404,0.00713881
+frozen_test,B3,Linear / Ridge,44,frozen_test_mixture_00000,0.01664877,0.04505533,0.06671625,0.08677377
+frozen_test,B3,Linear / Ridge,44,frozen_test_mixture_00001,0.01524485,0.03742380,0.05258448,0.06577810
+frozen_test,B3,Linear / Ridge,44,frozen_test_mixture_00002,0.01994830,0.04123873,0.05778523,0.07418937
+frozen_test,B3,Linear / Ridge,44,frozen_test_mixture_00003,0.02506573,0.06140922,0.08515521,0.10409522
+frozen_test,B3,Linear / Ridge,44,frozen_test_mixture_00004,0.02896401,0.06425761,0.08409208,0.10992352
+frozen_test,B3,Linear / Ridge,44,frozen_test_random_00000,0.11352386,0.25124577,0.33667985,0.39502397
+frozen_test,B3,Linear / Ridge,44,frozen_test_random_00001,0.09325954,0.17187224,0.21257818,0.26462594
+frozen_test,B3,Linear / Ridge,44,frozen_test_random_00002,0.15337490,0.25237194,0.28230646,0.31322840
+frozen_test,B3,Linear / Ridge,44,frozen_test_random_00003,0.12180538,0.22443570,0.26853827,0.29340616
+frozen_test,B3,Linear / Ridge,44,frozen_test_random_00004,0.10463960,0.18692201,0.23110823,0.25521600
+ood_test,B3,Linear / Ridge,44,ood_test_guided_00000,0.00077963,0.00322456,0.00437692,0.00518018
+ood_test,B3,Linear / Ridge,44,ood_test_guided_00001,0.00125079,0.00510131,0.00676605,0.00759029
+ood_test,B3,Linear / Ridge,44,ood_test_guided_00002,0.00063331,0.00267304,0.00391850,0.00534069
+ood_test,B3,Linear / Ridge,44,ood_test_guided_00003,0.00061211,0.00263274,0.00393137,0.00553993
+ood_test,B3,Linear / Ridge,44,ood_test_guided_00004,0.00104955,0.00422814,0.00591849,0.00725803
+ood_test,B3,Linear / Ridge,44,ood_test_mixture_00000,0.01691522,0.03647475,0.04900479,0.06095022
+ood_test,B3,Linear / Ridge,44,ood_test_mixture_00001,0.03678700,0.07616820,0.09712881,0.12219516
+ood_test,B3,Linear / Ridge,44,ood_test_mixture_00002,0.03230424,0.07306700,0.09900005,0.12196819
+ood_test,B3,Linear / Ridge,44,ood_test_mixture_00003,0.01647088,0.03741887,0.05237725,0.07055487
+ood_test,B3,Linear / Ridge,44,ood_test_mixture_00004,0.01920250,0.03940186,0.05055435,0.06329399
+ood_test,B3,Linear / Ridge,44,ood_test_random_00000,0.10802770,0.21965861,0.26357228,0.30081102
+ood_test,B3,Linear / Ridge,44,ood_test_random_00001,0.10607038,0.21828781,0.26928002,0.29633436
+ood_test,B3,Linear / Ridge,44,ood_test_random_00002,0.18133311,0.29558179,0.34024030,0.39918715
+ood_test,B3,Linear / Ridge,44,ood_test_random_00003,0.08206010,0.15629466,0.19383761,0.24159111
+ood_test,B3,Linear / Ridge,44,ood_test_random_00004,0.11427838,0.22069375,0.26354855,0.32932919
+validation,B3,Linear / Ridge,55,validation_guided_00000,0.00108196,0.00437526,0.00605370,0.00738569
+validation,B3,Linear / Ridge,55,validation_guided_00001,0.00082610,0.00323094,0.00434912,0.00519865
+validation,B3,Linear / Ridge,55,validation_guided_00002,0.00065579,0.00258447,0.00369041,0.00475435
+validation,B3,Linear / Ridge,55,validation_guided_00003,0.00081128,0.00325806,0.00438831,0.00496879
+validation,B3,Linear / Ridge,55,validation_guided_00004,0.00101684,0.00411861,0.00582250,0.00757448
+validation,B3,Linear / Ridge,55,validation_guided_00005,0.00090566,0.00371743,0.00505397,0.00585096
+validation,B3,Linear / Ridge,55,validation_guided_00006,0.00077569,0.00311014,0.00437876,0.00556341
+validation,B3,Linear / Ridge,55,validation_guided_00007,0.00070085,0.00283263,0.00399591,0.00498819
+validation,B3,Linear / Ridge,55,validation_guided_00008,0.00069238,0.00269962,0.00371757,0.00470315
+validation,B3,Linear / Ridge,55,validation_guided_00009,0.00118776,0.00486188,0.00673785,0.00833326
+validation,B3,Linear / Ridge,55,validation_mixture_00000,0.01800550,0.04235633,0.06004497,0.07789379
+validation,B3,Linear / Ridge,55,validation_mixture_00001,0.00796051,0.01904699,0.02621686,0.03068498
+validation,B3,Linear / Ridge,55,validation_mixture_00002,0.03389534,0.05907318,0.07744560,0.09522976
+validation,B3,Linear / Ridge,55,validation_mixture_00003,0.00990400,0.02601376,0.03766743,0.04857891
+validation,B3,Linear / Ridge,55,validation_mixture_00004,0.03245641,0.06200408,0.07787829,0.09446589
+validation,B3,Linear / Ridge,55,validation_mixture_00005,0.02095182,0.04955278,0.06754403,0.08502937
+validation,B3,Linear / Ridge,55,validation_mixture_00006,0.01819141,0.04297909,0.06107789,0.08118121
+validation,B3,Linear / Ridge,55,validation_mixture_00007,0.01326240,0.03024966,0.04008838,0.04868863
+validation,B3,Linear / Ridge,55,validation_mixture_00008,0.01308945,0.02160495,0.03128136,0.04050950
+validation,B3,Linear / Ridge,55,validation_mixture_00009,0.02754096,0.05666785,0.07359883,0.08798657
+validation,B3,Linear / Ridge,55,validation_random_00000,0.09839019,0.18818080,0.22497341,0.25396848
+validation,B3,Linear / Ridge,55,validation_random_00001,0.08779749,0.15997797,0.19078347,0.21048464
+validation,B3,Linear / Ridge,55,validation_random_00002,0.08814699,0.16316378,0.20531408,0.25174832
+validation,B3,Linear / Ridge,55,validation_random_00003,0.10232976,0.16559538,0.18381749,0.19356862
+validation,B3,Linear / Ridge,55,validation_random_00004,0.10436933,0.20330530,0.23658721,0.24288531
+validation,B3,Linear / Ridge,55,validation_random_00005,0.08559909,0.18117078,0.22850604,0.28273538
+validation,B3,Linear / Ridge,55,validation_random_00006,0.11423226,0.18603136,0.18694970,0.20490593
+validation,B3,Linear / Ridge,55,validation_random_00007,0.07593073,0.16739710,0.22291800,0.27759334
+validation,B3,Linear / Ridge,55,validation_random_00008,0.09157403,0.17382210,0.21343601,0.25830314
+validation,B3,Linear / Ridge,55,validation_random_00009,0.13202068,0.24434491,0.28336567,0.30569446
+frozen_test,B3,Linear / Ridge,55,frozen_test_guided_00000,0.00097758,0.00394606,0.00541612,0.00646487
+frozen_test,B3,Linear / Ridge,55,frozen_test_guided_00001,0.00112493,0.00454275,0.00605610,0.00706691
+frozen_test,B3,Linear / Ridge,55,frozen_test_guided_00002,0.00090917,0.00372346,0.00507767,0.00594976
+frozen_test,B3,Linear / Ridge,55,frozen_test_guided_00003,0.00128497,0.00517268,0.00690429,0.00804464
+frozen_test,B3,Linear / Ridge,55,frozen_test_guided_00004,0.00125818,0.00504457,0.00665404,0.00713881
+frozen_test,B3,Linear / Ridge,55,frozen_test_mixture_00000,0.01664877,0.04505533,0.06671625,0.08677377
+frozen_test,B3,Linear / Ridge,55,frozen_test_mixture_00001,0.01524485,0.03742380,0.05258448,0.06577810
+frozen_test,B3,Linear / Ridge,55,frozen_test_mixture_00002,0.01994830,0.04123873,0.05778523,0.07418937
+frozen_test,B3,Linear / Ridge,55,frozen_test_mixture_00003,0.02506573,0.06140922,0.08515521,0.10409522
+frozen_test,B3,Linear / Ridge,55,frozen_test_mixture_00004,0.02896401,0.06425761,0.08409208,0.10992352
+frozen_test,B3,Linear / Ridge,55,frozen_test_random_00000,0.11352386,0.25124577,0.33667985,0.39502397
+frozen_test,B3,Linear / Ridge,55,frozen_test_random_00001,0.09325954,0.17187224,0.21257818,0.26462594
+frozen_test,B3,Linear / Ridge,55,frozen_test_random_00002,0.15337490,0.25237194,0.28230646,0.31322840
+frozen_test,B3,Linear / Ridge,55,frozen_test_random_00003,0.12180538,0.22443570,0.26853827,0.29340616
+frozen_test,B3,Linear / Ridge,55,frozen_test_random_00004,0.10463960,0.18692201,0.23110823,0.25521600
+ood_test,B3,Linear / Ridge,55,ood_test_guided_00000,0.00077963,0.00322456,0.00437692,0.00518018
+ood_test,B3,Linear / Ridge,55,ood_test_guided_00001,0.00125079,0.00510131,0.00676605,0.00759029
+ood_test,B3,Linear / Ridge,55,ood_test_guided_00002,0.00063331,0.00267304,0.00391850,0.00534069
+ood_test,B3,Linear / Ridge,55,ood_test_guided_00003,0.00061211,0.00263274,0.00393137,0.00553993
+ood_test,B3,Linear / Ridge,55,ood_test_guided_00004,0.00104955,0.00422814,0.00591849,0.00725803
+ood_test,B3,Linear / Ridge,55,ood_test_mixture_00000,0.01691522,0.03647475,0.04900479,0.06095022
+ood_test,B3,Linear / Ridge,55,ood_test_mixture_00001,0.03678700,0.07616820,0.09712881,0.12219516
+ood_test,B3,Linear / Ridge,55,ood_test_mixture_00002,0.03230424,0.07306700,0.09900005,0.12196819
+ood_test,B3,Linear / Ridge,55,ood_test_mixture_00003,0.01647088,0.03741887,0.05237725,0.07055487
+ood_test,B3,Linear / Ridge,55,ood_test_mixture_00004,0.01920250,0.03940186,0.05055435,0.06329399
+ood_test,B3,Linear / Ridge,55,ood_test_random_00000,0.10802770,0.21965861,0.26357228,0.30081102
+ood_test,B3,Linear / Ridge,55,ood_test_random_00001,0.10607038,0.21828781,0.26928002,0.29633436
+ood_test,B3,Linear / Ridge,55,ood_test_random_00002,0.18133311,0.29558179,0.34024030,0.39918715
+ood_test,B3,Linear / Ridge,55,ood_test_random_00003,0.08206010,0.15629466,0.19383761,0.24159111
+ood_test,B3,Linear / Ridge,55,ood_test_random_00004,0.11427838,0.22069375,0.26354855,0.32932919
+validation,B4,Shuffled-action control,11,validation_guided_00000,0.00147064,0.00373552,0.00574865,0.00873751
+validation,B4,Shuffled-action control,11,validation_guided_00001,0.00143499,0.00278248,0.00392551,0.00561138
+validation,B4,Shuffled-action control,11,validation_guided_00002,0.00143723,0.00291075,0.00427603,0.00677448
+validation,B4,Shuffled-action control,11,validation_guided_00003,0.00146515,0.00291284,0.00389315,0.00574406
+validation,B4,Shuffled-action control,11,validation_guided_00004,0.00175840,0.00478263,0.00770913,0.01219441
+validation,B4,Shuffled-action control,11,validation_guided_00005,0.00126645,0.00205788,0.00254645,0.00339296
+validation,B4,Shuffled-action control,11,validation_guided_00006,0.00146920,0.00305762,0.00450499,0.00712314
+validation,B4,Shuffled-action control,11,validation_guided_00007,0.00134166,0.00305558,0.00469687,0.00776840
+validation,B4,Shuffled-action control,11,validation_guided_00008,0.00123182,0.00271799,0.00416401,0.00650643
+validation,B4,Shuffled-action control,11,validation_guided_00009,0.00156191,0.00355760,0.00549139,0.00878773
+validation,B4,Shuffled-action control,11,validation_mixture_00000,0.12406350,0.17601438,0.19395788,0.21214511
+validation,B4,Shuffled-action control,11,validation_mixture_00001,0.14537007,0.17968708,0.18769491,0.20105600
+validation,B4,Shuffled-action control,11,validation_mixture_00002,0.21244064,0.30925795,0.33957154,0.36427569
+validation,B4,Shuffled-action control,11,validation_mixture_00003,0.14317933,0.21038930,0.23807146,0.26717237
+validation,B4,Shuffled-action control,11,validation_mixture_00004,0.13810271,0.21815377,0.24698849,0.28075093
+validation,B4,Shuffled-action control,11,validation_mixture_00005,0.17093924,0.26056251,0.29299635,0.32216269
+validation,B4,Shuffled-action control,11,validation_mixture_00006,0.15659399,0.22309323,0.23833986,0.26183674
+validation,B4,Shuffled-action control,11,validation_mixture_00007,0.12086111,0.17128110,0.19445740,0.20952110
+validation,B4,Shuffled-action control,11,validation_mixture_00008,0.13211335,0.18086146,0.20293483,0.23232111
+validation,B4,Shuffled-action control,11,validation_mixture_00009,0.19687100,0.26570529,0.28724194,0.30627841
+validation,B4,Shuffled-action control,11,validation_random_00000,0.29654351,0.58920079,0.77388537,0.95793188
+validation,B4,Shuffled-action control,11,validation_random_00001,0.33476242,0.67991036,0.86555129,1.00471795
+validation,B4,Shuffled-action control,11,validation_random_00002,0.32319289,0.57728297,0.70861018,0.85913575
+validation,B4,Shuffled-action control,11,validation_random_00003,0.29247609,0.54593688,0.65828133,0.74360526
+validation,B4,Shuffled-action control,11,validation_random_00004,0.32286322,0.60916787,0.76564795,0.82772166
+validation,B4,Shuffled-action control,11,validation_random_00005,0.32701701,0.65410084,0.82334220,0.99637413
+validation,B4,Shuffled-action control,11,validation_random_00006,0.32718018,0.62035352,0.74707407,0.80490339
+validation,B4,Shuffled-action control,11,validation_random_00007,0.30548671,0.58678031,0.78419781,0.97994995
+validation,B4,Shuffled-action control,11,validation_random_00008,0.30281144,0.54623103,0.68394208,0.83531493
+validation,B4,Shuffled-action control,11,validation_random_00009,0.32734397,0.58866388,0.71907008,0.87051362
+frozen_test,B4,Shuffled-action control,11,frozen_test_guided_00000,0.00131036,0.00220973,0.00285343,0.00365983
+frozen_test,B4,Shuffled-action control,11,frozen_test_guided_00001,0.00137482,0.00303302,0.00465115,0.00690629
+frozen_test,B4,Shuffled-action control,11,frozen_test_guided_00002,0.00145736,0.00283251,0.00383526,0.00592131
+frozen_test,B4,Shuffled-action control,11,frozen_test_guided_00003,0.00150518,0.00334510,0.00514804,0.00815825
+frozen_test,B4,Shuffled-action control,11,frozen_test_guided_00004,0.00138957,0.00314414,0.00466767,0.00780130
+frozen_test,B4,Shuffled-action control,11,frozen_test_mixture_00000,0.18078464,0.25347489,0.27654716,0.31428251
+frozen_test,B4,Shuffled-action control,11,frozen_test_mixture_00001,0.15789896,0.23394530,0.26340291,0.27248123
+frozen_test,B4,Shuffled-action control,11,frozen_test_mixture_00002,0.18097195,0.26824674,0.29810780,0.32918525
+frozen_test,B4,Shuffled-action control,11,frozen_test_mixture_00003,0.17591742,0.26952374,0.30833313,0.35126722
+frozen_test,B4,Shuffled-action control,11,frozen_test_mixture_00004,0.17068039,0.23586154,0.25192767,0.25833660
+frozen_test,B4,Shuffled-action control,11,frozen_test_random_00000,0.34104306,0.65271932,0.82648343,1.02951443
+frozen_test,B4,Shuffled-action control,11,frozen_test_random_00001,0.26422027,0.47182980,0.58263928,0.67970508
+frozen_test,B4,Shuffled-action control,11,frozen_test_random_00002,0.32402802,0.63066494,0.80184299,1.01537669
+frozen_test,B4,Shuffled-action control,11,frozen_test_random_00003,0.29987577,0.57704800,0.72801089,0.81504476
+frozen_test,B4,Shuffled-action control,11,frozen_test_random_00004,0.30989739,0.66504234,0.81201559,0.97687757
+ood_test,B4,Shuffled-action control,11,ood_test_guided_00000,0.00144906,0.00310190,0.00438079,0.00666986
+ood_test,B4,Shuffled-action control,11,ood_test_guided_00001,0.00140774,0.00317321,0.00488821,0.00840496
+ood_test,B4,Shuffled-action control,11,ood_test_guided_00002,0.00143336,0.00299646,0.00460652,0.00726139
+ood_test,B4,Shuffled-action control,11,ood_test_guided_00003,0.00141165,0.00286442,0.00432547,0.00664302
+ood_test,B4,Shuffled-action control,11,ood_test_guided_00004,0.00151644,0.00373721,0.00559740,0.00897580
+ood_test,B4,Shuffled-action control,11,ood_test_mixture_00000,0.14836064,0.19565324,0.20912048,0.23510665
+ood_test,B4,Shuffled-action control,11,ood_test_mixture_00001,0.17422312,0.25320682,0.28951076,0.33437875
+ood_test,B4,Shuffled-action control,11,ood_test_mixture_00002,0.18578300,0.31090331,0.36670887,0.41140845
+ood_test,B4,Shuffled-action control,11,ood_test_mixture_00003,0.14617988,0.20513837,0.22262412,0.25299865
+ood_test,B4,Shuffled-action control,11,ood_test_mixture_00004,0.17717241,0.25105312,0.27762070,0.27749407
+ood_test,B4,Shuffled-action control,11,ood_test_random_00000,0.33764350,0.68378454,0.85203576,0.98090249
+ood_test,B4,Shuffled-action control,11,ood_test_random_00001,0.32275659,0.65030724,0.83068949,0.99460590
+ood_test,B4,Shuffled-action control,11,ood_test_random_00002,0.33799171,0.65985346,0.89041823,1.12177455
+ood_test,B4,Shuffled-action control,11,ood_test_random_00003,0.27748689,0.44483817,0.52571821,0.61801827
+ood_test,B4,Shuffled-action control,11,ood_test_random_00004,0.30900997,0.58638686,0.72549868,0.94833523
+validation,B4,Shuffled-action control,22,validation_guided_00000,0.00130453,0.00364075,0.00631927,0.01059539
+validation,B4,Shuffled-action control,22,validation_guided_00001,0.00122491,0.00300335,0.00558881,0.00997369
+validation,B4,Shuffled-action control,22,validation_guided_00002,0.00142064,0.00376538,0.00660288,0.01146634
+validation,B4,Shuffled-action control,22,validation_guided_00003,0.00153509,0.00478358,0.00813207,0.01186454
+validation,B4,Shuffled-action control,22,validation_guided_00004,0.00143784,0.00357455,0.00615795,0.01119547
+validation,B4,Shuffled-action control,22,validation_guided_00005,0.00118252,0.00338540,0.00602906,0.00950782
+validation,B4,Shuffled-action control,22,validation_guided_00006,0.00130872,0.00331955,0.00591653,0.01063953
+validation,B4,Shuffled-action control,22,validation_guided_00007,0.00158831,0.00415887,0.00677644,0.01138163
+validation,B4,Shuffled-action control,22,validation_guided_00008,0.00151379,0.00409833,0.00702212,0.01220538
+validation,B4,Shuffled-action control,22,validation_guided_00009,0.00161374,0.00455346,0.00810082,0.01383760
+validation,B4,Shuffled-action control,22,validation_mixture_00000,0.12091282,0.16473474,0.18143973,0.19819738
+validation,B4,Shuffled-action control,22,validation_mixture_00001,0.13706444,0.17997782,0.19634637,0.22031516
+validation,B4,Shuffled-action control,22,validation_mixture_00002,0.21631627,0.32236436,0.35883045,0.39050052
+validation,B4,Shuffled-action control,22,validation_mixture_00003,0.14909968,0.22739631,0.26268497,0.30516958
+validation,B4,Shuffled-action control,22,validation_mixture_00004,0.13739081,0.21724118,0.25190455,0.30318210
+validation,B4,Shuffled-action control,22,validation_mixture_00005,0.16182663,0.23961128,0.26406714,0.29028708
+validation,B4,Shuffled-action control,22,validation_mixture_00006,0.15603772,0.22840576,0.24911501,0.29259992
+validation,B4,Shuffled-action control,22,validation_mixture_00007,0.12169967,0.17508614,0.20570545,0.23799425
+validation,B4,Shuffled-action control,22,validation_mixture_00008,0.13759461,0.20081966,0.23092033,0.26972318
+validation,B4,Shuffled-action control,22,validation_mixture_00009,0.19667205,0.28062668,0.31151056,0.33333969
+validation,B4,Shuffled-action control,22,validation_random_00000,0.31426254,0.62222356,0.80318004,0.96846670
+validation,B4,Shuffled-action control,22,validation_random_00001,0.32126287,0.66240197,0.82389998,0.99930829
+validation,B4,Shuffled-action control,22,validation_random_00002,0.32600364,0.57825184,0.70857483,0.83066595
+validation,B4,Shuffled-action control,22,validation_random_00003,0.28777781,0.55817944,0.67200822,0.77795923
+validation,B4,Shuffled-action control,22,validation_random_00004,0.33230278,0.64441800,0.80985343,0.87225485
+validation,B4,Shuffled-action control,22,validation_random_00005,0.32160553,0.62400705,0.79057783,0.97519672
+validation,B4,Shuffled-action control,22,validation_random_00006,0.31611297,0.58974349,0.72444588,0.80107164
+validation,B4,Shuffled-action control,22,validation_random_00007,0.31102237,0.59120417,0.78339714,0.96624708
+validation,B4,Shuffled-action control,22,validation_random_00008,0.30402547,0.56618482,0.70529914,0.84571159
+validation,B4,Shuffled-action control,22,validation_random_00009,0.32080513,0.59082073,0.74089259,0.88027161
+frozen_test,B4,Shuffled-action control,22,frozen_test_guided_00000,0.00133484,0.00381052,0.00683918,0.01076044
+frozen_test,B4,Shuffled-action control,22,frozen_test_guided_00001,0.00115078,0.00314959,0.00615403,0.01131293
+frozen_test,B4,Shuffled-action control,22,frozen_test_guided_00002,0.00164675,0.00538248,0.00911842,0.01348711
+frozen_test,B4,Shuffled-action control,22,frozen_test_guided_00003,0.00152160,0.00416744,0.00714841,0.01176846
+frozen_test,B4,Shuffled-action control,22,frozen_test_guided_00004,0.00149914,0.00422864,0.00677311,0.01066823
+frozen_test,B4,Shuffled-action control,22,frozen_test_mixture_00000,0.18235266,0.24581063,0.26166311,0.29847088
+frozen_test,B4,Shuffled-action control,22,frozen_test_mixture_00001,0.16142435,0.23142500,0.25906491,0.27229083
+frozen_test,B4,Shuffled-action control,22,frozen_test_mixture_00002,0.17674460,0.26258406,0.30642831,0.35649237
+frozen_test,B4,Shuffled-action control,22,frozen_test_mixture_00003,0.17281446,0.25035641,0.27791116,0.30981290
+frozen_test,B4,Shuffled-action control,22,frozen_test_mixture_00004,0.16573504,0.22839117,0.24491884,0.24990776
+frozen_test,B4,Shuffled-action control,22,frozen_test_random_00000,0.33609119,0.64611095,0.83121300,1.04640365
+frozen_test,B4,Shuffled-action control,22,frozen_test_random_00001,0.26215592,0.47899732,0.60942155,0.73297960
+frozen_test,B4,Shuffled-action control,22,frozen_test_random_00002,0.32860944,0.67158014,0.87991869,1.13836849
+frozen_test,B4,Shuffled-action control,22,frozen_test_random_00003,0.30615339,0.60136837,0.77207291,0.84271550
+frozen_test,B4,Shuffled-action control,22,frozen_test_random_00004,0.31477892,0.68244123,0.85566241,1.00696731
+ood_test,B4,Shuffled-action control,22,ood_test_guided_00000,0.00164137,0.00553678,0.00954896,0.01432182
+ood_test,B4,Shuffled-action control,22,ood_test_guided_00001,0.00153916,0.00430235,0.00732697,0.01173871
+ood_test,B4,Shuffled-action control,22,ood_test_guided_00002,0.00124269,0.00298995,0.00534970,0.00960108
+ood_test,B4,Shuffled-action control,22,ood_test_guided_00003,0.00125149,0.00313258,0.00601958,0.01140895
+ood_test,B4,Shuffled-action control,22,ood_test_guided_00004,0.00158622,0.00463989,0.00781896,0.01291598
+ood_test,B4,Shuffled-action control,22,ood_test_mixture_00000,0.15393053,0.19929849,0.21551855,0.24545543
+ood_test,B4,Shuffled-action control,22,ood_test_mixture_00001,0.16799402,0.24078359,0.27201578,0.31861618
+ood_test,B4,Shuffled-action control,22,ood_test_mixture_00002,0.18069786,0.28841975,0.32588860,0.36523241
+ood_test,B4,Shuffled-action control,22,ood_test_mixture_00003,0.14469697,0.21027476,0.23523407,0.27512032
+ood_test,B4,Shuffled-action control,22,ood_test_mixture_00004,0.17683631,0.23921068,0.25651684,0.26012170
+ood_test,B4,Shuffled-action control,22,ood_test_random_00000,0.33811116,0.67795926,0.85888219,1.02488518
+ood_test,B4,Shuffled-action control,22,ood_test_random_00001,0.32660767,0.63898933,0.83169001,0.98713636
+ood_test,B4,Shuffled-action control,22,ood_test_random_00002,0.33168891,0.61093783,0.79675341,0.97469318
+ood_test,B4,Shuffled-action control,22,ood_test_random_00003,0.27596864,0.44636181,0.53120214,0.64350367
+ood_test,B4,Shuffled-action control,22,ood_test_random_00004,0.31321305,0.57522458,0.72142053,0.94350827
+validation,B4,Shuffled-action control,33,validation_guided_00000,0.00160285,0.00421622,0.00724836,0.01405088
+validation,B4,Shuffled-action control,33,validation_guided_00001,0.00139273,0.00290051,0.00493501,0.00949026
+validation,B4,Shuffled-action control,33,validation_guided_00002,0.00152206,0.00331123,0.00557769,0.01228833
+validation,B4,Shuffled-action control,33,validation_guided_00003,0.00110756,0.00199963,0.00299801,0.00644528
+validation,B4,Shuffled-action control,33,validation_guided_00004,0.00221788,0.00673738,0.01181360,0.02144363
+validation,B4,Shuffled-action control,33,validation_guided_00005,0.00118586,0.00212198,0.00363157,0.00834677
+validation,B4,Shuffled-action control,33,validation_guided_00006,0.00144278,0.00329121,0.00587364,0.01281783
+validation,B4,Shuffled-action control,33,validation_guided_00007,0.00194106,0.00533864,0.00854902,0.01341603
+validation,B4,Shuffled-action control,33,validation_guided_00008,0.00170042,0.00437717,0.00706973,0.01080356
+validation,B4,Shuffled-action control,33,validation_guided_00009,0.00209734,0.00621975,0.01062946,0.01901473
+validation,B4,Shuffled-action control,33,validation_mixture_00000,0.12686795,0.18288107,0.20676686,0.23400928
+validation,B4,Shuffled-action control,33,validation_mixture_00001,0.14124367,0.17673326,0.19022834,0.20843117
+validation,B4,Shuffled-action control,33,validation_mixture_00002,0.21274929,0.32218692,0.35603401,0.39208439
+validation,B4,Shuffled-action control,33,validation_mixture_00003,0.14961909,0.22019701,0.24720150,0.27974001
+validation,B4,Shuffled-action control,33,validation_mixture_00004,0.14292547,0.22270553,0.25150925,0.28921795
+validation,B4,Shuffled-action control,33,validation_mixture_00005,0.17395613,0.25417033,0.27662081,0.30232701
+validation,B4,Shuffled-action control,33,validation_mixture_00006,0.15487993,0.22299437,0.23973922,0.26516816
+validation,B4,Shuffled-action control,33,validation_mixture_00007,0.12341298,0.17044753,0.19488491,0.22559126
+validation,B4,Shuffled-action control,33,validation_mixture_00008,0.13596059,0.19165589,0.21605955,0.24482466
+validation,B4,Shuffled-action control,33,validation_mixture_00009,0.19680509,0.27155924,0.29896873,0.32697728
+validation,B4,Shuffled-action control,33,validation_random_00000,0.30777752,0.60249269,0.77447957,0.94264352
+validation,B4,Shuffled-action control,33,validation_random_00001,0.34034252,0.68356085,0.84357744,1.00922358
+validation,B4,Shuffled-action control,33,validation_random_00002,0.32326594,0.56438977,0.69887507,0.83802944
+validation,B4,Shuffled-action control,33,validation_random_00003,0.29589242,0.57991630,0.67402047,0.75559026
+validation,B4,Shuffled-action control,33,validation_random_00004,0.33186120,0.63740849,0.78670293,0.84234554
+validation,B4,Shuffled-action control,33,validation_random_00005,0.32119536,0.60920608,0.77525192,0.96572131
+validation,B4,Shuffled-action control,33,validation_random_00006,0.32616532,0.60769445,0.73217714,0.81470728
+validation,B4,Shuffled-action control,33,validation_random_00007,0.32176211,0.64208752,0.84811127,1.04004419
+validation,B4,Shuffled-action control,33,validation_random_00008,0.30825496,0.55501401,0.69756991,0.84586823
+validation,B4,Shuffled-action control,33,validation_random_00009,0.33641088,0.60446620,0.74559605,0.89771104
+frozen_test,B4,Shuffled-action control,33,frozen_test_guided_00000,0.00150701,0.00305751,0.00501711,0.00944375
+frozen_test,B4,Shuffled-action control,33,frozen_test_guided_00001,0.00135262,0.00275139,0.00463283,0.00893665
+frozen_test,B4,Shuffled-action control,33,frozen_test_guided_00002,0.00114713,0.00201324,0.00276329,0.00508152
+frozen_test,B4,Shuffled-action control,33,frozen_test_guided_00003,0.00173273,0.00444542,0.00788289,0.01566456
+frozen_test,B4,Shuffled-action control,33,frozen_test_guided_00004,0.00168224,0.00454138,0.00740478,0.01274797
+frozen_test,B4,Shuffled-action control,33,frozen_test_mixture_00000,0.18916012,0.25248960,0.27297786,0.30715650
+frozen_test,B4,Shuffled-action control,33,frozen_test_mixture_00001,0.16128322,0.23865719,0.26564094,0.27598968
+frozen_test,B4,Shuffled-action control,33,frozen_test_mixture_00002,0.18755482,0.29350278,0.33789566,0.38113281
+frozen_test,B4,Shuffled-action control,33,frozen_test_mixture_00003,0.16514930,0.23921619,0.26420033,0.29769158
+frozen_test,B4,Shuffled-action control,33,frozen_test_mixture_00004,0.17381018,0.24409784,0.27009657,0.28500926
+frozen_test,B4,Shuffled-action control,33,frozen_test_random_00000,0.33324572,0.61200267,0.76353645,0.95953786
+frozen_test,B4,Shuffled-action control,33,frozen_test_random_00001,0.26578832,0.44559050,0.53253859,0.61475462
+frozen_test,B4,Shuffled-action control,33,frozen_test_random_00002,0.32306167,0.64699173,0.82843804,1.02891409
+frozen_test,B4,Shuffled-action control,33,frozen_test_random_00003,0.31285706,0.59232497,0.73449397,0.82700962
+frozen_test,B4,Shuffled-action control,33,frozen_test_random_00004,0.32303074,0.68900985,0.83813703,0.99785465
+ood_test,B4,Shuffled-action control,33,ood_test_guided_00000,0.00112614,0.00205054,0.00294757,0.00558929
+ood_test,B4,Shuffled-action control,33,ood_test_guided_00001,0.00192689,0.00540622,0.00916314,0.01568111
+ood_test,B4,Shuffled-action control,33,ood_test_guided_00002,0.00143791,0.00313007,0.00547814,0.01151704
+ood_test,B4,Shuffled-action control,33,ood_test_guided_00003,0.00146466,0.00287608,0.00483090,0.00966115
+ood_test,B4,Shuffled-action control,33,ood_test_guided_00004,0.00201807,0.00646499,0.01085318,0.01817168
+ood_test,B4,Shuffled-action control,33,ood_test_mixture_00000,0.15468891,0.19872491,0.20884126,0.23252970
+ood_test,B4,Shuffled-action control,33,ood_test_mixture_00001,0.17092103,0.24652772,0.28109187,0.32859474
+ood_test,B4,Shuffled-action control,33,ood_test_mixture_00002,0.18497685,0.30015603,0.34552047,0.40089935
+ood_test,B4,Shuffled-action control,33,ood_test_mixture_00003,0.14341408,0.20164067,0.22075687,0.25442821
+ood_test,B4,Shuffled-action control,33,ood_test_mixture_00004,0.18279955,0.26937464,0.30004150,0.31136873
+ood_test,B4,Shuffled-action control,33,ood_test_random_00000,0.35595950,0.70917767,0.87645096,1.03332686
+ood_test,B4,Shuffled-action control,33,ood_test_random_00001,0.32209802,0.67162377,0.87729907,1.07312036
+ood_test,B4,Shuffled-action control,33,ood_test_random_00002,0.33404380,0.63210279,0.80313075,0.97703618
+ood_test,B4,Shuffled-action control,33,ood_test_random_00003,0.28578556,0.45620751,0.53410047,0.60903203
+ood_test,B4,Shuffled-action control,33,ood_test_random_00004,0.31417054,0.58777672,0.73170555,0.98099083
+validation,B4,Shuffled-action control,44,validation_guided_00000,0.00124513,0.00254793,0.00357169,0.00568257
+validation,B4,Shuffled-action control,44,validation_guided_00001,0.00147438,0.00230095,0.00273943,0.00373302
+validation,B4,Shuffled-action control,44,validation_guided_00002,0.00138835,0.00255620,0.00388048,0.00624594
+validation,B4,Shuffled-action control,44,validation_guided_00003,0.00121922,0.00245472,0.00331666,0.00414559
+validation,B4,Shuffled-action control,44,validation_guided_00004,0.00142818,0.00318107,0.00481040,0.00807889
+validation,B4,Shuffled-action control,44,validation_guided_00005,0.00127374,0.00213847,0.00267232,0.00368214
+validation,B4,Shuffled-action control,44,validation_guided_00006,0.00138455,0.00249873,0.00341933,0.00436085
+validation,B4,Shuffled-action control,44,validation_guided_00007,0.00144310,0.00338018,0.00580642,0.00971812
+validation,B4,Shuffled-action control,44,validation_guided_00008,0.00140944,0.00357807,0.00629751,0.01027513
+validation,B4,Shuffled-action control,44,validation_guided_00009,0.00137691,0.00276507,0.00433724,0.00792070
+validation,B4,Shuffled-action control,44,validation_mixture_00000,0.12297066,0.17045350,0.18709512,0.20512162
+validation,B4,Shuffled-action control,44,validation_mixture_00001,0.13699026,0.17194462,0.18363175,0.20207924
+validation,B4,Shuffled-action control,44,validation_mixture_00002,0.21267176,0.31732059,0.34655726,0.37222072
+validation,B4,Shuffled-action control,44,validation_mixture_00003,0.14612271,0.21715890,0.24306539,0.27039352
+validation,B4,Shuffled-action control,44,validation_mixture_00004,0.13842672,0.21752523,0.24542722,0.28125277
+validation,B4,Shuffled-action control,44,validation_mixture_00005,0.17199928,0.26050535,0.28969294,0.31748345
+validation,B4,Shuffled-action control,44,validation_mixture_00006,0.15643993,0.21904106,0.23392428,0.25874496
+validation,B4,Shuffled-action control,44,validation_mixture_00007,0.12218506,0.17048615,0.19632851,0.22504491
+validation,B4,Shuffled-action control,44,validation_mixture_00008,0.13403665,0.19142739,0.21833915,0.25124770
+validation,B4,Shuffled-action control,44,validation_mixture_00009,0.19032036,0.26606825,0.28839746,0.30282021
+validation,B4,Shuffled-action control,44,validation_random_00000,0.30763113,0.60243136,0.77444708,0.94672382
+validation,B4,Shuffled-action control,44,validation_random_00001,0.32824296,0.63662910,0.78450233,0.92297196
+validation,B4,Shuffled-action control,44,validation_random_00002,0.31859219,0.58122498,0.72769159,0.88265491
+validation,B4,Shuffled-action control,44,validation_random_00003,0.30556056,0.56997448,0.68514752,0.79805785
+validation,B4,Shuffled-action control,44,validation_random_00004,0.31998873,0.59082776,0.74330950,0.81277466
+validation,B4,Shuffled-action control,44,validation_random_00005,0.33193177,0.64159685,0.80114090,0.98209548
+validation,B4,Shuffled-action control,44,validation_random_00006,0.31777549,0.58229399,0.69435769,0.75583684
+validation,B4,Shuffled-action control,44,validation_random_00007,0.31471226,0.61579329,0.83515018,1.02395570
+validation,B4,Shuffled-action control,44,validation_random_00008,0.29071143,0.50700408,0.63837081,0.79604822
+validation,B4,Shuffled-action control,44,validation_random_00009,0.32704854,0.61168635,0.73094136,0.85683721
+frozen_test,B4,Shuffled-action control,44,frozen_test_guided_00000,0.00140326,0.00227345,0.00291453,0.00422153
+frozen_test,B4,Shuffled-action control,44,frozen_test_guided_00001,0.00136935,0.00217616,0.00239745,0.00298043
+frozen_test,B4,Shuffled-action control,44,frozen_test_guided_00002,0.00131443,0.00291973,0.00402289,0.00504276
+frozen_test,B4,Shuffled-action control,44,frozen_test_guided_00003,0.00138602,0.00257443,0.00360645,0.00592834
+frozen_test,B4,Shuffled-action control,44,frozen_test_guided_00004,0.00137401,0.00321123,0.00508561,0.00878183
+frozen_test,B4,Shuffled-action control,44,frozen_test_mixture_00000,0.17607777,0.23433764,0.24937464,0.28137782
+frozen_test,B4,Shuffled-action control,44,frozen_test_mixture_00001,0.15487993,0.22630586,0.25369123,0.26373467
+frozen_test,B4,Shuffled-action control,44,frozen_test_mixture_00002,0.18009028,0.26552492,0.29827362,0.32866773
+frozen_test,B4,Shuffled-action control,44,frozen_test_mixture_00003,0.16543604,0.24406077,0.26882380,0.29472038
+frozen_test,B4,Shuffled-action control,44,frozen_test_mixture_00004,0.16755222,0.23314464,0.25299796,0.26134032
+frozen_test,B4,Shuffled-action control,44,frozen_test_random_00000,0.33466539,0.62342238,0.78321856,0.93542284
+frozen_test,B4,Shuffled-action control,44,frozen_test_random_00001,0.25742608,0.46235797,0.59206080,0.70259982
+frozen_test,B4,Shuffled-action control,44,frozen_test_random_00002,0.33727494,0.66311377,0.85768646,1.05749297
+frozen_test,B4,Shuffled-action control,44,frozen_test_random_00003,0.30285290,0.57914084,0.72133756,0.79306936
+frozen_test,B4,Shuffled-action control,44,frozen_test_random_00004,0.31439212,0.69314009,0.83925873,0.96572131
+ood_test,B4,Shuffled-action control,44,ood_test_guided_00000,0.00128689,0.00290556,0.00399692,0.00504859
+ood_test,B4,Shuffled-action control,44,ood_test_guided_00001,0.00143265,0.00331917,0.00554156,0.00995418
+ood_test,B4,Shuffled-action control,44,ood_test_guided_00002,0.00137566,0.00250232,0.00355865,0.00486843
+ood_test,B4,Shuffled-action control,44,ood_test_guided_00003,0.00146293,0.00247500,0.00295463,0.00339624
+ood_test,B4,Shuffled-action control,44,ood_test_guided_00004,0.00133039,0.00312495,0.00523523,0.01003304
+ood_test,B4,Shuffled-action control,44,ood_test_mixture_00000,0.14911146,0.19791146,0.21397662,0.24438100
+ood_test,B4,Shuffled-action control,44,ood_test_mixture_00001,0.16467249,0.23188400,0.26014480,0.30247369
+ood_test,B4,Shuffled-action control,44,ood_test_mixture_00002,0.17442326,0.28144166,0.32104942,0.35319132
+ood_test,B4,Shuffled-action control,44,ood_test_mixture_00003,0.14349407,0.20485987,0.22367582,0.25579625
+ood_test,B4,Shuffled-action control,44,ood_test_mixture_00004,0.17467164,0.24895041,0.27156445,0.26639560
+ood_test,B4,Shuffled-action control,44,ood_test_random_00000,0.34865445,0.71966201,0.88616455,1.03325272
+ood_test,B4,Shuffled-action control,44,ood_test_random_00001,0.32626686,0.66324538,0.86369133,1.02949500
+ood_test,B4,Shuffled-action control,44,ood_test_random_00002,0.31822562,0.59617275,0.79562199,0.98637730
+ood_test,B4,Shuffled-action control,44,ood_test_random_00003,0.27670285,0.43801677,0.51487392,0.60134363
+ood_test,B4,Shuffled-action control,44,ood_test_random_00004,0.30533874,0.57812423,0.74129277,0.96390659
+validation,B4,Shuffled-action control,55,validation_guided_00000,0.00164312,0.00447384,0.00677902,0.01083319
+validation,B4,Shuffled-action control,55,validation_guided_00001,0.00153038,0.00325383,0.00472604,0.00807312
+validation,B4,Shuffled-action control,55,validation_guided_00002,0.00164719,0.00442072,0.00687340,0.01048391
+validation,B4,Shuffled-action control,55,validation_guided_00003,0.00160929,0.00377167,0.00532157,0.00747108
+validation,B4,Shuffled-action control,55,validation_guided_00004,0.00180975,0.00491737,0.00771783,0.01325976
+validation,B4,Shuffled-action control,55,validation_guided_00005,0.00164868,0.00358990,0.00492907,0.00679269
+validation,B4,Shuffled-action control,55,validation_guided_00006,0.00169142,0.00424446,0.00625018,0.00971645
+validation,B4,Shuffled-action control,55,validation_guided_00007,0.00206475,0.00665670,0.01172357,0.02064187
+validation,B4,Shuffled-action control,55,validation_guided_00008,0.00187753,0.00608629,0.01080525,0.01937568
+validation,B4,Shuffled-action control,55,validation_guided_00009,0.00177193,0.00491426,0.00793599,0.01389491
+validation,B4,Shuffled-action control,55,validation_mixture_00000,0.12573841,0.18292923,0.20868875,0.23571891
+validation,B4,Shuffled-action control,55,validation_mixture_00001,0.13945295,0.17681248,0.18638121,0.20050605
+validation,B4,Shuffled-action control,55,validation_mixture_00002,0.21406963,0.31419769,0.34775689,0.37984249
+validation,B4,Shuffled-action control,55,validation_mixture_00003,0.15249069,0.21734677,0.24332206,0.26971981
+validation,B4,Shuffled-action control,55,validation_mixture_00004,0.14357260,0.22153032,0.25564945,0.30257201
+validation,B4,Shuffled-action control,55,validation_mixture_00005,0.17215537,0.25700521,0.27718472,0.30559015
+validation,B4,Shuffled-action control,55,validation_mixture_00006,0.15791216,0.22818665,0.24513523,0.26776397
+validation,B4,Shuffled-action control,55,validation_mixture_00007,0.12429218,0.18238199,0.21048088,0.23123339
+validation,B4,Shuffled-action control,55,validation_mixture_00008,0.13547319,0.18721510,0.21815920,0.25419593
+validation,B4,Shuffled-action control,55,validation_mixture_00009,0.19003126,0.27679691,0.31514612,0.35041448
+validation,B4,Shuffled-action control,55,validation_random_00000,0.31325421,0.61158371,0.77929187,0.93465638
+validation,B4,Shuffled-action control,55,validation_random_00001,0.33802375,0.64861262,0.80552059,0.97907615
+validation,B4,Shuffled-action control,55,validation_random_00002,0.33134177,0.58696270,0.72995985,0.85831308
+validation,B4,Shuffled-action control,55,validation_random_00003,0.29891500,0.57562035,0.68082368,0.77627951
+validation,B4,Shuffled-action control,55,validation_random_00004,0.33388501,0.63348919,0.76022851,0.84280789
+validation,B4,Shuffled-action control,55,validation_random_00005,0.32759762,0.62907791,0.78557932,0.96627259
+validation,B4,Shuffled-action control,55,validation_random_00006,0.32027635,0.60810393,0.76046836,0.85825282
+validation,B4,Shuffled-action control,55,validation_random_00007,0.31012383,0.59738928,0.80132949,1.00492883
+validation,B4,Shuffled-action control,55,validation_random_00008,0.30417058,0.54845268,0.68084997,0.80744332
+validation,B4,Shuffled-action control,55,validation_random_00009,0.33253631,0.59125841,0.73241198,0.90455478
+frozen_test,B4,Shuffled-action control,55,frozen_test_guided_00000,0.00172717,0.00326207,0.00424287,0.00576421
+frozen_test,B4,Shuffled-action control,55,frozen_test_guided_00001,0.00153363,0.00293539,0.00384102,0.00565174
+frozen_test,B4,Shuffled-action control,55,frozen_test_guided_00002,0.00163978,0.00360529,0.00485613,0.00699893
+frozen_test,B4,Shuffled-action control,55,frozen_test_guided_00003,0.00173768,0.00444432,0.00660849,0.01030142
+frozen_test,B4,Shuffled-action control,55,frozen_test_guided_00004,0.00182228,0.00557962,0.00902038,0.01485534
+frozen_test,B4,Shuffled-action control,55,frozen_test_mixture_00000,0.18628198,0.25293455,0.27522421,0.31167793
+frozen_test,B4,Shuffled-action control,55,frozen_test_mixture_00001,0.16102323,0.23550703,0.26624495,0.28508118
+frozen_test,B4,Shuffled-action control,55,frozen_test_mixture_00002,0.18074819,0.26502225,0.29856199,0.33080921
+frozen_test,B4,Shuffled-action control,55,frozen_test_mixture_00003,0.18223035,0.29655072,0.33931971,0.38461864
+frozen_test,B4,Shuffled-action control,55,frozen_test_mixture_00004,0.17308842,0.23982716,0.25504497,0.26366246
+frozen_test,B4,Shuffled-action control,55,frozen_test_random_00000,0.32805198,0.60418576,0.75286126,0.93026149
+frozen_test,B4,Shuffled-action control,55,frozen_test_random_00001,0.26341385,0.46355522,0.57591212,0.66872019
+frozen_test,B4,Shuffled-action control,55,frozen_test_random_00002,0.33220983,0.68317491,0.87076366,1.03993714
+frozen_test,B4,Shuffled-action control,55,frozen_test_random_00003,0.30586776,0.57056355,0.72692794,0.83515787
+frozen_test,B4,Shuffled-action control,55,frozen_test_random_00004,0.31854761,0.69938284,0.84979141,0.96188825
+ood_test,B4,Shuffled-action control,55,ood_test_guided_00000,0.00164343,0.00417618,0.00590776,0.00842804
+ood_test,B4,Shuffled-action control,55,ood_test_guided_00001,0.00184511,0.00550517,0.00941134,0.01621580
+ood_test,B4,Shuffled-action control,55,ood_test_guided_00002,0.00137583,0.00323630,0.00525415,0.01002302
+ood_test,B4,Shuffled-action control,55,ood_test_guided_00003,0.00133111,0.00256793,0.00358667,0.00534927
+ood_test,B4,Shuffled-action control,55,ood_test_guided_00004,0.00183966,0.00555403,0.00938126,0.01660243
+ood_test,B4,Shuffled-action control,55,ood_test_mixture_00000,0.15551451,0.21114989,0.22565752,0.25054124
+ood_test,B4,Shuffled-action control,55,ood_test_mixture_00001,0.16940533,0.24618538,0.28278112,0.32935220
+ood_test,B4,Shuffled-action control,55,ood_test_mixture_00002,0.18946336,0.30592963,0.35881147,0.40949616
+ood_test,B4,Shuffled-action control,55,ood_test_mixture_00003,0.14403690,0.20586304,0.22716248,0.25942370
+ood_test,B4,Shuffled-action control,55,ood_test_mixture_00004,0.17011474,0.23381793,0.24958311,0.24812885
+ood_test,B4,Shuffled-action control,55,ood_test_random_00000,0.34472373,0.69039303,0.84208107,0.97654867
+ood_test,B4,Shuffled-action control,55,ood_test_random_00001,0.33075973,0.66974211,0.85789490,1.02707684
+ood_test,B4,Shuffled-action control,55,ood_test_random_00002,0.34065664,0.65671867,0.83755583,1.02132106
+ood_test,B4,Shuffled-action control,55,ood_test_random_00003,0.28676364,0.45811200,0.53301537,0.59835893
+ood_test,B4,Shuffled-action control,55,ood_test_random_00004,0.31253731,0.58756095,0.72527236,0.90259165

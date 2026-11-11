@@ -1,0 +1,17 @@
+{
+  "baseline": "B3",
+  "description": "Linear / Ridge dynamics (closed form)",
+  "seed": 55,
+  "state_dim": 23,
+  "condition_dim": 7,
+  "hidden_dims": [
+    256,
+    256
+  ],
+  "protocol": "closed-form ridge; alpha selected on validation",
+  "alpha": 1e-06,
+  "best_val_mse": 0.03197210282087326,
+  "best_epoch": 0,
+  "epochs_run": 0,
+  "history": []
+}

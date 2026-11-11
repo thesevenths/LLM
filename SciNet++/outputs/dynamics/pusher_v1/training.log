@@ -1,0 +1,25 @@
+[train] manifest verified: 300 episode files, SHA-256 all match
+[train] Phase 0 gate: PASS (pusher-8af70418c4fb)
+[train] train 240 ep / 24000 tr; validation 30 ep / 3000 tr
+[train] config_hash=c791729e1c5738f8... experiments=20 seeds=[11, 22, 33, 44, 55] baselines=['B1', 'B2', 'B3', 'B4']
+[train] B1 seed=11: epochs=32 best_epoch=12 val_mse=0.105672 (23.8s) -> c791729e_B1_seed11
+[train] B1 seed=22: epochs=28 best_epoch=8 val_mse=0.106437 (17.7s) -> c791729e_B1_seed22
+[train] B1 seed=33: epochs=29 best_epoch=9 val_mse=0.105994 (15.4s) -> c791729e_B1_seed33
+[train] B1 seed=44: epochs=31 best_epoch=11 val_mse=0.105899 (16.9s) -> c791729e_B1_seed44
+[train] B1 seed=55: epochs=30 best_epoch=10 val_mse=0.106079 (20.5s) -> c791729e_B1_seed55
+[train] B2 seed=11: epochs=76 best_epoch=56 val_mse=0.013819 (45.1s) -> c791729e_B2_seed11
+[train] B2 seed=22: epochs=94 best_epoch=74 val_mse=0.014298 (56.8s) -> c791729e_B2_seed22
+[train] B2 seed=33: epochs=102 best_epoch=82 val_mse=0.013354 (82.5s) -> c791729e_B2_seed33
+[train] B2 seed=44: epochs=92 best_epoch=72 val_mse=0.013578 (74.4s) -> c791729e_B2_seed44
+[train] B2 seed=55: epochs=82 best_epoch=62 val_mse=0.014083 (63.8s) -> c791729e_B2_seed55
+[train] B3 seed=11: epochs=0 best_epoch=0 val_mse=0.031972 (0.1s) -> c791729e_B3_seed11
+[train] B3 seed=22: epochs=0 best_epoch=0 val_mse=0.031972 (0.1s) -> c791729e_B3_seed22
+[train] B3 seed=33: epochs=0 best_epoch=0 val_mse=0.031972 (0.1s) -> c791729e_B3_seed33
+[train] B3 seed=44: epochs=0 best_epoch=0 val_mse=0.031972 (0.1s) -> c791729e_B3_seed44
+[train] B3 seed=55: epochs=0 best_epoch=0 val_mse=0.031972 (0.1s) -> c791729e_B3_seed55
+[train] B4 seed=11: epochs=26 best_epoch=6 val_mse=0.107604 (14.1s) -> c791729e_B4_seed11
+[train] B4 seed=22: epochs=28 best_epoch=8 val_mse=0.108306 (13.2s) -> c791729e_B4_seed22
+[train] B4 seed=33: epochs=28 best_epoch=8 val_mse=0.108909 (18.3s) -> c791729e_B4_seed33
+[train] B4 seed=44: epochs=28 best_epoch=8 val_mse=0.107753 (15.5s) -> c791729e_B4_seed44
+[train] B4 seed=55: epochs=27 best_epoch=7 val_mse=0.108322 (15.2s) -> c791729e_B4_seed55
+[train] DONE. 20 experiments under outputs\dynamics\pusher_v1

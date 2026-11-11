@@ -1,0 +1,29 @@
+[train] manifest verified: 300 episode files, SHA-256 all match
+[eval] splits: validation=30ep, frozen_test=15ep, ood_test=15ep
+[eval] B0 seed=11: frozen_test one-step mse=0.195003
+[eval] B0 seed=22: frozen_test one-step mse=0.195003
+[eval] B0 seed=33: frozen_test one-step mse=0.195003
+[eval] B0 seed=44: frozen_test one-step mse=0.195003
+[eval] B0 seed=55: frozen_test one-step mse=0.195003
+[eval] B1 seed=11: frozen_test one-step mse=0.160275
+[eval] B1 seed=22: frozen_test one-step mse=0.159593
+[eval] B1 seed=33: frozen_test one-step mse=0.158139
+[eval] B1 seed=44: frozen_test one-step mse=0.161162
+[eval] B1 seed=55: frozen_test one-step mse=0.157878
+[eval] B2 seed=11: frozen_test one-step mse=0.022173
+[eval] B2 seed=22: frozen_test one-step mse=0.024580
+[eval] B2 seed=33: frozen_test one-step mse=0.026367
+[eval] B2 seed=44: frozen_test one-step mse=0.025271
+[eval] B2 seed=55: frozen_test one-step mse=0.023615
+[eval] B3 seed=11: frozen_test one-step mse=0.046535
+[eval] B3 seed=22: frozen_test one-step mse=0.046535
+[eval] B3 seed=33: frozen_test one-step mse=0.046535
+[eval] B3 seed=44: frozen_test one-step mse=0.046535
+[eval] B3 seed=55: frozen_test one-step mse=0.046535
+[eval] B4 seed=11: frozen_test one-step mse=0.160824
+[eval] B4 seed=22: frozen_test one-step mse=0.160934
+[eval] B4 seed=33: frozen_test one-step mse=0.162824
+[eval] B4 seed=44: frozen_test one-step mse=0.159833
+[eval] B4 seed=55: frozen_test one-step mse=0.162662
+[eval] gates: G0=PASS, G1=PASS, G2=PASS, G3=PASS, G4=PASS
+[eval] outputs -> outputs\dynamics\pusher_v1\evaluation
