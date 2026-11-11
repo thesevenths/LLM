@@ -1,0 +1,435 @@
+{
+  "assignments": {
+    "E00_random": "train",
+    "E01_step": "train",
+    "E02_sinusoid": "train",
+    "E03_alternating": "train",
+    "E04_zero": "train",
+    "E05_random": "train",
+    "E06_step": "train",
+    "E07_sinusoid": "validation",
+    "E08_alternating": "train",
+    "E09_zero": "train",
+    "E10_random": "train",
+    "E11_step": "train",
+    "E12_sinusoid": "train",
+    "E13_alternating": "train",
+    "E14_zero": "train",
+    "E15_random": "train",
+    "E16_step": "train",
+    "E17_sinusoid": "test",
+    "E18_alternating": "train",
+    "E19_zero": "train"
+  },
+  "blocked_strata": [
+    [
+      "random",
+      1,
+      0,
+      0,
+      0,
+      1,
+      "bounded_oscillation"
+    ],
+    [
+      "step",
+      1,
+      0,
+      0,
+      1,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "alternating",
+      0,
+      0,
+      0,
+      2,
+      1,
+      "bounded_oscillation"
+    ],
+    [
+      "zero",
+      0,
+      0,
+      0,
+      2,
+      1,
+      "bounded_oscillation"
+    ],
+    [
+      "random",
+      0,
+      0,
+      0,
+      2,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "step",
+      1,
+      0,
+      0,
+      0,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "alternating",
+      0,
+      0,
+      0,
+      1,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "zero",
+      0,
+      0,
+      0,
+      2,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "random",
+      0,
+      0,
+      0,
+      0,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "step",
+      0,
+      0,
+      0,
+      2,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "sinusoid",
+      1,
+      0,
+      0,
+      2,
+      1,
+      "bounded_oscillation"
+    ],
+    [
+      "alternating",
+      0,
+      0,
+      0,
+      2,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "zero",
+      1,
+      0,
+      0,
+      0,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "random",
+      1,
+      0,
+      0,
+      2,
+      1,
+      "bounded_oscillation"
+    ],
+    [
+      "step",
+      0,
+      0,
+      0,
+      1,
+      1,
+      "bounded_oscillation"
+    ],
+    [
+      "alternating",
+      0,
+      0,
+      0,
+      0,
+      0,
+      "bounded_oscillation"
+    ],
+    [
+      "zero",
+      0,
+      0,
+      0,
+      1,
+      1,
+      "bounded_oscillation"
+    ]
+  ],
+  "coverage": {
+    "alternating::0::0::0::0::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "alternating::0::0::0::1::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "alternating::0::0::0::2::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "alternating::0::0::0::2::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "random::0::0::0::0::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "random::0::0::0::2::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "random::1::0::0::0::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "random::1::0::0::2::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "sinusoid::1::0::0::0::0::bounded_oscillation": {
+      "counts": {
+        "test": 1,
+        "train": 1,
+        "validation": 1
+      },
+      "key": [
+        "sinusoid",
+        1,
+        0,
+        0,
+        0,
+        0,
+        "bounded_oscillation"
+      ],
+      "n": 3,
+      "status": "covered"
+    },
+    "sinusoid::1::0::0::2::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "step::0::0::0::1::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "step::0::0::0::2::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "step::1::0::0::0::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "step::1::0::0::1::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "zero::0::0::0::1::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "zero::0::0::0::2::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "zero::0::0::0::2::1::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    },
+    "zero::1::0::0::0::0::bounded_oscillation": {
+      "counts": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "n": 1,
+      "reason": "n=1 < 3*min_per_cell=3",
+      "status": "blocked"
+    }
+  },
+  "distribution_verification": {
+    "test": {
+      "abs_error": 0.09999999999999999,
+      "actual": 1,
+      "actual_ratio": 0.05,
+      "requested": 0.15,
+      "requested_ratio": 0.15,
+      "within_tolerance": false
+    },
+    "train": {
+      "abs_error": 0.20000000000000007,
+      "actual": 18,
+      "actual_ratio": 0.9,
+      "requested": 0.7,
+      "requested_ratio": 0.7,
+      "within_tolerance": false
+    },
+    "validation": {
+      "abs_error": 0.09999999999999999,
+      "actual": 1,
+      "actual_ratio": 0.05,
+      "requested": 0.15,
+      "requested_ratio": 0.15,
+      "within_tolerance": false
+    }
+  },
+  "global_counts": {
+    "test": 1,
+    "train": 18,
+    "validation": 1
+  },
+  "inconclusive_strata": [],
+  "min_per_cell": 1,
+  "n_blocked_strata": 17,
+  "n_episodes": 20,
+  "n_inconclusive_strata": 0,
+  "n_strata": 18,
+  "n_unachievable_strata": 0,
+  "note": "Genuine stratified allocation over the 20-episode HISTORICAL pilot. The historical random split in manifest.json is PRESERVED; this report documents what real stratification would assign and, crucially, where the 20-episode pilot CANNOT cover strata (BLOCKED/INCONCLUSIVE). It is NOT a claim that the historical data is stratified.",
+  "ratio_errors": {
+    "test": 0.09999999999999999,
+    "train": 0.20000000000000007,
+    "validation": 0.09999999999999999
+  },
+  "requested_counts": {
+    "test": 3,
+    "train": 14,
+    "validation": 3
+  },
+  "requested_ratios": {
+    "test": 0.15,
+    "train": 0.7,
+    "validation": 0.15
+  },
+  "source_manifest": "datasets/controlled_pendulum_v2_pilot/manifest.json",
+  "status": "BLOCKED",
+  "stratification_dimensions": [
+    "action_profile",
+    "mass_bin",
+    "length_bin",
+    "damping_bin",
+    "theta0_bin",
+    "omega0_bin",
+    "regime"
+  ],
+  "unachievable_strata": []
+}
