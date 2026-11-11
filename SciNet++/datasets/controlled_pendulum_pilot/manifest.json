@@ -1,0 +1,1068 @@
+{
+  "T": 200,
+  "cond_dim": 1,
+  "config_hash": "41bb7d66887037e64da18626084f704e001f49ed6bbd92cebe8356a8cb936b82",
+  "created_at": "2026-11-11T06:55:34.875183+00:00",
+  "dataset_version": "cpilot-41bb7d668870",
+  "dt": 0.02,
+  "episodes": [
+    {
+      "action_stats": {
+        "abs_max": 4.999908468929801,
+        "in_bounds": true,
+        "max": 4.999908468929801,
+        "mean": -0.11639379262794965,
+        "min": -4.986321694362146,
+        "std": 2.7726166785998596
+      },
+      "episode_id": "S0_random",
+      "final_state": [
+        -1.1044343439983397,
+        2.8242165141688726
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 5.114940785534045,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.1020473644891213,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "random"
+      },
+      "profile_index": 0,
+      "profile_name": "random",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "nominal",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 0,
+      "scenario_name": "nominal",
+      "seed": 392489750,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.0,
+        "in_bounds": true,
+        "max": 3.0,
+        "mean": 0.0,
+        "min": -3.0,
+        "std": 3.0
+      },
+      "episode_id": "S0_step",
+      "final_state": [
+        -2.9613113697172566,
+        -0.8930439751449613
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 4.955135136069111,
+      "max_abs_theta": 2.9613113697172566,
+      "max_theta_step": 0.09909211498410275,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "step"
+      },
+      "profile_index": 1,
+      "profile_name": "step",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "nominal",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 0,
+      "scenario_name": "nominal",
+      "seed": 3640034285,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.5,
+        "in_bounds": true,
+        "max": 3.5,
+        "mean": 5.551115123125783e-17,
+        "min": -3.5,
+        "std": 2.4748737341529163
+      },
+      "episode_id": "S0_sinusoid",
+      "final_state": [
+        -1.9832844094762048,
+        -0.7710625765044068
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 4.333347578005352,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.08667725617020428,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "sinusoid"
+      },
+      "profile_index": 2,
+      "profile_name": "sinusoid",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "nominal",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 0,
+      "scenario_name": "nominal",
+      "seed": 1429282207,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 2.5,
+        "in_bounds": true,
+        "max": 2.5,
+        "mean": 0.0,
+        "min": -2.5,
+        "std": 2.5
+      },
+      "episode_id": "S0_alternating",
+      "final_state": [
+        -1.3002188715893235,
+        2.3152686131835107
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 5.145912929835439,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.10248254470283681,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "alternating"
+      },
+      "profile_index": 3,
+      "profile_name": "alternating",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "nominal",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 0,
+      "scenario_name": "nominal",
+      "seed": 2693606225,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 4.991593998743095,
+        "in_bounds": true,
+        "max": 4.991593998743095,
+        "mean": 0.46971124271949755,
+        "min": -4.832068112279173,
+        "std": 2.820330497616141
+      },
+      "episode_id": "S1_random",
+      "final_state": [
+        2.2515484387641695,
+        3.056506738830783
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 10.661428391201566,
+      "max_abs_theta": 2.2515484387641695,
+      "max_theta_step": 0.20757018656061996,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "random"
+      },
+      "profile_index": 0,
+      "profile_name": "random",
+      "scenario": {
+        "L": 0.3,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "short_rod",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 1,
+      "scenario_name": "short_rod",
+      "seed": 3830283104,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.0,
+        "in_bounds": true,
+        "max": 3.0,
+        "mean": 0.0,
+        "min": -3.0,
+        "std": 3.0
+      },
+      "episode_id": "S1_step",
+      "final_state": [
+        79.11208669618831,
+        -9.01962289629999
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 51.26387567890554,
+      "max_abs_theta": 82.1151103488298,
+      "max_theta_step": 1.0254772583035745,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "step"
+      },
+      "profile_index": 1,
+      "profile_name": "step",
+      "scenario": {
+        "L": 0.3,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "short_rod",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 1,
+      "scenario_name": "short_rod",
+      "seed": 1273116420,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.5,
+        "in_bounds": true,
+        "max": 3.5,
+        "mean": 5.551115123125783e-17,
+        "min": -3.5,
+        "std": 2.4748737341529163
+      },
+      "episode_id": "S1_sinusoid",
+      "final_state": [
+        -34.18529115806325,
+        -20.733083279821194
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 27.66280226045776,
+      "max_abs_theta": 34.18529115806325,
+      "max_theta_step": 0.5523128360455019,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "sinusoid"
+      },
+      "profile_index": 2,
+      "profile_name": "sinusoid",
+      "scenario": {
+        "L": 0.3,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "short_rod",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 1,
+      "scenario_name": "short_rod",
+      "seed": 2398345997,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 2.5,
+        "in_bounds": true,
+        "max": 2.5,
+        "mean": 0.0,
+        "min": -2.5,
+        "std": 2.5
+      },
+      "episode_id": "S1_alternating",
+      "final_state": [
+        1.3939943493414717,
+        2.9899555307360766
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 9.728814310302944,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.18945428556050947,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "alternating"
+      },
+      "profile_index": 3,
+      "profile_name": "alternating",
+      "scenario": {
+        "L": 0.3,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "short_rod",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 1,
+      "scenario_name": "short_rod",
+      "seed": 1409553315,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 4.984188416748248,
+        "in_bounds": true,
+        "max": 4.9818645139286115,
+        "mean": 0.14630817355879927,
+        "min": -4.984188416748248,
+        "std": 2.8362600389453823
+      },
+      "episode_id": "S2_random",
+      "final_state": [
+        -1.0444725268790498,
+        2.681788440823393
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 5.120181472010689,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.102269731285567,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "random"
+      },
+      "profile_index": 0,
+      "profile_name": "random",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 3.0,
+        "name": "heavy_bob",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 2,
+      "scenario_name": "heavy_bob",
+      "seed": 2524714583,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.0,
+        "in_bounds": true,
+        "max": 3.0,
+        "mean": 0.0,
+        "min": -3.0,
+        "std": 3.0
+      },
+      "episode_id": "S2_step",
+      "final_state": [
+        -1.0663156228751456,
+        3.40839297403427
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 4.748900130646743,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.09495474440021931,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "step"
+      },
+      "profile_index": 1,
+      "profile_name": "step",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 3.0,
+        "name": "heavy_bob",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 2,
+      "scenario_name": "heavy_bob",
+      "seed": 192087727,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.5,
+        "in_bounds": true,
+        "max": 3.5,
+        "mean": 5.551115123125783e-17,
+        "min": -3.5,
+        "std": 2.4748737341529163
+      },
+      "episode_id": "S2_sinusoid",
+      "final_state": [
+        -1.1707192712377552,
+        2.2051468898161515
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 4.744098176891361,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.09490049790763158,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "sinusoid"
+      },
+      "profile_index": 2,
+      "profile_name": "sinusoid",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 3.0,
+        "name": "heavy_bob",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 2,
+      "scenario_name": "heavy_bob",
+      "seed": 3718711618,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 2.5,
+        "in_bounds": true,
+        "max": 2.5,
+        "mean": 0.0,
+        "min": -2.5,
+        "std": 2.5
+      },
+      "episode_id": "S2_alternating",
+      "final_state": [
+        -1.2957508435011718,
+        2.349379855674091
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 5.127871684294433,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.10247387403375015,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "alternating"
+      },
+      "profile_index": 3,
+      "profile_name": "alternating",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 9.81,
+        "m": 3.0,
+        "name": "heavy_bob",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 2,
+      "scenario_name": "heavy_bob",
+      "seed": 792668707,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 4.97857150300624,
+        "in_bounds": true,
+        "max": 4.97857150300624,
+        "mean": 0.1872865131605617,
+        "min": -4.834510513017829,
+        "std": 2.950305815954269
+      },
+      "episode_id": "S3_random",
+      "final_state": [
+        0.21651337817216287,
+        0.7975878307534707
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 4.298169953172785,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.08591788636268066,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "random"
+      },
+      "profile_index": 0,
+      "profile_name": "random",
+      "scenario": {
+        "L": 1.0,
+        "b": 1.0,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "high_damping",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 3,
+      "scenario_name": "high_damping",
+      "seed": 268534521,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.0,
+        "in_bounds": true,
+        "max": 3.0,
+        "mean": 0.0,
+        "min": -3.0,
+        "std": 3.0
+      },
+      "episode_id": "S3_step",
+      "final_state": [
+        -0.12989195989032526,
+        0.9344797117252679
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 3.0663294121223066,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.061337061758659384,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "step"
+      },
+      "profile_index": 1,
+      "profile_name": "step",
+      "scenario": {
+        "L": 1.0,
+        "b": 1.0,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "high_damping",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 3,
+      "scenario_name": "high_damping",
+      "seed": 1373485281,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.5,
+        "in_bounds": true,
+        "max": 3.5,
+        "mean": 5.551115123125783e-17,
+        "min": -3.5,
+        "std": 2.4748737341529163
+      },
+      "episode_id": "S3_sinusoid",
+      "final_state": [
+        -0.9335280337121141,
+        0.07491462171148314
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 3.051274326815459,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.061038272007913896,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "sinusoid"
+      },
+      "profile_index": 2,
+      "profile_name": "sinusoid",
+      "scenario": {
+        "L": 1.0,
+        "b": 1.0,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "high_damping",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 3,
+      "scenario_name": "high_damping",
+      "seed": 1256174087,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 2.5,
+        "in_bounds": true,
+        "max": 2.5,
+        "mean": 0.0,
+        "min": -2.5,
+        "std": 2.5
+      },
+      "episode_id": "S3_alternating",
+      "final_state": [
+        0.07183355318503935,
+        0.6856133639804927
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 4.067816291077835,
+      "max_abs_theta": 2.0,
+      "max_theta_step": 0.08088976498111267,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "alternating"
+      },
+      "profile_index": 3,
+      "profile_name": "alternating",
+      "scenario": {
+        "L": 1.0,
+        "b": 1.0,
+        "g": 9.81,
+        "m": 1.0,
+        "name": "high_damping",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 3,
+      "scenario_name": "high_damping",
+      "seed": 1140997997,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 4.906470015539133,
+        "in_bounds": true,
+        "max": 4.906470015539133,
+        "mean": -0.31312786177180985,
+        "min": -4.843859741294157,
+        "std": 2.7703971354402306
+      },
+      "episode_id": "S4_random",
+      "final_state": [
+        -3.5208871091847964,
+        -1.3948178033438192
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 2.4308179834092845,
+      "max_abs_theta": 3.5208871091847964,
+      "max_theta_step": 0.04853253080697717,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "random",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "random"
+      },
+      "profile_index": 0,
+      "profile_name": "random",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 1.62,
+        "m": 1.0,
+        "name": "low_gravity",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 4,
+      "scenario_name": "low_gravity",
+      "seed": 310730405,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.0,
+        "in_bounds": true,
+        "max": 3.0,
+        "mean": 0.0,
+        "min": -3.0,
+        "std": 3.0
+      },
+      "episode_id": "S4_step",
+      "final_state": [
+        8.054394464538296,
+        -2.928334977034588
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 5.157083983515403,
+      "max_abs_theta": 9.141595931698186,
+      "max_theta_step": 0.10257704236992549,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "step",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "step"
+      },
+      "profile_index": 1,
+      "profile_name": "step",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 1.62,
+        "m": 1.0,
+        "name": "low_gravity",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 4,
+      "scenario_name": "low_gravity",
+      "seed": 327492901,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 3.5,
+        "in_bounds": true,
+        "max": 3.5,
+        "mean": 5.551115123125783e-17,
+        "min": -3.5,
+        "std": 2.4748737341529163
+      },
+      "episode_id": "S4_sinusoid",
+      "final_state": [
+        -1.5856505266757575,
+        -1.6631550090811467
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 2.663122349404459,
+      "max_abs_theta": 2.4952916152801485,
+      "max_theta_step": 0.05325027820614325,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.6,
+        "name": "sinusoid",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "sinusoid"
+      },
+      "profile_index": 2,
+      "profile_name": "sinusoid",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 1.62,
+        "m": 1.0,
+        "name": "low_gravity",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 4,
+      "scenario_name": "low_gravity",
+      "seed": 682209415,
+      "torque_in_bounds": true
+    },
+    {
+      "action_stats": {
+        "abs_max": 2.5,
+        "in_bounds": true,
+        "max": 2.5,
+        "mean": 0.0,
+        "min": -2.5,
+        "std": 2.5
+      },
+      "episode_id": "S4_alternating",
+      "final_state": [
+        -1.0824490399455589,
+        1.2675826515168986
+      ],
+      "initial_state": [
+        2.0,
+        0.0
+      ],
+      "max_abs_omega": 2.0255129504063327,
+      "max_abs_theta": 2.0002052553930563,
+      "max_theta_step": 0.0400081387294855,
+      "profile": {
+        "amplitude": 0.7,
+        "fraction": 0.5,
+        "frequency_hz": 0.5,
+        "magnitude": 0.5,
+        "name": "alternating",
+        "phase": 0.0,
+        "torque_max": 5.0,
+        "type": "alternating"
+      },
+      "profile_index": 3,
+      "profile_name": "alternating",
+      "scenario": {
+        "L": 1.0,
+        "b": 0.1,
+        "g": 1.62,
+        "m": 1.0,
+        "name": "low_gravity",
+        "omega0": 0.0,
+        "theta0": 2.0
+      },
+      "scenario_index": 4,
+      "scenario_name": "low_gravity",
+      "seed": 1479562969,
+      "torque_in_bounds": true
+    }
+  ],
+  "integrity": {
+    "all_valid": true,
+    "conditions_shape": [
+      20,
+      200,
+      1
+    ],
+    "n_valid_transitions": 4000,
+    "observations_shape": [
+      20,
+      201,
+      2
+    ],
+    "unique_episode_ids": true,
+    "valid_mask_shape": [
+      20,
+      200
+    ]
+  },
+  "master_seed": 20261111,
+  "n_episodes": 20,
+  "npz_file": "pilot_episodes.npz",
+  "npz_sha256": "8d769ff576a5c6e855947c43b2bf697f200f59a04cdb0e19c787ad684af4ed89",
+  "numpy_version": "2.2.6",
+  "obs_dim": 2,
+  "profiles": [
+    {
+      "amplitude": 0.7,
+      "fraction": 0.5,
+      "frequency_hz": 0.5,
+      "magnitude": 0.6,
+      "name": "random",
+      "phase": 0.0,
+      "torque_max": 5.0,
+      "type": "random"
+    },
+    {
+      "amplitude": 0.7,
+      "fraction": 0.5,
+      "frequency_hz": 0.5,
+      "magnitude": 0.6,
+      "name": "step",
+      "phase": 0.0,
+      "torque_max": 5.0,
+      "type": "step"
+    },
+    {
+      "amplitude": 0.7,
+      "fraction": 0.5,
+      "frequency_hz": 0.5,
+      "magnitude": 0.6,
+      "name": "sinusoid",
+      "phase": 0.0,
+      "torque_max": 5.0,
+      "type": "sinusoid"
+    },
+    {
+      "amplitude": 0.7,
+      "fraction": 0.5,
+      "frequency_hz": 0.5,
+      "magnitude": 0.5,
+      "name": "alternating",
+      "phase": 0.0,
+      "torque_max": 5.0,
+      "type": "alternating"
+    }
+  ],
+  "python_version": "3.13.0",
+  "scenarios": [
+    {
+      "L": 1.0,
+      "b": 0.1,
+      "g": 9.81,
+      "m": 1.0,
+      "name": "nominal",
+      "omega0": 0.0,
+      "theta0": 2.0
+    },
+    {
+      "L": 0.3,
+      "b": 0.1,
+      "g": 9.81,
+      "m": 1.0,
+      "name": "short_rod",
+      "omega0": 0.0,
+      "theta0": 2.0
+    },
+    {
+      "L": 1.0,
+      "b": 0.1,
+      "g": 9.81,
+      "m": 3.0,
+      "name": "heavy_bob",
+      "omega0": 0.0,
+      "theta0": 2.0
+    },
+    {
+      "L": 1.0,
+      "b": 1.0,
+      "g": 9.81,
+      "m": 1.0,
+      "name": "high_damping",
+      "omega0": 0.0,
+      "theta0": 2.0
+    },
+    {
+      "L": 1.0,
+      "b": 0.1,
+      "g": 1.62,
+      "m": 1.0,
+      "name": "low_gravity",
+      "omega0": 0.0,
+      "theta0": 2.0
+    }
+  ],
+  "storage_dtype": "float64",
+  "torch_version": "2.14.1+cu126",
+  "torque_max": 5.0
+}
