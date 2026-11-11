@@ -1,0 +1,98 @@
+# =============================================================================
+# SciNet++ -- P1-A Controlled Pendulum (Action-conditioned JEPA pilot)
+# -----------------------------------------------------------------------------
+#   python scripts/collect_controlled_pendulum.py \
+#       --config configs/dynamics/controlled_pendulum_jepa.yaml
+#   python scripts/audit_controlled_pendulum.py \
+#       --config configs/dynamics/controlled_pendulum_jepa.yaml
+#
+# This config drives ONLY the 20-episode P1-A pilot. It does NOT define a full
+# training run, an ActionConditionedWorldModel, or an MPC controller -- those are
+# explicitly out of scope for the pilot (see P1_A_PILOT_REPORT.md, STOP list).
+#
+# Determinism: every episode seed = master_seed*1000 + scenario_idx*100 +
+# profile_idx, so the pilot is byte-reproducible from this config alone.
+# =============================================================================
+experiment:
+  name: controlled_pendulum_jepa_pilot
+  seed: 20261111                       # master seed; drives per-episode seeds
+  output_root: datasets/controlled_pendulum_pilot
+
+simulator:
+  dt: 0.02                             # seconds per RK4 step (float64)
+  horizon_steps: 200                   # T transitions -> T+1 = 201 observations
+  action_max_torque: 5.0              # torque bound, U in [-5.0, +5.0]
+  observation_dim: 2                   # [theta_unwrapped, omega]
+  action_dim: 1                        # [torque]
+  reference_substeps: 16              # dt/16 reference for RK4 convergence audit
+
+# Five PHYSICAL scenarios. Initial conditions are held fixed (theta0, omega0) so
+# the only varying quantity is the physical parameter set -- this isolates the
+# parameter effect across episodes. Each scenario is paired with all 4 profiles.
+scenarios:
+  - name: nominal
+    g: 9.81
+    L: 1.0
+    m: 1.0
+    b: 0.1
+    theta0: 2.0
+    omega0: 0.0
+  - name: short_rod
+    g: 9.81
+    L: 0.3
+    m: 1.0
+    b: 0.1
+    theta0: 2.0
+    omega0: 0.0
+  - name: heavy_bob
+    g: 9.81
+    L: 1.0
+    m: 3.0
+    b: 0.1
+    theta0: 2.0
+    omega0: 0.0
+  - name: high_damping
+    g: 9.81
+    L: 1.0
+    m: 1.0
+    b: 1.0
+    theta0: 2.0
+    omega0: 0.0
+  - name: low_gravity
+    g: 1.62
+    L: 1.0
+    m: 1.0
+    b: 0.1
+    theta0: 2.0
+    omega0: 0.0
+
+# Four ACTION profiles. Each profile is a deterministic function of (T, dt, seed).
+action_profiles:
+  - name: random
+    type: random                      # uniform in [-torque_max, +torque_max], seeded
+  - name: step
+    type: step                        # +/- magnitude*torque_max, switch at `fraction`
+    fraction: 0.5
+    magnitude: 0.6
+  - name: sinusoid
+    type: sinusoid                    # amplitude*torque_max * sin(2*pi*f*t + phase)
+    amplitude: 0.7
+    frequency_hz: 0.5
+    phase: 0.0
+  - name: alternating
+    type: alternating                 # +magnitude*torque_max / -magnitude*torque_max
+    magnitude: 0.5
+
+pilot:
+  n_scenarios: 5
+  n_profiles: 4
+  episodes: 20                        # n_scenarios * n_profiles (hard requirement)
+  require_exactly: true
+  storage_dtype: float64              # pilot stored as float64 (physics fidelity)
+
+# Contract alignment note (read by consumers, not by the simulator):
+#   observations : [B, T+1, 2]   float64   -- x_0 ... x_T
+#   conditions   : [B, T,   1]   float64    -- u_0 ... u_{T-1} (torque)
+#   valid_mask   : [B, T]        bool
+#   episode_ids  : [B]            str
+# This matches dynamics.contracts.DynamicsBatch (unconditioned=False).
