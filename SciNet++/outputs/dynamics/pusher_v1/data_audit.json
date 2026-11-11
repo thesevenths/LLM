@@ -1,0 +1,5395 @@
+{
+  "audit_version": "1.0.0",
+  "generated_at": "2026-11-11T02:54:26.650976+00:00",
+  "dataset": {
+    "root": "datasets\\pusher_v1",
+    "dataset_version": "pusher-8af70418c4fb",
+    "dataset_seed": 20261110,
+    "manifest_sha256": "de69a06753bdb4d7954a0e40aa106337236905582cba905033d9f51020248d33",
+    "collection_config_hash": "f7c6f834ecd47a01f250a7f9d21a94f0e140b1fdd06302b33286cbe0dd1fefd0",
+    "environment_id": "Pusher-v5",
+    "gymnasium_version": "1.2.1",
+    "mujoco_version": "3.3.7"
+  },
+  "runtime": {
+    "python": "3.13.0",
+    "gymnasium": "1.2.1",
+    "mujoco": "3.3.7",
+    "numpy": "2.2.6",
+    "entry_point": "gymnasium.envs.mujoco.pusher_v5:PusherEnv",
+    "_get_obs_source": "    def _get_obs(self):\n        return np.concatenate(\n            [\n                self.data.qpos.flatten()[:7],\n                self.data.qvel.flatten()[:7],\n                self.get_body_com(\"tips_arm\"),\n                self.get_body_com(\"object\"),\n                self.get_body_com(\"goal\"),\n            ]\n        )\n"
+  },
+  "observation_contract": {
+    "source": "gymnasium.envs.mujoco.pusher_v5.PusherEnv._get_obs",
+    "verified_against": "gymnasium 1.2.1 / mujoco 3.3.7",
+    "layout": [
+      "obs[0:7]   = data.qpos.flatten()[:7]      (7 arm joint angles)",
+      "obs[7:14]  = data.qvel.flatten()[:7]      (7 arm joint velocities)",
+      "obs[14:17] = get_body_com('tips_arm')     (fingertip xyz)",
+      "obs[17:20] = get_body_com('object')       (object xyz)",
+      "obs[20:23] = get_body_com('goal')         (goal xyz, fixed)"
+    ],
+    "semantic_groups": {
+      "joint_qpos": [
+        0,
+        7
+      ],
+      "joint_qvel": [
+        7,
+        14
+      ],
+      "fingertip_com": [
+        14,
+        17
+      ],
+      "object_com": [
+        17,
+        20
+      ],
+      "goal_com": [
+        20,
+        23
+      ],
+      "robot_kinematics": [
+        0,
+        17
+      ]
+    }
+  },
+  "checks": {
+    "manifest_sha256": {
+      "pass": true,
+      "manifest_sha256": "de69a06753bdb4d7954a0e40aa106337236905582cba905033d9f51020248d33",
+      "declared_files": 300,
+      "disk_files": 300,
+      "hash_mismatches": [],
+      "undeclared_files": [],
+      "missing_files": []
+    },
+    "shapes": {
+      "pass": true,
+      "episodes": 300,
+      "transitions": 30000,
+      "obs_dim": 23,
+      "action_dim": 7,
+      "expected_shape": [
+        null,
+        23
+      ],
+      "violations": []
+    },
+    "action_bounds": {
+      "pass": true,
+      "declared": [
+        -2.0,
+        2.0
+      ],
+      "observed": [
+        -2.0,
+        2.0
+      ],
+      "violations": []
+    },
+    "episode_ids": {
+      "pass": true,
+      "total": 300,
+      "unique": 300,
+      "duplicates": [],
+      "meta_filename_mismatches": []
+    },
+    "split_isolation": {
+      "pass": true,
+      "episode_id_overlap": {},
+      "reset_seed_overlap": {},
+      "manifest_split_id_overlap": {},
+      "reset_seed_count_per_split": {
+        "train": 80,
+        "validation": 10,
+        "frozen_test": 5,
+        "ood_test": 5
+      }
+    },
+    "temporal_continuity": {
+      "pass": true,
+      "compared_elements": 683100,
+      "exact_matches": 683100,
+      "mismatched_elements": 0,
+      "max_abs_error": 0.0,
+      "rule": "obs[t+1] == next_obs[t] for t=0..T-2, bitwise in float32"
+    },
+    "action_alignment_replay": {
+      "enabled": true,
+      "status": "completed",
+      "mode": "exact_float64_actions",
+      "atol": 0.001,
+      "episodes_replayed": 300,
+      "steps_replayed": 30000,
+      "max_abs_obs_error": 0.0,
+      "mean_abs_obs_error": 0.0,
+      "p95_abs_obs_error": 0.0,
+      "worst": {
+        "episode": null,
+        "step": -1,
+        "abs_error": 0.0
+      },
+      "alignment_failures": [],
+      "n_alignment_failures": 0,
+      "action_reconstruction_max_abs_diff": 0.0,
+      "fingertip_object_contact_steps": 0,
+      "other_arm_object_contact_steps": 2819,
+      "episodes_with_fingertip_contact": 0,
+      "episodes_with_arm_contact": 116,
+      "per_episode": [
+        {
+          "episode_id": "train_guided_00000",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00001",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_guided_00002",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 72
+        },
+        {
+          "episode_id": "train_guided_00003",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00004",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00005",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00006",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00007",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "train_guided_00008",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00009",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00010",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00011",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "train_guided_00012",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00013",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00014",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00015",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00016",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00017",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00018",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00019",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00020",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00021",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00022",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00023",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 72
+        },
+        {
+          "episode_id": "train_guided_00024",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00025",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00026",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00027",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00028",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00029",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00030",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00031",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00032",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00033",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00034",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00035",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00036",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00037",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00038",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00039",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00040",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00041",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00042",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00043",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00044",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00045",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 61
+        },
+        {
+          "episode_id": "train_guided_00046",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00047",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00048",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00049",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 60
+        },
+        {
+          "episode_id": "train_guided_00050",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00051",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 65
+        },
+        {
+          "episode_id": "train_guided_00052",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00053",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "train_guided_00054",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00055",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 72
+        },
+        {
+          "episode_id": "train_guided_00056",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00057",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00058",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00059",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00060",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 5
+        },
+        {
+          "episode_id": "train_guided_00061",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00062",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00063",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00064",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_guided_00065",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00066",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00067",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00068",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_guided_00069",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_guided_00070",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00071",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00072",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00073",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_guided_00074",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "train_guided_00075",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00076",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_guided_00077",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00078",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00079",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00000",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 23
+        },
+        {
+          "episode_id": "train_mixture_00001",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 29
+        },
+        {
+          "episode_id": "train_mixture_00002",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00003",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00004",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00005",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00006",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 31
+        },
+        {
+          "episode_id": "train_mixture_00007",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00008",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 27
+        },
+        {
+          "episode_id": "train_mixture_00009",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00010",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00011",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00012",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00013",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "train_mixture_00014",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00015",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00016",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00017",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00018",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00019",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 5
+        },
+        {
+          "episode_id": "train_mixture_00020",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00021",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 31
+        },
+        {
+          "episode_id": "train_mixture_00022",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 20
+        },
+        {
+          "episode_id": "train_mixture_00023",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 11
+        },
+        {
+          "episode_id": "train_mixture_00024",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 23
+        },
+        {
+          "episode_id": "train_mixture_00025",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_mixture_00026",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00027",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00028",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 19
+        },
+        {
+          "episode_id": "train_mixture_00029",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00030",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 54
+        },
+        {
+          "episode_id": "train_mixture_00031",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 24
+        },
+        {
+          "episode_id": "train_mixture_00032",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00033",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00034",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00035",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 22
+        },
+        {
+          "episode_id": "train_mixture_00036",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00037",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 20
+        },
+        {
+          "episode_id": "train_mixture_00038",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00039",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00040",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00041",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "train_mixture_00042",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00043",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 5
+        },
+        {
+          "episode_id": "train_mixture_00044",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00045",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00046",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00047",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00048",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 13
+        },
+        {
+          "episode_id": "train_mixture_00049",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 19
+        },
+        {
+          "episode_id": "train_mixture_00050",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00051",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00052",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 42
+        },
+        {
+          "episode_id": "train_mixture_00053",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 21
+        },
+        {
+          "episode_id": "train_mixture_00054",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 37
+        },
+        {
+          "episode_id": "train_mixture_00055",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00056",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00057",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_mixture_00058",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00059",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00060",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00061",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 24
+        },
+        {
+          "episode_id": "train_mixture_00062",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00063",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_mixture_00064",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_mixture_00065",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_mixture_00066",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 4
+        },
+        {
+          "episode_id": "train_mixture_00067",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00068",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00069",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 26
+        },
+        {
+          "episode_id": "train_mixture_00070",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 21
+        },
+        {
+          "episode_id": "train_mixture_00071",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00072",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_mixture_00073",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 27
+        },
+        {
+          "episode_id": "train_mixture_00074",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 39
+        },
+        {
+          "episode_id": "train_mixture_00075",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00076",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 31
+        },
+        {
+          "episode_id": "train_mixture_00077",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00078",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00079",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_random_00000",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00001",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00002",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00003",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00004",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00005",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00006",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00007",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00008",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00009",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00010",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00011",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00012",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00013",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00014",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00015",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00016",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00017",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00018",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00019",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00020",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00021",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00022",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00023",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00024",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00025",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00026",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00027",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00028",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00029",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00030",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00031",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00032",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00033",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00034",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00035",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00036",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00037",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00038",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00039",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00040",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00041",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00042",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00043",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00044",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00045",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00046",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00047",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00048",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00049",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00050",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00051",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00052",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00053",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00054",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00055",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00056",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00057",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00058",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00059",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00060",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00061",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00062",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00063",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00064",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00065",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00066",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00067",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00068",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00069",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00070",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00071",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00072",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00073",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00074",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00075",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00076",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00077",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00078",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00079",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00000",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00001",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00002",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00003",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "validation_guided_00004",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "validation_guided_00005",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "validation_guided_00006",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00007",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00008",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00009",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_mixture_00000",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 35
+        },
+        {
+          "episode_id": "validation_mixture_00001",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 14
+        },
+        {
+          "episode_id": "validation_mixture_00002",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_mixture_00003",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 7
+        },
+        {
+          "episode_id": "validation_mixture_00004",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "validation_mixture_00005",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "validation_mixture_00006",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "validation_mixture_00007",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 21
+        },
+        {
+          "episode_id": "validation_mixture_00008",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 35
+        },
+        {
+          "episode_id": "validation_mixture_00009",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 4
+        },
+        {
+          "episode_id": "validation_random_00000",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00001",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00002",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00003",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00004",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00005",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00006",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00007",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00008",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00009",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_guided_00000",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "frozen_test_guided_00001",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_guided_00002",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "frozen_test_guided_00003",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_guided_00004",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_mixture_00000",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_mixture_00001",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "frozen_test_mixture_00002",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 15
+        },
+        {
+          "episode_id": "frozen_test_mixture_00003",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "frozen_test_mixture_00004",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "frozen_test_random_00000",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00001",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00002",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00003",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00004",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00000",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "ood_test_guided_00001",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00002",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00003",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00004",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_mixture_00000",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 14
+        },
+        {
+          "episode_id": "ood_test_mixture_00001",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 30
+        },
+        {
+          "episode_id": "ood_test_mixture_00002",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 7
+        },
+        {
+          "episode_id": "ood_test_mixture_00003",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "ood_test_mixture_00004",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "ood_test_random_00000",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00001",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00002",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00003",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00004",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        }
+      ],
+      "method": "gym.make('Pusher-v5'); reset(seed=episode_seed); at each t compare simulated obs[t] (float32) with stored obs[t]; rebuild the original float64 action via the deterministic collection policy + policy_rng_seed = (reset_seed ^ 0x5BD1E995) & 0x7FFFFFFF, then env.step(a64)."
+    },
+    "action_alignment_replay_diagnostic_float32": {
+      "enabled": true,
+      "status": "completed",
+      "mode": "stored_float32_actions",
+      "atol": 0.001,
+      "episodes_replayed": 300,
+      "steps_replayed": 30000,
+      "max_abs_obs_error": 0.580467939376831,
+      "mean_abs_obs_error": 0.00020702728245887555,
+      "p95_abs_obs_error": 3.170967102050781e-05,
+      "worst": {
+        "episode": "train_random_00019",
+        "step": 94,
+        "abs_error": 0.580467939376831
+      },
+      "alignment_failures": [
+        "train/train_mixture_00001@t=99: 1.873e-03",
+        "train/train_random_00003@t=75: 1.142e-03",
+        "train/train_random_00003@t=76: 1.016e-03",
+        "train/train_random_00009@t=90: 1.497e-03",
+        "train/train_random_00009@t=91: 1.323e-03",
+        "train/train_random_00009@t=92: 1.174e-03",
+        "train/train_random_00009@t=93: 1.048e-03",
+        "train/train_random_00009@t=97: 4.887e-03",
+        "train/train_random_00009@t=98: 1.137e-03",
+        "train/train_random_00009@t=99: 1.064e-03",
+        "train/train_random_00012@t=95: 1.417e-03",
+        "train/train_random_00012@t=96: 1.251e-03",
+        "train/train_random_00012@t=97: 1.106e-03",
+        "train/train_random_00019@t=77: 2.888e-01",
+        "train/train_random_00019@t=78: 2.064e-01",
+        "train/train_random_00019@t=79: 1.927e-01",
+        "train/train_random_00019@t=80: 1.775e-01",
+        "train/train_random_00019@t=81: 1.658e-01",
+        "train/train_random_00019@t=82: 1.535e-01",
+        "train/train_random_00019@t=83: 1.427e-01"
+      ],
+      "n_alignment_failures": 146,
+      "action_reconstruction_max_abs_diff": null,
+      "fingertip_object_contact_steps": 0,
+      "other_arm_object_contact_steps": 2819,
+      "episodes_with_fingertip_contact": 0,
+      "episodes_with_arm_contact": 116,
+      "per_episode": [
+        {
+          "episode_id": "train_guided_00000",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 7.031485438346863e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00001",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_guided_00002",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 8.475035429000854e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 72
+        },
+        {
+          "episode_id": "train_guided_00003",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00004",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 3.8743019104003906e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00005",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.564621925354004e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00006",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.825392246246338e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00007",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.384185791015625e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "train_guided_00008",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00009",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00010",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00011",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.6205012798309326e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "train_guided_00012",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00013",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.0116567611694336e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00014",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.6635825634002686e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00015",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00016",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.043081283569336e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00017",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00018",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.086162567138672e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00019",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.2479722499847412e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00020",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00021",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00022",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 4.470348358154297e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00023",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.0554504115134478e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 72
+        },
+        {
+          "episode_id": "train_guided_00024",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00025",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00026",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00027",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00028",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.980232238769531e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00029",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00030",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.0133953765034676e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00031",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1473894119262695e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "train_guided_00032",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00033",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00034",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.043081283569336e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00035",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 8.940696716308594e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00036",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.5459954738616943e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00037",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00038",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00039",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00040",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.384185791015625e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00041",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00042",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1175870895385742e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00043",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00044",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00045",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 4.377216100692749e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 61
+        },
+        {
+          "episode_id": "train_guided_00046",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 7.450580596923828e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00047",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00048",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 7.171183824539185e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00049",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.7345882952213287e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 60
+        },
+        {
+          "episode_id": "train_guided_00050",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 8.866190910339355e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00051",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.421438694000244e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 65
+        },
+        {
+          "episode_id": "train_guided_00052",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.289912223815918e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00053",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.6664853319525719e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "train_guided_00054",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 8.940696716308594e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00055",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 3.0687078833580017e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 72
+        },
+        {
+          "episode_id": "train_guided_00056",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00057",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.4156103134155273e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00058",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00059",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.332031726837158e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00060",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 5
+        },
+        {
+          "episode_id": "train_guided_00061",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.564621925354004e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00062",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00063",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00064",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.384185791015625e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_guided_00065",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.9371509552001953e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00066",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00067",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.9802322387695312e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00068",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_guided_00069",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_guided_00070",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.7881393432617188e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00071",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.592802047729492e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00072",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00073",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_guided_00074",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.7508864402770996e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "train_guided_00075",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 2.3096799850463867e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00076",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.341104507446289e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_guided_00077",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 7.746275514364243e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "train_guided_00078",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_guided_00079",
+          "split": "train",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00000",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.6558915376663208e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 23
+        },
+        {
+          "episode_id": "train_mixture_00001",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0018733441829681396,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 29
+        },
+        {
+          "episode_id": "train_mixture_00002",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.995133399963379e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00003",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 6.079673767089844e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00004",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.752671182155609e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00005",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 8.046627044677734e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00006",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.981590270996094e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 31
+        },
+        {
+          "episode_id": "train_mixture_00007",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00032158195972442627,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00008",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.0579824447631836e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 27
+        },
+        {
+          "episode_id": "train_mixture_00009",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00031960010528564453,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00010",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.5762786865234375e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00011",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.729496479034424e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00012",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 4.827976226806641e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00013",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.483363151550293e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "train_mixture_00014",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0002065896987915039,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00015",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.111098289489746e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00016",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00014823675155639648,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00017",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 8.344650268554688e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00018",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.1296011507511139e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00019",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.728534698486328e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 5
+        },
+        {
+          "episode_id": "train_mixture_00020",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.245737075805664e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00021",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.238719940185547e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 31
+        },
+        {
+          "episode_id": "train_mixture_00022",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.5626115277409554e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 20
+        },
+        {
+          "episode_id": "train_mixture_00023",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 6.192922592163086e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 11
+        },
+        {
+          "episode_id": "train_mixture_00024",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.179115295410156e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 23
+        },
+        {
+          "episode_id": "train_mixture_00025",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0008451342582702637,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_mixture_00026",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 8.225440979003906e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00027",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 8.940696716308594e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 18
+        },
+        {
+          "episode_id": "train_mixture_00028",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.4930963516235352e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 19
+        },
+        {
+          "episode_id": "train_mixture_00029",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.495284080505371e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00030",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.844499588012695e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 54
+        },
+        {
+          "episode_id": "train_mixture_00031",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.3440847396850586e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 24
+        },
+        {
+          "episode_id": "train_mixture_00032",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00015839934349060059,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00033",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.152557373046875e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00034",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0003141537308692932,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00035",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.0936131477355957e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 22
+        },
+        {
+          "episode_id": "train_mixture_00036",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.8743019104003906e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00037",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.304813385009766e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 20
+        },
+        {
+          "episode_id": "train_mixture_00038",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 8.493661880493164e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00039",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.952052116394043e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "train_mixture_00040",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 4.314631223678589e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00041",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00021708011627197266,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "train_mixture_00042",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.0547380447387695e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00043",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.118440508842468e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 5
+        },
+        {
+          "episode_id": "train_mixture_00044",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.664668373763561e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00045",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 4.76837158203125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00046",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.039836883544922e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00047",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 8.463859558105469e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00048",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.1980533599853516e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 13
+        },
+        {
+          "episode_id": "train_mixture_00049",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00023056194186210632,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 19
+        },
+        {
+          "episode_id": "train_mixture_00050",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.7374753952026367e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00051",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00019939476624131203,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00052",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 4.021450877189636e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 42
+        },
+        {
+          "episode_id": "train_mixture_00053",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.462237358093262e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 21
+        },
+        {
+          "episode_id": "train_mixture_00054",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.2961368560791016e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 37
+        },
+        {
+          "episode_id": "train_mixture_00055",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.321577191352844e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00056",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.03010368347168e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00057",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.7076256275177e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_mixture_00058",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.36766242980957e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00059",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.841255187988281e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 2
+        },
+        {
+          "episode_id": "train_mixture_00060",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 6.4373016357421875e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00061",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.4794211387634277e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 24
+        },
+        {
+          "episode_id": "train_mixture_00062",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0006711520254611969,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "train_mixture_00063",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 4.079192876815796e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_mixture_00064",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00011050701141357422,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "train_mixture_00065",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.881332516670227e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_mixture_00066",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 6.553530693054199e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 4
+        },
+        {
+          "episode_id": "train_mixture_00067",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.836148142814636e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 8
+        },
+        {
+          "episode_id": "train_mixture_00068",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.811452865600586e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "train_mixture_00069",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 6.22868537902832e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 26
+        },
+        {
+          "episode_id": "train_mixture_00070",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.000225067138671875,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 21
+        },
+        {
+          "episode_id": "train_mixture_00071",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.467632293701172e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00072",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00011889636516571045,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "train_mixture_00073",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 6.318092346191406e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 27
+        },
+        {
+          "episode_id": "train_mixture_00074",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.201995372772217e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 39
+        },
+        {
+          "episode_id": "train_mixture_00075",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.7060508728027344e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00076",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.181529998779297e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 31
+        },
+        {
+          "episode_id": "train_mixture_00077",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 4.798173904418945e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_mixture_00078",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.79006290435791e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_mixture_00079",
+          "split": "train",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.47713851928711e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 6
+        },
+        {
+          "episode_id": "train_random_00000",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 8.36402177810669e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00001",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 3.0472874641418457e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00002",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 7.240474224090576e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00003",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0011424049735069275,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00004",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00027298927307128906,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00005",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00015246868133544922,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00006",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0009542554616928101,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00007",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00011790543794631958,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00008",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0004494786262512207,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00009",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.004886537790298462,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00010",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0003071427345275879,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00011",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 3.629922866821289e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00012",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0014168024063110352,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00013",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 3.930926322937012e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00014",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.4126300811767578e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00015",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 5.1744282245635986e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00016",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00021991878747940063,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00017",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0001526474952697754,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00018",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00023307651281356812,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00019",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.580467939376831,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00020",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.2949109077453613e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00021",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00010389089584350586,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00022",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 5.88209368288517e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00023",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 8.732080459594727e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00024",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.9881408661603928e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00025",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0011584386229515076,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00026",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.798570156097412e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00027",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00012415647506713867,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00028",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0002222023904323578,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00029",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.850724220275879e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00030",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0001234188675880432,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00031",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0021175742149353027,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00032",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 9.641051292419434e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00033",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 8.665397763252258e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00034",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0009113550186157227,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00035",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00012214481830596924,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00036",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.0848045349121094e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00037",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 5.2168965339660645e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00038",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 4.398822784423828e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00039",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 5.602836608886719e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00040",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0008661188185214996,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00041",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0010446757078170776,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00042",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 4.2051076889038086e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00043",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.001572638750076294,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00044",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00021347403526306152,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00045",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 3.0338764190673828e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00046",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.037978529930114746,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00047",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00011960044503211975,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00048",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0015601813793182373,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00049",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.8600374460220337e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00050",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 2.562999725341797e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00051",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 2.4765729904174805e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00052",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0024676918983459473,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00053",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 7.587671279907227e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00054",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00012642145156860352,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00055",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 5.143880844116211e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00056",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00037550926208496094,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00057",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 4.06801700592041e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00058",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 8.07642936706543e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00059",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 3.829598426818848e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00060",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.4424324035644531e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00061",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00010007619857788086,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00062",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0006667971611022949,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00063",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.002346634864807129,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00064",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0004885122179985046,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00065",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 2.54213809967041e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00066",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00012254714965820312,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00067",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.0058283805847168e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00068",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 2.0712614059448242e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00069",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0014470070600509644,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00070",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00010992586612701416,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00071",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00017964839935302734,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00072",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 6.967782974243164e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00073",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 8.666515350341797e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00074",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 1.1563301086425781e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00075",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 6.330013275146484e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00076",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.0004622936248779297,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00077",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 0.00010067224502563477,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00078",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 2.7298927307128906e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "train_random_00079",
+          "split": "train",
+          "policy": "random",
+          "max_abs_obs_error": 6.596744060516357e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00000",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 1.043081283569336e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00001",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 3.073364496231079e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00002",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00003",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 2.1327286958694458e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "validation_guided_00004",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 1
+        },
+        {
+          "episode_id": "validation_guided_00005",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 2.5890767574310303e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 70
+        },
+        {
+          "episode_id": "validation_guided_00006",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 1.5515834093093872e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00007",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00008",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 1.4901161193847656e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_guided_00009",
+          "split": "validation",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_mixture_00000",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 7.450580596923828e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 35
+        },
+        {
+          "episode_id": "validation_mixture_00001",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.384185791015625e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 14
+        },
+        {
+          "episode_id": "validation_mixture_00002",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.533017873764038e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_mixture_00003",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.4156103134155273e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 7
+        },
+        {
+          "episode_id": "validation_mixture_00004",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0004643648862838745,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "validation_mixture_00005",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.00010508298873901367,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 12
+        },
+        {
+          "episode_id": "validation_mixture_00006",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.451108932495117e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 3
+        },
+        {
+          "episode_id": "validation_mixture_00007",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.0634382963180542e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 21
+        },
+        {
+          "episode_id": "validation_mixture_00008",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 1.8503516912460327e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 35
+        },
+        {
+          "episode_id": "validation_mixture_00009",
+          "split": "validation",
+          "policy": "mixture",
+          "max_abs_obs_error": 5.192123353481293e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 4
+        },
+        {
+          "episode_id": "validation_random_00000",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0001221001148223877,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00001",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.00014659762382507324,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00002",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0008440017700195312,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00003",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.00043220818042755127,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00004",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.014742091298103333,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00005",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 2.68593430519104e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00006",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 6.99162483215332e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00007",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.002588629722595215,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00008",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 1.1920928955078125e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "validation_random_00009",
+          "split": "validation",
+          "policy": "random",
+          "max_abs_obs_error": 0.0003948807716369629,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_guided_00000",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 4.991888999938965e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 69
+        },
+        {
+          "episode_id": "frozen_test_guided_00001",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_guided_00002",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 5.140900611877441e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "frozen_test_guided_00003",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_guided_00004",
+          "split": "frozen_test",
+          "policy": "guided",
+          "max_abs_obs_error": 3.129243850708008e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_mixture_00000",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.919696271419525e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_mixture_00001",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.16066837310791e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "frozen_test_mixture_00002",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.7954578399658203e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 15
+        },
+        {
+          "episode_id": "frozen_test_mixture_00003",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.0004214346408843994,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "frozen_test_mixture_00004",
+          "split": "frozen_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.978610038757324e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 9
+        },
+        {
+          "episode_id": "frozen_test_random_00000",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 1.5167519450187683e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00001",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 2.5704503059387207e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00002",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0001874864101409912,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00003",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0011807158589363098,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "frozen_test_random_00004",
+          "split": "frozen_test",
+          "policy": "random",
+          "max_abs_obs_error": 9.98079776763916e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00000",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 1.2097880244255066e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 71
+        },
+        {
+          "episode_id": "ood_test_guided_00001",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 1.1920928955078125e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00002",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 1.2665987014770508e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00003",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 1.5739351511001587e-07,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_guided_00004",
+          "split": "ood_test",
+          "policy": "guided",
+          "max_abs_obs_error": 5.960464477539063e-08,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_mixture_00000",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 9.995326399803162e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 14
+        },
+        {
+          "episode_id": "ood_test_mixture_00001",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 0.045049965381622314,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 30
+        },
+        {
+          "episode_id": "ood_test_mixture_00002",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 3.635883331298828e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 7
+        },
+        {
+          "episode_id": "ood_test_mixture_00003",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.682209014892578e-06,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 10
+        },
+        {
+          "episode_id": "ood_test_mixture_00004",
+          "split": "ood_test",
+          "policy": "mixture",
+          "max_abs_obs_error": 2.212822437286377e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 16
+        },
+        {
+          "episode_id": "ood_test_random_00000",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.006103873252868652,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00001",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0010962188243865967,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00002",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 0.0001614689826965332,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00003",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 2.2023916244506836e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        },
+        {
+          "episode_id": "ood_test_random_00004",
+          "split": "ood_test",
+          "policy": "random",
+          "max_abs_obs_error": 2.7120113372802734e-05,
+          "fingertip_contact_steps": 0,
+          "arm_contact_steps": 0
+        }
+      ],
+      "method": "gym.make('Pusher-v5'); reset(seed=episode_seed); at each t compare simulated obs[t] (float32) with stored obs[t]; env.step(stored float32 action[t]) directly."
+    },
+    "action_distribution": {
+      "per_dim_mean": [
+        0.07687786079150975,
+        0.14412655262393365,
+        -0.008812830276819719,
+        0.03531549859077559,
+        -0.010558296618586378,
+        -0.018251858094626792,
+        -0.009331509730609136
+      ],
+      "per_dim_std": [
+        0.8487985817925269,
+        0.8453148966951257,
+        0.8399308207486141,
+        0.8445825462954561,
+        0.8487619084326051,
+        0.8557798378385398,
+        0.8512744040068709
+      ],
+      "overall": {
+        "min": -2.0,
+        "max": 2.0,
+        "mean": 0.029909345326510992,
+        "std": 0.8496655651895358
+      },
+      "mean_abs_step_to_step_change": {
+        "min": 0.07480521500110626,
+        "max": 1.4137039184570312,
+        "mean": 0.8027808758119742,
+        "std": 0.5310366950373123
+      },
+      "note": "step-to-step change > 0 confirms actions are not constant"
+    },
+    "state_change_distribution": {
+      "per_dimension": [
+        {
+          "dim": 0,
+          "mean_abs_delta": 0.009043415622519873,
+          "std_delta": 0.010964773953917017,
+          "max_abs_delta": 0.0538385808467865
+        },
+        {
+          "dim": 1,
+          "mean_abs_delta": 0.01064321750114153,
+          "std_delta": 0.012678689703864984,
+          "max_abs_delta": 0.05990546941757202
+        },
+        {
+          "dim": 2,
+          "mean_abs_delta": 0.03431856085584729,
+          "std_delta": 0.05706035374193892,
+          "max_abs_delta": 0.3797868490219116
+        },
+        {
+          "dim": 3,
+          "mean_abs_delta": 0.033052756231958844,
+          "std_delta": 0.049813203260354606,
+          "max_abs_delta": 0.31808340549468994
+        },
+        {
+          "dim": 4,
+          "mean_abs_delta": 0.04313454345475984,
+          "std_delta": 0.07322843694318684,
+          "max_abs_delta": 0.412281334400177
+        },
+        {
+          "dim": 5,
+          "mean_abs_delta": 0.036505025941133175,
+          "std_delta": 0.0601917414927761,
+          "max_abs_delta": 0.33662307262420654
+        },
+        {
+          "dim": 6,
+          "mean_abs_delta": 0.043259590561073466,
+          "std_delta": 0.07301029522644299,
+          "max_abs_delta": 0.4271212946623564
+        },
+        {
+          "dim": 7,
+          "mean_abs_delta": 0.05972633466769657,
+          "std_delta": 0.09232826273171818,
+          "max_abs_delta": 0.6748269498348236
+        },
+        {
+          "dim": 8,
+          "mean_abs_delta": 0.09079311227976992,
+          "std_delta": 0.14219578572212563,
+          "max_abs_delta": 1.5029535293579102
+        },
+        {
+          "dim": 9,
+          "mean_abs_delta": 0.47845117137672644,
+          "std_delta": 0.7490649178216472,
+          "max_abs_delta": 8.74901568889618
+        },
+        {
+          "dim": 10,
+          "mean_abs_delta": 0.3684995281911799,
+          "std_delta": 0.588907519946958,
+          "max_abs_delta": 6.996720314025879
+        },
+        {
+          "dim": 11,
+          "mean_abs_delta": 0.6818491888365956,
+          "std_delta": 1.0566364919966709,
+          "max_abs_delta": 9.815134882926941
+        },
+        {
+          "dim": 12,
+          "mean_abs_delta": 0.690321455813562,
+          "std_delta": 1.1181913189202635,
+          "max_abs_delta": 8.601229190826416
+        },
+        {
+          "dim": 13,
+          "mean_abs_delta": 0.6962818485950115,
+          "std_delta": 1.0688731486145258,
+          "max_abs_delta": 9.423511624336243
+        },
+        {
+          "dim": 14,
+          "mean_abs_delta": 0.007533478828736891,
+          "std_delta": 0.011451004755273133,
+          "max_abs_delta": 0.09910938143730164
+        },
+        {
+          "dim": 15,
+          "mean_abs_delta": 0.007953386291168863,
+          "std_delta": 0.01058600820408392,
+          "max_abs_delta": 0.08303189277648926
+        },
+        {
+          "dim": 16,
+          "mean_abs_delta": 0.0070784788020123715,
+          "std_delta": 0.009969450193863331,
+          "max_abs_delta": 0.057851001620292664
+        },
+        {
+          "dim": 17,
+          "mean_abs_delta": 4.206907798846563e-05,
+          "std_delta": 0.0002146837931019647,
+          "max_abs_delta": 0.0036425888538360596
+        },
+        {
+          "dim": 18,
+          "mean_abs_delta": 4.691147667666276e-05,
+          "std_delta": 0.00023146731341388134,
+          "max_abs_delta": 0.004135847091674805
+        },
+        {
+          "dim": 19,
+          "mean_abs_delta": 0.0,
+          "std_delta": 0.0,
+          "max_abs_delta": 0.0
+        },
+        {
+          "dim": 20,
+          "mean_abs_delta": 0.0,
+          "std_delta": 0.0,
+          "max_abs_delta": 0.0
+        },
+        {
+          "dim": 21,
+          "mean_abs_delta": 0.0,
+          "std_delta": 0.0,
+          "max_abs_delta": 0.0
+        },
+        {
+          "dim": 22,
+          "mean_abs_delta": 0.0,
+          "std_delta": 0.0,
+          "max_abs_delta": 0.0
+        }
+      ],
+      "semantic_groups": {
+        "joint_qpos": {
+          "dims": [
+            0,
+            7
+          ],
+          "mean_abs_delta": 0.02999387288120486,
+          "max_abs_delta": 0.4271212946623564
+        },
+        "joint_qvel": {
+          "dims": [
+            7,
+            14
+          ],
+          "mean_abs_delta": 0.43798894853722026,
+          "max_abs_delta": 9.815134882926941
+        },
+        "fingertip_com": {
+          "dims": [
+            14,
+            17
+          ],
+          "mean_abs_delta": 0.007521781307306042,
+          "max_abs_delta": 0.09910938143730164
+        },
+        "object_com": {
+          "dims": [
+            17,
+            20
+          ],
+          "mean_abs_delta": 2.966018488837613e-05,
+          "max_abs_delta": 0.004135847091674805
+        },
+        "goal_com": {
+          "dims": [
+            20,
+            23
+          ],
+          "mean_abs_delta": 0.0,
+          "max_abs_delta": 0.0
+        },
+        "robot_kinematics": {
+          "dims": [
+            0,
+            17
+          ],
+          "mean_abs_delta": 0.19402618199122904,
+          "max_abs_delta": 9.815134882926941
+        }
+      }
+    },
+    "contact_statistics": {
+      "stored_contact_state_ratio_overall": {
+        "min": 0.0,
+        "max": 0.72,
+        "mean": 0.09396666666666666,
+        "std": 0.18965213476842865
+      },
+      "stored_contact_state_ratio_by_policy": {
+        "guided": {
+          "min": 0.0,
+          "max": 0.72,
+          "mean": 0.1561,
+          "std": 0.28548518350345253
+        },
+        "mixture": {
+          "min": 0.0,
+          "max": 0.54,
+          "mean": 0.12580000000000002,
+          "std": 0.11268700013754915
+        },
+        "random": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "replay_fingertip_object_contact_steps": 0,
+      "replay_other_arm_object_contact_steps": 2819,
+      "replay_total_steps": 30000
+    },
+    "per_split": {
+      "train": {
+        "episodes": 240,
+        "transitions": 24000,
+        "init_object_goal_distance": {
+          "min": 0.18234498798847198,
+          "max": 0.3249530792236328,
+          "mean": 0.2396605471149087,
+          "std": 0.04276676746325172
+        },
+        "final_object_goal_distance": {
+          "min": 0.14435377717018127,
+          "max": 0.3759783208370209,
+          "mean": 0.23983085981259744,
+          "std": 0.045343926634382394
+        },
+        "mean_reward": {
+          "min": -1.6542325019836426,
+          "max": -0.27391868829727173,
+          "mean": -0.9503839479138454,
+          "std": 0.45794437209874067
+        },
+        "stored_contact_ratio": {
+          "min": 0.0,
+          "max": 0.72,
+          "mean": 0.09170833333333334,
+          "std": 0.18725427880439888
+        },
+        "distinct_reset_seeds": 80,
+        "policy_counts": {
+          "guided": 80,
+          "mixture": 80,
+          "random": 80
+        }
+      },
+      "validation": {
+        "episodes": 30,
+        "transitions": 3000,
+        "init_object_goal_distance": {
+          "min": 0.19032655656337738,
+          "max": 0.29613709449768066,
+          "mean": 0.2223028689622879,
+          "std": 0.036068638563192666
+        },
+        "final_object_goal_distance": {
+          "min": 0.18295612931251526,
+          "max": 0.29613709449768066,
+          "mean": 0.2214948207139969,
+          "std": 0.036575670010384934
+        },
+        "mean_reward": {
+          "min": -1.5315585136413574,
+          "max": -0.28700336813926697,
+          "mean": -0.9216556598742803,
+          "std": 0.44230623937401087
+        },
+        "stored_contact_ratio": {
+          "min": 0.0,
+          "max": 0.7,
+          "mean": 0.09566666666666666,
+          "std": 0.18688112680406102
+        },
+        "distinct_reset_seeds": 10,
+        "policy_counts": {
+          "guided": 10,
+          "mixture": 10,
+          "random": 10
+        }
+      },
+      "frozen_test": {
+        "episodes": 15,
+        "transitions": 1500,
+        "init_object_goal_distance": {
+          "min": 0.20429617166519165,
+          "max": 0.2692793011665344,
+          "mean": 0.2383291244506836,
+          "std": 0.02812435391120521
+        },
+        "final_object_goal_distance": {
+          "min": 0.20419937372207642,
+          "max": 0.27697935700416565,
+          "mean": 0.23924151062965393,
+          "std": 0.02768762977983601
+        },
+        "mean_reward": {
+          "min": -1.5881646871566772,
+          "max": -0.313928484916687,
+          "mean": -0.9644729614257812,
+          "std": 0.4785027484366823
+        },
+        "stored_contact_ratio": {
+          "min": 0.0,
+          "max": 0.71,
+          "mean": 0.12200000000000001,
+          "std": 0.23175274180327046
+        },
+        "distinct_reset_seeds": 5,
+        "policy_counts": {
+          "guided": 5,
+          "mixture": 5,
+          "random": 5
+        }
+      },
+      "ood_test": {
+        "episodes": 15,
+        "transitions": 1500,
+        "init_object_goal_distance": {
+          "min": 0.17985166609287262,
+          "max": 0.24901054799556732,
+          "mean": 0.22562976479530333,
+          "std": 0.024848009193834453
+        },
+        "final_object_goal_distance": {
+          "min": 0.1740010529756546,
+          "max": 0.24901054799556732,
+          "mean": 0.22334828078746796,
+          "std": 0.025171999907173784
+        },
+        "mean_reward": {
+          "min": -1.5507932901382446,
+          "max": -0.2832013964653015,
+          "mean": -0.9362967530886332,
+          "std": 0.4573468096127018
+        },
+        "stored_contact_ratio": {
+          "min": 0.0,
+          "max": 0.71,
+          "mean": 0.09866666666666667,
+          "std": 0.18406037656764213
+        },
+        "distinct_reset_seeds": 5,
+        "policy_counts": {
+          "guided": 5,
+          "mixture": 5,
+          "random": 5
+        }
+      }
+    }
+  },
+  "ood_test_caveat": "ood_test differs from train only by reset seed; there is NO explicit distribution-shift mechanism. It must be treated as an additional held-out test set, NOT as evidence of OOD generalisation.",
+  "frozen_test_policy": "quarantined: Phase 0/3 never train on frozen_test",
+  "gate": {
+    "integrity_pass": true,
+    "failed_checks": [],
+    "verdict": "PASS - proceed to P2-02 Phase 1"
+  }
+}
