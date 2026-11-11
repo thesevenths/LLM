@@ -1,0 +1,117 @@
+{
+  "dataset": "controlled_pendulum_pilot (v1, P1-A)",
+  "manifest": "E:\\LLM\\SciNet++\\datasets\\controlled_pendulum_pilot\\manifest.json",
+  "npz": "E:\\LLM\\SciNet++\\datasets\\controlled_pendulum_pilot\\pilot_episodes.npz",
+  "file_sha256_actual": "8d769ff576a5c6e855947c43b2bf697f200f59a04cdb0e19c787ad684af4ed89",
+  "file_sha256_recorded": "8d769ff576a5c6e855947c43b2bf697f200f59a04cdb0e19c787ad684af4ed89",
+  "file_sha256_match": true,
+  "n_episodes": 20,
+  "T": 200,
+  "dt": 0.02,
+  "replay_tolerance": 1e-12,
+  "replay_max_abs_obs_error": 0.0,
+  "replay_exact": true,
+  "verdict": "PASS",
+  "per_episode": [
+    {
+      "episode_id": "S0_random",
+      "index": 0,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S0_step",
+      "index": 1,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S0_sinusoid",
+      "index": 2,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S0_alternating",
+      "index": 3,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S1_random",
+      "index": 4,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S1_step",
+      "index": 5,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S1_sinusoid",
+      "index": 6,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S1_alternating",
+      "index": 7,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S2_random",
+      "index": 8,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S2_step",
+      "index": 9,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S2_sinusoid",
+      "index": 10,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S2_alternating",
+      "index": 11,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S3_random",
+      "index": 12,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S3_step",
+      "index": 13,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S3_sinusoid",
+      "index": 14,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S3_alternating",
+      "index": 15,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S4_random",
+      "index": 16,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S4_step",
+      "index": 17,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S4_sinusoid",
+      "index": 18,
+      "max_abs_obs_error": 0.0
+    },
+    {
+      "episode_id": "S4_alternating",
+      "index": 19,
+      "max_abs_obs_error": 0.0
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "dataset": "controlled_pendulum_v2_pilot (v2, P1-B1)",
+  "manifest": "E:\\LLM\\SciNet++\\datasets\\controlled_pendulum_v2_pilot\\manifest.json",
+  "npz": "E:\\LLM\\SciNet++\\datasets\\controlled_pendulum_v2_pilot\\pilot_episodes.npz",
+  "file_sha256_actual": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
+  "file_sha256_recorded": "0f48914d8b1449adc923cdb474c453e114fb663d72f1ddf8bf758f65b4110810",
+  "file_sha256_match": true,
+  "n_episodes": 20,
+  "T": 1000,
+  "dt": 0.02,
+  "torque_bounds": [
+    -1.0,
+    1.0
+  ],
+  "replay_tolerance": 1e-12,
+  "replay_max_abs_obs_error": 0.0,
+  "replay_max_abs_cond_error": 0.0,
+  "replay_exact": true,
+  "episode_sha256_all_match": true,
+  "verdict": "PASS",
+  "per_episode": [
+    {
+      "episode_id": "E00_random",
+      "index": 0,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E01_step",
+      "index": 1,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E02_sinusoid",
+      "index": 2,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E03_alternating",
+      "index": 3,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E04_zero",
+      "index": 4,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E05_random",
+      "index": 5,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E06_step",
+      "index": 6,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E07_sinusoid",
+      "index": 7,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E08_alternating",
+      "index": 8,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E09_zero",
+      "index": 9,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E10_random",
+      "index": 10,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E11_step",
+      "index": 11,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E12_sinusoid",
+      "index": 12,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E13_alternating",
+      "index": 13,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E14_zero",
+      "index": 14,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E15_random",
+      "index": 15,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E16_step",
+      "index": 16,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E17_sinusoid",
+      "index": 17,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E18_alternating",
+      "index": 18,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    },
+    {
+      "episode_id": "E19_zero",
+      "index": 19,
+      "max_abs_obs_error": 0.0,
+      "max_abs_cond_error": 0.0,
+      "episode_sha256_match": true
+    }
+  ]
+}
