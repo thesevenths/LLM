@@ -47,6 +47,7 @@ share one consistent coordinate system, and predictions are mapped back with
 
 from __future__ import annotations
 
+import numbers
 from typing import Callable, Optional, Sequence, Tuple
 
 import torch
@@ -70,17 +71,41 @@ def _check_tensor(name: str, x, min_ndim: int = 2) -> None:
 
 
 def _check_hidden_dims(hidden_dims) -> Tuple[int, ...]:
+    """Strictly validate hidden layer widths.
+
+    P0-fix (Phase 0.1 review item A): the previous ``int(h)`` silently
+    truncated ``3.7 -> 3``, ``3.0 -> 3`` and ``True -> 1``, so a mistyped
+    config produced a different architecture with no error. Only real integer
+    scalars are accepted now: Python ``int`` and numpy integer scalars (both
+    are ``numbers.Integral``). Floats (including whole-valued ``3.0``),
+    booleans (Python ``bool`` is an ``int`` subclass; ``np.bool_`` is not
+    ``Integral`` at all), strings and ``None`` are rejected. No new dependency
+    is introduced -- ``numbers`` is in the standard library.
+    """
     if hidden_dims is None:
         raise ValueError("hidden_dims must be a sequence (may be empty), not None")
     if isinstance(hidden_dims, (str, bytes)):
         raise TypeError("hidden_dims must be a sequence of ints, not a string")
     try:
-        hidden = tuple(int(h) for h in hidden_dims)
-    except (TypeError, ValueError) as exc:
-        raise TypeError(f"hidden_dims must be a sequence of positive ints: {exc}") from exc
-    if any(h <= 0 for h in hidden):
-        raise ValueError(f"hidden_dims entries must be positive, got {hidden}")
-    return hidden
+        entries = list(hidden_dims)
+    except TypeError as exc:
+        raise TypeError(
+            f"hidden_dims must be a sequence of positive ints, got "
+            f"{type(hidden_dims).__name__}"
+        ) from exc
+    hidden: list[int] = []
+    for i, h in enumerate(entries):
+        if isinstance(h, bool) or not isinstance(h, numbers.Integral):
+            raise TypeError(
+                f"hidden_dims[{i}] must be an int (or numpy integer scalar), "
+                f"got {h!r} of type {type(h).__name__}; floats (even 3.0), "
+                f"booleans, strings and None are rejected"
+            )
+        h_int = int(h)
+        if h_int <= 0:
+            raise ValueError(f"hidden_dims[{i}] must be positive, got {h_int}")
+        hidden.append(h_int)
+    return tuple(hidden)
 
 
 def _check_positive_int(name: str, value) -> int:

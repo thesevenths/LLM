@@ -23,6 +23,9 @@ a test split.
 from __future__ import annotations
 
 import json
+import math
+import numbers
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -31,6 +34,62 @@ import torch
 
 _FLOAT_DTYPES = (torch.float16, torch.float32, torch.float64, torch.bfloat16)
 DEFAULT_EPS = 1e-8
+
+# Required by the P0-fix schema: every persisted dict produced by ``to_dict``
+# contains all seven keys; ``load()`` reads that exact format. A missing key is
+# therefore a corrupted/hand-edited file, not a legitimate partial config.
+_REQUIRED_FIELDS = (
+    "state_mean",
+    "state_std",
+    "cond_mean",
+    "cond_std",
+    "eps",
+    "source_split",
+    "n_valid_transitions",
+)
+# Train-only normalisation contract: no other split may be the source of stats.
+_ALLOWED_SOURCE_SPLITS = frozenset({"train"})
+
+
+def _validate_vector(value, name: str, *, strictly_positive: bool = False):
+    """Coerce a JSON-style 1-D numeric sequence to a finite float32 tensor.
+
+    Rejects nested sequences, booleans, strings, empty vectors, NaN/Inf and
+    (optionally) zero/negative entries. ``torch.as_tensor`` silently casts
+    ``True -> 1.0``, so sequence elements are checked BEFORE coercion.
+    """
+    if value is None or isinstance(value, (str, bytes, bool)):
+        raise TypeError(
+            f"{name} must be a 1-D numeric sequence, got "
+            f"{type(value).__name__}"
+        )
+    if isinstance(value, (list, tuple)):
+        for i, v in enumerate(value):
+            if isinstance(v, bool) or not isinstance(v, numbers.Real):
+                raise TypeError(
+                    f"{name}[{i}] must be a real number, got {v!r} "
+                    f"of type {type(v).__name__}"
+                )
+            if not math.isfinite(float(v)):
+                raise ValueError(f"{name}[{i}] is non-finite (NaN/Inf): {v!r}")
+    try:
+        t = torch.as_tensor(value, dtype=torch.float32)
+    except (TypeError, ValueError, RuntimeError) as exc:
+        raise TypeError(f"{name} must be a 1-D numeric sequence: {exc}") from exc
+    if t.dim() != 1:
+        raise ValueError(
+            f"{name} must be one-dimensional, got shape {tuple(t.shape)}"
+        )
+    if t.numel() == 0:
+        raise ValueError(f"{name} must be a non-empty vector")
+    if not bool(torch.isfinite(t).all().item()):
+        raise ValueError(f"{name} contains non-finite values (NaN/Inf)")
+    if strictly_positive and not bool((t > 0).all().item()):
+        raise ValueError(
+            f"{name} must be strictly positive (zero/negative entries would "
+            f"cause division by zero during normalisation)"
+        )
+    return t
 
 
 @dataclass
@@ -93,21 +152,82 @@ class NormalizationStats:
         p.write_text(json.dumps(self.to_dict(), indent=2), encoding="utf-8")
 
     @classmethod
-    def from_dict(cls, d: dict) -> "NormalizationStats":
+    def from_dict(cls, d: Mapping) -> "NormalizationStats":
+        """Rebuild stats from a persisted dict with strict schema validation.
+
+        P0-fix (Phase 0.1 review item B). The previous implementation had no
+        validation: a hand-edited or corrupted ``normalization.json`` could
+        inject mismatched lengths, zero/negative std (division by zero), NaN/Inf,
+        a single ``cond_*`` field, bad ``eps``, or ``source_split="frozen_test"``.
+        All of these are now rejected explicitly. ``to_dict()`` output, the
+        already-persisted P2-02 ``normalization.json`` and the unconditioned
+        (both ``cond_*`` = None) form all satisfy this schema.
+        """
+        if not isinstance(d, Mapping):
+            raise TypeError(f"expected a mapping, got {type(d).__name__}")
+        missing = [k for k in _REQUIRED_FIELDS if k not in d]
+        if missing:
+            raise ValueError(f"normalization dict missing required fields: {missing}")
+
+        state_mean = _validate_vector(d["state_mean"], "state_mean")
+        state_std = _validate_vector(
+            d["state_std"], "state_std", strictly_positive=True
+        )
+        if state_mean.shape != state_std.shape:
+            raise ValueError(
+                f"state_mean/state_std length mismatch: "
+                f"{tuple(state_mean.shape)} vs {tuple(state_std.shape)}"
+            )
+
+        cond_mean_raw, cond_std_raw = d["cond_mean"], d["cond_std"]
+        if (cond_mean_raw is None) != (cond_std_raw is None):
+            raise ValueError(
+                "cond_mean and cond_std must both be None or both be present"
+            )
+        if cond_mean_raw is None:
+            cond_mean = cond_std = None
+        else:
+            cond_mean = _validate_vector(cond_mean_raw, "cond_mean")
+            cond_std = _validate_vector(
+                cond_std_raw, "cond_std", strictly_positive=True
+            )
+            if cond_mean.shape != cond_std.shape:
+                raise ValueError(
+                    f"cond_mean/cond_std length mismatch: "
+                    f"{tuple(cond_mean.shape)} vs {tuple(cond_std.shape)}"
+                )
+
+        eps = d["eps"]
+        if (
+            isinstance(eps, bool)
+            or not isinstance(eps, numbers.Real)
+            or not math.isfinite(float(eps))
+            or eps <= 0
+        ):
+            raise ValueError(f"eps must be a positive finite number, got {eps!r}")
+        eps = float(eps)
+
+        source_split = d["source_split"]
+        if not isinstance(source_split, str) or source_split not in _ALLOWED_SOURCE_SPLITS:
+            raise ValueError(
+                f"source_split must be one of {sorted(_ALLOWED_SOURCE_SPLITS)} "
+                f"(train-only normalisation contract), got {source_split!r}"
+            )
+
+        n = d["n_valid_transitions"]
+        if isinstance(n, bool) or not isinstance(n, numbers.Integral) or int(n) < 0:
+            raise ValueError(
+                f"n_valid_transitions must be a non-negative integer, got {n!r}"
+            )
+
         return cls(
-            state_mean=torch.tensor(d["state_mean"], dtype=torch.float32),
-            state_std=torch.tensor(d["state_std"], dtype=torch.float32),
-            cond_mean=(
-                None if d.get("cond_mean") is None
-                else torch.tensor(d["cond_mean"], dtype=torch.float32)
-            ),
-            cond_std=(
-                None if d.get("cond_std") is None
-                else torch.tensor(d["cond_std"], dtype=torch.float32)
-            ),
-            eps=float(d.get("eps", DEFAULT_EPS)),
-            source_split=str(d.get("source_split", "train")),
-            n_valid_transitions=int(d.get("n_valid_transitions", 0)),
+            state_mean=state_mean,
+            state_std=state_std,
+            cond_mean=cond_mean,
+            cond_std=cond_std,
+            eps=eps,
+            source_split=source_split,
+            n_valid_transitions=int(n),
         )
 
     @classmethod
