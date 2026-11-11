@@ -258,8 +258,62 @@ def generate_torque_sequence_v2(profile: ProfileSpec, T: int, dt: float,
     return seq
 
 
-def classify_regime(obs: np.ndarray, p: ScenarioSpec) -> Dict[str, Any]:
-    """Preregistered regime classification (bounded / transitional / rotation)."""
+# Default regime criteria. These MUST stay byte-for-byte consistent with
+# configs/dynamics/controlled_pendulum_v2_pilot.yaml :: regime_criteria. They are
+# the fallback only; the audit and the P1-B2 collector MUST pass the YAML-declared
+# criteria so there is a single source of truth (P1-B1.1 / P8).
+DEFAULT_REGIME_CRITERIA = {
+    "continuous_rotation": {"min_abs_winding": 1.0, "max_omega_sign_changes": 2},
+    "bounded_oscillation": {
+        "max_theta_range_rad": 2.0 * math.pi,
+        "min_omega_sign_changes": 2,
+    },
+    "transitional": "otherwise",
+}
+
+
+def _validate_regime_criteria(criteria: Dict[str, Any]) -> None:
+    """Raise ValueError if ``criteria`` is not a complete, well-formed spec.
+
+    Missing keys -> 'missing criterion' failure. Non-numeric / non-finite
+    thresholds -> 'invalid criterion' failure.
+    """
+    if not isinstance(criteria, dict):
+        raise ValueError("regime_criteria must be a mapping")
+    for needed in ("continuous_rotation", "bounded_oscillation", "transitional"):
+        if needed not in criteria:
+            raise ValueError(f"regime_criteria missing required key: {needed!r}")
+    cr = criteria["continuous_rotation"]
+    bo = criteria["bounded_oscillation"]
+    for key in ("min_abs_winding", "max_omega_sign_changes"):
+        if key not in cr:
+            raise ValueError(f"continuous_rotation missing {key!r}")
+        if not isinstance(cr[key], (int, float)) or not math.isfinite(cr[key]):
+            raise ValueError(f"continuous_rotation.{key} must be a finite number")
+    for key in ("max_theta_range_rad", "min_omega_sign_changes"):
+        if key not in bo:
+            raise ValueError(f"bounded_oscillation missing {key!r}")
+        if not isinstance(bo[key], (int, float)) or not math.isfinite(bo[key]):
+            raise ValueError(f"bounded_oscillation.{key} must be a finite number")
+
+
+def classify_regime(obs: np.ndarray, p: ScenarioSpec,
+                    criteria: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Preregistered regime classification (bounded / transitional / rotation).
+
+    Thresholds are taken from ``criteria`` (the YAML-declared
+    ``regime_criteria`` block). When ``criteria`` is None the module-level
+    ``DEFAULT_REGIME_CRITERIA`` is used so existing callers keep working, but the
+    audit and the collector MUST pass the config so the threshold is never
+    duplicated/hardcoded at the call site (P1-B1.1 / P8).
+    """
+    if criteria is None:
+        criteria = DEFAULT_REGIME_CRITERIA
+    _validate_regime_criteria(criteria)
+
+    cr = criteria["continuous_rotation"]
+    bo = criteria["bounded_oscillation"]
+
     I = p.m * p.L * p.L
     E_barrier = 2.0 * p.m * p.g * p.L
     th, om = obs[:, 0], obs[:, 1]
@@ -269,16 +323,20 @@ def classify_regime(obs: np.ndarray, p: ScenarioSpec) -> Dict[str, Any]:
     nz = sgn[sgn != 0]
     sign_changes = int(np.sum(np.diff(nz) != 0)) if nz.size > 1 else 0
     frac_above = float(np.mean(E > E_barrier))
-    if abs(winding) >= 1.0 and sign_changes <= 2:
+    theta_range = float(th.max() - th.min())
+
+    if (abs(winding) >= cr["min_abs_winding"]
+            and sign_changes <= cr["max_omega_sign_changes"]):
         regime = "continuous_rotation"
-    elif (th.max() - th.min()) < 2.0 * np.pi and sign_changes >= 2:
+    elif (theta_range <= bo["max_theta_range_rad"]
+          and sign_changes >= bo["min_omega_sign_changes"]):
         regime = "bounded_oscillation"
     else:
         regime = "transitional"
     return {
         "regime": regime,
         "winding_number": winding,
-        "theta_range_rad": float(th.max() - th.min()),
+        "theta_range_rad": theta_range,
         "omega_sign_changes": sign_changes,
         "max_abs_omega_rad_s": float(np.max(np.abs(om))),
         "E_barrier_J": E_barrier,

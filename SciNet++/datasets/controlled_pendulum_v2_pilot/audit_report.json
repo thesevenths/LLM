@@ -240,16 +240,38 @@
       }
     },
     {
-      "check": "regime_classification_preregistered",
+      "check": "independent_regime_audit",
       "passed": true,
       "detail": {
-        "counts": {
+        "passed": true,
+        "criteria_present": true,
+        "config_consistent_with_yaml": true,
+        "recomputed_counts": {
+          "bounded_oscillation": 20,
+          "transitional": 0,
+          "continuous_rotation": 0
+        },
+        "manifest_counts": {
           "bounded_oscillation": 20,
           "continuous_rotation": 0,
           "transitional": 0
         },
-        "primary_training_all_bounded": true,
-        "note": "v1 historical pilot retains transitional/rotation as eval-only stress evidence; no strong-drive samples mixed in."
+        "counts_match": true,
+        "n_label_mismatches": 0,
+        "label_mismatches": [],
+        "n_metric_mismatches": 0,
+        "criteria_used": {
+          "continuous_rotation": {
+            "min_abs_winding": 1.0,
+            "max_omega_sign_changes": 2
+          },
+          "bounded_oscillation": {
+            "max_theta_range_rad": 6.283185307179586,
+            "min_omega_sign_changes": 2
+          },
+          "transitional": "otherwise"
+        },
+        "note": "Regime recomputed independently from raw observations using YAML regime_criteria; not a stored-label format check."
       }
     },
     {

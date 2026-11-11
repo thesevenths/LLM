@@ -85,6 +85,84 @@ def load():
     return data, man, cfg
 
 
+def independent_regime_audit(obs, man, cfg):
+    """Independently re-derive every episode's regime from RAW observations.
+
+    This is NOT a format-only check. It:
+      1. loads the preregistered ``regime_criteria`` from the YAML config and
+         validates it is complete and well-formed (missing/invalid -> fail);
+      2. cross-checks that the manifest's stored ``regime_criteria`` equals the
+         YAML (config/implementation consistency);
+      3. recomputes each episode's regime from ``obs[i]`` + its physical
+         parameters using the YAML thresholds -- never trusting the stored label;
+      4. recomputes aggregate regime counts and compares them to the manifest;
+      5. reports per-episode label mismatches.
+
+    Returns ``(passed, detail)``.
+    """
+    from data.controlled_pendulum_v2 import (
+        _validate_regime_criteria, classify_regime,
+    )
+
+    eps = man["episodes"]
+    # 1. load + validate preregistered criteria from YAML
+    try:
+        criteria = cfg["regime_criteria"]
+        _validate_regime_criteria(criteria)
+    except Exception as exc:  # missing/invalid criterion must fail
+        return False, {
+            "passed": False,
+            "error": f"regime_criteria invalid or missing in config: {exc}",
+            "criteria_present": "regime_criteria" in cfg,
+        }
+
+    # 2. config consistency: YAML must equal manifest-stored resolved config
+    stored_criteria = man.get("resolved_config", {}).get("regime_criteria")
+    config_consistent = (stored_criteria == criteria)
+
+    # 3 + 4. recompute per-episode and aggregate from raw observations
+    recomputed_counts = {"bounded_oscillation": 0,
+                         "transitional": 0,
+                         "continuous_rotation": 0}
+    label_mismatches = []
+    metric_mismatches = []
+    for i, e in enumerate(eps):
+        pp = e["physical_parameters"]
+        sc = ScenarioSpec(
+            name=e["episode_id"], g=pp["g"], L=pp["L"], m=pp["m"], b=pp["b"],
+            theta0=float(e["initial_state"][0]), omega0=float(e["initial_state"][1]))
+        r = classify_regime(obs[i], sc, criteria=criteria)
+        recomputed_counts[r["regime"]] += 1
+        if r["regime"] != e["regime"]:
+            label_mismatches.append({
+                "episode_id": e["episode_id"],
+                "stored": e["regime"], "recomputed": r["regime"]})
+        rd = e.get("regime_detail", {})
+        for mk in ("winding_number", "theta_range_rad", "omega_sign_changes"):
+            if mk in rd and abs(float(rd[mk]) - float(r[mk])) > 1e-9:
+                metric_mismatches.append({
+                    "episode_id": e["episode_id"], "metric": mk,
+                    "stored": rd[mk], "recomputed": r[mk]})
+
+    stored_counts = man.get("regime_counts", {})
+    counts_match = (recomputed_counts == stored_counts)
+    passed = (not label_mismatches) and counts_match and config_consistent
+    return passed, {
+        "passed": passed,
+        "criteria_present": True,
+        "config_consistent_with_yaml": config_consistent,
+        "recomputed_counts": recomputed_counts,
+        "manifest_counts": stored_counts,
+        "counts_match": counts_match,
+        "n_label_mismatches": len(label_mismatches),
+        "label_mismatches": label_mismatches[:20],
+        "n_metric_mismatches": len(metric_mismatches),
+        "criteria_used": criteria,
+        "note": ("Regime recomputed independently from raw observations using "
+                 "YAML regime_criteria; not a stored-label format check."),
+    }
+
+
 def main() -> int:
     data, man, cfg = load()
     obs, cond, valid = data["observations"], data["conditions"], data["valid_mask"]
@@ -173,15 +251,9 @@ def main() -> int:
         {"all_finite": finite, "max_abs_delta_theta_per_step": max_dth,
          "pi_threshold": math.pi})
 
-    # 6. regime classification ------------------------------------------------ #
-    reg_ok = all(e["regime"] in ("bounded_oscillation", "transitional",
-                                 "continuous_rotation") for e in eps)
-    rc = man["regime_counts"]
-    add("regime_classification_preregistered", reg_ok,
-        {"counts": rc, "primary_training_all_bounded":
-            rc["bounded_oscillation"] == len(eps),
-         "note": "v1 historical pilot retains transitional/rotation as "
-                 "eval-only stress evidence; no strong-drive samples mixed in."})
+    # 6. INDEPENDENT regime audit (recompute from raw observations + YAML) --- #
+    reg_pass, reg_detail = independent_regime_audit(obs, man, cfg)
+    add("independent_regime_audit", reg_pass, reg_detail)
 
     # 7. initial-state diversity --------------------------------------------- #
     th0 = np.array([e["initial_state"][0] for e in eps])
