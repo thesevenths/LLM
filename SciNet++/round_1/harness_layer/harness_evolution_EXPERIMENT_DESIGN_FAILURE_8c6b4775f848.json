@@ -1,0 +1,177 @@
+{
+  "accepted": [],
+  "analysis": {
+    "analyses": [
+      {
+        "domain": "scinet",
+        "dominant": "EXPERIMENT_DESIGN_FAILURE",
+        "findings": [
+          {
+            "category": "EXPERIMENT_DESIGN_FAILURE",
+            "confidence": 0.9,
+            "evidence": {
+              "decisions": [
+                "inconclusive",
+                "inconclusive"
+              ],
+              "n_candidates": 2,
+              "n_inconclusive": 2,
+              "planner_strategy": "fixed_first_knob"
+            },
+            "reason": "experiments did not discriminate competing hypotheses",
+            "severity": "high",
+            "suggested_target": "planner.strategy"
+          },
+          {
+            "category": "EVALUATION_FAILURE",
+            "confidence": 0.85,
+            "evidence": {
+              "hard_violations": [],
+              "holdout_evaluated": true,
+              "mean_holdout_delta": 0.0,
+              "ood_mean_delta": null
+            },
+            "reason": "finding not confirmed on an independent holdout / hard constraints",
+            "severity": "high",
+            "suggested_target": "reviewer.require_falsification"
+          },
+          {
+            "category": "MEMORY_FAILURE",
+            "confidence": 0.8,
+            "evidence": {
+              "experience_top_k": 0
+            },
+            "reason": "planner ignores historical successes and refutations",
+            "severity": "medium",
+            "suggested_target": "memory.experience_top_k"
+          },
+          {
+            "category": "WORKFLOW_FAILURE",
+            "confidence": 0.7,
+            "evidence": {
+              "campaign_rounds": 1,
+              "campaigns": 1
+            },
+            "reason": "single-round workflow cannot iterate on evidence",
+            "severity": "medium",
+            "suggested_target": "workflow.campaign_rounds"
+          }
+        ],
+        "quality_Q": 0.737508,
+        "source_sha256": "4f09c1e9066fefa39ecfd833463e8de6fd12a21d6414ecad496089bfb4a62f42",
+        "task_id": "task_d6e746355d02"
+      },
+      {
+        "domain": "scinet",
+        "dominant": "EXPERIMENT_DESIGN_FAILURE",
+        "findings": [
+          {
+            "category": "EXPERIMENT_DESIGN_FAILURE",
+            "confidence": 0.9,
+            "evidence": {
+              "decisions": [
+                "inconclusive",
+                "inconclusive"
+              ],
+              "n_candidates": 2,
+              "n_inconclusive": 2,
+              "planner_strategy": "fixed_first_knob"
+            },
+            "reason": "experiments did not discriminate competing hypotheses",
+            "severity": "high",
+            "suggested_target": "planner.strategy"
+          },
+          {
+            "category": "EVALUATION_FAILURE",
+            "confidence": 0.85,
+            "evidence": {
+              "hard_violations": [],
+              "holdout_evaluated": true,
+              "mean_holdout_delta": 0.0,
+              "ood_mean_delta": null
+            },
+            "reason": "finding not confirmed on an independent holdout / hard constraints",
+            "severity": "high",
+            "suggested_target": "reviewer.require_falsification"
+          },
+          {
+            "category": "MEMORY_FAILURE",
+            "confidence": 0.8,
+            "evidence": {
+              "experience_top_k": 0
+            },
+            "reason": "planner ignores historical successes and refutations",
+            "severity": "medium",
+            "suggested_target": "memory.experience_top_k"
+          },
+          {
+            "category": "WORKFLOW_FAILURE",
+            "confidence": 0.7,
+            "evidence": {
+              "campaign_rounds": 1,
+              "campaigns": 1
+            },
+            "reason": "single-round workflow cannot iterate on evidence",
+            "severity": "medium",
+            "suggested_target": "workflow.campaign_rounds"
+          }
+        ],
+        "quality_Q": 0.737952,
+        "source_sha256": "2f10490e2dd4e8afd93db07342394e83f671b34870fcb80f18b9b34075d74525",
+        "task_id": "task_7f509a103d13"
+      }
+    ],
+    "counts": {
+      "COST_FAILURE": 0,
+      "EVALUATION_FAILURE": 2,
+      "EXPERIMENT_DESIGN_FAILURE": 2,
+      "HYPOTHESIS_QUALITY_FAILURE": 0,
+      "MEMORY_FAILURE": 2,
+      "PLANNING_FAILURE": 0,
+      "TOOL_USAGE_FAILURE": 0,
+      "WORKFLOW_FAILURE": 2
+    },
+    "dominant": "EXPERIMENT_DESIGN_FAILURE",
+    "n_tasks": 2,
+    "source_sha256": "dd5ab7f271394b13cad71f1f0ca761af5f232e016609dfa85282faaf40f6c790"
+  },
+  "artifact_sha256": "8c6b4775f848a3ab8b48d0690171df5d5fe3636d96c33156db6d136250b7905a",
+  "base_harness": {
+    "campaign_rounds": 1,
+    "experience_top_k": 0,
+    "hypothesis_prompt": "terse_v0",
+    "max_candidates": 2,
+    "notes": "Promoted base after ARR 1.0 evolve R1 (base/v3, operator human:user): workflow.max_candidates 1->2 ACCEPTED (Q 0.8763->0.8957, +0.0194 validated). Other knobs (planner_strategy/hypothesis_prompt/experience_top_k) stayed INCONCLUSIVE and were NOT landed.",
+    "planner_strategy": "fixed_first_knob",
+    "require_falsification": false,
+    "schema_version": "arr-1.0-harness-v1"
+  },
+  "base_harness_sha256": "e5d01feb99f9a839870db77be7aabaccf01022f1b89c42ac106ed44402f3dd8f",
+  "candidate_type": "research_harness",
+  "dominant_failure": "EXPERIMENT_DESIGN_FAILURE",
+  "elapsed_seconds": 859.999,
+  "evaluation_substrate_sha256": {
+    "adaptive_runtime/evolution_spaces.py": "MISSING",
+    "adaptive_runtime/gate.py": "MISSING",
+    "research_runtime/research_quality.py": "MISSING",
+    "research_runtime/research_task.py": "MISSING"
+  },
+  "evaluation_substrate_unchanged": true,
+  "live_runtime_untouched": true,
+  "max_minutes": 8.0,
+  "n_accepted": 0,
+  "n_inconclusive": 0,
+  "n_negative_controls": 0,
+  "n_rejected": 0,
+  "negative_controls_rejected": 0,
+  "promotion": {
+    "note": "No version.promote() is called by the loop. Applying an accepted Harness is a separate, human-gated step.",
+    "operator": "",
+    "status": "not_requested"
+  },
+  "records": [],
+  "rollback_available": true,
+  "rounds_executed": 0,
+  "rounds_requested": 1,
+  "schema_version": "arr-1.0-harness-evolution-v1"
+}
